@@ -5,6 +5,7 @@ using Plugin.CurrentActivity;
 using Plugin.Fingerprint;
 using Prism;
 using Prism.Ioc;
+using Xamarin.Forms;
 
 namespace MySafe.Droid
 {
@@ -18,6 +19,8 @@ namespace MySafe.Droid
             //ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+            
+            Forms.SetFlags("Shapes_Experimental");
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             CrossFingerprint.SetCurrentActivityResolver(() => CrossCurrentActivity.Current.Activity);
             global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
