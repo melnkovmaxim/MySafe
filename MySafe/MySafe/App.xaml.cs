@@ -6,6 +6,7 @@ using Prism.Ioc;
 using MySafe.ViewModels;
 using MySafe.Views;
 using Prism.DryIoc;
+using Xamarin.Essentials;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Forms;
@@ -29,7 +30,16 @@ namespace MySafe
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/AuthPage");
+            var password = await SecureStorage.GetAsync("ApplicationPassword");
+
+            if (string.IsNullOrEmpty(password))
+            {
+                await NavigationService.NavigateAsync($"NavigationPage/{nameof(RegisterPage)}");
+            }
+            else
+            {
+                await NavigationService.NavigateAsync($"NavigationPage/{nameof(LoginPage)}");
+            }
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -37,7 +47,9 @@ namespace MySafe
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<AuthPage, LoginViewModel>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
+            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
         }
     }
 }

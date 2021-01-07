@@ -43,7 +43,7 @@ namespace MySafe.Models
 
         public string GetPassword()
         {
-            var password = string.Join("", PasswordStack);
+            var password = string.Join("", PasswordStack.Reverse());
 
             if (PasswordStack.Count == 5)
             {

@@ -1,13 +1,14 @@
 ﻿using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace MySafe.Views
 {
-    public partial class AuthPage : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class LoginPage : ContentPage
     {
-        public AuthPage()
+        public LoginPage()
         {
             InitializeComponent();
-
         }
     }
 }

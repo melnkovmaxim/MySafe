@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Input;
 using MySafe.Models;
 using MySafe.Services;
+using MySafe.Views;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 using Prism.Ioc;
@@ -20,19 +21,9 @@ namespace MySafe.ViewModels
     {
         public AuthPassword Password { get; set; }
 
-        private string _secret => "12225";
-        private bool _isCorretPassword => _secret == Password.GetPassword();
-
-        public bool IsSet(int k) => true;
-
-        private readonly YandexAuthService _authService;
-        private bool _isAuthorized;
-
-        public LoginViewModel(INavigationService navigationService, YandexAuthService authService)
+        public LoginViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "Авторизация";
-            _authService = authService;
             Password = new AuthPassword();
         }
 
@@ -51,12 +42,18 @@ namespace MySafe.ViewModels
             }
         });
 
-        public DelegateCommand<string> EnterNumberCommand => new DelegateCommand<string>((number) =>
+        public DelegateCommand<string> EnterNumberCommand => new DelegateCommand<string>(async (number) =>
         {
             Password.Push(int.Parse(number));
-            if (_isCorretPassword)
-            {
+            var password = Password.GetPassword();
 
+            if (await SecureStorage.GetAsync("ApplicationPassword") == password)
+            {
+                await NavigationService.NavigateAsync(nameof(MainPage));
+            }
+            else if (password.Length == 5)
+            {
+                Vibration.Vibrate(TimeSpan.FromSeconds(1));
             }
         });
 
