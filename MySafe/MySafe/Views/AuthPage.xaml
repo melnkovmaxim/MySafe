@@ -1,11 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="MySafe.Views.LoginPage"
+    x:Class="MySafe.Views.AuthPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="http://prismlibrary.com"
     BackgroundColor="#E4E8FB"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=AuthViewModel}"
     NavigationPage.HasNavigationBar="False">
+    <ContentPage.Behaviors>
+        <behaviors:EventToCommandBehavior Command="{Binding LoadedCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
     <ContentPage.Resources>
         <Style TargetType="{x:Type Ellipse}">
             <Setter Property="Stroke" Value="#8EADEA" />
@@ -69,6 +73,16 @@
                 </VisualStateGroupList>
             </Setter>
         </Style>
+        <Style TargetType="Label">
+            <Style.Triggers>
+                <DataTrigger TargetType="Label" Binding="{Binding IsRegistered}" Value="False">
+                    <Setter TargetName="LabelHelper" Property="Text" Value="Введите пароль для регистрации"/>
+                </DataTrigger>                
+                <DataTrigger TargetType="Label" Binding="{Binding IsRegistered}" Value="True">
+                    <Setter TargetName="LabelHelper" Property="Text" Value="Используйте пароль или отпечаток для входа"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
@@ -94,6 +108,7 @@
                     TextColor="Black" />
 
                 <Label
+                    x:Name="LabelHelper"
                     Margin="0,0,0,20"
                     FontFamily="Roboto-Medium"
                     FontSize="18"
@@ -188,7 +203,8 @@
                     Grid.Row="3"
                     Grid.Column="0"
                     Command="{Binding FingerPrintCommand}"
-                    ImageSource="fingerprint.png" />
+                    ImageSource="fingerprint.png"
+                    IsVisible="{Binding IsRegistered}" />
                 <Button
                     Grid.Row="3"
                     Grid.Column="1"
@@ -207,6 +223,7 @@
                 Grid.Row="2"
                 FontFamily="Roboto-Medium"
                 HorizontalOptions="Center"
+                IsVisible="{Binding IsRegistered}"
                 Text="Забыли пароль?"
                 TextColor="#3969C6">
                 <Label.GestureRecognizers>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ImTools;
 using Prism.Mvvm;
@@ -41,12 +42,13 @@ namespace MySafe.Models
             }
         }
 
-        public string GetPassword()
+        public async Task<string> GetPassword()
         {
             var password = string.Join("", PasswordStack.Reverse());
 
             if (PasswordStack.Count == 5)
             {
+                await Task.Run(() => Thread.Sleep(1000));
                 PasswordStack.Clear();
                 UpdateProperty();
             }

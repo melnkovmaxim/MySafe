@@ -30,16 +30,7 @@ namespace MySafe
         {
             InitializeComponent();
 
-            var password = await SecureStorage.GetAsync("ApplicationPassword");
-
-            if (string.IsNullOrEmpty(password))
-            {
-                await NavigationService.NavigateAsync($"NavigationPage/{nameof(RegisterPage)}");
-            }
-            else
-            {
-                await NavigationService.NavigateAsync($"NavigationPage/{nameof(LoginPage)}");
-            }
+            await NavigationService.NavigateAsync($"NavigationPage/{nameof(AuthPage)}");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -47,8 +38,7 @@ namespace MySafe
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
-            containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
+            containerRegistry.RegisterForNavigation<AuthPage, AuthViewModel>();
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
         }
     }

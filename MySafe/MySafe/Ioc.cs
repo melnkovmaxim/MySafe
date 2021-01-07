@@ -31,6 +31,6 @@ namespace MySafe
 
     public class VmLocator
     {
-        public static LoginViewModel AuthViewModel => Ioc.Resolve<LoginViewModel>();
+        public static AuthViewModel AuthViewModel => Ioc.Resolve<AuthViewModel>();
     }
 }
