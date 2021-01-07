@@ -7,6 +7,7 @@ namespace MySafe.Views
         public AuthPage()
         {
             InitializeComponent();
+
         }
     }
 }

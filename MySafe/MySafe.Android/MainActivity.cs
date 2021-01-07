@@ -21,6 +21,7 @@ namespace MySafe.Droid
             base.OnCreate(savedInstanceState);
             
             Forms.SetFlags("Shapes_Experimental");
+
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             CrossFingerprint.SetCurrentActivityResolver(() => CrossCurrentActivity.Current.Activity);
             global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);

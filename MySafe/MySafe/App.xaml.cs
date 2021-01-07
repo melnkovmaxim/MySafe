@@ -10,6 +10,9 @@ using Xamarin.Essentials.Interfaces;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Forms;
 
+[assembly: ExportFont("Montserrat-Regular.ttf", Alias= "Montserrat")]
+[assembly: ExportFont("Roboto-Medium.ttf", Alias= "Roboto-Medium")]
+[assembly: ExportFont("Roboto-Regular.ttf", Alias= "Roboto-Regular")]
 namespace MySafe
 {
     public partial class App

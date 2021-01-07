@@ -4,15 +4,71 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     BackgroundColor="#E4E8FB"
-    BindingContext="{Binding Source={StaticResource VmLocator}, Path=AuthViewModel}">
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=AuthViewModel}"
+    NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
-        <ResourceDictionary>
-
-            <Style TargetType="Ellipse">
-                <Setter Property="HorizontalOptions" Value="Start" />
-            </Style>
-
-        </ResourceDictionary>
+        <Style TargetType="{x:Type Ellipse}">
+            <Setter Property="Stroke" Value="#8EADEA" />
+            <Setter Property="WidthRequest" Value="15" />
+            <Setter Property="HeightRequest" Value="15" />
+            <Style.Triggers>
+                <DataTrigger
+                    Binding="{Binding Password.IsSetNumber1}"
+                    TargetType="{x:Type Ellipse}"
+                    Value="True">
+                    <Setter TargetName="EllipsePass1" Property="Fill" Value="#fac16b" />
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding Password.IsSetNumber2}"
+                    TargetType="{x:Type Ellipse}"
+                    Value="True">
+                    <Setter TargetName="EllipsePass2" Property="Fill" Value="#fac16b" />
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding Password.IsSetNumber3}"
+                    TargetType="{x:Type Ellipse}"
+                    Value="True">
+                    <Setter TargetName="EllipsePass3" Property="Fill" Value="#fac16b" />
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding Password.IsSetNumber4}"
+                    TargetType="{x:Type Ellipse}"
+                    Value="True">
+                    <Setter TargetName="EllipsePass4" Property="Fill" Value="#fac16b" />
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding Password.IsSetNumber5}"
+                    TargetType="{x:Type Ellipse}"
+                    Value="True">
+                    <Setter TargetName="EllipsePass5" Property="Fill" Value="#fac16b" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Roboto-Regular" />
+            <Setter Property="FontSize" Value="31" />
+            <Setter Property="WidthRequest" Value="70" />
+            <Setter Property="HeightRequest" Value="70" />
+            <Setter Property="CornerRadius" Value="35" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#DADDF0" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
@@ -21,16 +77,17 @@
                 <RowDefinition Height="2*" />
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-
             <StackLayout Grid.Row="0">
                 <Label
                     Margin="0,25,0,0"
+                    FontFamily="Montserrat"
                     FontSize="36"
                     HorizontalOptions="Center"
                     Text="MySafe"
                     TextColor="Black" />
                 <Label
                     Margin="0,-15,0,0"
+                    FontFamily="Montserrat"
                     FontSize="36"
                     HorizontalOptions="Center"
                     Text="online"
@@ -38,31 +95,17 @@
 
                 <Label
                     Margin="0,0,0,20"
+                    FontFamily="Roboto-Medium"
                     FontSize="18"
                     HorizontalTextAlignment="Center"
                     Text="Используйте пароль или отпечаток для входа" />
                 <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                    <Ellipse
-                        HeightRequest="10"
-                        Stroke="#8EADEA"
-                        WidthRequest="10" />
-                    <Ellipse
-                        HeightRequest="10"
-                        Stroke="#8EADEA"
-                        WidthRequest="10" />
-                    <Ellipse
-                        HeightRequest="10"
-                        Stroke="#8EADEA"
-                        WidthRequest="10" />
-                    <Ellipse
-                        HeightRequest="10"
-                        Stroke="#8EADEA"
-                        WidthRequest="10" />
-                    <Ellipse
-                        HeightRequest="10"
-                        Stroke="#8EADEA"
-                        WidthRequest="10" />
 
+                    <Ellipse x:Name="EllipsePass1" />
+                    <Ellipse x:Name="EllipsePass2" />
+                    <Ellipse x:Name="EllipsePass3" />
+                    <Ellipse x:Name="EllipsePass4" />
+                    <Ellipse x:Name="EllipsePass5" />
                 </StackLayout>
             </StackLayout>
 
@@ -72,9 +115,9 @@
                 HorizontalOptions="Center"
                 VerticalOptions="CenterAndExpand">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="90" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -87,71 +130,89 @@
                 <Button
                     Grid.Row="0"
                     Grid.Column="0"
-                    BackgroundColor="#DADDF0"
-                    CornerRadius="35"
-                    HeightRequest="70"
-                    HorizontalOptions="Center"
-                    Text="1"
-                    VerticalOptions="Center"
-                    WidthRequest="70" />
+                    Command="{Binding EnterNumberCommand}"
+                    CommandParameter="1"
+                    Text="1" />
                 <Button
                     Grid.Row="0"
                     Grid.Column="1"
-                    CornerRadius="15"
+                    Command="{Binding EnterNumberCommand}"
+                    CommandParameter="1"
                     Text="2" />
                 <Button
                     Grid.Row="0"
                     Grid.Column="2"
-                    CornerRadius="15"
+                    Command="{Binding EnterNumberCommand}"
+                    CommandParameter="1"
                     Text="3" />
 
                 <Button
                     Grid.Row="1"
                     Grid.Column="0"
-                    CornerRadius="15"
+                    Command="{Binding EnterNumberCommand}"
+                    CommandParameter="1"
                     Text="4" />
                 <Button
                     Grid.Row="1"
                     Grid.Column="1"
+                    Command="{Binding EnterNumberCommand}"
+                    CommandParameter="1"
                     Text="5" />
                 <Button
                     Grid.Row="1"
                     Grid.Column="2"
+                    Command="{Binding EnterNumberCommand}"
+                    CommandParameter="1"
                     Text="6" />
 
                 <Button
                     Grid.Row="2"
                     Grid.Column="0"
+                    Command="{Binding EnterNumberCommand}"
+                    CommandParameter="1"
                     Text="7" />
                 <Button
                     Grid.Row="2"
                     Grid.Column="1"
+                    Command="{Binding EnterNumberCommand}"
+                    CommandParameter="1"
                     Text="8" />
                 <Button
                     Grid.Row="2"
                     Grid.Column="2"
+                    Command="{Binding EnterNumberCommand}"
+                    CommandParameter="1"
                     Text="9" />
 
                 <Button
                     Grid.Row="3"
                     Grid.Column="0"
-                    Text="F" />
+                    Command="{Binding FingerPrintCommand}"
+                    ImageSource="fingerprint.png" />
                 <Button
                     Grid.Row="3"
                     Grid.Column="1"
+                    Command="{Binding EnterNumberCommand}"
+                    CommandParameter="1"
                     Text="0" />
                 <Button
                     Grid.Row="3"
                     Grid.Column="2"
-                    Text="B" />
+                    Command="{Binding RemoveLastNumberCommand}"
+                    CommandParameter="1"
+                    ImageSource="backspace.png" />
 
             </Grid>
-
             <Label
                 Grid.Row="2"
+                FontFamily="Roboto-Medium"
                 HorizontalOptions="Center"
                 Text="Забыли пароль?"
-                TextColor="#3969C6" />
+                TextColor="#3969C6">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding RestorePasswordCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
 
         </Grid>
     </ContentPage.Content>

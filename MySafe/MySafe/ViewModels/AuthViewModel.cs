@@ -2,19 +2,26 @@
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using MySafe.Models;
 using MySafe.Services;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 using Prism.Ioc;
 using Prism.Navigation;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace MySafe.ViewModels
 {
     public class AuthViewModel : ViewModelBase
     {
+        public AuthPassword Password { get; set; }
+
+        public bool IsSet(int k) => true;
+
         private readonly YandexAuthService _authService;
         private bool _isAuthorized;
 
@@ -23,13 +30,12 @@ namespace MySafe.ViewModels
         {
             Title = "Авторизация";
             _authService = authService;
+            Password = new AuthPassword();
         }
 
-        private ICommand _auth;
-        public ICommand Auth => _auth ??= new DelegateCommand(async () =>
+        public DelegateCommand FingerPrintCommand => new DelegateCommand(async () =>
         {
-            
-            var request = new AuthenticationRequestConfiguration ("Вход в MySafe", "Коснитесь сканера отпечатков");
+            var request = new AuthenticationRequestConfiguration("Вход в MySafe", "Коснитесь сканера отпечатков");
             var result = await CrossFingerprint.Current.AuthenticateAsync(request);
             if (result.Authenticated)
             {
@@ -40,6 +46,21 @@ namespace MySafe.ViewModels
             {
                 // not allowed to do secret stuff :(
             }
+        });
+
+        public DelegateCommand<string> EnterNumberCommand => new DelegateCommand<string>((number) =>
+        {
+            Password.Push(int.Parse(number));
+        });
+
+        public DelegateCommand RemoveLastNumberCommand => new DelegateCommand(() =>
+        {
+            Password.Pop();
+        });
+
+        public DelegateCommand RestorePasswordCommand => new DelegateCommand(() =>
+        {
+            // App.Current.MainPage.DisplayAlert("Вы забыли пароль!", "Восстанавливаем...", "Отмена");
         });
     }
 }
