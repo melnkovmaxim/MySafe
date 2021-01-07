@@ -37,7 +37,7 @@ namespace MySafe
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<AuthPage, AuthViewModel>();
+            containerRegistry.RegisterForNavigation<AuthPage, LoginViewModel>();
         }
     }
 }

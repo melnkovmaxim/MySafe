@@ -10,35 +10,48 @@ namespace MySafe.Models
 {
     public class AuthPassword : BindableBase
     {
-        private Stack<int> Password;
+        private Stack<int> PasswordStack;
 
-        public bool IsSetNumber1 => Password.Count > 0;
-        public bool IsSetNumber2 => Password.Count > 1;
-        public bool IsSetNumber3 => Password.Count > 2;
-        public bool IsSetNumber4 => Password.Count > 3;
-        public bool IsSetNumber5 => Password.Count > 4;
+        public bool IsSetNumber1 => PasswordStack.Count > 0;
+        public bool IsSetNumber2 => PasswordStack.Count > 1;
+        public bool IsSetNumber3 => PasswordStack.Count > 2;
+        public bool IsSetNumber4 => PasswordStack.Count > 3;
+        public bool IsSetNumber5 => PasswordStack.Count > 4;
 
         public AuthPassword()
         {
-            Password = new Stack<int>();
+            PasswordStack = new Stack<int>();
         }
 
         public void Push(int value)
         {
-            if (Password.Count < 5)
+            if (PasswordStack.Count < 5)
             {
-                Password.Push(value);
+                PasswordStack.Push(value);
                 UpdateProperty();
             }
         }
 
         public void Pop()
         {
-            if (Password.Count > 0)
+            if (PasswordStack.Count > 0)
             {
-                Password.Pop();
+                PasswordStack.Pop();
                 UpdateProperty();
             }
+        }
+
+        public string GetPassword()
+        {
+            var password = string.Join("", PasswordStack);
+
+            if (PasswordStack.Count == 5)
+            {
+                PasswordStack.Clear();
+                UpdateProperty();
+            }
+
+            return password;
         }
 
         private void UpdateProperty()

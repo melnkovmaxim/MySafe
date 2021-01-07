@@ -16,16 +16,19 @@ using Xamarin.Forms;
 
 namespace MySafe.ViewModels
 {
-    public class AuthViewModel : ViewModelBase
+    public class LoginViewModel : ViewModelBase
     {
         public AuthPassword Password { get; set; }
+
+        private string _secret => "12225";
+        private bool _isCorretPassword => _secret == Password.GetPassword();
 
         public bool IsSet(int k) => true;
 
         private readonly YandexAuthService _authService;
         private bool _isAuthorized;
 
-        public AuthViewModel(INavigationService navigationService, YandexAuthService authService)
+        public LoginViewModel(INavigationService navigationService, YandexAuthService authService)
             : base(navigationService)
         {
             Title = "Авторизация";
@@ -51,6 +54,10 @@ namespace MySafe.ViewModels
         public DelegateCommand<string> EnterNumberCommand => new DelegateCommand<string>((number) =>
         {
             Password.Push(int.Parse(number));
+            if (_isCorretPassword)
+            {
+
+            }
         });
 
         public DelegateCommand RemoveLastNumberCommand => new DelegateCommand(() =>
