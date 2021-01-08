@@ -15,80 +15,52 @@ namespace MySafe.Models
     // TODO: Убрать из моделей, решить вопрос с RaiseNotify и большим количеством свойств
     public class AuthPassword : BindableBase
     {
-        private readonly int _passwordLength;
-        public ObservableCollection<string> PasswordStack { get; set; }
-
-        public ObservableCollection<Func<bool>> IsSetNumbers { get; set; }
-
-        public bool IsSetNumber1 => PasswordStack.Count > 0;
-        public bool IsSetNumber2 => PasswordStack.Count > 1;
-        public bool IsSetNumber3 => PasswordStack.Count > 2;
-        public bool IsSetNumber4 => PasswordStack.Count > 3;
-        public bool IsSetNumber5 => PasswordStack.Count > 4;
+        public ObservableCollection<string> Password { get; }
+        public int PasswordLength => Password.Count;
 
         public AuthPassword(int passwordLength)
         {
-            _passwordLength = passwordLength;
-            PasswordStack = new ObservableCollection<string>();
-            for (var i = 0; i < 5; i++)
-            {
-                PasswordStack.Add(string.Empty);
-            }
-            IsSetNumbers = new ObservableCollection<Func<bool>>();
+            Password = new ObservableCollection<string>();
 
-            for (var i = 0; i < _passwordLength; i ++)
+            for (var i = 0; i < passwordLength; i++)
             {
-                IsSetNumbers.Add(() => true);
+                Password.Add(string.Empty);
             }
         }
 
-        public void Push(string value)
+        public void Add(string value)
         {
-            var @string = PasswordStack.FirstOrDefault(string.IsNullOrEmpty);
+            var @string = Password.FirstOrDefault(string.IsNullOrEmpty);
 
             if (@string != null)
             {
-                var lastIndex = PasswordStack.IndexOf(@string);
-                PasswordStack[lastIndex] = value;
+                var lastIndex = Password.IndexOf(@string);
+                Password[lastIndex] = value;
             }
         }
 
-        public void Pop()
+        public void RemoveLast()
         {
-            var @string = PasswordStack.LastOrDefault(x => !string.IsNullOrEmpty(x));
+            var @string = Password.LastOrDefault(x => !string.IsNullOrEmpty(x));
 
             if (@string != null)
             {
-                var lastIndex = PasswordStack.ToList().LastIndexOf(@string);
-                PasswordStack[lastIndex] = string.Empty;
+                var lastIndex = Password.ToList().LastIndexOf(@string);
+                Password[lastIndex] = string.Empty;
             }
         }
 
         public async Task<string> GetPassword()
         {
-            var password = string.Join("", PasswordStack.Reverse());
+            var password = string.Join("", Password.Reverse());
 
-            if (PasswordStack.Count == _passwordLength)
+            if (Password.Count == PasswordLength)
             {
-                await Task.Run(() => Thread.Sleep(500));
-                PasswordStack.Clear();
-                UpdateProperty();
+                await Task.Run(() => Thread.Sleep(250));
+                Password.Clear();
             }
 
             return password;
-        }
-
-        private void UpdateProperty()
-        {
-            RaisePropertyChanged(nameof(IsSetNumbers));
-            foreach (var k in IsSetNumbers)
-            {
-                RaisePropertyChanged(nameof(k));
-            }
-            typeof(AuthPassword)
-                .GetProperties()
-                .Where(x => x.Name.StartsWith("IsSet"))
-                .ForEach(x => RaisePropertyChanged(x.Name));
         }
     }
 }

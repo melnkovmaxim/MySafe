@@ -29,7 +29,7 @@ namespace MySafe.ViewModels
         public AuthViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Password = new AuthPassword(5);
+            Password = new AuthPassword(6);
         }
 
         // TODO: вынести "applicationpassword" в другой класc/модуль

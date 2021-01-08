@@ -87,13 +87,13 @@
 
                 <CollectionView
                     HorizontalOptions="Center"
-                    ItemsSource="{Binding Password.PasswordStack}"
+                    ItemsSource="{Binding Password.Password}"
                     WidthRequest="210">
 
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout
                             Orientation="Vertical"
-                            Span="{Binding Password.PasswordStack.Count}" />
+                            Span="{Binding Password.Password.Count}" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
