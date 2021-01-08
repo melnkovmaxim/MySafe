@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using System.Threading;
 using System.Windows.Input;
 using MySafe.Models;
 using MySafe.Services;
@@ -18,6 +19,7 @@ using Xamarin.Forms;
 
 namespace MySafe.ViewModels
 {
+    // TODO: во вьюшке добавить статик ресурсы
     public class AuthViewModel : ViewModelBase
     {
         public AuthPassword Password { get; set; }
@@ -27,9 +29,10 @@ namespace MySafe.ViewModels
         public AuthViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Password = new AuthPassword();
+            Password = new AuthPassword(5);
         }
 
+        // TODO: вынести "applicationpassword" в другой класc/модуль
         public DelegateCommand LoadedCommand => new DelegateCommand(async () =>
         {
             var k = !string.IsNullOrEmpty(await SecureStorage.GetAsync("ApplicationPassword"));
@@ -50,25 +53,28 @@ namespace MySafe.ViewModels
                 Vibration.Vibrate(TimeSpan.FromSeconds(0.5));
             }
         });
-
-        public DelegateCommand<string> EnterNumberCommand => new DelegateCommand<string>(async (number) =>
+        
+        // TODO: в сервис или медиатор, добавить флаг на одновременное выполнение только одной команды 
+        private DelegateCommand<string> _enterNumberCommand;
+        public DelegateCommand<string> EnterNumberCommand => 
+            _enterNumberCommand ??= new DelegateCommand<string>(async (number) =>
         {
-            Password.Push(int.Parse(number));
-            var password = await Password.GetPassword();
+            Password.Push(number);
+            //var password = await Password.GetPassword();
 
-            if (await SecureStorage.GetAsync("ApplicationPassword") == password && IsRegistered)
-            {
-                await NavigationService.NavigateAsync(nameof(MainPage));
-            }
-            else if (password.Length == 5 && IsRegistered)
-            {
-                Vibration.Vibrate(TimeSpan.FromSeconds(0.5));
-            }
-            else if (password.Length == 5 && !IsRegistered)
-            {
-                await SecureStorage.SetAsync("ApplicationPassword", password);
-                await NavigationService.NavigateAsync(nameof(AuthPage));
-            }
+            //if (await SecureStorage.GetAsync("ApplicationPassword") == password && IsRegistered)
+            //{
+            //    await NavigationService.NavigateAsync(nameof(MainPage));
+            //}
+            //else if (password.Length == 5 && IsRegistered)
+            //{
+            //    Vibration.Vibrate(TimeSpan.FromSeconds(0.5));
+            //}
+            //else if (password.Length == 5 && !IsRegistered)
+            //{
+            //    await SecureStorage.SetAsync("ApplicationPassword", password);
+            //    await NavigationService.NavigateAsync(nameof(AuthPage));
+            //}
         });
 
         public DelegateCommand RemoveLastNumberCommand => new DelegateCommand(() =>

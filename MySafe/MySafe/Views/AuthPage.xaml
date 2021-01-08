@@ -11,43 +11,6 @@
         <behaviors:EventToCommandBehavior Command="{Binding LoadedCommand}" EventName="Appearing" />
     </ContentPage.Behaviors>
     <ContentPage.Resources>
-        <Style TargetType="{x:Type Ellipse}">
-            <Setter Property="Stroke" Value="#8EADEA" />
-            <Setter Property="WidthRequest" Value="15" />
-            <Setter Property="HeightRequest" Value="15" />
-            <Style.Triggers>
-                <DataTrigger
-                    Binding="{Binding Password.IsSetNumber1}"
-                    TargetType="{x:Type Ellipse}"
-                    Value="True">
-                    <Setter TargetName="EllipsePass1" Property="Fill" Value="#fac16b" />
-                </DataTrigger>
-                <DataTrigger
-                    Binding="{Binding Password.IsSetNumber2}"
-                    TargetType="{x:Type Ellipse}"
-                    Value="True">
-                    <Setter TargetName="EllipsePass2" Property="Fill" Value="#fac16b" />
-                </DataTrigger>
-                <DataTrigger
-                    Binding="{Binding Password.IsSetNumber3}"
-                    TargetType="{x:Type Ellipse}"
-                    Value="True">
-                    <Setter TargetName="EllipsePass3" Property="Fill" Value="#fac16b" />
-                </DataTrigger>
-                <DataTrigger
-                    Binding="{Binding Password.IsSetNumber4}"
-                    TargetType="{x:Type Ellipse}"
-                    Value="True">
-                    <Setter TargetName="EllipsePass4" Property="Fill" Value="#fac16b" />
-                </DataTrigger>
-                <DataTrigger
-                    Binding="{Binding Password.IsSetNumber5}"
-                    TargetType="{x:Type Ellipse}"
-                    Value="True">
-                    <Setter TargetName="EllipsePass5" Property="Fill" Value="#fac16b" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="Roboto-Regular" />
             <Setter Property="FontSize" Value="31" />
@@ -75,11 +38,17 @@
         </Style>
         <Style TargetType="Label">
             <Style.Triggers>
-                <DataTrigger TargetType="Label" Binding="{Binding IsRegistered}" Value="False">
-                    <Setter TargetName="LabelHelper" Property="Text" Value="Введите пароль для регистрации"/>
-                </DataTrigger>                
-                <DataTrigger TargetType="Label" Binding="{Binding IsRegistered}" Value="True">
-                    <Setter TargetName="LabelHelper" Property="Text" Value="Используйте пароль или отпечаток для входа"/>
+                <DataTrigger
+                    Binding="{Binding IsRegistered}"
+                    TargetType="Label"
+                    Value="False">
+                    <Setter TargetName="LabelHelper" Property="Text" Value="Введите пароль для регистрации" />
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding IsRegistered}"
+                    TargetType="Label"
+                    Value="True">
+                    <Setter TargetName="LabelHelper" Property="Text" Value="Используйте пароль или отпечаток для входа" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -114,14 +83,42 @@
                     FontSize="18"
                     HorizontalTextAlignment="Center"
                     Text="Используйте пароль или отпечаток для входа" />
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
 
-                    <Ellipse x:Name="EllipsePass1" />
-                    <Ellipse x:Name="EllipsePass2" />
-                    <Ellipse x:Name="EllipsePass3" />
-                    <Ellipse x:Name="EllipsePass4" />
-                    <Ellipse x:Name="EllipsePass5" />
-                </StackLayout>
+
+                <CollectionView
+                    HorizontalOptions="Center"
+                    ItemsSource="{Binding Password.PasswordStack}"
+                    WidthRequest="210">
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            Orientation="Vertical"
+                            Span="{Binding Password.PasswordStack.Count}" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Ellipse
+                                    x:Name="Ellipse"
+                                    Fill="#fac16b"
+                                    HeightRequest="15"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Stroke="#8eadea"
+                                    VerticalOptions="CenterAndExpand"
+                                    WidthRequest="15">
+                                    <Ellipse.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Source={x:Reference Ellipse}, Path=BindingContext}"
+                                            TargetType="Ellipse"
+                                            Value="">
+                                            <Setter Property="Fill" Value="Transparent" />
+                                        </DataTrigger>
+                                    </Ellipse.Triggers>
+                                </Ellipse>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </StackLayout>
 
 
