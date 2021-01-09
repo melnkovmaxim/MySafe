@@ -1,21 +1,13 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading;
-using System.Windows.Input;
-using MySafe.Models;
-using MySafe.Services;
+﻿using MySafe.Models;
 using MySafe.Views;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
-using Prism.Ioc;
-using Prism.Navigation;
+using System;
+using NetStandardCommands;
+using Prism.Commands;
 using Xamarin.Essentials;
-using Xamarin.Forms;
+using DelegateCommand = Prism.Commands.DelegateCommand;
+using INavigationService = Prism.Navigation.INavigationService;
 
 namespace MySafe.ViewModels
 {
@@ -23,24 +15,30 @@ namespace MySafe.ViewModels
     public class AuthViewModel : ViewModelBase
     {
         public AuthPassword Password { get; set; }
-
         public bool IsRegistered { get; set; }
 
         public AuthViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Password = new AuthPassword(6);
+            Password = new AuthPassword(5);
         }
 
         // TODO: вынести "applicationpassword" в другой класc/модуль
-        public DelegateCommand LoadedCommand => new DelegateCommand(async () =>
+        public DelegateCommand LoadedCommand => _loadedCommand ??= new DelegateCommand(async () =>
         {
             var k = !string.IsNullOrEmpty(await SecureStorage.GetAsync("ApplicationPassword"));
             IsRegistered = k;
         });
-          //  IsNotAuthorized = string.IsNullOrEmpty(await SecureStorage.GetAsync("ApplicationPassword")));
+        //  IsNotAuthorized = string.IsNullOrEmpty(await SecureStorage.GetAsync("ApplicationPassword")));
 
-        public DelegateCommand FingerPrintCommand => new DelegateCommand(async () =>
+        private AsyncCommand<string> _navigateCommand;
+        private DelegateCommand _restorePasswordCommand;
+        private DelegateCommand _removeLastNumberCommand;
+        private DelegateCommand _loadedCommand;
+        private DelegateCommand _fingerPrintCommand;
+        private DelegateCommand<string> _enterNumberCommand;
+
+        public DelegateCommand FingerPrintCommand => _fingerPrintCommand ??= new DelegateCommand(async () =>
         {
             var request = new AuthenticationRequestConfiguration("Вход в MySafe", string.Empty);
             var result = await CrossFingerprint.Current.AuthenticateAsync(request);
@@ -53,39 +51,57 @@ namespace MySafe.ViewModels
                 Vibration.Vibrate(TimeSpan.FromSeconds(0.5));
             }
         });
-        
+
         // TODO: в сервис или медиатор, добавить флаг на одновременное выполнение только одной команды 
-        private DelegateCommand<string> _enterNumberCommand;
-        public DelegateCommand<string> EnterNumberCommand => 
-            _enterNumberCommand ??= new DelegateCommand<string>(async (number) =>
-        {
-            Password.Push(number);
-            //var password = await Password.GetPassword();
+        public DelegateCommand<string> EnterNumberCommand =>
+            _enterNumberCommand ??= new Prism.Commands.DelegateCommand<string>(async (number) =>
+            {
+                Password.Add(number);
 
-            //if (await SecureStorage.GetAsync("ApplicationPassword") == password && IsRegistered)
-            //{
-            //    await NavigationService.NavigateAsync(nameof(MainPage));
-            //}
-            //else if (password.Length == 5 && IsRegistered)
-            //{
-            //    Vibration.Vibrate(TimeSpan.FromSeconds(0.5));
-            //}
-            //else if (password.Length == 5 && !IsRegistered)
-            //{
-            //    await SecureStorage.SetAsync("ApplicationPassword", password);
-            //    await NavigationService.NavigateAsync(nameof(AuthPage));
-            //}
+                //if (IsRegistered)
+                //{
+                //    // mediator
+                //}
+                //else
+                //{
+
+                //}
+
+                var password = await Password.GetPassword();
+
+                if (await SecureStorage.GetAsync("ApplicationPassword") == password && IsRegistered)
+                {
+                    await NavigateCommand.ExecuteAsync(nameof(MainPage));
+                    //await NavigationService.NavigateAsync($"NavigationPage/{nameof(MainPage)}?appModuleRefresh=OnInitialized");
+                }
+                else if (password.Length == Password.PasswordMaxLength && IsRegistered)
+                {
+                    Vibration.Vibrate(TimeSpan.FromSeconds(0.5));
+                    Password.Clear();
+                }
+                else if (password.Length == Password.PasswordMaxLength && !IsRegistered)
+                {
+                    await SecureStorage.SetAsync("ApplicationPassword", password);
+                    await NavigateCommand.ExecuteAsync(nameof(AuthPage));
+                }
+            });
+
+        public DelegateCommand RemoveLastNumberCommand => 
+            _removeLastNumberCommand ??= new DelegateCommand(() =>
+        {
+            Password.RemoveLast();
         });
 
-        public DelegateCommand RemoveLastNumberCommand => new DelegateCommand(() =>
-        {
-            Password.Pop();
-        });
-
-        public DelegateCommand RestorePasswordCommand => new DelegateCommand(async () =>
+        public DelegateCommand RestorePasswordCommand => 
+            _restorePasswordCommand ??= new DelegateCommand(async () =>
         {
             await SecureStorage.SetAsync("ApplicationPassword", string.Empty);
-            await NavigationService.NavigateAsync(nameof(AuthPage));
+            await NavigateCommand.ExecuteAsync(nameof(AuthPage));
         });
+
+        public AsyncCommand<string> NavigateCommand =>
+            _navigateCommand ??= new AsyncCommand<string>(async (page) => 
+                await NavigationService.NavigateAsync(page), 
+                canExecuteMethod: (s) => true, allowMultipleExecution: false);
     }
 }

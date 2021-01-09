@@ -35,6 +35,11 @@
                     </VisualStateGroup>
                 </VisualStateGroupList>
             </Setter>
+            <Style.Triggers>
+                <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                    <Setter Property="TextColor" Value="Black"></Setter>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style TargetType="Label">
             <Style.Triggers>

@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using DryIoc;
-using MySafe.Services;
 using MySafe.ViewModels;
 using Prism;
 using Prism.DryIoc;

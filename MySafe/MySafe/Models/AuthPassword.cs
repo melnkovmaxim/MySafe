@@ -16,7 +16,9 @@ namespace MySafe.Models
     public class AuthPassword : BindableBase
     {
         public ObservableCollection<string> Password { get; }
-        public int PasswordLength => Password.Count;
+        public int PasswordMaxLength => Password.Count;
+        public int PasswordLength => Password.Count(x => !string.IsNullOrEmpty(x));
+
 
         public AuthPassword(int passwordLength)
         {
@@ -50,14 +52,21 @@ namespace MySafe.Models
             }
         }
 
+        public void Clear()
+        {
+            for (var i = 0; i < PasswordMaxLength; i++)
+            {
+                Password[i] = string.Empty;
+            }
+        }
+
         public async Task<string> GetPassword()
         {
             var password = string.Join("", Password.Reverse());
 
-            if (Password.Count == PasswordLength)
+            if (PasswordLength == PasswordMaxLength)
             {
                 await Task.Run(() => Thread.Sleep(250));
-                Password.Clear();
             }
 
             return password;
