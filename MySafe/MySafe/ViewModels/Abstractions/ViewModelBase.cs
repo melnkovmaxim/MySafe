@@ -1,13 +1,9 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace MySafe.ViewModels
+namespace MySafe.ViewModels.Abstractions
 {
-    public class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible
+    public abstract class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible
     {
         protected INavigationService NavigationService { get; private set; }
 

@@ -49,7 +49,7 @@
 
   <ItemGroup>
     <Folder Include="Mediator\" />
-    <Folder Include="Views\Styles\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>

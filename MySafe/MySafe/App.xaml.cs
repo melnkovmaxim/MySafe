@@ -1,11 +1,14 @@
 using System;
 using System.Runtime.CompilerServices;
 using DryIoc;
+using MySafe.Services;
+using MySafe.Services.Abstractions;
 using Prism;
 using Prism.Ioc;
 using MySafe.ViewModels;
 using MySafe.Views;
 using Prism.DryIoc;
+using Prism.Navigation;
 using Xamarin.Essentials;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Essentials.Implementation;
@@ -40,6 +43,15 @@ namespace MySafe
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<AuthPage, AuthViewModel>();
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
+
+            //containerRegistry.RegisterSingleton<INavigateHelperService, NavigateHelperService>();
+            containerRegistry.Register<IPasswordManagerService, PasswordManagerService>();
+            containerRegistry.Register<ILoginService, LoginService>();
+            containerRegistry.Register<IRegisterService, RegisterService>();
+            //containerRegistry.Register<INavigateHelperService, NavigateHelperService>(Reuse.Singleton);
+            //containerRegistry.Register<IPasswordManagerService, PasswordManagerService>(Reuse.Transient);
+            //containerRegistry.Register<ILoginService, LoginService>(Reuse.Transient);
+            //containerRegistry.Register<IRegisterService, RegisterService>(Reuse.Transient);
         }
     }
 }
