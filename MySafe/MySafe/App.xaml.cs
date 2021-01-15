@@ -40,18 +40,8 @@ namespace MySafe
         {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
-            containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<AuthPage, AuthViewModel>();
-            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
-
-            //containerRegistry.RegisterSingleton<INavigateHelperService, NavigateHelperService>();
-            containerRegistry.Register<IPasswordManagerService, PasswordManagerService>();
-            containerRegistry.Register<ILoginService, LoginService>();
-            containerRegistry.Register<IRegisterService, RegisterService>();
-            //containerRegistry.Register<INavigateHelperService, NavigateHelperService>(Reuse.Singleton);
-            //containerRegistry.Register<IPasswordManagerService, PasswordManagerService>(Reuse.Transient);
-            //containerRegistry.Register<ILoginService, LoginService>(Reuse.Transient);
-            //containerRegistry.Register<IRegisterService, RegisterService>(Reuse.Transient);
+            containerRegistry.RegisterNavigation()
+                             .RegisterServices();
         }
     }
 }

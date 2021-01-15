@@ -11,29 +11,36 @@ using MediatR;
 using MySafe.Services;
 using MySafe.Services.Abstractions;
 using MySafe.ViewModels;
+using MySafe.Views;
 using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
+using Xamarin.Forms;
 
 namespace MySafe
 {
-    public class Ioc
+    public static class Ioc
     {
-        private static readonly IContainer _container;
-        private static readonly IContainerProvider _containerProvider;
 
-        static Ioc()
+        public static IContainerRegistry RegisterServices(this IContainerRegistry container)
         {
-            _containerProvider = PrismApplicationBase.Current.Container;
-            _container = _containerProvider.GetContainer();
-            
-            //_container.RegisterDelegate<ServiceFactory>(r => r.Resolve);
-            //_container.UseInstance<TextWriter>(writer);
-            //_container.RegisterMany(new[] { typeof(IMediator).GetAssembly(), typeof(Ping).GetAssembly() }, Registrator.Interfaces);
-            // _container.RegisterMany<TestService>(Reuse.Singleton);
+            container.Register<IPasswordManagerService, PasswordManagerService>();
+            container.Register<ILoginService, LoginService>();
+            container.Register<IRegisterService, RegisterService>();
+
+            return container;
         }
 
-        public static T Resolve<T>() => _containerProvider.Resolve<T>();
+        public static IContainerRegistry RegisterNavigation(this IContainerRegistry container)
+        {
+            container.RegisterForNavigation<NavigationPage>();
+            container.RegisterForNavigation<AuthPage, AuthViewModel>();
+            container.RegisterForNavigation<MainPage, MainViewModel>();
+
+            return container;
+        }
+
+        public static T Resolve<T>() => PrismApplicationBase.Current.Container.Resolve<T>();
     }
 
     public class VmLocator
