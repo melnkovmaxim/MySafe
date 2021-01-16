@@ -38,10 +38,10 @@ namespace MySafe
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
-
-            containerRegistry.RegisterNavigation()
-                             .RegisterServices();
+            containerRegistry.AddApplication()
+                .AddNavigation()
+                .AddServices()
+                .AddMediatr();
         }
     }
 }
