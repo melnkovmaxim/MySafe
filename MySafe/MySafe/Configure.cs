@@ -5,7 +5,6 @@ using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using DryIoc;
 using MediatR;
-using MySafe.Mediator.Test;
 using MySafe.Services;
 using MySafe.Services.Abstractions;
 using MySafe.ViewModels;
