@@ -5,7 +5,6 @@ using Plugin.Fingerprint.Abstractions;
 using System;
 using MediatR;
 using MySafe.Helpers;
-using MySafe.Mediator.Test;
 using MySafe.Services;
 using MySafe.Services.Abstractions;
 using MySafe.ViewModels.Abstractions;
