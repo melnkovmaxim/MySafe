@@ -34,6 +34,14 @@ namespace MySafe
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<AuthPage, AuthViewModel>();
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
+            containerRegistry.RegisterForNavigation<DocumentPage, DocumentViewModel>();
+            containerRegistry.RegisterForNavigation<TaxPage, TaxViewModel>();
+            containerRegistry.RegisterForNavigation<HealthPage, HealthViewModel>();
+            containerRegistry.RegisterForNavigation<BinPage, BinViewModel>();
+            containerRegistry.RegisterForNavigation<UtilPage, UtilViewModel>();
+            containerRegistry.RegisterForNavigation<NotePage, NoteViewModel>();
+            containerRegistry.RegisterForNavigation<EstatePage, EstateViewModel>();
+            containerRegistry.RegisterForNavigation<OtherPage, OtherViewModel>();
 
             return containerRegistry;
         }
@@ -79,5 +87,7 @@ namespace MySafe
     public class VmLocator
     {
         public static AuthViewModel AuthViewModel => Ioc.Resolve<AuthViewModel>();
+        public static MainViewModel MainViewModel => Ioc.Resolve<MainViewModel>();
+        public static DocumentViewModel DocumentViewModel => Ioc.Resolve<DocumentViewModel>();
     }
 }

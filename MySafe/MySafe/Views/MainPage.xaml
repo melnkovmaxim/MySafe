@@ -1,13 +1,131 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage 
+            x:Name="Main"
+             x:Class="MySafe.Views.MainPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behaviors="http://prismlibrary.com"
-             x:Class="MySafe.Views.MainPage">
+             BindingContext="{Binding Source={StaticResource VmLocator}, Path=MainViewModel}">
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <!-- <Setter Property="HeightRequest" Value="70" /> -->
+            <Setter Property="CornerRadius" Value="25" />
+            <!--<Setter Property="Backgroundcolor" Value="#E4E8FB" />-->
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="75" />
+            </Grid.RowDefinitions>
+            <StackLayout
+                Grid.Row="0"
+                Grid.Column="0"
+                BackgroundColor="Black"
+                HorizontalOptions="CenterAndExpand"
+                Orientation="Horizontal">
+                <Label Text="MySafe online" />
+                <Button ImageSource="info.png" Text="pook" />
+            </StackLayout>
+            <StackLayout
+                Grid.Row="1"
+                HeightRequest="300"
+                HorizontalOptions="CenterAndExpand"
+                Orientation="Horizontal">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Command="{behaviors:NavigateTo 'NavigationPage/DocumentPage',
+                                                       SourcePage={x:Reference Main}}"
+                        Text="Документы" />
+                    <Button
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="Налоги" 
+                        Command="{behaviors:NavigateTo 'NavigationPage/TaxPage',
+                                                       SourcePage={x:Reference Main}}"
+                        />
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="ЖКХ"
+                        Command="{behaviors:NavigateTo 'NavigationPage/UtilPage',
+                                                       SourcePage={x:Reference Main}}" />
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Text="Имущество"
+                        Command="{behaviors:NavigateTo 'NavigationPage/EstatePage',
+                                                       SourcePage={x:Reference Main}}"/>
+                    <Button
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Text="Здоровье"
+                        Command="{behaviors:NavigateTo 'NavigationPage/HealthPage',
+                                                       SourcePage={x:Reference Main}}"/>
+                    <Button
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Text="Другое"
+                        Command="{behaviors:NavigateTo 'NavigationPage/OtherPage',
+                                                       SourcePage={x:Reference Main}}"/>
+                </Grid>
+                <Button Text="Текст" 
+                        Command="{behaviors:NavigateTo 'NavigationPage/NotePage',
+                                                       SourcePage={x:Reference Main}}"/>
+            </StackLayout>
+            <Button Grid.Row="2" Command="{behaviors:NavigateTo 'NavigationPage/BinPage',
+                                                       SourcePage={x:Reference Main}}" />
+        </Grid>
+        <!--<StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0">
+                    <Label
+                        Margin="0,25,0,0"
+                        FontFamily="Montserrat"
+                        FontSize="36"
+                        HorizontalOptions="Center"
+                        Text="MySafe"
+                        TextColor="Black" />
+                    <Label
+                        Margin="0,-15,0,0"
+                        FontFamily="Montserrat"
+                        FontSize="36"
+                        HorizontalOptions="Center"
+                        Text="online"
+                        TextColor="Black" />
+                    <Label
+                        Grid.Row="2"
+                        FontFamily="Roboto-Medium"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsRegistered}"
+                        Text="Память хранилища"
+                        TextColor="#262626" />
+                </StackLayout>
+            </Grid>
+            <Button CornerRadius="25" HeightRequest="75" ></Button>
+        </StackLayout>-->
+
     </ContentPage.Content>
 </ContentPage>
