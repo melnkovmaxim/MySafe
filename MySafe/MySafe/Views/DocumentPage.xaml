@@ -3,7 +3,11 @@
     x:Class="MySafe.Views.DocumentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="http://prismlibrary.com"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=DocumentViewModel}">
+    <ContentPage.Behaviors>
+        <behaviors:EventToCommandBehavior Command="{Binding LoadedCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
     <ContentPage.Content>
         <StackLayout>
             <Label

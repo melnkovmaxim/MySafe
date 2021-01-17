@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using DryIoc;
+using FluentValidation;
 using MediatR;
 using MySafe.Services;
 using MySafe.Services.Abstractions;
@@ -56,7 +57,9 @@ namespace MySafe
 
             var mediatrOpenTypes = new[]
             {
-                typeof(IRequestHandler<,>)
+                typeof(IRequestHandler<,>),
+                typeof(IPipelineBehavior<,>),
+                typeof(AbstractValidator<>)
             };
 
             foreach (var mediatrOpenType in mediatrOpenTypes)
