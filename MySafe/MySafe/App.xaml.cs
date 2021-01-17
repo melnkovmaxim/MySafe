@@ -27,14 +27,6 @@ namespace MySafe
         public App(IPlatformInitializer initializer)
             : base(initializer)
         {
-            var domain = AppDomain.CurrentDomain;
-            domain.UnhandledException += HandleException;
-        }
-
-        // не обрабатывается, а закрывается
-        private void HandleException(object sender, UnhandledExceptionEventArgs e)
-        {
-            Trace.WriteLine("exception");
         }
 
         protected override async void OnInitialized()
@@ -48,6 +40,7 @@ namespace MySafe
         {
             containerRegistry.AddApplication()
                 .AddNavigation()
+                .AddRepositories()
                 .AddServices()
                 .AddMediatr();
         }

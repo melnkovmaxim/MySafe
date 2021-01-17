@@ -9,7 +9,7 @@ namespace MySafe.Mediator.SignIn
         public async Task<string> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
             await Task.Run(() => Thread.Sleep(1000), cancellationToken);
-            return "HELLO_SOSAMBA!";
+            return "HELLO!";
         }
     }
 }

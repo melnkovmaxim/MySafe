@@ -5,6 +5,7 @@ using Plugin.Fingerprint.Abstractions;
 using System;
 using MediatR;
 using MySafe.Helpers;
+using MySafe.Repositories.Abstractions;
 using MySafe.Services;
 using MySafe.Services.Abstractions;
 using MySafe.ViewModels.Abstractions;
@@ -46,7 +47,7 @@ namespace MySafe.ViewModels
 
         public DelegateCommand LoadedCommand => _loadedCommand ??= new DelegateCommand(async () =>
         {
-            var passwordFromStorage = await SecureStorage.GetAsync(App.Resources.PasswordPath);
+            var passwordFromStorage = await Ioc.Resolve<ISecureStorageRepository>().GetLocalPasswordAsync();
             IsRegistered = !string.IsNullOrEmpty(passwordFromStorage);
         });
 
@@ -82,7 +83,7 @@ namespace MySafe.ViewModels
 
         public DelegateCommand RestorePasswordCommand => _restorePasswordCommand ??= new DelegateCommand(async () =>
         {
-            await SecureStorage.SetAsync(App.Resources.PasswordPath, string.Empty);
+            await Ioc.Resolve<ISecureStorageRepository>().RemovePasswordAsync();
             await NavigateHelper.NavigateAsync(_navigationService, nameof(AuthPage));
         });
     }

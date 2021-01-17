@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 using DryIoc;
 using FluentValidation;
 using MediatR;
+using MySafe.Repositories;
+using MySafe.Repositories.Abstractions;
 using MySafe.Services;
 using MySafe.Services.Abstractions;
 using MySafe.ViewModels;
@@ -26,6 +28,13 @@ namespace MySafe
             containerRegistry.Register<IPasswordManagerService, PasswordManagerService>();
             containerRegistry.Register<ILoginService, LoginService>();
             containerRegistry.Register<IRegisterService, RegisterService>();
+
+            return containerRegistry;
+        }
+
+        public static IContainerRegistry AddRepositories(this IContainerRegistry containerRegistry)
+        {
+            containerRegistry.Register<ISecureStorageRepository, SecureStorageRepository>();
 
             return containerRegistry;
         }

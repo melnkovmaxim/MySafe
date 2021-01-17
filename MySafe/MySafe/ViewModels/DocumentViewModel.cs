@@ -18,9 +18,9 @@ namespace MySafe.ViewModels
             _mediator = mediator;
         }
 
-        public DelegateCommand LoadedCommand => new DelegateCommand(async () =>
-            {
-                var result = await _mediator.Send(new SignInCommand("", "password"));
-            });
+        //public DelegateCommand LoadedCommand => new DelegateCommand(async () =>
+        //    {
+        //        var result = await _mediator.Send(new SignInCommand("", "password"));
+        //    });
     }
 }

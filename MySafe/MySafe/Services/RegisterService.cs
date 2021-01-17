@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MySafe.Repositories.Abstractions;
 using MySafe.Services.Abstractions;
 using MySafe.Views;
 using Prism.Navigation;
@@ -14,7 +15,7 @@ namespace MySafe.Services
         {
             if (password.Length == requiredLength)
             {
-                await SecureStorage.SetAsync(App.Resources.PasswordPath, password);
+                await Ioc.Resolve<ISecureStorageRepository>().SetLocalPasswordAsync(password);
                 actionOnRegister?.Invoke();
             }
             

@@ -1,6 +1,12 @@
-﻿using Android.App;
+﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using Android.App;
 using Android.Content.PM;
+using Android.Graphics;
 using Android.OS;
+using Android.Runtime;
+using Java.IO;
 using Plugin.CurrentActivity;
 using Plugin.Fingerprint;
 using Prism;
@@ -26,7 +32,24 @@ namespace MySafe.Droid
             CrossFingerprint.SetCurrentActivityResolver(() => CrossCurrentActivity.Current.Activity);
             global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+            TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
+            AndroidEnvironment.UnhandledExceptionRaiser += AndroidEnvironmentOnUnhandledException;
             LoadApplication(new App(new AndroidInitializer()));
+        }
+
+        private void AndroidEnvironmentOnUnhandledException(object sender, RaiseThrowableEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+        }
+
+        private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)

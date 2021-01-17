@@ -16,7 +16,8 @@ namespace MySafe.ViewModels
     {
         private readonly IMediator _mediator;
 
-        public MainViewModel(INavigationService navigationService, IMediator mediator) : base(navigationService)
+        public MainViewModel(INavigationService navigationService, IMediator mediator) 
+            : base(navigationService)
         {
             _mediator = mediator;
         }

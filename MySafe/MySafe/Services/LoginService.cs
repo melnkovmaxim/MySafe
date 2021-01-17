@@ -3,6 +3,7 @@ using MySafe.Views;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MySafe.Repositories.Abstractions;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 using Prism.Navigation;
@@ -18,7 +19,7 @@ namespace MySafe.Services
         {
             await Task.Run(() => Thread.Sleep(500));
 
-            var correctPassword = await SecureStorage.GetAsync(App.Resources.PasswordPath);
+            var correctPassword = await Ioc.Resolve<ISecureStorageRepository>().GetLocalPasswordAsync();
 
             if (password == correctPassword)
             {

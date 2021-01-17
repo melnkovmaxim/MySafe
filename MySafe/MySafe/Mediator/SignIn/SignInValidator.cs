@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
+using FluentValidation.Results;
 
 namespace MySafe.Mediator.SignIn
 {
@@ -16,6 +17,10 @@ namespace MySafe.Mediator.SignIn
 
             RuleFor(s => s.Password)
                 .NotEmpty();
+        }
+
+        protected override void RaiseValidationException(ValidationContext<SignInCommand> context, ValidationResult result)
+        {
         }
     }
 }
