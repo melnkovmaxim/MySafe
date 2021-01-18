@@ -44,7 +44,7 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
     <LangVersion>8.0</LangVersion>
-    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidKeyStore>false</AndroidKeyStore>
     <AndroidSigningKeyStore>C:\Users\Maks\AppData\Local\Xamarin\Mono for Android\Keystore\melnikovmaxim\melnikovmaxim.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>Ssd17xDldD</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>melnikovmaxim</AndroidSigningKeyAlias>

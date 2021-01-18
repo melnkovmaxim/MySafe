@@ -10,7 +10,10 @@
         <Style TargetType="Button">
             <!-- <Setter Property="HeightRequest" Value="70" /> -->
             <Setter Property="CornerRadius" Value="25" />
-            <!--<Setter Property="Backgroundcolor" Value="#E4E8FB" />-->
+            <!-- <Setter Property="Backgroundcolor" Value="#E4E8FB" /> -->
+        </Style>
+        <Style TargetType="StackLayout">
+            <!--<Setter Property="CornerRadius" Value="25" /> -->
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -19,25 +22,41 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="120" />
+                <RowDefinition Height="90" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="75" />
             </Grid.RowDefinitions>
             <StackLayout
                 Grid.Row="0"
                 Grid.Column="0"
-                BackgroundColor="Black"
+                WidthRequest="365"
                 HorizontalOptions="CenterAndExpand"
+                BackgroundColor="#E4E8FB"
                 Orientation="Horizontal">
-                <Label Text="MySafe online" />
-                <Button ImageSource="info.png" Text="pook" />
+                <Label
+                    Margin="50,25,0,0"
+                    FontFamily="Montserrat"
+                    FontSize="24"
+                    HorizontalOptions="Center"
+                    Text="MySafe"
+                    TextColor="Black" />
+                <Label
+                    Margin="-80,45,0,0"
+                    FontFamily="Montserrat"
+                    FontSize="18"
+                    HorizontalOptions="Center"
+                    Text="online"
+                    TextColor="Black" />
             </StackLayout>
+
+
             <StackLayout
                 Grid.Row="1"
                 HeightRequest="300"
                 HorizontalOptions="CenterAndExpand"
-                Orientation="Horizontal">
-                <Grid>
+                Orientation="Horizontal"
+                >
+                <Grid ColumnSpacing="25" RowSpacing="15">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
@@ -53,10 +72,12 @@
                         Grid.Column="0"
                         Command="{behaviors:NavigateTo 'NavigationPage/DocumentPage',
                                                        SourcePage={x:Reference Main}}"
+                        BackgroundColor="#E4E8FB"
                         Text="Документы" />
                     <Button
                         Grid.Row="0"
                         Grid.Column="1"
+                        BackgroundColor="#E4E8FB"
                         Text="Налоги" 
                         Command="{behaviors:NavigateTo 'NavigationPage/TaxPage',
                                                        SourcePage={x:Reference Main}}"
@@ -65,67 +86,47 @@
                         Grid.Row="1"
                         Grid.Column="0"
                         Text="ЖКХ"
+                        BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/UtilPage',
                                                        SourcePage={x:Reference Main}}" />
                     <Button
                         Grid.Row="1"
                         Grid.Column="1"
                         Text="Имущество"
+                        BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/EstatePage',
                                                        SourcePage={x:Reference Main}}"/>
                     <Button
                         Grid.Row="2"
                         Grid.Column="0"
                         Text="Здоровье"
+                        BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/HealthPage',
                                                        SourcePage={x:Reference Main}}"/>
                     <Button
                         Grid.Row="2"
                         Grid.Column="1"
                         Text="Другое"
+                        BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/OtherPage',
                                                        SourcePage={x:Reference Main}}"/>
                 </Grid>
-                <Button Text="Текст" 
+                <Button Text="БЛТ" Margin="20,0,0,0" BackgroundColor="#FFC46B"
                         Command="{behaviors:NavigateTo 'NavigationPage/NotePage',
                                                        SourcePage={x:Reference Main}}"/>
             </StackLayout>
-            <Button Grid.Row="2" Command="{behaviors:NavigateTo 'NavigationPage/BinPage',
+            <StackLayout
+                Grid.Row="2"
+                HeightRequest="30"
+                HorizontalOptions="CenterAndExpand"
+                Orientation="Horizontal"
+                >
+
+                <Button Text="КРЗ" Margin="0,20,0,0" WidthRequest="365" HorizontalOptions="Center"
+                Grid.Row="2" BackgroundColor="#E4E8FB" Command="{behaviors:NavigateTo 'NavigationPage/BinPage',
                                                        SourcePage={x:Reference Main}}" />
+            </StackLayout>
         </Grid>
-        <!--<StackLayout>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="50" />
-                </Grid.RowDefinitions>
-                <StackLayout Grid.Row="0">
-                    <Label
-                        Margin="0,25,0,0"
-                        FontFamily="Montserrat"
-                        FontSize="36"
-                        HorizontalOptions="Center"
-                        Text="MySafe"
-                        TextColor="Black" />
-                    <Label
-                        Margin="0,-15,0,0"
-                        FontFamily="Montserrat"
-                        FontSize="36"
-                        HorizontalOptions="Center"
-                        Text="online"
-                        TextColor="Black" />
-                    <Label
-                        Grid.Row="2"
-                        FontFamily="Roboto-Medium"
-                        HorizontalOptions="Center"
-                        IsVisible="{Binding IsRegistered}"
-                        Text="Память хранилища"
-                        TextColor="#262626" />
-                </StackLayout>
-            </Grid>
-            <Button CornerRadius="25" HeightRequest="75" ></Button>
-        </StackLayout>-->
 
     </ContentPage.Content>
 </ContentPage>

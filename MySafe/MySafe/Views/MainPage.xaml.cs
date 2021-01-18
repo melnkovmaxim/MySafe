@@ -20,5 +20,11 @@ namespace MySafe.Views
         {
             InitializeComponent();
         }
+
+        private void Blue_Button_Clicked(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            button.BackgroundColor = Color.Blue;
+        }
     }
 }
