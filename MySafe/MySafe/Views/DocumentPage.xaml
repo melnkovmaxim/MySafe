@@ -17,6 +17,7 @@
     </ContentPage.Behaviors>
     <ContentPage.Content>
         <StackLayout>
+            <Button HeightRequest="50" HorizontalOptions="Fill" CornerRadius="24" Margin="40,0,40,0" Padding="-100,0,0,0"  Text="Документы" BackgroundColor="#E4E8FB" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -62,15 +63,15 @@
                 HorizontalOptions="CenterAndExpand"
                 Orientation="Horizontal"
                 >
-                    <Grid ColumnSpacing="35" RowSpacing="25">
+                    <Grid ColumnSpacing="10" RowSpacing="15">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="100" />
                             <RowDefinition Height="100" />
                             <RowDefinition Height="100" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130" />
-                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="160" />
+                            <ColumnDefinition Width="160" />
                         </Grid.ColumnDefinitions>
 
                         <Button
@@ -78,24 +79,24 @@
                         Grid.Column="0"
                         
                         BackgroundColor="#E4E8FB"
-                        Text="ИНН" />
+                        Text="Паспорт" />
                         <Button
                         Grid.Row="0"
                         Grid.Column="1"
                         BackgroundColor="#E4E8FB"
-                        Text="Прописка" 
+                        Text="ИНН" 
                         
                         />
                         <Button
                         Grid.Row="1"
                         Grid.Column="0"
-                        Text="Прописка"
+                        Text="СНИЛС"
                         BackgroundColor="#E4E8FB"
                          />
                         <Button
                         Grid.Row="1"
                         Grid.Column="1"
-                        Text="Прописка"
+                        Text="Страхование"
                         BackgroundColor="#E4E8FB"
                         />
                         <Button
@@ -107,7 +108,7 @@
                         <Button
                         Grid.Row="2"
                         Grid.Column="1"
-                        Text="Прописка"
+                        Text="Другое"
                         BackgroundColor="#E4E8FB"
                         />
                     </Grid>

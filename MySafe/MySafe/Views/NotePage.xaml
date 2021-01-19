@@ -2,20 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MySafe.Views.NotePage">
-    <ContentPage.Resources>
-        <Style TargetType="Editor">
-            <Setter Property="BackgroundColor" Value="#F3F5FF"/>
-        </Style>
-    </ContentPage.Resources>
+
     <ContentPage.Content>
-
         <StackLayout>
-            <Button Text="Меню" Padding="-50,0,0,0" WidthRequest="350" HorizontalOptions="CenterAndExpand" FontSize="24" CornerRadius="24" BackgroundColor="#E4E8FB"/>
-
-            <Button Text="Блокнот" WidthRequest="350" HorizontalOptions="CenterAndExpand" FontSize="24" CornerRadius="24" BackgroundColor="#E4E8FB"/>
-
-            <Editor HorizontalOptions="FillAndExpand" WidthRequest="350" VerticalOptions="FillAndExpand" BackgroundColor="#F3F5FF" />
+            <Button Text="Блокнот" Margin="20,0,20,0" HorizontalOptions="Fill" Padding="-150,0,0,0" FontSize="24" CornerRadius="24" BackgroundColor="#E4E8FB"/>
+            <Frame CornerRadius="10" HasShadow="True"  BorderColor="#3465C4" HorizontalOptions="Fill" Margin="20, 10, 20, 20" VerticalOptions="FillAndExpand"  BackgroundColor="#F3F5FF">
+                <Editor HorizontalOptions="FillAndExpand" Placeholder="_______________________________" VerticalOptions="FillAndExpand" BackgroundColor="#F3F5FF" />
+            </Frame>
         </StackLayout>
-
     </ContentPage.Content>
 </ContentPage>

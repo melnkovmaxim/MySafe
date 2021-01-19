@@ -18,6 +18,7 @@ namespace MySafe.Views
     {
         public MainPage()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
         }
 

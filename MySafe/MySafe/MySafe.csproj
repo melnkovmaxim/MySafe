@@ -9,12 +9,15 @@
     <None Remove="Quirlycues.ttf" />
     <None Remove="Resources\Fonts\Roboto-Medium.ttf" />
     <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
+    <None Remove="Resources\jam_menu.png" />
+    <None Remove="Resources\jam_menu1.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Montserrat-Regular.ttf" />
     <EmbeddedResource Include="Resources\Fonts\Roboto-Medium.ttf" />
     <EmbeddedResource Include="Resources\Fonts\Roboto-Regular.ttf" />
+    <EmbeddedResource Include="Resources\jam_menu1.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,6 +79,10 @@
     <Reference Include="NetStandardCommands">
       <HintPath>NetStandardCommands.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\jam_menu.png" />
   </ItemGroup>
 
 </Project>

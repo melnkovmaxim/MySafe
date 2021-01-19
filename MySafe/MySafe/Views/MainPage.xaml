@@ -10,6 +10,7 @@
         <Style TargetType="Button">
             <!-- <Setter Property="HeightRequest" Value="70" /> -->
             <Setter Property="CornerRadius" Value="25" />
+            <Setter Property="Padding" Value="0,-75,0,0" />
             <!-- <Setter Property="Backgroundcolor" Value="#E4E8FB" /> -->
         </Style>
         <Style TargetType="StackLayout">
@@ -26,33 +27,44 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="75" />
             </Grid.RowDefinitions>
+            <Frame CornerRadius="24" Margin="20,20,20,-20" WidthRequest="380" BackgroundColor="#E4E8FB">
             <StackLayout
                 Grid.Row="0"
                 Grid.Column="0"
-                WidthRequest="365"
-                HorizontalOptions="CenterAndExpand"
-                BackgroundColor="#E4E8FB"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
                 Orientation="Horizontal">
+                
                 <Label
-                    Margin="50,25,0,0"
+                    Margin="20,0,0,0"
                     FontFamily="Montserrat"
                     FontSize="24"
-                    HorizontalOptions="Center"
+                    HorizontalOptions="StartAndExpand"
+                    WidthRequest="150"
                     Text="MySafe"
-                    TextColor="Black" />
+                    TextColor="Black" 
+                    />
                 <Label
-                    Margin="-80,45,0,0"
+                    Margin="-120,24,0,0"
                     FontFamily="Montserrat"
                     FontSize="18"
-                    HorizontalOptions="Center"
+                    WidthRequest="150"
+                    HorizontalOptions="Start"
                     Text="online"
                     TextColor="Black" />
+                <Button HorizontalOptions="End" Margin="120,0,20,0" WidthRequest="50" HeightRequest="10" BackgroundColor="#F2F4FF" CornerRadius="50" ImageSource="Resources/jam_menu1.png" />
+                    
+                </StackLayout>
+                
+            </Frame>
+            <StackLayout>
+                <ProgressBar HorizontalOptions="Fill" Margin="60,90,60,0"  VerticalOptions="EndAndExpand"/>
             </StackLayout>
-
-
+            <!--<Button Text="Search" HorizontalOptions="Fill" HeightRequest="50" CornerRadius="24"/> -->
             <StackLayout
                 Grid.Row="1"
                 HeightRequest="300"
+                Margin="0,30,0,0"
                 HorizontalOptions="CenterAndExpand"
                 Orientation="Horizontal"
                 >
@@ -63,8 +75,8 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="120" />
                     </Grid.ColumnDefinitions>
 
                     <Button
@@ -111,19 +123,19 @@
                         Command="{behaviors:NavigateTo 'NavigationPage/OtherPage',
                                                        SourcePage={x:Reference Main}}"/>
                 </Grid>
-                <Button Text="БЛТ" Margin="20,0,0,0" BackgroundColor="#FFC46B"
+                <Button Text="БЛТ" Margin="20,0,0,0" BackgroundColor="#FFC46B" Padding="0,0,0,0"
                         Command="{behaviors:NavigateTo 'NavigationPage/NotePage',
                                                        SourcePage={x:Reference Main}}"/>
             </StackLayout>
             <StackLayout
                 Grid.Row="2"
-                HeightRequest="30"
+                HeightRequest="25"
                 HorizontalOptions="CenterAndExpand"
                 Orientation="Horizontal"
                 >
 
-                <Button Text="КРЗ" Margin="0,20,0,0" WidthRequest="365" HorizontalOptions="Center"
-                Grid.Row="2" BackgroundColor="#E4E8FB" Command="{behaviors:NavigateTo 'NavigationPage/BinPage',
+                <Button Margin="0,15,0,15" WidthRequest="380" Padding="0,0,0,0" HorizontalOptions="Center"
+                Grid.Row="2" BackgroundColor="#E4E8FB" Text="КРЗ" Command="{behaviors:NavigateTo 'NavigationPage/BinPage',
                                                        SourcePage={x:Reference Main}}" />
             </StackLayout>
         </Grid>
