@@ -1,17 +1,18 @@
-﻿using MySafe.Services.Abstractions;
-using MySafe.Views;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MySafe.Repositories.Abstractions;
+using MySafe.Services.Abstractions;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
-using Prism.Navigation;
 using Xamarin.Essentials;
 
 namespace MySafe.Services
 {
-    public class LoginService : ILoginService, ITransientService
+    public class DeviceAuthService : IDeviceAuthService, ITransientService
     {
         private const string FINGER_PRINT_SCAN_TITLE = "Вход в MySafe";
 
@@ -49,6 +50,17 @@ namespace MySafe.Services
             Vibration.Vibrate(vibrationDuration);
 
             return false;
+        }
+
+        public async Task RegisterAsync(string password, int requiredLength, Action actionOnRegister)
+        {
+            if (password.Length == requiredLength)
+            {
+                await Ioc.Resolve<ISecureStorageRepository>().SetLocalPasswordAsync(password);
+                actionOnRegister?.Invoke();
+            }
+            
+            await Task.Run(() => Thread.Sleep(500));
         }
     }
 }

@@ -14,11 +14,11 @@ using Prism.Navigation;
 
 namespace MySafe.ViewModels
 {
-    public class TwoFactorViewModel : ViewModelBase
+    public class TwoFactorViewModel : ViewModelBase, INavigatedAware
     {
         public string Code { get; set; }
 
-        private readonly JwtSecurityToken _jwtToken;
+        private JwtSecurityToken _jwtToken;
 
         public TwoFactorViewModel(INavigationService navigationService) : base(navigationService)
         {
@@ -29,5 +29,14 @@ namespace MySafe.ViewModels
         {
             await Task.Run(() => Ioc.Resolve<IMediator>().Send(new TwoFactorCommand(Code, _jwtToken)));
         }, () => true, !SignInCommand.IsExecuting);
+
+        public void OnNavigatedFrom(INavigationParameters parameters)
+        {
+        }
+
+        public void OnNavigatedTo(INavigationParameters parameters)
+        {
+            _jwtToken = (JwtSecurityToken) parameters[nameof(JwtSecurityToken)];
+        }
     }
 }

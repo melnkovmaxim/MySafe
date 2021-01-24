@@ -29,8 +29,7 @@ namespace MySafe
         public static IContainerRegistry AddServices(this IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IPasswordManagerService, PasswordManagerService>();
-            containerRegistry.Register<ILoginService, LoginService>();
-            containerRegistry.Register<IRegisterService, RegisterService>();
+            containerRegistry.Register<IDeviceAuthService, DeviceAuthService>();
             containerRegistry.RegisterInstance(typeof(IRestClient), new RestClient("https://mysafeonline.com/"));
 
             return containerRegistry;
@@ -72,6 +71,7 @@ namespace MySafe
             containerRegistry.RegisterForNavigation<EstatePage, EstateViewModel>();
             containerRegistry.RegisterForNavigation<OtherPage, OtherViewModel>();
             containerRegistry.RegisterForNavigation<SignInPage, SignInViewModel>();
+            containerRegistry.RegisterForNavigation<TwoFactorPage, TwoFactorViewModel>();
 
             return containerRegistry;
         }
@@ -141,5 +141,6 @@ namespace MySafe
         public static MainViewModel MainViewModel => Ioc.Resolve<MainViewModel>();
         public static DocumentViewModel DocumentViewModel => Ioc.Resolve<DocumentViewModel>();
         public static SignInViewModel SignInViewModel => Ioc.Resolve<SignInViewModel>();
+        public static TwoFactorViewModel TwoFactorViewModel => Ioc.Resolve<TwoFactorViewModel>();
     }
 }

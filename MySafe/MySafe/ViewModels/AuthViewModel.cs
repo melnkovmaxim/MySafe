@@ -22,10 +22,9 @@ using INavigationService = Prism.Navigation.INavigationService;
 
 namespace MySafe.ViewModels
 {
-    public class AuthViewModel : BindableBase
+    public class AuthViewModel : ViewModelBase
     {
-        private readonly INavigationService _navigationService;
-        private readonly ILoginService _loginService;
+        private readonly IDeviceAuthService _deviceAuthService;
         private readonly TimeSpan _vibrationDuration;
         
         private readonly Action _actionOnLogin;
@@ -40,11 +39,11 @@ namespace MySafe.ViewModels
         public IPasswordManagerService PasswordManager { get; }
         public bool IsRegistered { get; set; }
 
-        public AuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager, ILoginService loginService)
+        public AuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager, IDeviceAuthService deviceAuthService) 
+            : base(navigationService)
         {
             PasswordManager = passwordManager;
-            _navigationService = navigationService;
-            _loginService = loginService;
+            _deviceAuthService = deviceAuthService;
             _vibrationDuration = TimeSpan.FromSeconds(0.2);
             _actionOnLogin = async () => await NavigateHelper.NavigateAsync(navigationService, nameof(MainPage));
             _actionOnRegister = async () => await NavigateHelper.NavigateAsync(navigationService, nameof(AuthPage));
@@ -58,7 +57,7 @@ namespace MySafe.ViewModels
 
         public DelegateCommand FingerPrintScanCommand => _fingerPrintScanCommand ??= new DelegateCommand(async () =>
         {
-            await _loginService.TryLoginWithPrintScanAsync(_actionOnLogin, _vibrationDuration);
+            await _deviceAuthService.TryLoginWithPrintScanAsync(_actionOnLogin, _vibrationDuration);
         });
 
         public DelegateCommand<string> NumberInputCommand => 
@@ -69,14 +68,14 @@ namespace MySafe.ViewModels
 
             if (IsRegistered)
             {
-                var isSuccessfulLogin = await Ioc.Resolve<ILoginService>()
+                var isSuccessfulLogin = await Ioc.Resolve<IDeviceAuthService>()
                     .TryLoginAsync(PasswordManager.Password, _actionOnLogin, _vibrationDuration);
 
                 if (!isSuccessfulLogin) PasswordManager.Clear();
             }
             else
             {
-                await Ioc.Resolve<IRegisterService>()
+                await Ioc.Resolve<IDeviceAuthService>()
                     .RegisterAsync(PasswordManager.Password, PasswordManager.PasswordMaxLength, _actionOnRegister);
             }
         });

@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MySafe.Views.TwoFactorPage"
-             BindingContext="{Binding Source={StaticResource VmLocator}, Path=SignInTwoFactorViewModel}">
+<ContentPage
+    x:Class="MySafe.Views.TwoFactorPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=TwoFactorViewModel}">
     <ContentPage.Content>
-        <StackLayout>
-            <Label>Код из SMS</Label>
-            <Entry></Entry>
+        <StackLayout VerticalOptions="CenterAndExpand">
+            <Label HorizontalOptions="CenterAndExpand">Код из SMS</Label>
+            <Entry Text="{Binding Code}" />
+            <Button Command="{Binding SignInCommand}" Text="Отправить" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

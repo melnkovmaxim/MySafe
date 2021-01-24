@@ -3,9 +3,9 @@ using Prism.Navigation;
 
 namespace MySafe.ViewModels.Abstractions
 {
-    public abstract class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible
+    public abstract class ViewModelBase : BindableBase
     {
-        protected INavigationService NavigationService { get; private set; }
+        protected INavigationService _navigationService { get; }
 
         private string _title;
         public string Title
@@ -16,27 +16,7 @@ namespace MySafe.ViewModels.Abstractions
 
         public ViewModelBase(INavigationService navigationService)
         {
-            NavigationService = navigationService;
-        }
-
-        public virtual void Initialize(INavigationParameters parameters)
-        {
-
-        }
-
-        public virtual void OnNavigatedFrom(INavigationParameters parameters)
-        {
-
-        }
-
-        public virtual void OnNavigatedTo(INavigationParameters parameters)
-        {
-
-        }
-
-        public virtual void Destroy()
-        {
-
+            _navigationService = navigationService;
         }
     }
 }
