@@ -40,6 +40,7 @@ namespace MySafe
         {
             containerRegistry.AddApplication()
                 .AddNavigation()
+                .AddMapper()
                 .AddRepositories()
                 .AddServices()
                 .AddMediatr();

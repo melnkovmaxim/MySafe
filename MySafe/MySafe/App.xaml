@@ -4,7 +4,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mySafe="clr-namespace:MySafe;assembly=MySafe"
-    xmlns:prism="http://prismlibrary.com">
+    xmlns:prism="http://prismlibrary.com"
+    NavigationPage.HasNavigationBar="False">
     <Application.Resources>
         <mySafe:VmLocator x:Key="VmLocator" />
     </Application.Resources>
