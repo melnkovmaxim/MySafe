@@ -8,6 +8,7 @@ using MediatR;
 using MySafe.Helpers;
 using MySafe.Mediator.SignIn;
 using MySafe.ViewModels.Abstractions;
+using MySafe.Views;
 using NetStandardCommands;
 using Prism.Navigation;
 using Prism.Navigation.Xaml;
@@ -17,24 +18,23 @@ namespace MySafe.ViewModels
 {
     public class SignInViewModel : ViewModelBase
     {
+        private readonly IMediator _mediator;
+
         public string Login { get; set; }
         public string Password { get; set; }
 
 
-        public SignInViewModel(INavigationService navigationService) : base(navigationService)
+        public SignInViewModel(INavigationService navigationService, IMediator mediator) : base(navigationService)
         {
+            _mediator = mediator;
         }
 
         private AsyncCommand _signInCommand;
         public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
         {
-            var jwtToken = await Task.Run(() => Ioc.Resolve<IMediator>()
-                    .Send(new SignInCommand(Login, Password))).ConfigureAwait(false);
-
-            var navigationParams = new NavigationParameters();
-            navigationParams.Add(nameof(JwtSecurityToken), jwtToken);
-
-            await NavigateHelper.NavigateAsync(_navigationService, nameof(TwoFactorViewModel), navigationParams);
-        }, () => true, !SignInCommand.IsExecuting);
+            _jwtToken = await _mediator.Send(new SignInCommand(Login, Password));
+            
+            await NavigateHelper.NavigateAsync(_navigationService, nameof(TwoFactorPage), _navigationParams);
+        }, () => true, allowMultipleExecution: false);
     }
 }

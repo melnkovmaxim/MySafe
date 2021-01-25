@@ -25,7 +25,7 @@ namespace MySafe.Mediator.SignOut
         {
             _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
             var httpRequest = new RestRequest("users/sign_out", Method.DELETE);
-            var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken);
+            _ = await _restClient.ExecuteAsync(httpRequest, cancellationToken);
 
             return Unit.Value;
         }

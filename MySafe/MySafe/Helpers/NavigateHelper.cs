@@ -14,8 +14,9 @@ namespace MySafe.Helpers
             {
                 var navigateService = turple.Item1;
                 var pagePath = turple.Item2;
+                var @params = turple.Item3;
 
-                await navigateService.NavigateAsync(pagePath);
+                await navigateService.NavigateAsync(pagePath, @params);
             }, canExecuteMethod: (s) => true, allowMultipleExecution: false);
         }
 

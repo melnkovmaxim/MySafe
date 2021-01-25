@@ -45,7 +45,7 @@ namespace MySafe.ViewModels
             PasswordManager = passwordManager;
             _deviceAuthService = deviceAuthService;
             _vibrationDuration = TimeSpan.FromSeconds(0.2);
-            _actionOnLogin = async () => await NavigateHelper.NavigateAsync(navigationService, nameof(MainPage));
+            _actionOnLogin = async () => await NavigateHelper.NavigateAsync(navigationService, nameof(SignInPage));
             _actionOnRegister = async () => await NavigateHelper.NavigateAsync(navigationService, nameof(AuthPage));
         }
 

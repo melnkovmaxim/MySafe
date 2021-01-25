@@ -6,37 +6,31 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using MySafe.Extensions;
+using MySafe.Helpers;
 using MySafe.Mediator.SignIn;
 using MySafe.Mediator.SignInTwoFactor;
 using MySafe.ViewModels.Abstractions;
+using MySafe.Views;
 using NetStandardCommands;
 using Prism.Navigation;
 
 namespace MySafe.ViewModels
 {
-    public class TwoFactorViewModel : ViewModelBase, INavigatedAware
+    public class TwoFactorViewModel : ViewModelBase
     {
+        private readonly IMediator _mediator;
         public string Code { get; set; }
 
-        private JwtSecurityToken _jwtToken;
-
-        public TwoFactorViewModel(INavigationService navigationService) : base(navigationService)
+        public TwoFactorViewModel(INavigationService navigationService, IMediator mediator) : base(navigationService)
         {
+            _mediator = mediator;
         }
 
         public AsyncCommand _signInCommand;
         public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
         {
-            await Task.Run(() => Ioc.Resolve<IMediator>().Send(new TwoFactorCommand(Code, _jwtToken)));
-        }, () => true, !SignInCommand.IsExecuting);
-
-        public void OnNavigatedFrom(INavigationParameters parameters)
-        {
-        }
-
-        public void OnNavigatedTo(INavigationParameters parameters)
-        {
-            _jwtToken = (JwtSecurityToken) parameters[nameof(JwtSecurityToken)];
-        }
+            _jwtToken = await _mediator.Send(new TwoFactorCommand(Code, _jwtToken));
+            await NavigateHelper.NavigateAsync(_navigationService, nameof(MainPage), _navigationParams);
+        }, () => true, allowMultipleExecution: false);
     }
 }

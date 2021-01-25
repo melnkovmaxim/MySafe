@@ -4,13 +4,12 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=SignInViewModel}">
-    <ContentPage.Content>
-        <StackLayout VerticalOptions="CenterAndExpand">
-            <Label HorizontalOptions="CenterAndExpand">Логин</Label>
-            <Entry Text="{Binding Login}" />
-            <Label HorizontalOptions="CenterAndExpand">Пароль</Label>
-            <Entry IsPassword="True" Text="{Binding Password}" />
-            <Button Command="{Binding SignInCommand}" Text="Войти" />
-        </StackLayout>
-    </ContentPage.Content>
+
+    <StackLayout VerticalOptions="CenterAndExpand">
+        <Label HorizontalOptions="CenterAndExpand">Логин</Label>
+        <Entry Text="{Binding Login}" />
+        <Label HorizontalOptions="CenterAndExpand">Пароль</Label>
+        <Entry Text="{Binding Password}" />
+        <Button Command="{Binding SignInCommand}" Text="Войти" />
+    </StackLayout>
 </ContentPage>

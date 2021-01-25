@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
-            x:Name="Main"
-             x:Class="MySafe.Views.MainPage"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:behaviors="http://prismlibrary.com"
-             BindingContext="{Binding Source={StaticResource VmLocator}, Path=MainViewModel}">
+<ContentPage
+    x:Class="MySafe.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="http://prismlibrary.com"
+    x:Name="Main"
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=MainViewModel}">
     <ContentPage.Resources>
         <Style TargetType="Button">
             <!-- <Setter Property="HeightRequest" Value="70" /> -->
@@ -13,7 +13,10 @@
             <!--<Setter Property="Backgroundcolor" Value="#E4E8FB" />-->
         </Style>
     </ContentPage.Resources>
-    <ContentPage.Content>
+    <StackLayout VerticalOptions="CenterAndExpand">
+        <Button Command="{Binding SignOutCommand}" Text="Выйти" />
+    </StackLayout>
+    <!--<ContentPage.Content>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -57,7 +60,7 @@
                     <Button
                         Grid.Row="0"
                         Grid.Column="1"
-                        Text="Налоги" 
+                        Text="Налоги"
                         Command="{behaviors:NavigateTo 'NavigationPage/TaxPage',
                                                        SourcePage={x:Reference Main}}"
                         />
@@ -86,14 +89,15 @@
                         Command="{behaviors:NavigateTo 'NavigationPage/OtherPage',
                                                        SourcePage={x:Reference Main}}"/>
                 </Grid>
-                <Button Text="Текст" 
+                <Button Text="Текст"
                         Command="{behaviors:NavigateTo 'NavigationPage/NotePage',
                                                        SourcePage={x:Reference Main}}"/>
             </StackLayout>
             <Button Grid.Row="2" Command="{behaviors:NavigateTo 'NavigationPage/BinPage',
                                                        SourcePage={x:Reference Main}}" />
         </Grid>
-        <!--<StackLayout>
+    -->
+    <!--<StackLayout>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -126,6 +130,7 @@
             </Grid>
             <Button CornerRadius="25" HeightRequest="75" ></Button>
         </StackLayout>-->
+    <!--
 
-    </ContentPage.Content>
+    </ContentPage.Content>-->
 </ContentPage>

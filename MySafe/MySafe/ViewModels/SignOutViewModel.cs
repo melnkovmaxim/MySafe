@@ -14,10 +14,9 @@ using Prism.Navigation;
 
 namespace MySafe.ViewModels
 {
-    public class SignOutViewModel : ViewModelBase, INavigatedAware
+    public class SignOutViewModel : ViewModelBase
     {
         private readonly IMediator _mediator;
-        private JwtSecurityToken _jwtToken;
         private AsyncCommand _signOutCommand;
 
         public SignOutViewModel(INavigationService navigationService, IMediator mediator) : base(navigationService)
@@ -27,17 +26,8 @@ namespace MySafe.ViewModels
 
         public AsyncCommand SignOutCommand => _signOutCommand ??= new AsyncCommand(async () =>
         {
-            _ = _mediator.Send(new SignOutCommand(_jwtToken));
-            await NavigateHelper.NavigateAsync(_navigationService, nameof(AuthPage));
+            _ = await _mediator.Send(new SignOutCommand(_jwtToken));
+            await NavigateHelper.NavigateAsync(_navigationService, nameof(AuthPage), _navigationParams);
         }, () => true, !SignOutCommand.IsExecuting);
-
-        public void OnNavigatedFrom(INavigationParameters parameters)
-        {
-        }
-
-        public void OnNavigatedTo(INavigationParameters parameters)
-        {
-            _jwtToken = (JwtSecurityToken) parameters[nameof(JwtSecurityToken)];
-        }
     }
 }

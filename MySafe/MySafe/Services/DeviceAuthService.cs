@@ -62,5 +62,10 @@ namespace MySafe.Services
             
             await Task.Run(() => Thread.Sleep(500));
         }
+
+        public async Task Logout()
+        {
+            await Ioc.Resolve<ISecureStorageRepository>().RemovePasswordAsync();
+        }
     }
 }

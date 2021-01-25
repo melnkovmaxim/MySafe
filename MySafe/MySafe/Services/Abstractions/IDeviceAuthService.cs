@@ -11,5 +11,6 @@ namespace MySafe.Services.Abstractions
         Task<bool> TryLoginAsync(string password, Action actionOnLogin, TimeSpan vibrationDuration);
         Task<bool> TryLoginWithPrintScanAsync(Action actionOnLogin, TimeSpan vibrationDuration);
         Task RegisterAsync(string password, int requiredLength, Action actionOnRegister);
+        Task Logout();
     }
 }

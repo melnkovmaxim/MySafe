@@ -28,7 +28,6 @@ namespace MySafe.Mediator.SignIn
 
             var httpRequest = new RestRequest("users/sign_in", Method.POST)
                 .AddJsonBody(serializedUser);
-
             var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             var jwtToken = new JwtSecurityTokenHandler()
                 .GetJwtTokenFromResponse(response);

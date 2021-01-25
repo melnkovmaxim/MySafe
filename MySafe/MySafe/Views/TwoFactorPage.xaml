@@ -4,11 +4,10 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=TwoFactorViewModel}">
-    <ContentPage.Content>
-        <StackLayout VerticalOptions="CenterAndExpand">
-            <Label HorizontalOptions="CenterAndExpand">Код из SMS</Label>
-            <Entry Text="{Binding Code}" />
-            <Button Command="{Binding SignInCommand}" Text="Отправить" />
-        </StackLayout>
-    </ContentPage.Content>
+
+    <StackLayout VerticalOptions="CenterAndExpand">
+        <Label HorizontalOptions="CenterAndExpand">Код из SMS</Label>
+        <Entry Text="{Binding Code}" />
+        <Button Command="{Binding SignInCommand}" Text="Отправить" />
+    </StackLayout>
 </ContentPage>
