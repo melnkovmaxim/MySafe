@@ -8,6 +8,7 @@ using MySafe.Mediator.SignIn;
 using Prism;
 using Prism.Commands;
 using Prism.DryIoc;
+using Prism.Navigation;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

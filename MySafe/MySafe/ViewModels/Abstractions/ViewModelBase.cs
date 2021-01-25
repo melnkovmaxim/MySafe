@@ -1,11 +1,23 @@
-﻿using Prism.Mvvm;
+﻿using System.IdentityModel.Tokens.Jwt;
+using Prism.Mvvm;
 using Prism.Navigation;
 
 namespace MySafe.ViewModels.Abstractions
 {
-    public abstract class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible
+    public abstract class ViewModelBase : BindableBase, INavigatedAware
     {
-        protected INavigationService NavigationService { get; private set; }
+        protected INavigationService _navigationService { get; }
+
+        protected JwtSecurityToken _jwtToken;
+        protected NavigationParameters _navigationParams
+        {
+            get
+            {
+                var @params = new NavigationParameters();
+                @params.Add(nameof(JwtSecurityToken), _jwtToken);
+                return @params;
+            }
+        }
 
         private string _title;
         public string Title
@@ -16,27 +28,16 @@ namespace MySafe.ViewModels.Abstractions
 
         public ViewModelBase(INavigationService navigationService)
         {
-            NavigationService = navigationService;
+            _navigationService = navigationService;
         }
 
-        public virtual void Initialize(INavigationParameters parameters)
+        public void OnNavigatedFrom(INavigationParameters parameters)
         {
-
         }
 
-        public virtual void OnNavigatedFrom(INavigationParameters parameters)
+        public void OnNavigatedTo(INavigationParameters parameters)
         {
-
-        }
-
-        public virtual void OnNavigatedTo(INavigationParameters parameters)
-        {
-
-        }
-
-        public virtual void Destroy()
-        {
-
+            _jwtToken = (JwtSecurityToken) parameters[nameof(JwtSecurityToken)];
         }
     }
 }

@@ -33,13 +33,14 @@ namespace MySafe
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync($"NavigationPage/{nameof(AuthPage)}"); //nachinayu sosat
+            await NavigationService.NavigateAsync($"NavigationPage/{nameof(AuthPage)}");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.AddApplication()
                 .AddNavigation()
+                .AddMapper()
                 .AddRepositories()
                 .AddServices()
                 .AddMediatr();
