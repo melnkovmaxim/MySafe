@@ -157,25 +157,10 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\MySafe_online_1.png" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\info.svg" />
+  </ItemGroup>
+  <ItemGroup>
     <AndroidResource Include="Resources\drawable\info.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ShadowEffect.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\jam_menu.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\note.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\docs.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\loopa.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\pen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
