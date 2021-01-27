@@ -27,5 +27,7 @@ namespace MySafe.Views
             Button button = (Button)sender;
             button.BackgroundColor = Color.Blue;
         }
+
+
     }
 }

@@ -9,6 +9,8 @@
         <Style TargetType="Button">
             <!-- <Setter Property="HeightRequest" Value="70" /> -->
             <Setter Property="CornerRadius" Value="25" />
+            <Setter Property="Padding" Value="0,-60,0,0" />
+            <Setter Property="FontSize" Value="18" />
             <!-- <Setter Property="Backgroundcolor" Value="#E4E8FB" /> -->
         </Style>
     </ContentPage.Resources>
@@ -17,7 +19,8 @@
     </ContentPage.Behaviors>
     <ContentPage.Content>
         <StackLayout>
-            <Button HeightRequest="50" HorizontalOptions="Fill" CornerRadius="24" Margin="40,0,40,0" Padding="-100,0,0,0"  Text="Документы" BackgroundColor="#E4E8FB" />
+            <Button HeightRequest="50" HorizontalOptions="Fill" CornerRadius="24" FontSize="24" Margin="20,20,20,10" Padding="-80,0,0,0" ImageSource="docs.png"  BackgroundColor="#E4E8FB">
+            </Button>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -36,21 +39,24 @@
                             <RowDefinition Height="60" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160" />
-                            <ColumnDefinition Width="160" />
+                            <ColumnDefinition Width="180" />
+                            <ColumnDefinition Width="180" />
                         </Grid.ColumnDefinitions>
                         <Button
                         Grid.Row="0"
                         Grid.Column="0"
-                        CornerRadius="50"
+                            Padding="0,0,0,0"
+                        CornerRadius="15"
                         BackgroundColor="#E4E8FB"
                         Text="+" />
 
                         <Button
                         Grid.Row="0"
                         Grid.Column="1"
-                        Text="Edit"
-                        CornerRadius="50"
+                            Padding="0,0,0,0"
+                        
+                            ImageSource="pen.png"
+                        CornerRadius="15"
                         BackgroundColor="#E4E8FB"
                          />
                     </Grid>
@@ -59,19 +65,19 @@
                 <StackLayout
                 Grid.Row="1"
                 HeightRequest="300"
-                    Margin="0,-50,0,0"
                 HorizontalOptions="CenterAndExpand"
                 Orientation="Horizontal"
+                    Margin="0,-50,0,0"
                 >
-                    <Grid ColumnSpacing="10" RowSpacing="15">
+                    <Grid ColumnSpacing="10" RowSpacing="20">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="100" />
-                            <RowDefinition Height="100" />
-                            <RowDefinition Height="100" />
+                            <RowDefinition Height="120" />
+                            <RowDefinition Height="120" />
+                            <RowDefinition Height="120" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160" />
-                            <ColumnDefinition Width="160" />
+                            <ColumnDefinition Width="180" />
+                            <ColumnDefinition Width="180" />
                         </Grid.ColumnDefinitions>
 
                         <Button
@@ -79,36 +85,36 @@
                         Grid.Column="0"
                         
                         BackgroundColor="#E4E8FB"
-                        Text="Паспорт" />
+                        Text="Паспорт:" />
                         <Button
                         Grid.Row="0"
                         Grid.Column="1"
                         BackgroundColor="#E4E8FB"
-                        Text="ИНН" 
+                        Text="ИНН:" 
                         
                         />
                         <Button
                         Grid.Row="1"
                         Grid.Column="0"
-                        Text="СНИЛС"
+                        Text="СНИЛС:"
                         BackgroundColor="#E4E8FB"
                          />
                         <Button
                         Grid.Row="1"
                         Grid.Column="1"
-                        Text="Страхование"
+                        Text="Страхование:"
                         BackgroundColor="#E4E8FB"
                         />
                         <Button
                         Grid.Row="2"
                         Grid.Column="0"
-                        Text="Прописка"
+                        Text="Прописка:"
                         BackgroundColor="#E4E8FB"
                         />
                         <Button
                         Grid.Row="2"
                         Grid.Column="1"
-                        Text="Другое"
+                        Text="Другое:"
                         BackgroundColor="#E4E8FB"
                         />
                     </Grid>
