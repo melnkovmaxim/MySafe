@@ -19,8 +19,17 @@
     </ContentPage.Behaviors>
     <ContentPage.Content>
         <StackLayout>
-            <Button HeightRequest="50" HorizontalOptions="Fill" CornerRadius="24" FontSize="24" Margin="20,20,20,10" Padding="-80,0,0,0" ImageSource="docs.png"  BackgroundColor="#E4E8FB">
-            </Button>
+            <Frame HeightRequest="22" HorizontalOptions="Fill" CornerRadius="24" Margin="20,20,20,10"  BackgroundColor="#E4E8FB">
+                <StackLayout
+            VerticalOptions="StartAndExpand" 
+            HorizontalOptions="StartAndExpand">
+                    <Image
+                Source="docs.png" Margin="-150,0,0,0"
+                 />
+                    <Label FontSize="24" Text="Документы" Margin="45,-33,0,0">
+                    </Label>
+                </StackLayout>
+            </Frame>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
