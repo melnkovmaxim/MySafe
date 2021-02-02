@@ -14,6 +14,7 @@ namespace MySafe.Views
     {
         public TaxPage()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
         }
     }

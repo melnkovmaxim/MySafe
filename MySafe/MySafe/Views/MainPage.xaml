@@ -66,7 +66,9 @@
                 
             </Frame>
             <StackLayout>
-                <ProgressBar HorizontalOptions="Fill" Margin="60,90,60,0" ProgressColor="#FFC772" Progress="100" VerticalOptions="EndAndExpand"/>
+                <BoxView HorizontalOptions="Fill" Margin="56,97,56,0" HeightRequest="9" CornerRadius="24" Color="Black" Opacity="0.20" />
+                <BoxView HorizontalOptions="Fill" Margin="58,-13,58,0" HeightRequest="5" CornerRadius="24" Color="White" Opacity="0.75" />
+                <ProgressBar HorizontalOptions="Fill" Margin="60,-95,60,0" ProgressColor="#FFC772" Progress="100" VerticalOptions="EndAndExpand"/>
                 <Grid Margin="60,-10,-85,0">
                     <Label 
                         Grid.Row="0"
@@ -85,9 +87,9 @@
             </StackLayout>
             <StackLayout Grid.Row="1"
                 Grid.Column="0">
-                <!--<Image Source="loopa.png" WidthRequest="20"></Image>-->
-                <Entry HorizontalOptions="Fill" PlaceholderColor="#7e7e7e" IsEnabled="True"  Margin="20,20,20,20" Opacity="0.9" Text=" Название документа"></Entry>
-                
+                <Image Source="loopa.png"  Margin="-335,40,0,0" WidthRequest="20"></Image>
+                <Entry HorizontalOptions="Fill" PlaceholderColor="#7e7e7e" IsEnabled="True" Margin="50,-37,20,20" Opacity="0.8" Text=" Название документа"></Entry>
+                <BoxView HorizontalOptions="Fill" Opacity="0.87" HeightRequest="2" Color="#3465C4" Margin="20,-35,20,0" />
             </StackLayout>
             <!--<Button Text="Search" HorizontalOptions="Fill" HeightRequest="50" CornerRadius="24"/> -->
             <StackLayout
