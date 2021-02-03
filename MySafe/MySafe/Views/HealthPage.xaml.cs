@@ -14,6 +14,7 @@ namespace MySafe.Views
     {
         public HealthPage()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
         }
     }

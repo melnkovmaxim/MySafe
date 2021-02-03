@@ -14,6 +14,7 @@ namespace MySafe.Views
     {
         public EstatePage()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
         }
     }
