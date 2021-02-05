@@ -88,7 +88,7 @@
             <StackLayout Grid.Row="1"
                 Grid.Column="0">
                 <Image Source="loopa.png"  Margin="-335,40,0,0" WidthRequest="20"></Image>
-                <Entry HorizontalOptions="Fill" PlaceholderColor="#7e7e7e" IsEnabled="True" Margin="50,-37,20,20" Opacity="0.8" Text=" Название документа"></Entry>
+                <Entry HorizontalOptions="Fill" PlaceholderColor="#7e7e7e" IsEnabled="True" Margin="50,-37,20,20" Opacity="0.8" Placeholder=" Название документа"></Entry>
                 <BoxView HorizontalOptions="Fill" Opacity="0.87" HeightRequest="2" Color="#3465C4" Margin="20,-35,20,0" />
             </StackLayout>
             <!--<Button Text="Search" HorizontalOptions="Fill" HeightRequest="50" CornerRadius="24"/> -->

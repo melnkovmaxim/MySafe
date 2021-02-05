@@ -32,7 +32,7 @@ namespace MySafe.ViewModels
         private AsyncCommand _signInCommand;
         public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
         {
-            _jwtToken = await _mediator.Send(new SignInCommand(Login, Password));
+            /*_jwtToken = await _mediator.Send(new SignInCommand(Login, Password));*/
             
             await NavigateHelper.NavigateAsync(_navigationService, nameof(TwoFactorPage), _navigationParams);
         }, () => true, allowMultipleExecution: false);
