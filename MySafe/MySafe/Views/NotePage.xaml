@@ -1,44 +1,139 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MySafe.Views.NotePage">
+<ContentPage
+    x:Class="MySafe.Views.NotePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <ContentPage.Content>
         <StackLayout>
-            <Frame HeightRequest="24" HorizontalOptions="Fill" CornerRadius="24" Margin="20,15,20,-10"  BackgroundColor="#E4E8FB">
-                <StackLayout
-            VerticalOptions="StartAndExpand" 
-            HorizontalOptions="StartAndExpand">
-                    <Image
-                Source="docs.png" Margin="-120,0,0,0"
-                 />
-                    <Label FontSize="24" Text="Блокнот" Margin="45,-33,0,0">
-                    </Label>
+            <Frame
+                Margin="20,15,20,-10"
+                BackgroundColor="#E4E8FB"
+                CornerRadius="24"
+                HeightRequest="24"
+                HorizontalOptions="Fill">
+                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                    <Image Margin="-120,0,0,0" Source="docs.png" />
+                    <Label
+                        Margin="45,-33,0,0"
+                        FontSize="24"
+                        Text="Блокнот" />
                 </StackLayout>
             </Frame>
-            <Frame CornerRadius="10" HasShadow="True"  BorderColor="#3465C4" HorizontalOptions="Fill" Margin="20, 10, 20, 15" VerticalOptions="Fill" HeightRequest="460"  BackgroundColor="#F3F5FF">
-                <Editor HorizontalOptions="FillAndExpand" VerticalOptions="Fill" BackgroundColor="#F3F5FF" />
+            <Frame
+                Margin="20,10,20,15"
+                BackgroundColor="#F3F5FF"
+                BorderColor="#3465C4"
+                CornerRadius="10"
+                HasShadow="True"
+                HeightRequest="460"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
+                <Editor
+                    BackgroundColor="#F3F5FF"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Fill" />
             </Frame>
-            <BoxView Color="Black" Opacity="0.4" Margin="40,-470,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
-            <BoxView Color="Black" Opacity="0.4" Margin="40,13,40,0" HeightRequest="2" />
+            <BoxView
+                Margin="40,-470,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -3,9 +3,9 @@ using MySafe.Views;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
 using MediatR;
-using MySafe.Helpers;
 using MySafe.Mediator.SignIn;
 using MySafe.Models.Requests;
 using MySafe.Repositories.Abstractions;
@@ -24,11 +24,12 @@ namespace MySafe.ViewModels
 {
     public class AuthViewModel : ViewModelBase
     {
+        private readonly INavigationService _navigationService;
         private readonly IDeviceAuthService _deviceAuthService;
         private readonly TimeSpan _vibrationDuration;
         
-        private readonly Action _actionOnLogin;
-        private readonly Action _actionOnRegister;
+        private Action _actionOnLogin;
+        private Action _actionOnRegister;
 
         private DelegateCommand _removeLastNumberCommand;
         private DelegateCommand _loadedCommand;
@@ -39,14 +40,24 @@ namespace MySafe.ViewModels
         public IPasswordManagerService PasswordManager { get; }
         public bool IsRegistered { get; set; }
 
-        public AuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager, IDeviceAuthService deviceAuthService) 
-            : base(navigationService)
+        public AuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager, IDeviceAuthService deviceAuthService)
         {
             PasswordManager = passwordManager;
+            _navigationService = navigationService;
             _deviceAuthService = deviceAuthService;
             _vibrationDuration = TimeSpan.FromSeconds(0.2);
-            _actionOnLogin = async () => await NavigateHelper.NavigateAsync(navigationService, nameof(SignInPage));
-            _actionOnRegister = async () => await NavigateHelper.NavigateAsync(navigationService, nameof(AuthPage));
+
+            
+            _actionOnLogin = async () =>
+            {
+                var storageRepository = Ioc.Resolve<ISecureStorageRepository>();
+                var token = await storageRepository.GetTokenAsync();
+                await _navigationService.NavigateAsync(IsValidToken(new JwtSecurityToken(token))
+                    ? nameof(MainPage)
+                    : nameof(SignInPage));
+            };
+            _actionOnRegister = async () => await _navigationService.NavigateAsync(nameof(AuthPage));
+
         }
 
         public DelegateCommand LoadedCommand => _loadedCommand ??= new DelegateCommand(async () =>
@@ -88,8 +99,7 @@ namespace MySafe.ViewModels
         public DelegateCommand RestorePasswordCommand => _restorePasswordCommand ??= new DelegateCommand(async () =>
         {
             await Ioc.Resolve<ISecureStorageRepository>().RemovePasswordAsync();
-            await NavigateHelper.NavigateAsync(_navigationService, nameof(AuthPage));
-            
+            await _navigationService.NavigateAsync(nameof(AuthPage));
         });
     }
 }

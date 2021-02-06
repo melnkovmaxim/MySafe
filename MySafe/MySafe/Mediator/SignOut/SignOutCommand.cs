@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using MySafe.Extensions;
+using MySafe.Models.MediatorResponses;
 
 namespace MySafe.Mediator.SignOut
 {
-    public class SignOutCommand : IRequest
+    public class SignOutCommand : IRequest<UserResponse>
     {
         public JwtSecurityToken JwtToken { get; set; }
 

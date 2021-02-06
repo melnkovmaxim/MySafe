@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using MySafe.Models.MediatorResponses;
 using RestSharp;
 
 namespace MySafe.Mediator.SignInTwoFactor
 {
-    public class TwoFactorCommand : IRequest<JwtSecurityToken>
+    public class TwoFactorCommand : IRequest<UserResponse>
     {
         public string Code { get; set; }
         public JwtSecurityToken JwtToken { get; set; }

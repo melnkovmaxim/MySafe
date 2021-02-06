@@ -29,8 +29,9 @@ namespace MySafe
         public static IContainerRegistry AddServices(this IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IPasswordManagerService, PasswordManagerService>();
+            containerRegistry.Register<ISecureStorageRepository, SecureStorageRepository>();
             containerRegistry.Register<IDeviceAuthService, DeviceAuthService>();
-            containerRegistry.RegisterInstance(typeof(IRestClient), new RestClient("https://mysafeonline.com/"));
+            containerRegistry.RegisterInstance(typeof(IRestClient), new RestClient("https://mysafeonline.com/"));//"http://username228-001-site1.itempurl.com/"));//""));
 
             return containerRegistry;
         }

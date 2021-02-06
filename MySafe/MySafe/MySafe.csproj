@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Responses\**" />
+    <EmbeddedResource Remove="Models\Responses\**" />
+    <None Remove="Models\Responses\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Quirlycues.ttf" />
     <None Remove="Resources\docs.png" />
     <None Remove="Resources\Fonts\Roboto-Medium.ttf" />
@@ -107,10 +113,6 @@
     <Resource Include="Resources\note.png" />
     <Resource Include="Resources\note.svg" />
     <Resource Include="Resources\pen.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Responses\" />
   </ItemGroup>
 
 </Project>

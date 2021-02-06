@@ -1,43 +1,26 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using Prism.Mvvm;
+﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
+using MySafe.Repositories.Abstractions;
+using NetStandardCommands;
 using Prism.Navigation;
+using Xamarin.Essentials;
+using BindableBase = Prism.Mvvm.BindableBase;
 
 namespace MySafe.ViewModels.Abstractions
 {
-    public abstract class ViewModelBase : BindableBase, INavigatedAware
+    public abstract class ViewModelBase : BindableBase
     {
-        protected INavigationService _navigationService { get; }
+        public string Error { get; set; }
 
-        protected JwtSecurityToken _jwtToken;
-        protected NavigationParameters _navigationParams
+        protected virtual bool IsValidToken(JwtSecurityToken jwtToken)
         {
-            get
+            if (jwtToken?.ValidTo.ToUniversalTime() > DateTime.UtcNow.AddMinutes(5))
             {
-                var @params = new NavigationParameters();
-                @params.Add(nameof(JwtSecurityToken), _jwtToken);
-                return @params;
+                return true;
             }
-        }
 
-        private string _title;
-        public string Title
-        {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
-        }
-
-        public ViewModelBase(INavigationService navigationService)
-        {
-            _navigationService = navigationService;
-        }
-
-        public void OnNavigatedFrom(INavigationParameters parameters)
-        {
-        }
-
-        public void OnNavigatedTo(INavigationParameters parameters)
-        {
-            _jwtToken = (JwtSecurityToken) parameters[nameof(JwtSecurityToken)];
+            return false;
         }
     }
 }

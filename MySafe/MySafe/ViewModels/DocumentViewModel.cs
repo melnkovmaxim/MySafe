@@ -5,15 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using MySafe.Mediator.SignIn;
+using MySafe.ViewModels.Abstractions;
 using Prism.Commands;
+using Prism.Navigation;
 
 namespace MySafe.ViewModels
 {
-    public class DocumentViewModel
+    public class DocumentViewModel : AuthorizedViewModelBase
     {
         private readonly IMediator _mediator;
 
-        public DocumentViewModel(IMediator mediator)
+        public DocumentViewModel(INavigationService navigationService, IMediator mediator) 
+            : base(navigationService)
         {
             _mediator = mediator;
         }

@@ -7,12 +7,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using MySafe.Extensions;
+using MySafe.Models.MediatorResponses;
+using MySafe.Repositories.Abstractions;
+using MySafe.Services.Abstractions;
 using RestSharp;
 using RestSharp.Authenticators;
 
 namespace MySafe.Mediator.SignOut
 {
-    public class SignOutCommandHandler : IRequestHandler<SignOutCommand>
+    public class SignOutCommandHandler : IRequestHandler<SignOutCommand, UserResponse>
     {
         private readonly IRestClient _restClient;
 
@@ -21,13 +24,29 @@ namespace MySafe.Mediator.SignOut
             _restClient = restClient;
         }
         
-        public async Task<Unit> Handle(SignOutCommand request, CancellationToken cancellationToken)
+        public async Task<UserResponse> Handle(SignOutCommand request, CancellationToken cancellationToken)
         {
-            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-            var httpRequest = new RestRequest("users/sign_out", Method.DELETE);
-            _ = await _restClient.ExecuteAsync(httpRequest, cancellationToken);
+            var cmdResponse = new UserResponse();
 
-            return Unit.Value;
+            try
+            {
+                _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
+                var httpRequest = new RestRequest("users/sign_out", Method.DELETE);
+                var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken);
+
+                if (!response.IsSuccessful)
+                {
+                    throw response.ErrorException;
+                }
+
+                await Ioc.Resolve<ISecureStorageRepository>().RemoveToken();
+            }
+            catch (Exception ex)
+            {
+                cmdResponse.Error = ex.Message;
+            }
+
+            return cmdResponse;
         }
     }
 }

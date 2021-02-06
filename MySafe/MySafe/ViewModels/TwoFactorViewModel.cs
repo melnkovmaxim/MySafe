@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IdentityModel.Tokens.Jwt;
 using MediatR;
-using MySafe.Extensions;
-using MySafe.Helpers;
-using MySafe.Mediator.SignIn;
 using MySafe.Mediator.SignInTwoFactor;
+using MySafe.Repositories.Abstractions;
 using MySafe.ViewModels.Abstractions;
 using MySafe.Views;
 using NetStandardCommands;
@@ -16,21 +9,44 @@ using Prism.Navigation;
 
 namespace MySafe.ViewModels
 {
-    public class TwoFactorViewModel : ViewModelBase
+    public class TwoFactorViewModel : ViewModelBase, INavigatedAware
     {
+        private readonly INavigationService _navigationService;
         private readonly IMediator _mediator;
+        private JwtSecurityToken _tempToken;
+        private AsyncCommand _signInCommand;
+
         public string Code { get; set; }
 
-        public TwoFactorViewModel(INavigationService navigationService, IMediator mediator) : base(navigationService)
+        public TwoFactorViewModel(INavigationService navigationService, IMediator mediator)
         {
+            _navigationService = navigationService;
             _mediator = mediator;
         }
 
-        public AsyncCommand _signInCommand;
         public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
         {
-            /*_jwtToken = await _mediator.Send(new TwoFactorCommand(Code, _jwtToken));*/
-            await NavigateHelper.NavigateAsync(_navigationService, nameof(MainPage), _navigationParams);
-        }, () => true, allowMultipleExecution: false);
+            var response = await _mediator.Send(new TwoFactorCommand(Code, _tempToken));
+
+            if (response.HasError)
+            {
+                Error = response.Error;
+                return;
+            }
+
+            if (IsValidToken(_tempToken))
+            {
+                await _navigationService.NavigateAsync(nameof(MainPage));
+            }
+        });
+
+        public void OnNavigatedFrom(INavigationParameters parameters)
+        {
+        }
+
+        public void OnNavigatedTo(INavigationParameters parameters)
+        {
+            _tempToken = (JwtSecurityToken) parameters[nameof(JwtSecurityToken)];
+        }
     }
 }

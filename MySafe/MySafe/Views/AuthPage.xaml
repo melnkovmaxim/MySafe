@@ -37,7 +37,7 @@
             </Setter>
             <Style.Triggers>
                 <Trigger TargetType="Button" Property="IsEnabled" Value="False">
-                    <Setter Property="TextColor" Value="Black"></Setter>
+                    <Setter Property="TextColor" Value="Black" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -96,9 +96,7 @@
                     WidthRequest="210">
 
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout
-                            Orientation="Vertical"
-                            Span="{Binding PasswordManager.PasswordCollection.Count}" />
+                        <GridItemsLayout Orientation="Vertical" Span="{Binding PasswordManager.PasswordCollection.Count}" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>

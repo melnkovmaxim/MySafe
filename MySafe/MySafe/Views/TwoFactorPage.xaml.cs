@@ -16,10 +16,10 @@ namespace MySafe.Views
         {
             InitializeComponent();
         }
-        
+
         public void OnNavigatedFrom(INavigationParameters parameters)
         {
-            Navigation.RemovePage(this);
+            Navigation.RemovePage(this); 
         }
 
         public void OnNavigatedTo(INavigationParameters parameters)

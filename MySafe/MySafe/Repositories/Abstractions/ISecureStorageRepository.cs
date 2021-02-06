@@ -11,5 +11,8 @@ namespace MySafe.Repositories.Abstractions
         Task<string> GetLocalPasswordAsync();
         Task SetLocalPasswordAsync(string password);
         Task RemovePasswordAsync();
+        Task<string> GetTokenAsync();
+        Task SetTokenAsync(string jwtToken);
+        Task RemoveToken();
     }
 }

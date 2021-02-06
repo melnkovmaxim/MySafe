@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using Newtonsoft.Json;
-using RestSharp;
+﻿using MediatR;
+using MySafe.Models.MediatorResponses;
 
 namespace MySafe.Mediator.SignIn
 {
-    public class SignInCommand : IRequest<JwtSecurityToken>
+    public class SignInCommand : IRequest<UserResponse>
     {
         public string Login { get; }
         public string Password { get; }

@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Helpers;
-using MySafe.Mediator.SignIn;
+﻿using MediatR;
 using MySafe.Mediator.SignOut;
 using MySafe.Services.Abstractions;
 using MySafe.ViewModels.Abstractions;
 using MySafe.Views;
 using NetStandardCommands;
-using Prism.Commands;
 using Prism.Navigation;
-using Xamarin.Forms;
 
 namespace MySafe.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : AuthorizedViewModelBase
     {
         private readonly IMediator _mediator;
         private AsyncCommand _signOutCommand;
@@ -31,8 +22,7 @@ namespace MySafe.ViewModels
         public AsyncCommand SignOutCommand => _signOutCommand ??= new AsyncCommand(async () =>
         {
             _ = _mediator.Send(new SignOutCommand(_jwtToken));
-            await Ioc.Resolve<IDeviceAuthService>().Logout();
-            await NavigateHelper.NavigateAsync(_navigationService, nameof(AuthPage));
+            await _navigationService.NavigateAsync(nameof(AuthPage));
         });
     }
 }

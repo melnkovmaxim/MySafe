@@ -10,20 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace MySafe.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SignInPage : ContentPage, INavigationAware
+    public partial class SignInPage : ContentPage
     {
         public SignInPage()
         {
             InitializeComponent();
-        }
-        
-        public void OnNavigatedFrom(INavigationParameters parameters)
-        {
-            Navigation.RemovePage(this);
-        }
-
-        public void OnNavigatedTo(INavigationParameters parameters)
-        {
         }
     }
 }

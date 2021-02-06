@@ -1,40 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IdentityModel.Tokens.Jwt;
 using MediatR;
-using MySafe.Helpers;
 using MySafe.Mediator.SignIn;
 using MySafe.ViewModels.Abstractions;
 using MySafe.Views;
 using NetStandardCommands;
 using Prism.Navigation;
-using Prism.Navigation.Xaml;
-using NavigationParameters = Prism.Navigation.NavigationParameters;
 
 namespace MySafe.ViewModels
 {
     public class SignInViewModel : ViewModelBase
     {
+        private readonly INavigationService _navigationService;
         private readonly IMediator _mediator;
+        private AsyncCommand _signInCommand;
 
         public string Login { get; set; }
         public string Password { get; set; }
 
 
-        public SignInViewModel(INavigationService navigationService, IMediator mediator) : base(navigationService)
+        public SignInViewModel(INavigationService navigationService, IMediator mediator)
         {
+            _navigationService = navigationService;
             _mediator = mediator;
         }
 
-        private AsyncCommand _signInCommand;
         public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
         {
-            /*_jwtToken = await _mediator.Send(new SignInCommand(Login, Password));*/
-            
-            await NavigateHelper.NavigateAsync(_navigationService, nameof(TwoFactorPage), _navigationParams);
-        }, () => true, allowMultipleExecution: false);
+            var response = await _mediator.Send(new SignInCommand(Login, Password));
+
+            if (response.HasError)
+            {
+                Error = response.Error;
+                return;
+            }
+
+            if (IsValidToken(response.JwtToken))
+            {
+                var @params = new NavigationParameters();
+                @params.Add(nameof(JwtSecurityToken), response.JwtToken);
+                await _navigationService.NavigateAsync(nameof(TwoFactorPage), @params);
+            }
+        });
     }
 }

@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
-            x:Name="Main"
-             x:Class="MySafe.Views.MainPage"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:behaviors="http://prismlibrary.com"
-             BindingContext="{Binding Source={StaticResource VmLocator}, Path=MainViewModel}">
+<ContentPage
+    x:Class="MySafe.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="http://prismlibrary.com"
+    x:Name="Main"
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=MainViewModel}">
     <ContentPage.Resources>
         <Style TargetType="Button">
             <!-- <Setter Property="HeightRequest" Value="70" /> -->
@@ -30,75 +30,115 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="75" />
             </Grid.RowDefinitions>
-            
-            <Frame CornerRadius="24" Margin="20,20,20,-20" HasShadow="True" WidthRequest="380" BackgroundColor="#E4E8FB">
-            
-            <StackLayout
-                Grid.Row="0"
-                Grid.Column="0"
-                VerticalOptions="FillAndExpand"
-                HorizontalOptions="FillAndExpand"
-                Orientation="Horizontal">
-                
-                <Label
-                    Margin="20,0,0,0"
-                    FontFamily="Montserrat"
-                    FontSize="24"
-                    HorizontalOptions="StartAndExpand"
-                    WidthRequest="150"
-                    Text="MySafe"
-                    TextColor="Black" 
-                    />
-                <Label
-                    Margin="-120,24,0,0"
-                    FontFamily="Montserrat"
-                    FontSize="18"
-                    WidthRequest="150"
-                    HorizontalOptions="Start"
-                    Text="online"
-                    TextColor="Black" />
-                    <Button HorizontalOptions="End" Margin="120,0,20,30" Padding="0,0,0,0" ImageSource="jam_menu.png" WidthRequest="50" HeightRequest="10" BackgroundColor="#F2F4FF" CornerRadius="50">
-                        
-                    </Button>
-                    
+
+            <Frame
+                Margin="20,20,20,-20"
+                BackgroundColor="#E4E8FB"
+                CornerRadius="24"
+                HasShadow="True"
+                WidthRequest="380">
+
+                <StackLayout
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Horizontal"
+                    VerticalOptions="FillAndExpand">
+
+                    <Label
+                        Margin="20,0,0,0"
+                        FontFamily="Montserrat"
+                        FontSize="24"
+                        HorizontalOptions="StartAndExpand"
+                        Text="MySafe"
+                        TextColor="Black"
+                        WidthRequest="150" />
+                    <Label
+                        Margin="-120,24,0,0"
+                        FontFamily="Montserrat"
+                        FontSize="18"
+                        HorizontalOptions="Start"
+                        Text="online"
+                        TextColor="Black"
+                        WidthRequest="150" />
+                    <Button
+                        Margin="120,0,20,30"
+                        Padding="0,0,0,0"
+                        BackgroundColor="#F2F4FF"
+                        Command="{Binding SignOutCommand}"
+                        CornerRadius="50"
+                        HeightRequest="10"
+                        HorizontalOptions="End"
+                        ImageSource="jam_menu.png"
+                        WidthRequest="50" />
+
 
                 </StackLayout>
-                
+
             </Frame>
             <StackLayout>
-                <BoxView HorizontalOptions="Fill" Margin="56,97,56,0" HeightRequest="9" CornerRadius="24" Color="Black" Opacity="0.20" />
-                <BoxView HorizontalOptions="Fill" Margin="58,-13,58,0" HeightRequest="5" CornerRadius="24" Color="White" Opacity="0.75" />
-                <ProgressBar HorizontalOptions="Fill" Margin="60,-95,60,0" ProgressColor="#FFC772" Progress="100" VerticalOptions="EndAndExpand"/>
+                <BoxView
+                    Margin="56,97,56,0"
+                    CornerRadius="24"
+                    HeightRequest="9"
+                    HorizontalOptions="Fill"
+                    Opacity="0.20"
+                    Color="Black" />
+                <BoxView
+                    Margin="58,-13,58,0"
+                    CornerRadius="24"
+                    HeightRequest="5"
+                    HorizontalOptions="Fill"
+                    Opacity="0.75"
+                    Color="White" />
+                <ProgressBar
+                    Margin="60,-95,60,0"
+                    HorizontalOptions="Fill"
+                    Progress="0.5"
+                    ProgressColor="#FFC772"
+                    VerticalOptions="EndAndExpand" />
                 <Grid Margin="60,-10,-85,0">
-                    <Label 
+                    <Label
                         Grid.Row="0"
                         Grid.Column="0"
                         FontSize="10"
                         Text="Память хранилища"
-                        TextColor="#7e7e7e"/>
-                    <Label 
+                        TextColor="#7e7e7e" />
+                    <Label
                         Grid.Row="0"
                         Grid.Column="1"
                         FontSize="10"
                         Text="1024/1024 MB"
-                        TextColor="#7e7e7e"/>
+                        TextColor="#7e7e7e" />
                 </Grid>
-                
+
             </StackLayout>
-            <StackLayout Grid.Row="1"
-                Grid.Column="0">
-                <Image Source="loopa.png"  Margin="-335,40,0,0" WidthRequest="20"></Image>
-                <Entry HorizontalOptions="Fill" PlaceholderColor="#7e7e7e" IsEnabled="True" Margin="50,-37,20,20" Opacity="0.8" Placeholder=" Название документа"></Entry>
-                <BoxView HorizontalOptions="Fill" Opacity="0.87" HeightRequest="2" Color="#3465C4" Margin="20,-35,20,0" />
+            <StackLayout Grid.Row="1" Grid.Column="0">
+                <Image
+                    Margin="-335,40,0,0"
+                    Source="loopa.png"
+                    WidthRequest="20" />
+                <Entry
+                    Margin="50,-37,20,20"
+                    HorizontalOptions="Fill"
+                    IsEnabled="True"
+                    Opacity="0.8"
+                    Placeholder=" Название документа"
+                    PlaceholderColor="#7e7e7e" />
+                <BoxView
+                    Margin="20,-35,20,0"
+                    HeightRequest="2"
+                    HorizontalOptions="Fill"
+                    Opacity="0.87"
+                    Color="#3465C4" />
             </StackLayout>
             <!--<Button Text="Search" HorizontalOptions="Fill" HeightRequest="50" CornerRadius="24"/> -->
             <StackLayout
                 Grid.Row="2"
-                HeightRequest="220"
                 Margin="0,50,0,0"
+                HeightRequest="220"
                 HorizontalOptions="CenterAndExpand"
-                Orientation="Horizontal"
-                >
+                Orientation="Horizontal">
                 <Grid ColumnSpacing="25" RowSpacing="15">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -113,28 +153,25 @@
                     <Button
                         Grid.Row="0"
                         Grid.Column="0"
+                        BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/DocumentPage',
                                                        SourcePage={x:Reference Main}}"
-                        BackgroundColor="#E4E8FB"
                         Text="Документы:" />
                     <Button
                         Grid.Row="0"
                         Grid.Column="1"
                         BackgroundColor="#E4E8FB"
-                        Text="Налоги:" 
                         Command="{behaviors:NavigateTo 'NavigationPage/TaxPage',
                                                        SourcePage={x:Reference Main}}"
-                        />
+                        Text="Налоги:" />
 
-                    <Button 
+                    <Button
                         Grid.Row="1"
                         Grid.Column="0"
-                        
-                        Text="Имущество:"
                         BackgroundColor="#E4E8FB"
-                        
                         Command="{behaviors:NavigateTo 'NavigationPage/EstatePage',
-                                                       SourcePage={x:Reference Main}}">
+                                                       SourcePage={x:Reference Main}}"
+                        Text="Имущество:">
                         <!-- <Button.Effects>
                             <local:ShadowEffect Radius="5" DistanceX="5" DistanceY="5">
                                 <local:ShadowEffect.Color>
@@ -143,49 +180,56 @@
                                     </OnPlatform>
                                 </local:ShadowEffect.Color>
                             </local:ShadowEffect>
-                        </Button.Effects> -->
-                        
+                        </Button.Effects>-->
+
                     </Button>
                     <Button
                         Grid.Row="1"
                         Grid.Column="1"
-                        Text="ЖКХ:"
                         BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/UtilPage',
-                                                       SourcePage={x:Reference Main}}" />
+                                                       SourcePage={x:Reference Main}}"
+                        Text="ЖКХ:" />
                     <Button
                         Grid.Row="2"
                         Grid.Column="0"
-                        Text="Здоровье:"
                         BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/HealthPage',
-                                                       SourcePage={x:Reference Main}}"/>
+                                                       SourcePage={x:Reference Main}}"
+                        Text="Здоровье:" />
                     <Button
                         Grid.Row="2"
                         Grid.Column="1"
-                        Text="Другое:"
                         BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/OtherPage',
-                                                       SourcePage={x:Reference Main}}"/>
+                                                       SourcePage={x:Reference Main}}"
+                        Text="Другое:" />
                 </Grid>
-                <Button ImageSource="note.png" Margin="20,0,0,0" BackgroundColor="#FFC46B" Padding="0,0,0,0"
-                        Command="{behaviors:NavigateTo 'NavigationPage/NotePage',
-                                                       SourcePage={x:Reference Main}}">
-                </Button>
+                <Button
+                    Margin="20,0,0,0"
+                    Padding="0,0,0,0"
+                    BackgroundColor="#FFC46B"
+                    Command="{behaviors:NavigateTo 'NavigationPage/NotePage',
+                                                   SourcePage={x:Reference Main}}"
+                    ImageSource="note.png" />
             </StackLayout>
             <StackLayout
                 Grid.Row="3"
                 HeightRequest="30"
                 HorizontalOptions="CenterAndExpand"
-                Orientation="Horizontal"
-                >
+                Orientation="Horizontal">
 
-                <Button Margin="0,15,0,10" WidthRequest="380" Padding="0,0,0,0" HorizontalOptions="Center"
-                Grid.Row="2" BackgroundColor="#E4E8FB" ImageSource="info.png" Command="{behaviors:NavigateTo 'NavigationPage/BinPage',
-                                                       SourcePage={x:Reference Main}}" 
-                        
-                />
-                
+                <Button
+                    Grid.Row="2"
+                    Margin="0,15,0,10"
+                    Padding="0,0,0,0"
+                    BackgroundColor="#E4E8FB"
+                    Command="{behaviors:NavigateTo 'NavigationPage/BinPage',
+                                                   SourcePage={x:Reference Main}}"
+                    HorizontalOptions="Center"
+                    ImageSource="info.png"
+                    WidthRequest="380" />
+
             </StackLayout>
         </Grid>
 
