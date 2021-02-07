@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Fody;
 using MediatR;
 using MySafe.Extensions;
 using MySafe.Mediator.SignIn;
@@ -19,6 +20,7 @@ using RestSharp.Authenticators;
 
 namespace MySafe.Mediator.SignInTwoFactor
 {
+    [ConfigureAwait(false)]
     public class TwoFactorCommandHandler : IRequestHandler<TwoFactorCommand, UserResponse>
     {
         private readonly IRestClient _restClient;
@@ -44,8 +46,7 @@ namespace MySafe.Mediator.SignInTwoFactor
                 var httpRequest = new RestRequest("users/two_factor_authentication", Method.PUT)
                     .AddJsonBody(serializedUser);
 
-                var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken)
-                    .ConfigureAwait(false);
+                var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken);
                 
                 if (!response.IsSuccessful)
                 {

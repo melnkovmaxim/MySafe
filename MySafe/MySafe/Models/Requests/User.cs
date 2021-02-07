@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace MySafe.Models.Requests
 {
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
-    public class User : BaseJsonObject
+    public class User : JsonObjectBase
     {
         [JsonProperty("login")]
         public string Login { get; set; }

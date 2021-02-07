@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace MySafe.Models
 {
-    public abstract class BaseJsonObject
+    public abstract class JsonObjectBase
     {
         //  Получаем сериализованный объект вместе с корневым названием
         public virtual string SerializeWithRoot()

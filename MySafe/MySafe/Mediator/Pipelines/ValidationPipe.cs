@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Validators;
 using MediatR;
+using MySafe.Models.Responses;
 
 namespace MySafe.Mediator.Pipelines
 {
-    public class ValidationPipe<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest: IRequest<TResponse>
+    public class ValidationPipe<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
+        where TRequest: IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
@@ -29,7 +31,18 @@ namespace MySafe.Mediator.Pipelines
                 .ToList();
 
             if (failures.Count != 0)
-            {
+            {            
+                var responseType = typeof(TResponse);
+                var instance = Activator.CreateInstance(responseType) as IResponse;
+
+                if (instance == null)
+                {
+                    var messages = failures.Select(x => x.ErrorMessage);
+                    throw new ValidationException(string.Join(", ", messages));
+                }
+
+                instance.Error = failures.First().ErrorMessage;
+                return Task.FromResult((TResponse) instance);
             }
 
             return next();

@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Fody;
 using MediatR;
 using MySafe.Extensions;
 using MySafe.Models.Responses;
@@ -17,6 +18,7 @@ using RestSharp.Authenticators;
 
 namespace MySafe.Mediator.SignOut
 {
+    [ConfigureAwait(false)]
     public class SignOutCommandHandler : IRequestHandler<SignOutCommand, UserResponse>
     {
         private readonly IRestClient _restClient;

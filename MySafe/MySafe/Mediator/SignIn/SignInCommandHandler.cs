@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using DryIoc;
+using Fody;
 using MediatR;
 using MySafe.Extensions;
 using MySafe.Models.Requests;
@@ -16,6 +17,7 @@ using Xamarin.Essentials;
 
 namespace MySafe.Mediator.SignIn
 {
+    [ConfigureAwait(false)]
     public class SignInCommandHandler : IRequestHandler<SignInCommand, UserResponse>
     {
         private readonly IRestClient _restClient;

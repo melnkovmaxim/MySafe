@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Fody;
 using MySafe.Repositories.Abstractions;
 using MySafe.Services.Abstractions;
 using Plugin.Fingerprint;
@@ -15,12 +16,18 @@ namespace MySafe.Services
     public class DeviceAuthService : IDeviceAuthService, ITransientService
     {
         private const string FINGER_PRINT_SCAN_TITLE = "Вход в MySafe";
+        private readonly ISecureStorageRepository _secureStorage;
+
+        public DeviceAuthService(ISecureStorageRepository secureStorage)
+        {
+            _secureStorage = secureStorage;
+        }
 
         public async Task<bool> TryLoginAsync(string password, Action actionOnLogin, TimeSpan vibrationDuration)
         {
             await Task.Run(() => Thread.Sleep(500));
 
-            var correctPassword = await Ioc.Resolve<ISecureStorageRepository>().GetLocalPasswordAsync();
+            var correctPassword = await _secureStorage.GetLocalPasswordAsync();
 
             if (password == correctPassword)
             {
@@ -51,21 +58,24 @@ namespace MySafe.Services
 
             return false;
         }
-
+        
+        [ConfigureAwait(false)]
         public async Task RegisterAsync(string password, int requiredLength, Action actionOnRegister)
         {
             if (password.Length == requiredLength)
             {
-                await Ioc.Resolve<ISecureStorageRepository>().SetLocalPasswordAsync(password);
+                await _secureStorage.SetLocalPasswordAsync(password);
+
                 actionOnRegister?.Invoke();
             }
             
             await Task.Run(() => Thread.Sleep(500));
         }
-
+        
+        [ConfigureAwait(false)]
         public async Task Logout()
         {
-            await Ioc.Resolve<ISecureStorageRepository>().RemovePasswordAsync();
+            await _secureStorage.RemovePasswordAsync();
         }
     }
 }

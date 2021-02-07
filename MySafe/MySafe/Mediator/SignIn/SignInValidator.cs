@@ -18,9 +18,5 @@ namespace MySafe.Mediator.SignIn
             RuleFor(s => s.Password)
                 .NotEmpty();
         }
-
-        protected override void RaiseValidationException(ValidationContext<SignInCommand> context, ValidationResult result)
-        {
-        }
     }
 }

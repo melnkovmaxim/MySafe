@@ -2,10 +2,12 @@
 using System.IdentityModel.Tokens.Jwt;
 using MySafe.Repositories.Abstractions;
 using System.Threading.Tasks;
+using Fody;
 using Xamarin.Essentials;
 
 namespace MySafe.Repositories
 {
+    [ConfigureAwait(false)]
     public class SecureStorageRepository : ISecureStorageRepository
     {
         public Task<string> GetLocalPasswordAsync()

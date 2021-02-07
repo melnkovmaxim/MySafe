@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Fody;
 using MediatR;
 using MySafe.Models.Responses;
 using Newtonsoft.Json;
@@ -14,6 +15,7 @@ using RestSharp.Authenticators;
 
 namespace MySafe.Mediator.SafeInfo
 {
+    [ConfigureAwait(false)]
     public class SafeInfoQueryHandler : IRequestHandler<SafeInfoQuery, SafeInfoResponse>
     {
         private readonly IRestClient _restClient;

@@ -7,6 +7,7 @@ using AutoMapper;
 using DryIoc;
 using FluentValidation;
 using MediatR;
+using MySafe.Core;
 using MySafe.Repositories;
 using MySafe.Repositories.Abstractions;
 using MySafe.Services;
@@ -31,7 +32,7 @@ namespace MySafe
             containerRegistry.Register<IPasswordManagerService, PasswordManagerService>();
             containerRegistry.Register<ISecureStorageRepository, SecureStorageRepository>();
             containerRegistry.Register<IDeviceAuthService, DeviceAuthService>();
-            containerRegistry.RegisterInstance(typeof(IRestClient), new RestClient("https://mysafeonline.com/"));//));//""));
+            containerRegistry.RegisterInstance(typeof(IRestClient), new RestClient(MySafeApp.Resources.ServerHost));
 
             return containerRegistry;
         }
@@ -45,10 +46,11 @@ namespace MySafe
 
         public static IContainerRegistry AddNavigation(this IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<NavigationPage>();
+            //containerRegistry.RegisterForNavigation<NavigationPage>();
+
             //var types = typeof(Configure).Assembly.GetTypes();
             //var pages = types
-            //    .Where(t => t.BaseType == typeof(ContentPage) && t.Name.EndsWith("Page"));  
+            //    .Where(t => t.BaseType == typeof(ContentPage) && t.Name.EndsWith("Page"));
             //var viewModels = types
             //    .Where(t => t.BaseType == typeof(ViewModelBase) || t.Name.EndsWith("ViewModel"))
             //    .ToList();
@@ -58,7 +60,7 @@ namespace MySafe
             //    var pageName = page.Name.Replace("Page", string.Empty);
             //    var viewModel = viewModels.FirstOrDefault(vm => vm.Name.StartsWith(pageName));
 
-            //    containerRegistry.RegisterForNavigation<typeof(NavigationPage)>();
+            //    containerRegistry.RegisterForNavigation(viewModel page.Name);
             //}
 
             containerRegistry.RegisterForNavigation<AuthPage, AuthViewModel>();
