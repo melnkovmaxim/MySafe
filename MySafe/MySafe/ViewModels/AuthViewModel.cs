@@ -24,21 +24,21 @@ namespace MySafe.ViewModels
 {
     public class AuthViewModel : ViewModelBase
     {
+        public DelegateCommand RemoveLastNumberCommand{ get; }
+        public DelegateCommand LoadedCommand { get; }
+        public DelegateCommand FingerPrintScanCommand { get; }
+        public DelegateCommand RestorePasswordCommand { get; }
+        public DelegateCommand<string> NumberInputCommand { get; }
+        
+        public IPasswordManagerService PasswordManager { get; }
+        public bool IsRegistered { get; set; }
+
         private readonly INavigationService _navigationService;
         private readonly IDeviceAuthService _deviceAuthService;
         private readonly TimeSpan _vibrationDuration;
-        
-        private Action _actionOnLogin;
-        private Action _actionOnRegister;
 
-        private DelegateCommand _removeLastNumberCommand;
-        private DelegateCommand _loadedCommand;
-        private DelegateCommand _fingerPrintScanCommand;
-        private DelegateCommand _restorePasswordCommand;
-        private DelegateCommand<string> _numberInputCommand;
-
-        public IPasswordManagerService PasswordManager { get; }
-        public bool IsRegistered { get; set; }
+        private readonly Action _actionOnLogin;
+        private readonly Action _actionOnRegister;
 
         public AuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager, IDeviceAuthService deviceAuthService)
         {
@@ -47,32 +47,37 @@ namespace MySafe.ViewModels
             _deviceAuthService = deviceAuthService;
             _vibrationDuration = TimeSpan.FromSeconds(0.2);
 
-            
-            _actionOnLogin = async () =>
-            {
-                var storageRepository = Ioc.Resolve<ISecureStorageRepository>();
-                var token = await storageRepository.GetTokenAsync();
-                await _navigationService.NavigateAsync(IsValidToken(new JwtSecurityToken(token))
-                    ? nameof(MainPage)
-                    : nameof(SignInPage));
-            };
-            _actionOnRegister = async () => await _navigationService.NavigateAsync(nameof(AuthPage));
+            LoadedCommand = new DelegateCommand(Loaded);
+            RemoveLastNumberCommand = new DelegateCommand(() => PasswordManager.RemoveLast());
+            FingerPrintScanCommand = new DelegateCommand(FingerPrintScan);
+            RestorePasswordCommand = new DelegateCommand(RestorePassword);
+            NumberInputCommand = new DelegateCommand<string>(NumberInput);
 
+            _actionOnLogin = Login;
+            _actionOnRegister = async () => await _navigationService.NavigateAsync(nameof(AuthPage));
         }
 
-        public DelegateCommand LoadedCommand => _loadedCommand ??= new DelegateCommand(async () =>
+        private async void Login()
+        {
+            var storageRepository = Ioc.Resolve<ISecureStorageRepository>();
+            var token = await storageRepository.GetTokenAsync();
+            await _navigationService.NavigateAsync(IsValidToken(new JwtSecurityToken(token))
+                ? nameof(MainPage)
+                : nameof(SignInPage));
+        }
+
+        private async void Loaded()
         {
             var passwordFromStorage = await Ioc.Resolve<ISecureStorageRepository>().GetLocalPasswordAsync();
             IsRegistered = !string.IsNullOrEmpty(passwordFromStorage);
-        });
+        }
 
-        public DelegateCommand FingerPrintScanCommand => _fingerPrintScanCommand ??= new DelegateCommand(async () =>
+        private async void FingerPrintScan()
         {
             await _deviceAuthService.TryLoginWithPrintScanAsync(_actionOnLogin, _vibrationDuration);
-        });
+        }
 
-        public DelegateCommand<string> NumberInputCommand => 
-            _numberInputCommand ??= new DelegateCommand<string>(async (number) =>
+        private async void NumberInput(string number)
         {
             if (!PasswordManager.TryAdd(number) || PasswordManager.PasswordLength != PasswordManager.PasswordMaxLength)
                 return;
@@ -89,17 +94,12 @@ namespace MySafe.ViewModels
                 await Ioc.Resolve<IDeviceAuthService>()
                     .RegisterAsync(PasswordManager.Password, PasswordManager.PasswordMaxLength, _actionOnRegister);
             }
-        });
+        }
 
-        public DelegateCommand RemoveLastNumberCommand => _removeLastNumberCommand ??= new DelegateCommand(() =>
-        {
-            PasswordManager.RemoveLast();
-        });
-
-        public DelegateCommand RestorePasswordCommand => _restorePasswordCommand ??= new DelegateCommand(async () =>
+        private async void RestorePassword()
         {
             await Ioc.Resolve<ISecureStorageRepository>().RemovePasswordAsync();
             await _navigationService.NavigateAsync(nameof(AuthPage));
-        });
+        }
     }
 }

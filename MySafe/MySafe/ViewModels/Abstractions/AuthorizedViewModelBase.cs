@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySafe.Repositories.Abstractions;
 using MySafe.Views;
+using Prism.Commands;
 using Prism.Navigation;
 
 namespace MySafe.ViewModels.Abstractions
@@ -14,7 +15,7 @@ namespace MySafe.ViewModels.Abstractions
     {
         protected readonly INavigationService _navigationService;
         protected JwtSecurityToken _jwtToken;
-        public bool ToggleTemp { get; set; }
+        protected DelegateCommand _loadedCommand;
 
         protected AuthorizedViewModelBase(INavigationService navigationService)
         {
@@ -37,7 +38,7 @@ namespace MySafe.ViewModels.Abstractions
                 return;
             }
 
-            ToggleTemp = true;
+            _loadedCommand?.Execute();
         }
     }
 }
