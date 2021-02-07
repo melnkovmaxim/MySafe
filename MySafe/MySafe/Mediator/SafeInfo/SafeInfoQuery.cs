@@ -5,16 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
-using MySafe.Extensions;
 using MySafe.Models.Responses;
 
-namespace MySafe.Mediator.SignOut
+namespace MySafe.Mediator.SafeInfo
 {
-    public class SignOutCommand : IRequest<UserResponse>
+    public class SafeInfoQuery : IRequest<SafeInfoResponse>
     {
         public JwtSecurityToken JwtToken { get; set; }
 
-        public SignOutCommand(JwtSecurityToken jwtToken)
+        public SafeInfoQuery(JwtSecurityToken jwtToken)
         {
             JwtToken = jwtToken;
         }

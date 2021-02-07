@@ -6,6 +6,7 @@
     xmlns:behaviors="http://prismlibrary.com"
     x:Name="Main"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=MainViewModel}">
+
     <ContentPage.Resources>
         <Style TargetType="Button">
             <!-- <Setter Property="HeightRequest" Value="70" /> -->
@@ -44,6 +45,12 @@
                     HorizontalOptions="FillAndExpand"
                     Orientation="Horizontal"
                     VerticalOptions="FillAndExpand">
+
+                    <Switch IsToggled="{Binding ToggleTemp}" IsVisible="False" >
+                        <Switch.Behaviors>
+                            <behaviors:EventToCommandBehavior Command="{Binding LoadedCommand}" EventName="Toggled" />
+                        </Switch.Behaviors>
+                    </Switch>
 
                     <Label
                         Margin="20,0,0,0"
@@ -94,7 +101,7 @@
                 <ProgressBar
                     Margin="60,-95,60,0"
                     HorizontalOptions="Fill"
-                    Progress="0.5"
+                    Progress="{Binding Progress}"
                     ProgressColor="#FFC772"
                     VerticalOptions="EndAndExpand" />
                 <Grid Margin="60,-10,-85,0">
@@ -108,7 +115,7 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         FontSize="10"
-                        Text="1024/1024 MB"
+                        Text="{Binding SafeSizeInfo}"
                         TextColor="#7e7e7e" />
                 </Grid>
 
@@ -231,6 +238,7 @@
                     WidthRequest="380" />
 
             </StackLayout>
+
         </Grid>
 
     </ContentPage.Content>

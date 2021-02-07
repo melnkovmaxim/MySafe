@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
-using MySafe.Models.MediatorResponses;
+using MySafe.Models.Responses;
 using RestSharp;
 
 namespace MySafe.Mediator.SignInTwoFactor

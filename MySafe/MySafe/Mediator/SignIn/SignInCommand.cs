@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySafe.Models.MediatorResponses;
+using MySafe.Models.Responses;
 
 namespace MySafe.Mediator.SignIn
 {

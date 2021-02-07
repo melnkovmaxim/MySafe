@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -8,41 +7,33 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using MySafe.Extensions;
-using MySafe.Mediator.SignIn;
-using MySafe.Models.Requests;
 using MySafe.Models.Responses;
-using MySafe.Repositories.Abstractions;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
 
-namespace MySafe.Mediator.SignInTwoFactor
+namespace MySafe.Mediator.SafeInfo
 {
-    public class TwoFactorCommandHandler : IRequestHandler<TwoFactorCommand, UserResponse>
+    public class SafeInfoQueryHandler : IRequestHandler<SafeInfoQuery, SafeInfoResponse>
     {
         private readonly IRestClient _restClient;
         private readonly IMapper _mapper;
-
-        public TwoFactorCommandHandler(IRestClient restClient, IMapper mapper)
+        
+        public SafeInfoQueryHandler(IRestClient restClient, IMapper mapper)
         {
             _restClient = restClient;
             _mapper = mapper;
         }
 
-        public async Task<UserResponse> Handle(TwoFactorCommand request, CancellationToken cancellationToken)
+        public async Task<SafeInfoResponse> Handle(SafeInfoQuery request, CancellationToken cancellationToken)
         {
-            var cmdResponse = new UserResponse();
+            var cmdResponse = new SafeInfoResponse();
 
             try
             {
-                var twoFactor = _mapper.Map<TwoFactorCommand, TwoFactor>(request);
-                var serializedUser = JsonConvert.SerializeObject(twoFactor);
-
                 _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
 
-                var httpRequest = new RestRequest("users/two_factor_authentication", Method.PUT)
-                    .AddJsonBody(serializedUser);
+                var httpRequest = new RestRequest("api/v1/my_safe", Method.GET);
 
                 var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken)
                     .ConfigureAwait(false);
@@ -52,12 +43,8 @@ namespace MySafe.Mediator.SignInTwoFactor
                     var errorResponse = JsonConvert.DeserializeObject<BaseResponse>(response.Content);
                     throw new HttpRequestException(errorResponse.Error);
                 }
-                
-                var jwtToken = new JwtSecurityTokenHandler()
-                    .GetJwtTokenFromResponse(response);
 
-                await Ioc.Resolve<ISecureStorageRepository>()
-                    .SetTokenAsync(jwtToken.RawData);
+                cmdResponse = JsonConvert.DeserializeObject<SafeInfoResponse>(response.Content);
             }
             catch (Exception ex)
             {

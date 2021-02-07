@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MediatR;
 using MySafe.Mediator.SignIn;
 using Prism;
+using Prism.Behaviors;
 using Prism.Commands;
 using Prism.DryIoc;
 using Prism.Navigation;
@@ -28,7 +29,5 @@ namespace MySafe.Views
             Button button = (Button)sender;
             button.BackgroundColor = Color.Blue;
         }
-
-
     }
 }

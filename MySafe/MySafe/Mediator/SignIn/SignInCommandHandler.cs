@@ -1,14 +1,18 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using DryIoc;
 using MediatR;
 using MySafe.Extensions;
-using MySafe.Models.MediatorResponses;
 using MySafe.Models.Requests;
+using MySafe.Models.Responses;
+using Newtonsoft.Json;
 using RestSharp;
+using Xamarin.Essentials;
 
 namespace MySafe.Mediator.SignIn
 {
@@ -25,7 +29,7 @@ namespace MySafe.Mediator.SignIn
 
         public async Task<UserResponse> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
-            var commandResponse = new UserResponse();
+            var cmdResponse = new UserResponse();
 
             try
             {
@@ -40,20 +44,21 @@ namespace MySafe.Mediator.SignIn
 
                 if (!response.IsSuccessful)
                 {
-                    throw response.ErrorException;
+                    var errorResponse = JsonConvert.DeserializeObject<BaseResponse>(response.Content);
+                    throw new HttpRequestException(errorResponse.Error);
                 }
 
                 var jwtToken = new JwtSecurityTokenHandler()
                     .GetJwtTokenFromResponse(response);
 
-                commandResponse.JwtToken = jwtToken;
+                cmdResponse.JwtToken = jwtToken;
             }
             catch (Exception ex)
             {
-                commandResponse.Error = ex.Message;
+                cmdResponse.Error = ex.Message;
             }
 
-            return commandResponse;
+            return cmdResponse;
         }
     }
 }

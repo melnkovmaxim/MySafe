@@ -28,6 +28,14 @@ namespace MySafe.Repositories
             return SecureStorage.GetAsync(nameof(JwtSecurityToken));
         }
 
+        public async Task<JwtSecurityToken> GetJstTokenAsync()
+        {
+            var token = await SecureStorage.GetAsync(nameof(JwtSecurityToken))
+                .ConfigureAwait(false);
+
+            return new JwtSecurityToken(token); 
+        }
+
         public Task SetTokenAsync(string jwtToken)
         {
             return SecureStorage.SetAsync(nameof(JwtSecurityToken), jwtToken);

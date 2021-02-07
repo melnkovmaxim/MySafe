@@ -6,12 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\Responses\**" />
-    <EmbeddedResource Remove="Models\Responses\**" />
-    <None Remove="Models\Responses\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Quirlycues.ttf" />
     <None Remove="Resources\docs.png" />
     <None Remove="Resources\Fonts\Roboto-Medium.ttf" />

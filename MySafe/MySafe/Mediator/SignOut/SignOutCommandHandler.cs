@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using MySafe.Extensions;
-using MySafe.Models.MediatorResponses;
+using MySafe.Models.Responses;
 using MySafe.Repositories.Abstractions;
 using MySafe.Services.Abstractions;
+using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
 
@@ -36,7 +38,8 @@ namespace MySafe.Mediator.SignOut
 
                 if (!response.IsSuccessful)
                 {
-                    throw response.ErrorException;
+                    var errorResponse = JsonConvert.DeserializeObject<BaseResponse>(response.Content);
+                    throw new HttpRequestException(errorResponse.Error);
                 }
 
                 await Ioc.Resolve<ISecureStorageRepository>().RemoveToken();

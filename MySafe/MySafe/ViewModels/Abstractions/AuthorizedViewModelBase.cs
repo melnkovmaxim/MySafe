@@ -14,6 +14,7 @@ namespace MySafe.ViewModels.Abstractions
     {
         protected readonly INavigationService _navigationService;
         protected JwtSecurityToken _jwtToken;
+        public bool ToggleTemp { get; set; }
 
         protected AuthorizedViewModelBase(INavigationService navigationService)
         {
@@ -26,17 +27,17 @@ namespace MySafe.ViewModels.Abstractions
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {   
-            _jwtToken = (JwtSecurityToken) parameters[nameof(JwtSecurityToken)];
-
-            if (IsValidToken(_jwtToken)) return;
-
-            var token = await Ioc.Resolve<ISecureStorageRepository>().GetTokenAsync();
-            _jwtToken = new JwtSecurityToken(token);
+            _jwtToken ??= (JwtSecurityToken) parameters[nameof(JwtSecurityToken)];
+            _jwtToken ??= await Ioc.Resolve<ISecureStorageRepository>()
+                .GetJstTokenAsync();
 
             if (!IsValidToken(_jwtToken))
             {
                 await _navigationService.NavigateAsync(nameof(SignInPage));
+                return;
             }
+
+            ToggleTemp = true;
         }
     }
 }
