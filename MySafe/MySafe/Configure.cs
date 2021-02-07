@@ -46,7 +46,7 @@ namespace MySafe
 
         public static IContainerRegistry AddNavigation(this IContainerRegistry containerRegistry)
         {
-            //containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<NavigationPage>();
 
             //var types = typeof(Configure).Assembly.GetTypes();
             //var pages = types
