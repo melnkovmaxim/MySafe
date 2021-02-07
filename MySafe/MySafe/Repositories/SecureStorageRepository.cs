@@ -33,7 +33,7 @@ namespace MySafe.Repositories
             var token = await SecureStorage.GetAsync(nameof(JwtSecurityToken))
                 .ConfigureAwait(false);
 
-            return new JwtSecurityToken(token); 
+            return string.IsNullOrEmpty(token) ? null : new JwtSecurityToken(token); 
         }
 
         public Task SetTokenAsync(string jwtToken)

@@ -60,8 +60,8 @@ namespace MySafe.ViewModels
         private async void Login()
         {
             var storageRepository = Ioc.Resolve<ISecureStorageRepository>();
-            var token = await storageRepository.GetTokenAsync();
-            await _navigationService.NavigateAsync(IsValidToken(new JwtSecurityToken(token))
+            var token = await storageRepository.GetJstTokenAsync();
+            await _navigationService.NavigateAsync(IsValidToken(token)
                 ? nameof(MainPage)
                 : nameof(SignInPage));
         }
@@ -98,7 +98,9 @@ namespace MySafe.ViewModels
 
         private async void RestorePassword()
         {
-            await Ioc.Resolve<ISecureStorageRepository>().RemovePasswordAsync();
+            var secureStorage = Ioc.Resolve<ISecureStorageRepository>();
+            await secureStorage.RemovePasswordAsync();
+            await secureStorage.RemoveToken();
             await _navigationService.NavigateAsync(nameof(AuthPage));
         }
     }
