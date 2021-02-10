@@ -13,10 +13,12 @@ namespace MySafe.Mediator.SignIn
         public SignInValidator()
         {
             RuleFor(s => s.Login)
-                .NotEmpty();
+                .NotEmpty()
+                .WithMessage("Введите логин");
 
             RuleFor(s => s.Password)
-                .NotEmpty();
+                .NotEmpty()
+                .WithMessage("Введите пароль");
         }
     }
 }

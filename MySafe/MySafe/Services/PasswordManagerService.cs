@@ -2,22 +2,22 @@
 using Prism.Mvvm;
 using System.Collections.ObjectModel;
 using System.Linq;
+using MySafe.Core;
 
 namespace MySafe.Services
 {
-    // TODO: Убрать из моделей, решить вопрос с RaiseNotify и большим количеством свойств
     public class PasswordManagerService : BindableBase, IPasswordManagerService, ITransientService
     {
         public ObservableCollection<string> PasswordCollection { get; }
         public string Password => string.Join("", PasswordCollection.Reverse());
-        public int PasswordMaxLength => PasswordCollection.Count;
+        public int PasswordMaxLength => MySafeApp.Resources.RequiredLengthDevicePwd;
         public int PasswordLength => PasswordCollection.Count(x => !string.IsNullOrEmpty(x));
 
 
         public PasswordManagerService()
         {
             PasswordCollection = new ObservableCollection<string>();
-            SetPasswordLength(5);
+            SetPasswordLength(PasswordMaxLength);
         }
 
         public void SetPasswordLength(int length)

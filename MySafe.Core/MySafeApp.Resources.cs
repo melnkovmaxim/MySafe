@@ -6,6 +6,7 @@
         {
             public static string PasswordPath => "ApplicationPassword";
             public static string ServerHost = "https://mysafeonline.com/";
+            public static int RequiredLengthDevicePwd = 5;
         }
     }
 }

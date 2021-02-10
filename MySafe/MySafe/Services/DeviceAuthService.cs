@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Fody;
+using MySafe.Core;
 using MySafe.Repositories.Abstractions;
 using MySafe.Services.Abstractions;
 using Plugin.Fingerprint;
@@ -60,9 +61,9 @@ namespace MySafe.Services
         }
         
         [ConfigureAwait(false)]
-        public async Task RegisterAsync(string password, int requiredLength, Action actionOnRegister)
+        public async Task RegisterAsync(string password, Action actionOnRegister)
         {
-            if (password.Length == requiredLength)
+            if (password.Length == MySafeApp.Resources.RequiredLengthDevicePwd)
             {
                 await _secureStorage.SetLocalPasswordAsync(password);
 

@@ -92,7 +92,7 @@ namespace MySafe.ViewModels
             else
             {
                 await Ioc.Resolve<IDeviceAuthService>()
-                    .RegisterAsync(PasswordManager.Password, PasswordManager.PasswordMaxLength, _actionOnRegister);
+                    .RegisterAsync(PasswordManager.Password, _actionOnRegister);
             }
         }
 

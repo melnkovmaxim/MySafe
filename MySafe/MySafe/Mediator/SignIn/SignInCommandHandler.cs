@@ -25,7 +25,7 @@ namespace MySafe.Mediator.SignIn
 
         public SignInCommandHandler(IRestClient restClient, IMapper mapper)
         {
-            this._restClient = restClient;
+            _restClient = restClient;
             _mapper = mapper;
         }
 
