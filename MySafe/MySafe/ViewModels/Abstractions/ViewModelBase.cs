@@ -43,8 +43,7 @@ namespace MySafe.ViewModels.Abstractions
 
             if (IsValidToken(token))
             {
-                var @params = new NavigationParameters();
-                @params.Add(nameof(JwtSecurityToken), token);
+                var @params = new NavigationParameters {{nameof(JwtSecurityToken), token}};
                 await _navigationService.NavigateAsync(pageName, @params);
             }
         }

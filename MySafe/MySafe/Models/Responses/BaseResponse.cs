@@ -7,7 +7,7 @@ namespace MySafe.Models.Responses
     public abstract class BaseResponse: IResponse
     {
         [JsonProperty("error")]
-        public string Error { get; }
+        public string Error { get; set; }
         public bool HasError => !string.IsNullOrEmpty(Error);
     }
 }
