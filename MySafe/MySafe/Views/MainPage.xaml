@@ -216,8 +216,7 @@
                     Margin="20,0,0,0"
                     Padding="0,0,0,0"
                     BackgroundColor="#FFC46B"
-                    Command="{behaviors:NavigateTo 'NavigationPage/NotePage',
-                                                   SourcePage={x:Reference Main}}"
+                    Command="{Binding SignOutCommand}"
                     ImageSource="note.png" />
             </StackLayout>
             <StackLayout

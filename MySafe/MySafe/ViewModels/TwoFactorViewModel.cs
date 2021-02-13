@@ -26,7 +26,7 @@ namespace MySafe.ViewModels
         public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
         {
             var response = await _mediator.Send(new TwoFactorCommand(Code, _tempToken));
-            await HandleResponse(response, nameof(MainPage));
+            await HandleResponse(response, nameof(MainPage), response.JwtToken);
         });
 
 

@@ -30,26 +30,12 @@ namespace MySafe.Mediator.SignOut
         
         public async Task<UserResponse> Handle(SignOutCommand request, CancellationToken cancellationToken)
         {
-            var cmdResponse = new UserResponse();
+            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
 
-            try
-            {
-                _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-                var httpRequest = new RestRequest("users/sign_out", Method.DELETE);
-                var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken);
-
-                if (!response.IsSuccessful)
-                {
-                    var errorResponse = JsonConvert.DeserializeObject<BaseResponse>(response.Content);
-                    throw new HttpRequestException(errorResponse.Error);
-                }
-
-                await Ioc.Resolve<ISecureStorageRepository>().RemoveToken();
-            }
-            catch (Exception ex)
-            {
-                cmdResponse.Error = ex.Message;
-            }
+            var httpRequest = new RestRequest("users/sign_out", Method.DELETE);
+            var cmdResponse = await _restClient.GetResponseAsync<UserResponse>(httpRequest, cancellationToken);
+            
+            await Ioc.Resolve<ISecureStorageRepository>().RemoveToken();
 
             return cmdResponse;
         }

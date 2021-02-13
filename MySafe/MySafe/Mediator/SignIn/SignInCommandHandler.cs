@@ -13,6 +13,7 @@ using MySafe.Models.Requests;
 using MySafe.Models.Responses;
 using Newtonsoft.Json;
 using RestSharp;
+using RestSharp.Authenticators;
 using Xamarin.Essentials;
 
 namespace MySafe.Mediator.SignIn
@@ -31,34 +32,13 @@ namespace MySafe.Mediator.SignIn
 
         public async Task<UserResponse> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
-            var cmdResponse = new UserResponse();
+            var serializedUser = _mapper.Map<SignInCommand, User>(request)
+                .SerializeWithRoot();
 
-            try
-            {
-                var serializedUser = _mapper.Map<SignInCommand, User>(request)
-                    .SerializeWithRoot();
+            var httpRequest = new RestRequest("users/sign_in", Method.POST)
+                .AddJsonBody(serializedUser);
 
-                var httpRequest = new RestRequest("users/sign_in", Method.POST)
-                    .AddJsonBody(serializedUser);
-
-                var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken)
-                    .ConfigureAwait(false);
-
-                if (!response.IsSuccessful)
-                {
-                    var errorResponse = JsonConvert.DeserializeObject<BaseResponse>(response.Content);
-                    throw new HttpRequestException(errorResponse.Error);
-                }
-
-                var jwtToken = new JwtSecurityTokenHandler()
-                    .GetJwtTokenFromResponse(response);
-
-                cmdResponse.JwtToken = jwtToken;
-            }
-            catch (Exception ex)
-            {
-                cmdResponse.Error = ex.Message;
-            }
+            var cmdResponse = await _restClient.GetResponseAsync<UserResponse>(httpRequest, cancellationToken);
 
             return cmdResponse;
         }

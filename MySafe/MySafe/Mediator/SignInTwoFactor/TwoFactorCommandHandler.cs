@@ -34,36 +34,17 @@ namespace MySafe.Mediator.SignInTwoFactor
 
         public async Task<UserResponse> Handle(TwoFactorCommand request, CancellationToken cancellationToken)
         {
-            var cmdResponse = new UserResponse();
+            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
 
-            try
-            {
-                var twoFactor = _mapper.Map<TwoFactorCommand, TwoFactor>(request);
-                var serializedUser = JsonConvert.SerializeObject(twoFactor);
-
-                _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-
-                var httpRequest = new RestRequest("users/two_factor_authentication", Method.PUT)
-                    .AddJsonBody(serializedUser);
-
-                var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken);
-                
-                if (!response.IsSuccessful)
-                {
-                    var errorResponse = JsonConvert.DeserializeObject<BaseResponse>(response.Content);
-                    throw new HttpRequestException(errorResponse.Error);
-                }
-                
-                var jwtToken = new JwtSecurityTokenHandler()
-                    .GetJwtTokenFromResponse(response);
-
-                await Ioc.Resolve<ISecureStorageRepository>()
-                    .SetTokenAsync(jwtToken.RawData);
-            }
-            catch (Exception ex)
-            {
-                cmdResponse.Error = ex.Message;
-            }
+            var twoFactor = _mapper.Map<TwoFactorCommand, TwoFactor>(request);
+            var serializedUser = JsonConvert.SerializeObject(twoFactor);
+            var httpRequest = new RestRequest("users/two_factor_authentication", Method.PUT)
+                .AddJsonBody(serializedUser);
+            
+            var cmdResponse = await _restClient.GetResponseAsync<UserResponse>(httpRequest, cancellationToken);
+            
+            await Ioc.Resolve<ISecureStorageRepository>()
+                .SetTokenAsync(cmdResponse.JwtToken.RawData);
 
             return cmdResponse;
         }

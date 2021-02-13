@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Fody;
 using MediatR;
+using MySafe.Extensions;
 using MySafe.Models.Responses;
 using Newtonsoft.Json;
 using RestSharp;
@@ -29,29 +30,9 @@ namespace MySafe.Mediator.SafeInfo
 
         public async Task<SafeInfoResponse> Handle(SafeInfoQuery request, CancellationToken cancellationToken)
         {
-            var cmdResponse = new SafeInfoResponse();
-
-            try
-            {
-                _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-
-                var httpRequest = new RestRequest("api/v1/my_safe", Method.GET);
-
-                var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken)
-                    .ConfigureAwait(false);
-                
-                if (!response.IsSuccessful)
-                {
-                    var errorResponse = JsonConvert.DeserializeObject<BaseResponse>(response.Content);
-                    throw new HttpRequestException(errorResponse.Error);
-                }
-
-                cmdResponse = JsonConvert.DeserializeObject<SafeInfoResponse>(response.Content);
-            }
-            catch (Exception ex)
-            {
-                cmdResponse.Error = ex.Message;
-            }
+            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
+            var httpRequest = new RestRequest("api/v1/my_safe", Method.GET);
+            var cmdResponse = await _restClient.GetResponseAsync<SafeInfoResponse>(httpRequest, cancellationToken);
 
             return cmdResponse;
         }
