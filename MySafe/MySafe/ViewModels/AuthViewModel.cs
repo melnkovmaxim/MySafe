@@ -33,7 +33,6 @@ namespace MySafe.ViewModels
         public IPasswordManagerService PasswordManager { get; }
         public bool IsRegistered { get; set; }
 
-        private readonly INavigationService _navigationService;
         private readonly IDeviceAuthService _deviceAuthService;
         private readonly TimeSpan _vibrationDuration;
 
@@ -41,9 +40,9 @@ namespace MySafe.ViewModels
         private readonly Action _actionOnRegister;
 
         public AuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager, IDeviceAuthService deviceAuthService)
+            :base(navigationService)
         {
             PasswordManager = passwordManager;
-            _navigationService = navigationService;
             _deviceAuthService = deviceAuthService;
             _vibrationDuration = TimeSpan.FromSeconds(0.2);
 

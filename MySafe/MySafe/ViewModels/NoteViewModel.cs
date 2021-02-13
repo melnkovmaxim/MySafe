@@ -10,7 +10,7 @@ namespace MySafe.ViewModels
 {
     public class NoteViewModel : ViewModelBase
     {
-        public NoteViewModel(INavigationService navigationService)
+        public NoteViewModel(INavigationService navigationService) : base(navigationService)
         {
         }
     }

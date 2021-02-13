@@ -13,13 +13,12 @@ namespace MySafe.ViewModels.Abstractions
 {
     public abstract class AuthorizedViewModelBase : ViewModelBase, INavigatedAware
     {
-        protected readonly INavigationService _navigationService;
         protected JwtSecurityToken _jwtToken;
         protected DelegateCommand _loadedCommand;
 
-        protected AuthorizedViewModelBase(INavigationService navigationService)
+        protected AuthorizedViewModelBase(INavigationService navigationService) 
+            : base(navigationService)
         {
-            _navigationService = navigationService;
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)

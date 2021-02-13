@@ -8,6 +8,7 @@ namespace MySafe.Models.Responses
 {
     public interface IResponse
     {
-        string Error { get; set; }
+        string Error { get; }
+        bool HasError { get; }
     }
 }

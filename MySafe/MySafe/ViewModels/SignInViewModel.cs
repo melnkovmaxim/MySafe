@@ -10,7 +10,6 @@ namespace MySafe.ViewModels
 {
     public class SignInViewModel : ViewModelBase
     {
-        private readonly INavigationService _navigationService;
         private readonly IMediator _mediator;
         private AsyncCommand _signInCommand;
 
@@ -19,27 +18,15 @@ namespace MySafe.ViewModels
 
 
         public SignInViewModel(INavigationService navigationService, IMediator mediator)
+            :base(navigationService)
         {
-            _navigationService = navigationService;
             _mediator = mediator;
         }
 
         public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
         {
             var response = await _mediator.Send(new SignInCommand(Login, Password));
-
-            if (response.HasError)
-            {
-                Error = response.Error;
-                return;
-            }
-
-            if (IsValidToken(response.JwtToken))
-            {
-                var @params = new NavigationParameters();
-                @params.Add(nameof(JwtSecurityToken), response.JwtToken);
-                await _navigationService.NavigateAsync(nameof(TwoFactorPage), @params);
-            }
+            await HandleResponse(response, nameof(TwoFactorPage), response.JwtToken);
         });
     }
 }
