@@ -7,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using MySafe.Repositories;
 using MySafe.Repositories.Abstractions;
+using MySafe.Services;
 using MySafe.Services.Abstractions;
+using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms.Internals;
 
 namespace MySafe.Tests
@@ -20,35 +22,28 @@ namespace MySafe.Tests
         static Ioc()
         {
             var services = new ServiceCollection();
+            
+            services.AddTransient<ISecureStorage, SecureStorageWrapper>();
+            services.AddSingleton<Mock<IAsyncDelayerService>>();
+            services.AddSingleton<IAsyncDelayerService>(provider => provider.GetService<Mock<IAsyncDelayerService>>().Object);
 
-            typeof(MySafe.Ioc).Assembly.GetTypes()
+
+            typeof(MySafe.Configure).Assembly.GetTypes()
                 .Where(t => SERVICE_NAME_ENDINGS.Any(t.Name.EndsWith) && t.IsClass)
                 .ForEach(service =>
                 {
                     var interfaces = service.GetInterfaces();
                     var ownInterface = interfaces.FirstOrDefault(x => x.Name == $"I{service.Name}");
 
-                    if (service == typeof(SecureStorageRepository))
+                    if (interfaces.Any(x => x == typeof(ISingletonService)))
                     {
-
-                        services.AddTransient<Mock<ISecureStorageRepository>>();
-                        
-                    }
-                    else
-                    {
-
-                        if (interfaces.Any(x => x == typeof(ISingletonService)))
-                        {
-                            AddSingleton(services, service, ownInterface);
-                        }
-
-                        AddTransient(services, service, ownInterface);
+                        AddSingleton(services, service, ownInterface);
                     }
 
+                    AddTransient(services, service, ownInterface);
                 });
-
-            services.AddTransient<ISecureStorageRepository>(provider => provider.GetService<Mock<ISecureStorageRepository>>().Object);
-
+            
+                        
             _serviceProvider = services.BuildServiceProvider();
 
         }

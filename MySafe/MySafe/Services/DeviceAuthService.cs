@@ -18,15 +18,17 @@ namespace MySafe.Services
     {
         private const string FINGER_PRINT_SCAN_TITLE = "Вход в MySafe";
         private readonly ISecureStorageRepository _secureStorage;
+        private readonly IAsyncDelayerService _delayerService;
 
-        public DeviceAuthService(ISecureStorageRepository secureStorage)
+        public DeviceAuthService(ISecureStorageRepository secureStorage, IAsyncDelayerService delayerService)
         {
             _secureStorage = secureStorage;
+            _delayerService = delayerService;
         }
 
-        public async Task<bool> TryLoginAsync(string password, Action actionOnLogin, TimeSpan vibrationDuration)
+        public async Task<bool> TryLoginAsync(string password, Action actionOnLogin = null)
         {
-            await Task.Run(() => Thread.Sleep(500));
+            await _delayerService.Delay();
 
             var correctPassword = await _secureStorage.GetLocalPasswordAsync();
 
@@ -38,13 +40,13 @@ namespace MySafe.Services
 
             if (password.Length == correctPassword.Length)
             {
-                Vibration.Vibrate(vibrationDuration);
+                Vibration.Vibrate(MySafeApp.Resources.DefaultVibrationDuration);
             }
 
             return false;
         }
 
-        public async Task<bool> TryLoginWithPrintScanAsync(Action actionOnLogin, TimeSpan vibrationDuration)
+        public async Task<bool> TryLoginWithPrintScanAsync(Action actionOnLogin = null)
         {
             var request = new AuthenticationRequestConfiguration(FINGER_PRINT_SCAN_TITLE, string.Empty);
             var result = await CrossFingerprint.Current.AuthenticateAsync(request);
@@ -55,13 +57,13 @@ namespace MySafe.Services
                 return true;
             }
 
-            Vibration.Vibrate(vibrationDuration);
+            Vibration.Vibrate(MySafeApp.Resources.DefaultVibrationDuration);
 
             return false;
         }
         
         [ConfigureAwait(false)]
-        public async Task RegisterAsync(string password, Action actionOnRegister)
+        public async Task RegisterAsync(string password, Action actionOnRegister = null)
         {
             if (password.Length == MySafeApp.Resources.RequiredLengthDevicePwd)
             {
@@ -69,14 +71,8 @@ namespace MySafe.Services
 
                 actionOnRegister?.Invoke();
             }
-            
-            await Task.Run(() => Thread.Sleep(500));
-        }
-        
-        [ConfigureAwait(false)]
-        public async Task Logout()
-        {
-            await _secureStorage.RemovePasswordAsync();
+
+            await _delayerService.Delay();
         }
     }
 }

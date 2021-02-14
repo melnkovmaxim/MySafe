@@ -20,4 +20,8 @@
     <ProjectReference Include="..\MySafe\MySafe\MySafe.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RepositoryTests\" />
+  </ItemGroup>
+
 </Project>

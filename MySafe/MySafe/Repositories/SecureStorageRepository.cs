@@ -4,20 +4,28 @@ using MySafe.Repositories.Abstractions;
 using System.Threading.Tasks;
 using Fody;
 using Xamarin.Essentials;
+using Xamarin.Essentials.Interfaces;
 
 namespace MySafe.Repositories
 {
     [ConfigureAwait(false)]
     public class SecureStorageRepository : ISecureStorageRepository
     {
+        private readonly ISecureStorage _secureStorage;
+
+        public SecureStorageRepository(ISecureStorage secureStorage)
+        {
+            _secureStorage = secureStorage;
+        }
+
         public Task<string> GetLocalPasswordAsync()
         {
-            return SecureStorage.GetAsync(App.Resources.PasswordPath);
+            return _secureStorage.GetAsync(App.Resources.PasswordPath);
         }
 
         public Task SetLocalPasswordAsync(string password)
         {
-            return SecureStorage.SetAsync(App.Resources.PasswordPath, password);
+            return _secureStorage.SetAsync(App.Resources.PasswordPath, password);
         }
 
         public Task RemovePasswordAsync()
@@ -27,12 +35,12 @@ namespace MySafe.Repositories
 
         public Task<string> GetTokenAsync()
         {
-            return SecureStorage.GetAsync(nameof(JwtSecurityToken));
+            return _secureStorage.GetAsync(nameof(JwtSecurityToken));
         }
 
         public async Task<JwtSecurityToken> GetJstTokenAsync()
         {
-            var token = await SecureStorage.GetAsync(nameof(JwtSecurityToken))
+            var token = await _secureStorage.GetAsync(nameof(JwtSecurityToken))
                 .ConfigureAwait(false);
 
             return string.IsNullOrEmpty(token) ? null : new JwtSecurityToken(token); 
@@ -40,12 +48,12 @@ namespace MySafe.Repositories
 
         public Task SetTokenAsync(string jwtToken)
         {
-            return SecureStorage.SetAsync(nameof(JwtSecurityToken), jwtToken);
+            return _secureStorage.SetAsync(nameof(JwtSecurityToken), jwtToken);
         }
 
         public Task RemoveToken()
         {
-            return SecureStorage.SetAsync(nameof(JwtSecurityToken), string.Empty);
+            return _secureStorage.SetAsync(nameof(JwtSecurityToken), string.Empty);
         }
     }
 }

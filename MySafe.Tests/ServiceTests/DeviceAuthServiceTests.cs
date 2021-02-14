@@ -11,6 +11,7 @@ using MySafe.Repositories.Abstractions;
 using MySafe.Services;
 using MySafe.Services.Abstractions;
 using NUnit.Framework;
+using Xamarin.Essentials.Interfaces;
 
 namespace MySafe.Tests.ServiceTests
 {
@@ -18,25 +19,51 @@ namespace MySafe.Tests.ServiceTests
     public class DeviceAuthServiceTests
     {
         private readonly IDeviceAuthService _deviceAuthService;
+        private readonly Faker _faker;
 
         public DeviceAuthServiceTests()
         {
             _deviceAuthService = Ioc.Resolve<IDeviceAuthService>();
+            _faker = new Faker();
+            var secureStorage = Ioc.Resolve<Mock<ISecureStorage>>()
+                .Setup(s => s.SetAsync(It.IsAny<string>(), It.IsAny<string>()));
+
+            Ioc.Resolve<Mock<IAsyncDelayerService>>()
+                .Setup(d => d.Delay());
         }
 
         [Test]
         public async Task RegisterTest()
         {
-            var faker = new Faker();
-            for (var i = 0; i < 10; i++)
+
+            for (var i = 0; i < 100; i++)
             {
-                var password = faker.Random.String(0, 10, '0', '9');
+                var password = _faker.Random.String(0, 15, '0', '9');
                 var expectedResult = password.Length == MySafeApp.Resources.RequiredLengthDevicePwd;
                 var isCompleteAction = false;
 
                 await _deviceAuthService.RegisterAsync(password, () => isCompleteAction = true);
 
                 Assert.AreEqual(expectedResult , isCompleteAction);
+            }
+        }
+
+        [Test]
+        public async Task TryLoginAsync()
+        {
+            for (var i = 0; i < 100; i++)
+            {
+                var password = _faker.Random.String(0, 15, '0', '9');
+                var expectedResult = password.Length == MySafeApp.Resources.RequiredLengthDevicePwd;
+
+                await _deviceAuthService.RegisterAsync(password);
+
+                var resultOnLogin = false;
+                var result = await _deviceAuthService.TryLoginAsync(password, () => resultOnLogin = true);
+
+
+                Assert.AreEqual(expectedResult, result);
+                Assert.AreEqual(result, resultOnLogin);
             }
         }
     }
