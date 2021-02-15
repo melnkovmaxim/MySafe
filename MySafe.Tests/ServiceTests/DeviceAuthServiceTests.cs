@@ -21,12 +21,11 @@ namespace MySafe.Tests.ServiceTests
         private readonly IDeviceAuthService _deviceAuthService;
         private readonly Faker _faker;
 
+        
         public DeviceAuthServiceTests()
         {
             _deviceAuthService = Ioc.Resolve<IDeviceAuthService>();
             _faker = new Faker();
-            var secureStorage = Ioc.Resolve<Mock<ISecureStorage>>()
-                .Setup(s => s.SetAsync(It.IsAny<string>(), It.IsAny<string>()));
 
             Ioc.Resolve<Mock<IAsyncDelayerService>>()
                 .Setup(d => d.Delay());
@@ -35,21 +34,23 @@ namespace MySafe.Tests.ServiceTests
         [Test]
         public async Task RegisterTest()
         {
-
+            // Arrange
             for (var i = 0; i < 100; i++)
             {
                 var password = _faker.Random.String(0, 15, '0', '9');
                 var expectedResult = password.Length == MySafeApp.Resources.RequiredLengthDevicePwd;
                 var isCompleteAction = false;
 
+                // Act
                 await _deviceAuthService.RegisterAsync(password, () => isCompleteAction = true);
 
+                // Assert
                 Assert.AreEqual(expectedResult , isCompleteAction);
             }
         }
 
         [Test]
-        public async Task TryLoginAsync()
+        public async Task TryLoginAsyncTest()
         {
             for (var i = 0; i < 100; i++)
             {

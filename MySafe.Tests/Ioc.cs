@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using MySafe.Repositories;
-using MySafe.Repositories.Abstractions;
 using MySafe.Services;
 using MySafe.Services.Abstractions;
+using MySafe.Tests.Ef;
+using System;
+using System.Linq;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using MySafe.Tests.Ef.Repositories;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms.Internals;
 
@@ -22,8 +21,10 @@ namespace MySafe.Tests
         static Ioc()
         {
             var services = new ServiceCollection();
-            
-            services.AddTransient<ISecureStorage, SecureStorageWrapper>();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase("db"), ServiceLifetime.Transient);
+
             services.AddSingleton<Mock<IAsyncDelayerService>>();
             services.AddSingleton<IAsyncDelayerService>(provider => provider.GetService<Mock<IAsyncDelayerService>>().Object);
 
@@ -35,15 +36,23 @@ namespace MySafe.Tests
                     var interfaces = service.GetInterfaces();
                     var ownInterface = interfaces.FirstOrDefault(x => x.Name == $"I{service.Name}");
 
-                    if (interfaces.Any(x => x == typeof(ISingletonService)))
+                    if (service == typeof(AsyncDelayerService))
                     {
-                        AddSingleton(services, service, ownInterface);
-                    }
 
-                    AddTransient(services, service, ownInterface);
+                    }
+                    else
+                    {
+
+                        if (interfaces.Any(x => x == typeof(ISingletonService)))
+                        {
+                            AddSingleton(services, service, ownInterface);
+                        }
+
+                        AddTransient(services, service, ownInterface);
+                    }
                 });
-            
-                        
+            services.AddTransient<ISecureStorage, EfSecureStorageRepository>();
+
             _serviceProvider = services.BuildServiceProvider();
 
         }

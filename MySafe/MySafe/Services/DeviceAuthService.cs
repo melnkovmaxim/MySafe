@@ -38,7 +38,7 @@ namespace MySafe.Services
                 return true;
             }
 
-            if (password.Length == correctPassword.Length)
+            if (correctPassword?.Length == password.Length)
             {
                 Vibration.Vibrate(MySafeApp.Resources.DefaultVibrationDuration);
             }
