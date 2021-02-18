@@ -29,6 +29,7 @@
             <Label
                 Margin="120,-20,120,0"
                 HorizontalOptions="Center"
+                FontSize="35"
                 HorizontalTextAlignment="Center">
                 Введите код из SMS, отправленный на ваш номер телефона
             </Label>

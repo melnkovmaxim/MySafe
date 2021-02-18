@@ -14,9 +14,12 @@
             <Setter Property="Padding" Value="0,-60,0,0" />
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Opacity" Value="0.8" />
+            
             <!-- <Setter Property="Backgroundcolor" Value="#E4E8FB" /> -->
         </Style>
-        <Style TargetType="StackLayout">
+        <Style TargetType="Frame">
+            <Setter Property="CornerRadius" Value="25" />
+            <Setter Property="HasShadow" Value="True" />
             <!--<Setter Property="CornerRadius" Value="25" /> -->
         </Style>
     </ContentPage.Resources>
@@ -121,19 +124,26 @@
 
             </StackLayout>
             <StackLayout Grid.Row="1" Grid.Column="0">
-                <Image
+                <!-- <Image
                     Margin="-335,40,0,0"
                     Source="loopa.png"
-                    WidthRequest="20" />
-                <Entry
+                    WidthRequest="20" /> -->
+                <SearchBar Margin="10,10,10,20"
+                    HorizontalOptions="Fill"
+                    IsEnabled="True"
+                    Opacity="0.8"
+                    Placeholder=" Название документа"
+                    PlaceholderColor="#7e7e7e" ></SearchBar>
+                <!--<Entry
                     Margin="50,-37,20,20"
                     HorizontalOptions="Fill"
                     IsEnabled="True"
                     Opacity="0.8"
                     Placeholder=" Название документа"
-                    PlaceholderColor="#7e7e7e" />
+                    PlaceholderColor="#7e7e7e" /> -->
+                <!-- 20,-35,20,0 -->
                 <BoxView
-                    Margin="20,-35,20,0"
+                    Margin="20,-28,20,0" 
                     HeightRequest="2"
                     HorizontalOptions="Fill"
                     Opacity="0.87"
@@ -156,25 +166,28 @@
                         <ColumnDefinition Width="120" />
                         <ColumnDefinition Width="120" />
                     </Grid.ColumnDefinitions>
-
+                    <Frame Grid.Row="0"
+                        Grid.Column="0">
                     <Button
-                        Grid.Row="0"
-                        Grid.Column="0"
+                        Margin="-20,-20,-20,-20"
                         BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/DocumentPage',
                                                        SourcePage={x:Reference Main}}"
                         Text="Документы:" />
-                    <Button
-                        Grid.Row="0"
-                        Grid.Column="1"
+                    </Frame>
+                    <Frame Grid.Row="0"
+                        Grid.Column="1">
+                        <Button
+                        Margin="-20,-20,-20,-20"
                         BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/TaxPage',
-                                                       SourcePage={x:Reference Main}}"
+                        SourcePage={x:Reference Main}}"
                         Text="Налоги:" />
-
+                    </Frame>
+                    <Frame Grid.Row="1"
+                        Grid.Column="0">
                     <Button
-                        Grid.Row="1"
-                        Grid.Column="0"
+                        Margin="-20,-20,-20,-20"
                         BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/EstatePage',
                                                        SourcePage={x:Reference Main}}"
@@ -190,6 +203,7 @@
                         </Button.Effects>-->
 
                     </Button>
+                    </Frame>
                     <Button
                         Grid.Row="1"
                         Grid.Column="1"
@@ -217,7 +231,7 @@
                     Padding="0,0,0,0"
                     BackgroundColor="#FFC46B"
                     Command="{Binding SignOutCommand}"
-                    ImageSource="note.png" />
+                    ImageSource="note1.png" />
             </StackLayout>
             <StackLayout
                 Grid.Row="3"
