@@ -49,7 +49,7 @@
             <Frame Margin="80,20,80,20" HasShadow="True" HeightRequest="15" CornerRadius="25" BackgroundColor="#FFFFFF">
                 <StackLayout  Margin="0,-16,0,0">
                 <Entry
-                HorizontalTextAlignment="Center"
+                HorizontalTextAlignment="Center" IsPassword="True"
                 Placeholder="Пароль"
                 Text="{Binding Password}" />
                 </StackLayout>
