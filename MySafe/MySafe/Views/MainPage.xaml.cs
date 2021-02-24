@@ -25,15 +25,5 @@ namespace MySafe.Views
             //btnDoc.Pressed += (s, e) => OnPressed();
             //btnDoc.Released += (s, e) => OnRelease();
         }
-
-        private void OnRelease()
-        {
-            btnDoc.BackgroundColor = Color.Red;
-        }
-
-        private void OnPressed()
-        {
-            btnDoc.BackgroundColor = Color.Blue;
-        }
     }
 }
