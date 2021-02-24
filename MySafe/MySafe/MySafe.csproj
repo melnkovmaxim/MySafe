@@ -16,6 +16,7 @@
     <None Remove="Resources\loopa.png" />
     <None Remove="Resources\note.png" />
     <None Remove="Resources\note.svg" />
+    <None Remove="Resources\note1.png" />
     <None Remove="Resources\pen.png" />
   </ItemGroup>
 
@@ -111,6 +112,7 @@
     <Resource Include="Resources\loopa.png" />
     <Resource Include="Resources\note.png" />
     <Resource Include="Resources\note.svg" />
+    <Resource Include="Resources\note1.png" />
     <Resource Include="Resources\pen.png" />
   </ItemGroup>
 

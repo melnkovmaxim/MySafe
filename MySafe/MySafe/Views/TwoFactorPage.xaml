@@ -29,13 +29,19 @@
             <Label
                 Margin="120,-20,120,0"
                 HorizontalOptions="Center"
+                
                 HorizontalTextAlignment="Center">
                 Введите код из SMS, отправленный на ваш номер телефона
             </Label>
 
         </StackLayout>
         <StackLayout Grid.Row="1" VerticalOptions="Center">
-            <Entry Margin="80,60,80,0" Text="{Binding Code}" />
+            <Entry Margin="80,60,80,0" HorizontalTextAlignment="Center" FontSize="35" CharacterSpacing="15" Placeholder="_ _ _ _ _" Text="{Binding Code}" />
+            <!--<BoxView
+                    Margin="20,-28,20,0" 
+                    HeightRequest="2"
+                    HorizontalOptions="Fill"
+                    Color="White" /> -->
         </StackLayout>
         <StackLayout Grid.Row="2" VerticalOptions="Center">
             <Button
