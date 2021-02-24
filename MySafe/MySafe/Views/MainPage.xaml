@@ -46,7 +46,7 @@
                     Orientation="Horizontal"
                     VerticalOptions="FillAndExpand">
 
-                    <Switch IsToggled="{Binding ToggleTemp}" IsVisible="False" >
+                    <Switch IsToggled="{Binding ToggleTemp}" IsVisible="False">
                         <Switch.Behaviors>
                             <behaviors:EventToCommandBehavior Command="{Binding LoadedCommand}" EventName="Toggled" />
                         </Switch.Behaviors>
@@ -158,12 +158,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Button
+                        x:Name="btnDoc"
                         Grid.Row="0"
                         Grid.Column="0"
                         BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/DocumentPage',
                                                        SourcePage={x:Reference Main}}"
                         Text="Документы:" />
+
                     <Button
                         Grid.Row="0"
                         Grid.Column="1"

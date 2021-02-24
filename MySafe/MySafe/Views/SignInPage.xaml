@@ -46,6 +46,7 @@
             <Entry
                 Margin="80,20,80,20"
                 HorizontalTextAlignment="Center"
+                IsPassword="True"
                 Placeholder="Пароль"
                 Text="{Binding Password}" />
 
