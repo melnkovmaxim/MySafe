@@ -5,6 +5,10 @@
     <LangVersion>default</LangVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Quirlycues.ttf" />
     <None Remove="Resources\docs.png" />
