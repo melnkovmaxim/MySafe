@@ -15,6 +15,7 @@ namespace MySafe.ViewModels.Abstractions
     {
         protected JwtSecurityToken _jwtToken;
         protected DelegateCommand _loadedCommand;
+        protected INavigationParameters _parameters;
 
         protected AuthorizedViewModelBase(INavigationService navigationService) 
             : base(navigationService)
@@ -26,7 +27,8 @@ namespace MySafe.ViewModels.Abstractions
         }
 
         public async void OnNavigatedTo(INavigationParameters parameters)
-        {   
+        {
+            _parameters = parameters;
             _jwtToken ??= (JwtSecurityToken) parameters[nameof(JwtSecurityToken)];
             _jwtToken ??= await Ioc.Resolve<ISecureStorageRepository>()
                 .GetJstTokenAsync();

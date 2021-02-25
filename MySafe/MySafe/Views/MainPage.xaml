@@ -44,7 +44,7 @@
                     HorizontalOptions="FillAndExpand"
                     Orientation="Horizontal"
                     VerticalOptions="FillAndExpand">
-                    <Switch IsToggled="{Binding ToggleTemp}" IsVisible="False" >
+                    <Switch IsToggled="{Binding ToggleTemp}" IsVisible="False">
                         <Switch.Behaviors>
                             <behaviors:EventToCommandBehavior Command="{Binding LoadedCommand}" EventName="Toggled" />
                         </Switch.Behaviors>
@@ -75,7 +75,7 @@
                         HorizontalOptions="End"
                         ImageSource="jam_menu.png"
                         WidthRequest="50" />
-                    
+
                 </StackLayout>
             </Frame>
             <StackLayout>
@@ -113,29 +113,30 @@
                         Text="{Binding SafeSizeInfo}"
                         TextColor="#7e7e7e" />
                 </Grid>
-                
+
             </StackLayout>
             <StackLayout Grid.Row="1" Grid.Column="0">
                 <!-- <Image
                     Margin="-335,40,0,0"
                     Source="loopa.png"
-                    WidthRequest="20" /> -->
-                <SearchBar Margin="10,10,10,20"
+                    WidthRequest="20" />-->
+                <SearchBar
+                    Margin="10,10,10,20"
                     HorizontalOptions="Fill"
                     IsEnabled="True"
                     Opacity="0.8"
                     Placeholder=" Название документа"
-                    PlaceholderColor="#7e7e7e" ></SearchBar>
+                    PlaceholderColor="#7e7e7e" />
                 <!--<Entry
                     Margin="50,-37,20,20"
                     HorizontalOptions="Fill"
                     IsEnabled="True"
                     Opacity="0.8"
                     Placeholder=" Название документа"
-                    PlaceholderColor="#7e7e7e" /> -->
-                <!-- 20,-35,20,0 -->
+                    PlaceholderColor="#7e7e7e" />-->
+                <!--  20,-35,20,0  -->
                 <BoxView
-                    Margin="20,-28,20,0" 
+                    Margin="20,-28,20,0"
                     HeightRequest="2"
                     HorizontalOptions="Fill"
                     Opacity="0.87"
@@ -158,69 +159,62 @@
                         <ColumnDefinition Width="120" />
                         <ColumnDefinition Width="120" />
                     </Grid.ColumnDefinitions>
-                    <Frame Grid.Row="0"
-                        Grid.Column="0">
+
+
+                    <Frame Grid.Row="0" Grid.Column="0">
                         <Button
-                        Margin="-20,-20,-20,-20"
-                        BackgroundColor="#E4E8FB"
-                        Command="{behaviors:NavigateTo 'NavigationPage/DocumentPage',
-                                                       SourcePage={x:Reference Main}}"
-                        Text="Документы:" />
+                            Margin="-20,-20,-20,-20"
+                            BackgroundColor="#E4E8FB"
+                            Command="{Binding NavigCommand}"
+                            Text="{Binding Doc1}" />
                     </Frame>
-                    <Frame Grid.Row="0"
-                        Grid.Column="1">
+                    <Frame Grid.Row="0" Grid.Column="1">
                         <Button
-                        Margin="-20,-20,-20,-20"
-                        BackgroundColor="#E4E8FB"
-                        Command="{behaviors:NavigateTo 'NavigationPage/TaxPage',
-                        SourcePage={x:Reference Main}}"
-                        Text="Налоги:" />
+                            Margin="-20,-20,-20,-20"
+                            BackgroundColor="#E4E8FB"
+                            Command="{behaviors:NavigateTo 'NavigationPage/TaxPage',
+                                                           SourcePage={x:Reference Main}}"
+                            Text="{Binding Doc2}" />
                     </Frame>
-                    <Frame Grid.Row="1"
-                        Grid.Column="0">
+                    <Frame Grid.Row="1" Grid.Column="0">
                         <Button
-                        Margin="-20,-20,-20,-20"
-                        BackgroundColor="#E4E8FB"
-                        Command="{behaviors:NavigateTo 'NavigationPage/EstatePage',
-                        SourcePage={x:Reference Main}}"
-                        Text="Имущество:">
-                        </Button>
+                            Margin="-20,-20,-20,-20"
+                            BackgroundColor="#E4E8FB"
+                            Command="{behaviors:NavigateTo 'NavigationPage/EstatePage',
+                                                           SourcePage={x:Reference Main}}"
+                            Text="{Binding Doc3}" />
                     </Frame>
-                    <Frame  Grid.Row="1"
-                        Grid.Column="1">
-                    <Button
-                        Margin="-20,-20,-20,-20"
-                        BackgroundColor="#E4E8FB"
-                        Command="{behaviors:NavigateTo 'NavigationPage/UtilPage',
-                                                       SourcePage={x:Reference Main}}"
-                        Text="ЖКХ:" />
+                    <Frame Grid.Row="1" Grid.Column="1">
+                        <Button
+                            Margin="-20,-20,-20,-20"
+                            BackgroundColor="#E4E8FB"
+                            Command="{behaviors:NavigateTo 'NavigationPage/UtilPage',
+                                                           SourcePage={x:Reference Main}}"
+                            Text="{Binding Doc4}" />
                     </Frame>
-                    <Frame Grid.Row="2"
-                        Grid.Column="0">
-                    <Button
-                        Margin="-20,-20,-20,-20"
-                        BackgroundColor="#E4E8FB"
-                        Command="{behaviors:NavigateTo 'NavigationPage/HealthPage',
-                                                       SourcePage={x:Reference Main}}"
-                        Text="Здоровье:" />
+                    <Frame Grid.Row="2" Grid.Column="0">
+                        <Button
+                            Margin="-20,-20,-20,-20"
+                            BackgroundColor="#E4E8FB"
+                            Command="{behaviors:NavigateTo 'NavigationPage/HealthPage',
+                                                           SourcePage={x:Reference Main}}"
+                            Text="{Binding Doc5}" />
                     </Frame>
-                    <Frame Grid.Row="2"
-                        Grid.Column="1">
-                    <Button
-                        Margin="-20,-20,-20,-20"
-                        BackgroundColor="#E4E8FB"
-                        Command="{behaviors:NavigateTo 'NavigationPage/OtherPage',
-                        SourcePage={x:Reference Main}}"
-                        Text="Другое:" />
+                    <Frame Grid.Row="2" Grid.Column="1">
+                        <Button
+                            Margin="-20,-20,-20,-20"
+                            BackgroundColor="#E4E8FB"
+                            Command="{behaviors:NavigateTo 'NavigationPage/OtherPage',
+                                                           SourcePage={x:Reference Main}}"
+                            Text="{Binding Doc6}" />
                     </Frame>
                 </Grid>
-                <Frame Margin="20,0,0,0"
-                     >
+                <Frame Margin="20,0,0,0">
                     <Button
-                    Margin="-20,-20,-20,-20" Padding="0,0,0,0"
-                    BackgroundColor="#FFC46B"
-                    Command="{Binding SignOutCommand}"
-                    ImageSource="note1.png" />
+                        Margin="-20,-20,-20,-20"
+                        Padding="0,0,0,0"
+                        BackgroundColor="#FFC46B"
+                        ImageSource="note1.png" />
                 </Frame>
 
             </StackLayout>
@@ -229,22 +223,20 @@
                 HeightRequest="30"
                 HorizontalOptions="CenterAndExpand"
                 Orientation="Horizontal">
-                <Frame Grid.Row="2" Margin="0,15,0,10"
-                     >
+                <Frame Grid.Row="2" Margin="0,15,0,10">
                     <Button
-                    
-                    Margin="-20,-20,-20,-20"
-                    Padding="0,0,0,0"
-                    BackgroundColor="#E4E8FB"
-                    Command="{behaviors:NavigateTo 'NavigationPage/BinPage',
-                                                   SourcePage={x:Reference Main}}"
-                    HorizontalOptions="Center"
-                    ImageSource="info.png"
-                    WidthRequest="380" />
+                        Margin="-20,-20,-20,-20"
+                        Padding="0,0,0,0"
+                        BackgroundColor="#E4E8FB"
+                        Command="{behaviors:NavigateTo 'NavigationPage/BinPage',
+                                                       SourcePage={x:Reference Main}}"
+                        HorizontalOptions="Center"
+                        ImageSource="info.png"
+                        WidthRequest="380" />
                 </Frame>
             </StackLayout>
-            
+
         </Grid>
-        
+
     </ContentPage.Content>
 </ContentPage>

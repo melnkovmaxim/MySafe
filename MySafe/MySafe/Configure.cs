@@ -77,6 +77,7 @@ namespace MySafe
             containerRegistry.RegisterForNavigation<OtherPage, OtherViewModel>();
             containerRegistry.RegisterForNavigation<SignInPage, SignInViewModel>();
             containerRegistry.RegisterForNavigation<TwoFactorPage, TwoFactorViewModel>();
+            containerRegistry.RegisterForNavigation<FolderDocPage, FolderDocViewModel>();
 
             return containerRegistry;
         }
@@ -147,5 +148,6 @@ namespace MySafe
         public static DocumentViewModel DocumentViewModel => Ioc.Resolve<DocumentViewModel>();
         public static SignInViewModel SignInViewModel => Ioc.Resolve<SignInViewModel>();
         public static TwoFactorViewModel TwoFactorViewModel => Ioc.Resolve<TwoFactorViewModel>();
+        public static FolderDocViewModel FolderDocViewModel => Ioc.Resolve<FolderDocViewModel>();
     }
 }
