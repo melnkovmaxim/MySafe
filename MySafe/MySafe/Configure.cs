@@ -19,7 +19,6 @@ using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
 using RestSharp;
-using Xamarin.Essentials;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -40,7 +39,6 @@ namespace MySafe
 
         public static IContainerRegistry AddRepositories(this IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<ISecureStorage, SecureStorageWrapper>();
             containerRegistry.Register<ISecureStorageRepository, SecureStorageRepository>();
 
             return containerRegistry;
@@ -136,7 +134,7 @@ namespace MySafe
         }
     }
 
-    internal class Ioc
+    public class Ioc
     {
         public static T Resolve<T>() => PrismApplicationBase.Current.Container.Resolve<T>();
     }

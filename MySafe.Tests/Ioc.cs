@@ -1,14 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using MySafe.Services;
+using MySafe.Repositories;
+using MySafe.Repositories.Abstractions;
 using MySafe.Services.Abstractions;
-using MySafe.Tests.Ef;
-using System;
-using System.Linq;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using MySafe.Tests.Ef.Repositories;
-using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms.Internals;
 
 namespace MySafe.Tests
@@ -22,23 +21,18 @@ namespace MySafe.Tests
         {
             var services = new ServiceCollection();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase("db"), ServiceLifetime.Transient);
-
-            services.AddSingleton<Mock<IAsyncDelayerService>>();
-            services.AddSingleton<IAsyncDelayerService>(provider => provider.GetService<Mock<IAsyncDelayerService>>().Object);
-
-
-            typeof(MySafe.Configure).Assembly.GetTypes()
+            typeof(MySafe.Ioc).Assembly.GetTypes()
                 .Where(t => SERVICE_NAME_ENDINGS.Any(t.Name.EndsWith) && t.IsClass)
                 .ForEach(service =>
                 {
                     var interfaces = service.GetInterfaces();
                     var ownInterface = interfaces.FirstOrDefault(x => x.Name == $"I{service.Name}");
 
-                    if (service == typeof(AsyncDelayerService))
+                    if (service == typeof(SecureStorageRepository))
                     {
 
+                        services.AddTransient<Mock<ISecureStorageRepository>>();
+                        
                     }
                     else
                     {
@@ -50,8 +44,10 @@ namespace MySafe.Tests
 
                         AddTransient(services, service, ownInterface);
                     }
+
                 });
-            services.AddTransient<ISecureStorage, EfSecureStorageRepository>();
+
+            services.AddTransient<ISecureStorageRepository>(provider => provider.GetService<Mock<ISecureStorageRepository>>().Object);
 
             _serviceProvider = services.BuildServiceProvider();
 

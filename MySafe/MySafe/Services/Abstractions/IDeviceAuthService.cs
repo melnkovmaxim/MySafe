@@ -8,8 +8,9 @@ namespace MySafe.Services.Abstractions
 {
     public interface IDeviceAuthService
     {
-        Task<bool> TryLoginAsync(string password, Action actionOnLogin = null);
-        Task<bool> TryLoginWithPrintScanAsync(Action actionOnLogin = null);
-        Task RegisterAsync(string password, Action actionOnRegister = null);
+        Task<bool> TryLoginAsync(string password, Action actionOnLogin, TimeSpan vibrationDuration);
+        Task<bool> TryLoginWithPrintScanAsync(Action actionOnLogin, TimeSpan vibrationDuration);
+        Task RegisterAsync(string password, Action actionOnRegister);
+        Task Logout();
     }
 }

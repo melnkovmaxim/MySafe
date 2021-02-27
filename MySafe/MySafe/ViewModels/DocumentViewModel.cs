@@ -17,6 +17,7 @@ namespace MySafe.ViewModels
 {
     public class DocumentViewModel : AuthorizedViewModelBase
     {
+        public static int ID { get; set; }
         private readonly IMediator _mediator;
         public ObservableCollection<Document> Documents { get; set; }
 
@@ -41,7 +42,8 @@ namespace MySafe.ViewModels
         private async void ActionAfterLoadPage()
         {
             Documents.Clear();
-            var id = (int) _parameters["id"];
+            var id = (_parameters["id"] == null || !(_parameters["id"] is int))  ? ID : (int) _parameters["id"];
+            ID = id;
             var queryResponse = await _mediator.Send(new FolderInfoQuery(_jwtToken, id));
 
             if (queryResponse.HasError)

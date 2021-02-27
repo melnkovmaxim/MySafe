@@ -34,6 +34,7 @@ namespace MySafe.ViewModels
         public bool IsRegistered { get; set; }
 
         private readonly IDeviceAuthService _deviceAuthService;
+        private readonly TimeSpan _vibrationDuration;
 
         private readonly Action _actionOnLogin;
         private readonly Action _actionOnRegister;
@@ -43,6 +44,7 @@ namespace MySafe.ViewModels
         {
             PasswordManager = passwordManager;
             _deviceAuthService = deviceAuthService;
+            _vibrationDuration = TimeSpan.FromSeconds(0.2);
 
             LoadedCommand = new DelegateCommand(Loaded);
             RemoveLastNumberCommand = new DelegateCommand(() => PasswordManager.RemoveLast());
@@ -71,7 +73,7 @@ namespace MySafe.ViewModels
 
         private async void FingerPrintScan()
         {
-            await _deviceAuthService.TryLoginWithPrintScanAsync(_actionOnLogin);
+            await _deviceAuthService.TryLoginWithPrintScanAsync(_actionOnLogin, _vibrationDuration);
         }
 
         private async void NumberInput(string number)
@@ -82,7 +84,7 @@ namespace MySafe.ViewModels
             if (IsRegistered)
             {
                 var isSuccessfulLogin = await Ioc.Resolve<IDeviceAuthService>()
-                    .TryLoginAsync(PasswordManager.Password, _actionOnLogin);
+                    .TryLoginAsync(PasswordManager.Password, _actionOnLogin, _vibrationDuration);
 
                 if (!isSuccessfulLogin) PasswordManager.Clear();
             }

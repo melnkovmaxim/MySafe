@@ -22,8 +22,12 @@ namespace MySafe.Views
         {
             NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
-            //btnDoc.Pressed += (s, e) => OnPressed();
-            //btnDoc.Released += (s, e) => OnRelease();
+        }
+
+        private void Blue_Button_Clicked(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            button.BackgroundColor = Color.Blue;
         }
     }
 }

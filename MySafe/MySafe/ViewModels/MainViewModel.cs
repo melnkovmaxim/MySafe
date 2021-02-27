@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MediatR;
-using MySafe.Mediator.SafeInfo;
-using MySafe.Mediator.SignOut;
+using MySafe.Mediator.Safe.SafeInfo;
+using MySafe.Mediator.Users.SignOut;
 using MySafe.Models;
 using MySafe.Repositories.Abstractions;
 using MySafe.Services.Abstractions;
@@ -28,6 +28,11 @@ namespace MySafe.ViewModels
         public string Doc6 { get; set; }
 
         public int Doc1Id { get; set; }
+        public int Doc2Id { get; set; }
+        public int Doc3Id { get; set; }
+        public int Doc4Id { get; set; }
+        public int Doc5Id { get; set; }
+        public int Doc6Id { get; set; }
 
         private int _maxCapacity;
         private int _usedCapacity;
