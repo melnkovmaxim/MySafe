@@ -71,6 +71,7 @@ namespace MySafe
             containerRegistry.RegisterForNavigation<SignInPage, SignInViewModel>();
             containerRegistry.RegisterForNavigation<TwoFactorPage, TwoFactorViewModel>();
             containerRegistry.RegisterForNavigation<FolderPage, FolderViewModel>();
+            containerRegistry.RegisterForNavigation<DocumentPage, DocumentViewModel>();
 
             return containerRegistry;
         }

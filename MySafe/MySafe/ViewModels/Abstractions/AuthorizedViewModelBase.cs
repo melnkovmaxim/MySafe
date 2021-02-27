@@ -17,7 +17,7 @@ namespace MySafe.ViewModels.Abstractions
         protected JwtSecurityToken _jwtToken;
         protected INavigationParameters _parameters;
         protected int? _itemId;
-        protected string? _itemName;
+        protected string _itemName;
         private DelegateCommand _loadedCommand { get; }
 
         protected AuthorizedViewModelBase(INavigationService navigationService) 
@@ -39,6 +39,8 @@ namespace MySafe.ViewModels.Abstractions
 
         public void OnNavigatedFrom(INavigationParameters parameters)
         {
+            parameters.Add(nameof(MySafeApp.Resources.ItemId), _itemId);
+            parameters.Add(nameof(MySafeApp.Resources.ItemName), _itemName);
         }
 
         public async void OnNavigatedTo(INavigationParameters parameters)
@@ -46,7 +48,7 @@ namespace MySafe.ViewModels.Abstractions
             _parameters = parameters;
 
             _itemId = (int?) parameters[nameof(MySafeApp.Resources.ItemId)];
-            _itemName = (string?) parameters[nameof(MySafeApp.Resources.ItemName)];
+            _itemName = (string) parameters[nameof(MySafeApp.Resources.ItemName)];
 
             _jwtToken ??= (JwtSecurityToken) parameters[nameof(JwtSecurityToken)];
             _jwtToken ??= await Ioc.Resolve<ISecureStorageRepository>()

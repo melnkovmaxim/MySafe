@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace MySafe.Models.Responses
 {
@@ -65,5 +68,20 @@ namespace MySafe.Models.Responses
 
         [JsonProperty]
         public int PagesCount { get; set; }
+
+        [JsonIgnore]
+        public ImageSource ImageSource => _imageSource ??= _imageSourceLazy.Value;
+
+        [JsonIgnore]
+        private ImageSource _imageSource;
+
+        [JsonIgnore] 
+        private Lazy<ImageSource> _imageSourceLazy => new Lazy<ImageSource>(() => 
+        {
+            var reg = new Regex(".*base64,");
+            var base64 = reg.Replace(Preview, "").Replace("\\n", "");
+            var @byte = Convert.FromBase64String(base64);
+            return ImageSource.FromStream(() => new MemoryStream(@byte));
+        });
     }
 }

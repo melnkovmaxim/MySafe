@@ -15,9 +15,6 @@
             <!-- <Setter Property="Backgroundcolor" Value="#E4E8FB" /> -->
         </Style>
     </ContentPage.Resources>
-    <ContentPage.Behaviors>
-        <behaviors:EventToCommandBehavior Command="{Binding _loadedCommand}" EventName="Appearing" />
-    </ContentPage.Behaviors>
     <ContentPage.Content>
 
         <StackLayout>
