@@ -1,22 +1,10 @@
 ﻿
-using MySafe.Views;
-using Plugin.Fingerprint;
-using Plugin.Fingerprint.Abstractions;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using AutoMapper;
-using MediatR;
-using MySafe.Mediator.SignIn;
-using MySafe.Models.Requests;
 using MySafe.Repositories.Abstractions;
-using MySafe.Services;
 using MySafe.Services.Abstractions;
 using MySafe.ViewModels.Abstractions;
-using NetStandardCommands;
-using Newtonsoft.Json;
+using MySafe.Views;
 using Prism.Commands;
-using Prism.Navigation.Xaml;
-using Xamarin.Essentials;
+using System;
 using DelegateCommand = Prism.Commands.DelegateCommand;
 using INavigationService = Prism.Navigation.INavigationService;
 

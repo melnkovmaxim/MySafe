@@ -1,11 +1,10 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using MediatR;
-using MySafe.Mediator.SignInTwoFactor;
-using MySafe.Repositories.Abstractions;
+﻿using MediatR;
 using MySafe.ViewModels.Abstractions;
 using MySafe.Views;
 using NetStandardCommands;
 using Prism.Navigation;
+using System.IdentityModel.Tokens.Jwt;
+using MySafe.Mediator.Users.SignInTwoFactor;
 
 namespace MySafe.ViewModels
 {

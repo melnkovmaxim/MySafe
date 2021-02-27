@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Mediator.FileInfo;
-using MySafe.Mediator.FolderInfo;
+﻿using MediatR;
 using MySafe.ViewModels.Abstractions;
 using Prism.Commands;
 using Prism.Navigation;
+using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Text.RegularExpressions;
+using MySafe.Mediator.Documents.GetDocumentInfo;
 using Xamarin.Forms;
 using File = MySafe.Models.File;
 
@@ -35,7 +30,7 @@ namespace MySafe.ViewModels
             Files.Clear();
             var id = (int) _parameters["id"];
             
-            var queryResponse = await _mediator.Send(new FileInfoQuery(_jwtToken, id));
+            var queryResponse = await _mediator.Send(new DocumentInfoQuery(_jwtToken, id));
 
             if (queryResponse.HasError)
             {

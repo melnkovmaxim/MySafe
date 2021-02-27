@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using MySafe.Mediator.SignIn;
-using MySafe.Mediator.SignInTwoFactor;
+using MySafe.Mediator.Users.SignIn;
+using MySafe.Mediator.Users.SignInTwoFactor;
 using MySafe.Models.Requests;
 
 namespace MySafe.MapperProfiles

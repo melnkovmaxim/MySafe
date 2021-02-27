@@ -1,6 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using MediatR;
-using MySafe.Mediator.SignIn;
+﻿using MediatR;
+using MySafe.Mediator.Users.SignIn;
 using MySafe.ViewModels.Abstractions;
 using MySafe.Views;
 using NetStandardCommands;

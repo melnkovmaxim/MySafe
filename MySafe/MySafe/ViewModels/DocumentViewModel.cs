@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Mediator.FolderInfo;
-using MySafe.Mediator.SignIn;
+﻿using MediatR;
 using MySafe.Models;
 using MySafe.ViewModels.Abstractions;
-using MySafe.Views;
 using Prism.Commands;
 using Prism.Navigation;
+using System.Collections.ObjectModel;
+using MySafe.Mediator.Folders.GetFolderInfo;
 
 namespace MySafe.ViewModels
 {
