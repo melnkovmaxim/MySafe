@@ -14,8 +14,8 @@
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="Roboto-Regular" />
             <Setter Property="FontSize" Value="31" />
-            <Setter Property="WidthRequest" Value="70" />
-            <Setter Property="HeightRequest" Value="70" />
+            <Setter Property="WidthRequest" Value="80" />
+            <Setter Property="HeightRequest" Value="80" />
             <Setter Property="CornerRadius" Value="35" />
             <Setter Property="HorizontalOptions" Value="Center" />
             <Setter Property="VerticalOptions" Value="Center" />
@@ -130,9 +130,9 @@
                 HorizontalOptions="Center"
                 VerticalOptions="CenterAndExpand">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="90" />
-                    <ColumnDefinition Width="90" />
-                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />

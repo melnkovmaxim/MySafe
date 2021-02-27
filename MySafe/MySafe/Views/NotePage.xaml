@@ -5,7 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <ContentPage.Content>
-        <StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0">
             <Frame
                 Margin="20,15,20,-10"
                 BackgroundColor="#E4E8FB"
@@ -20,13 +25,15 @@
                         Text="Блокнот" />
                 </StackLayout>
             </Frame>
-            <Frame
+            </StackLayout>
+            <StackLayout Grid.Row="1">
+                <Frame
                 Margin="20,10,20,15"
                 BackgroundColor="#F3F5FF"
                 BorderColor="#3465C4"
                 CornerRadius="10"
                 HasShadow="True"
-                HeightRequest="460"
+                HeightRequest="530"
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill">
                 <Editor
@@ -35,7 +42,7 @@
                     VerticalOptions="Fill" />
             </Frame>
             <BoxView
-                Margin="40,-470,40,0"
+                Margin="40,-540,40,0"
                 HeightRequest="2"
                 Opacity="0.4"
                 Color="Black" />
@@ -134,6 +141,22 @@
                 HeightRequest="2"
                 Opacity="0.4"
                 Color="Black" />
-        </StackLayout>
+                <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+                <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+                <BoxView
+                Margin="40,13,40,0"
+                HeightRequest="2"
+                Opacity="0.4"
+                Color="Black" />
+            </StackLayout>
+    </Grid>
     </ContentPage.Content>
 </ContentPage>
