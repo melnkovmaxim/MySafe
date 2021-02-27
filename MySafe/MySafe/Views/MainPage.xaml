@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:behaviors="http://prismlibrary.com"
+    xmlns:uniformGrid="clr-namespace:UniformGrid;assembly=UniformGrid"
     x:Name="Main"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=MainViewModel}">
 
@@ -44,11 +45,6 @@
                     HorizontalOptions="FillAndExpand"
                     Orientation="Horizontal"
                     VerticalOptions="FillAndExpand">
-                    <Switch IsToggled="{Binding ToggleTemp}" IsVisible="False">
-                        <Switch.Behaviors>
-                            <behaviors:EventToCommandBehavior Command="{Binding LoadedCommand}" EventName="Toggled" />
-                        </Switch.Behaviors>
-                    </Switch>
                     <Label
                         Margin="20,0,0,0"
                         FontFamily="Montserrat"
@@ -149,66 +145,21 @@
                 HeightRequest="220"
                 HorizontalOptions="CenterAndExpand"
                 Orientation="Horizontal">
-                <Grid ColumnSpacing="25" RowSpacing="15">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="120" />
-                    </Grid.ColumnDefinitions>
-
-
-                    <Frame Grid.Row="0" Grid.Column="0">
-                        <Button
-                            Margin="-20,-20,-20,-20"
-                            BackgroundColor="#E4E8FB"
-                            Command="{Binding NavigCommand}"
-                            Text="{Binding Doc1}" />
-                    </Frame>
-                    <Frame Grid.Row="0" Grid.Column="1">
-                        <Button
-                            Margin="-20,-20,-20,-20"
-                            BackgroundColor="#E4E8FB"
-                            Command="{behaviors:NavigateTo 'NavigationPage/TaxPage',
-                                                           SourcePage={x:Reference Main}}"
-                            Text="{Binding Doc2}" />
-                    </Frame>
-                    <Frame Grid.Row="1" Grid.Column="0">
-                        <Button
-                            Margin="-20,-20,-20,-20"
-                            BackgroundColor="#E4E8FB"
-                            Command="{behaviors:NavigateTo 'NavigationPage/EstatePage',
-                                                           SourcePage={x:Reference Main}}"
-                            Text="{Binding Doc3}" />
-                    </Frame>
-                    <Frame Grid.Row="1" Grid.Column="1">
-                        <Button
-                            Margin="-20,-20,-20,-20"
-                            BackgroundColor="#E4E8FB"
-                            Command="{behaviors:NavigateTo 'NavigationPage/UtilPage',
-                                                           SourcePage={x:Reference Main}}"
-                            Text="{Binding Doc4}" />
-                    </Frame>
-                    <Frame Grid.Row="2" Grid.Column="0">
-                        <Button
-                            Margin="-20,-20,-20,-20"
-                            BackgroundColor="#E4E8FB"
-                            Command="{behaviors:NavigateTo 'NavigationPage/HealthPage',
-                                                           SourcePage={x:Reference Main}}"
-                            Text="{Binding Doc5}" />
-                    </Frame>
-                    <Frame Grid.Row="2" Grid.Column="1">
-                        <Button
-                            Margin="-20,-20,-20,-20"
-                            BackgroundColor="#E4E8FB"
-                            Command="{behaviors:NavigateTo 'NavigationPage/OtherPage',
-                                                           SourcePage={x:Reference Main}}"
-                            Text="{Binding Doc6}" />
-                    </Frame>
-                </Grid>
+                <uniformGrid:UniformGrid VerticalOptions="FillAndExpand" BindableLayout.ItemsSource="{Binding Folders}" >
+                    <BindableLayout.EmptyView>
+                        <Label Text="Пожалуйста, подождите..."/>
+                    </BindableLayout.EmptyView>
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Button
+                                BackgroundColor="#E4E8FB"
+                                Command="{Binding BindingContext.MoveToFolderCommand, Source={x:Reference Main}}"
+                                CommandParameter="{Binding .}"
+                                Text="{Binding Name}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </uniformGrid:UniformGrid>
+                
                 <Frame Margin="20,0,0,0">
                     <Button
                         Margin="-20,-20,-20,-20"

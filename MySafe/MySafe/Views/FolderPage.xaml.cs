@@ -10,10 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace MySafe.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class BinPage : ContentPage
+    public partial class FolderPage : ContentPage
     {
-        public BinPage()
+        public FolderPage()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
         }
     }

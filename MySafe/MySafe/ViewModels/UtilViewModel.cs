@@ -13,5 +13,10 @@ namespace MySafe.ViewModels
         public UtilViewModel(INavigationService navigationService) : base(navigationService)
         {
         }
+
+        protected override void ActionAfterLoadPage()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

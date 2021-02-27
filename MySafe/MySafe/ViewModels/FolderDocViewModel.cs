@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.RegularExpressions;
 using MySafe.Mediator.Documents.GetDocumentInfo;
+using MySafe.Mediator.Folders.GetFolderInfo;
+using MySafe.Models;
 using Xamarin.Forms;
 using File = MySafe.Models.File;
 
@@ -22,43 +24,25 @@ namespace MySafe.ViewModels
         {
             _mediator = mediator;
             Files = new ObservableCollection<File>();
-            _loadedCommand ??= new DelegateCommand(ActionAfterLoadPage);
         }
 
-        private async void ActionAfterLoadPage()
+        protected override async void ActionAfterLoadPage()
         {
-            Files.Clear();
-            var id = (int) _parameters["id"];
-            
-            var queryResponse = await _mediator.Send(new DocumentInfoQuery(_jwtToken, id));
+            //Documents.Clear();
+            //var id = (_parameters["id"] == null || !(_parameters["id"] is int))  ? ID : (int) _parameters["id"];
+            //ID = id;
+            //var queryResponse = await _mediator.Send(new FolderInfoQuery(_jwtToken, id));
 
-            if (queryResponse.HasError)
-            {
-                Error = queryResponse.Error;
-                return;
-            }
+            //if (queryResponse.HasError)
+            //{
+            //    Error = queryResponse.Error;
+            //    return;
+            //}
 
-            queryResponse.Attachments.ForEach(x =>
-            {
-                try
-                {
-
-                    var reg = new Regex(".*base64,");
-                    var base64 = reg.Replace(x.Preview, "").Replace("\\n", "");
-                    var @byte = Convert.FromBase64String(base64);
-                    
-                    var imageSource = ImageSource.FromStream(() =>
-                    {
-                        Stream stream = new MemoryStream(@byte);
-                        return stream;
-                    });
-                    Files.Add(new File() { Id = x.Id, Base64 = imageSource });
-                }
-                catch (Exception ex)
-                {
-
-                }
-            });
+            //queryResponse.Documents.ForEach(x =>
+            //{
+            //    Documents.Add(new Document(_navigationService) { Id = x.Id, Name = x.Name, ContainsAttachments = x.ContainsAttachments});
+            //});
         }
     }
 }

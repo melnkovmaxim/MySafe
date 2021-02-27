@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MySafe.Views.FolderPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="http://prismlibrary.com"
+    x:Name="Folder"
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=FolderViewModel}">
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <!-- <Setter Property="HeightRequest" Value="70" /> -->
+            <Setter Property="CornerRadius" Value="25" />
+            <Setter Property="Padding" Value="0,-60,0,0" />
+            <Setter Property="FontSize" Value="18" />
+            <!-- <Setter Property="Backgroundcolor" Value="#E4E8FB" /> -->
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Behaviors>
+        <behaviors:EventToCommandBehavior Command="{Binding _loadedCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+    <ContentPage.Content>
+
+        <StackLayout>
+            <Frame
+                Margin="20,20,20,10"
+                BackgroundColor="#E4E8FB"
+                CornerRadius="24"
+                HeightRequest="22"
+                HorizontalOptions="Fill">
+                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                    <Image Margin="-150,0,0,0" Source="docs.png" />
+                    <Label
+                        Margin="45,-33,0,0"
+                        FontSize="24"
+                        Text="Документы" />
+                </StackLayout>
+            </Frame>
+            <CollectionView
+                x:Name="MyList"
+                ItemsSource="{Binding Documents}"
+                VerticalOptions="FillAndExpand">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        HorizontalItemSpacing="10"
+                        Orientation="Vertical"
+                        Span="2"
+                        VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame>
+                            <Button
+                                Margin="-20,-20,-20,-20"
+                                BackgroundColor="#E4E8FB"
+                                Command="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}"
+                                CommandParameter="{Binding .}"
+                                HeightRequest="75"
+                                Text="{Binding Name}" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

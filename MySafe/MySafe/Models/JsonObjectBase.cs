@@ -14,6 +14,7 @@ namespace MySafe.Models
         {
             var rootName = this.GetType().Name.ToLower();
             var serializedObject = JsonConvert.SerializeObject(this);
+
             return $"{{\"{rootName}\":{serializedObject}}}";
         }
     }

@@ -6,6 +6,7 @@ using Android.Content.PM;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
+using DLToolkit.Forms.Controls;
 using Java.IO;
 using Plugin.CurrentActivity;
 using Plugin.Fingerprint;

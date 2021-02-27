@@ -32,7 +32,7 @@ namespace MySafe
             containerRegistry.Register<IPasswordManagerService, PasswordManagerService>();
             containerRegistry.Register<ISecureStorageRepository, SecureStorageRepository>();
             containerRegistry.Register<IDeviceAuthService, DeviceAuthService>();
-            containerRegistry.RegisterInstance(typeof(IRestClient), new RestClient(MySafeApp.Resources.ServerHost));
+            containerRegistry.Register<IRestClient, RestClientWrapper>();
 
             return containerRegistry;
         }
@@ -65,17 +65,12 @@ namespace MySafe
 
             containerRegistry.RegisterForNavigation<AuthPage, AuthViewModel>();
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
-            containerRegistry.RegisterForNavigation<DocumentPage, DocumentViewModel>();
-            containerRegistry.RegisterForNavigation<TaxPage, TaxViewModel>();
-            containerRegistry.RegisterForNavigation<HealthPage, HealthViewModel>();
-            containerRegistry.RegisterForNavigation<BinPage, BinViewModel>();
+            containerRegistry.RegisterForNavigation<FolderPage, DocumentViewModel>();
             containerRegistry.RegisterForNavigation<UtilPage, UtilViewModel>();
             containerRegistry.RegisterForNavigation<NotePage, NoteViewModel>();
-            containerRegistry.RegisterForNavigation<EstatePage, EstateViewModel>();
-            containerRegistry.RegisterForNavigation<OtherPage, OtherViewModel>();
             containerRegistry.RegisterForNavigation<SignInPage, SignInViewModel>();
             containerRegistry.RegisterForNavigation<TwoFactorPage, TwoFactorViewModel>();
-            containerRegistry.RegisterForNavigation<FolderDocPage, FolderDocViewModel>();
+            containerRegistry.RegisterForNavigation<FolderPage, FolderViewModel>();
 
             return containerRegistry;
         }
@@ -146,6 +141,6 @@ namespace MySafe
         public static DocumentViewModel DocumentViewModel => Ioc.Resolve<DocumentViewModel>();
         public static SignInViewModel SignInViewModel => Ioc.Resolve<SignInViewModel>();
         public static TwoFactorViewModel TwoFactorViewModel => Ioc.Resolve<TwoFactorViewModel>();
-        public static FolderDocViewModel FolderDocViewModel => Ioc.Resolve<FolderDocViewModel>();
+        public static FolderViewModel FolderViewModel => Ioc.Resolve<FolderViewModel>();
     }
 }

@@ -5,6 +5,7 @@ using Prism.Commands;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
 using MySafe.Mediator.Folders.GetFolderInfo;
+using MySafe.Models.Responses;
 
 namespace MySafe.ViewModels
 {
@@ -12,7 +13,7 @@ namespace MySafe.ViewModels
     {
         public static int ID { get; set; }
         private readonly IMediator _mediator;
-        public ObservableCollection<Document> Documents { get; set; }
+        public ObservableCollection<DocumentResponse> Documents { get; set; }
 
         private Document _selectedDocument;
         public Document SelectedDocument
@@ -28,11 +29,10 @@ namespace MySafe.ViewModels
             : base(navigationService)
         {
             _mediator = mediator;
-            Documents = new ObservableCollection<Document>();
-            _loadedCommand ??= new DelegateCommand(ActionAfterLoadPage);
+            Documents = new ObservableCollection<DocumentResponse>();
         }
 
-        private async void ActionAfterLoadPage()
+        protected override async void ActionAfterLoadPage()
         {
             Documents.Clear();
             var id = (_parameters["id"] == null || !(_parameters["id"] is int))  ? ID : (int) _parameters["id"];
@@ -47,7 +47,7 @@ namespace MySafe.ViewModels
 
             queryResponse.Documents.ForEach(x =>
             {
-                Documents.Add(new Document(_navigationService) { Id = x.Id, Name = x.Name, ContainsAttachments = x.ContainsAttachments});
+                Documents.Add(new DocumentResponse() { Id = x.Id, Name = x.Name, ConstainsAttachments = x.ConstainsAttachments});
             });
 
             //await _navigationService.NavigateAsync(nameof(FolderDocPage), new NavigationParameters{{"id", 99}});

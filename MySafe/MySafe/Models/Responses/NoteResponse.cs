@@ -8,13 +8,18 @@ using Newtonsoft.Json;
 namespace MySafe.Models.Responses
 {
     [JsonObject]
-    public class FolderResponse: BaseResponse
+    public class NoteResponse: BaseResponse
     {
         [JsonProperty]
         public int Id { get; set; }
+
         [JsonProperty]
-        public string Name { get; set; }
+        public DateTime? CreatedAt { get; set; }
+
         [JsonProperty]
-        public List<DocumentResponse> Documents { get; set; }
+        public string Content { get; set; }
+
+        [JsonProperty]
+        public string ClippedContent { get; set; }
     }
 }
