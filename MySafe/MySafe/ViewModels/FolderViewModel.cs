@@ -67,6 +67,7 @@ namespace MySafe.ViewModels
             }
 
             DocumentsList = queryResponse.Documents;
+            Documents.Clear();
             queryResponse.Documents.ForEach(Documents.Add);
 
             
