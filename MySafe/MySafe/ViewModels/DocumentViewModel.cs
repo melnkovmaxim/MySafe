@@ -14,8 +14,10 @@ using MySafe.Core;
 using MySafe.Mediator.Documents.GetDocumentInfo;
 using MySafe.Mediator.Folders.GetFolderInfo;
 using MySafe.Mediator.Images.GetOriginalImage;
+using MySafe.Mediator.Images.MoveToTrash;
 using MySafe.Mediator.Images.UploadImage;
 using MySafe.Mediator.Sheets.GetFile;
+using MySafe.Mediator.Sheets.MoveToTrash;
 using MySafe.Mediator.Sheets.UploadFile;
 using MySafe.Models.Responses;
 using MySafe.Repositories.Abstractions;
@@ -126,6 +128,26 @@ namespace MySafe.ViewModels
         });
 
         public AsyncCommand<Attachment> MoveToTrashCommand => 
-            _moveToTrashCommand ??= new AsyncCommand<Attachment>(async (attachment) => {  });
+            _moveToTrashCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
+        {
+            BaseResponse response;
+
+            if (attachment.IsImage)
+            {
+                response = await _mediator.Send(new ImageToTrashCommand(_jwtToken, attachment.Id));
+            }
+            else
+            {
+                response = await _mediator.Send(new MoveFileToTrashCommand(_jwtToken, attachment.Id));
+            }
+
+            if (response.HasError)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось загрузить файл, что-то пошло не так... ", "Ok");
+                return;
+            }
+
+            Attachments.Remove(attachment);
+        });
     }
 }

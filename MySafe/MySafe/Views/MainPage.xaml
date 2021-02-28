@@ -138,9 +138,9 @@
                 HeightRequest="220"
                 HorizontalOptions="CenterAndExpand"
                 Orientation="Horizontal">
-                <uniformGrid:UniformGrid VerticalOptions="FillAndExpand" BindableLayout.ItemsSource="{Binding Folders}"  >
+                <uniformGrid:UniformGrid BindableLayout.ItemsSource="{Binding Folders}" VerticalOptions="FillAndExpand">
                     <BindableLayout.EmptyView>
-                        <Label Text="Пожалуйста, подождите..."/>
+                        <Label Text="Пожалуйста, подождите..." />
                     </BindableLayout.EmptyView>
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
@@ -152,7 +152,7 @@
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </uniformGrid:UniformGrid>
-                
+
                 <Frame Margin="20,0,0,0">
                     <Button
                         Margin="-20,-20,-20,-20"
@@ -167,12 +167,12 @@
                 HeightRequest="30"
                 HorizontalOptions="CenterAndExpand"
                 Orientation="Horizontal">
-                <Frame Grid.Row="2" Margin="0,15,0,10">
+                <Frame Margin="0,15,0,10">
                     <Button
                         Margin="-20,-20,-20,-20"
                         Padding="0,0,0,0"
                         BackgroundColor="#E4E8FB"
-                        Command="{behaviors:NavigateTo 'NavigationPage/BinPage',
+                        Command="{behaviors:NavigateTo 'NavigationPage/TrashFolderPage',
                                                        SourcePage={x:Reference Main}}"
                         HorizontalOptions="Center"
                         ImageSource="info.png"

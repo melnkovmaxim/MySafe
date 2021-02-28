@@ -67,7 +67,6 @@ namespace MySafe.ViewModels
             await _navigationService.NavigateAsync(nameof(FolderPage), @params);
         });
 
-
         public AsyncCommand SignOutCommand => _signOutCommand ??= new AsyncCommand(async () =>
         {
             _ = _mediator.Send(new SignOutCommand(_jwtToken));

@@ -35,7 +35,6 @@ namespace MySafe.Models.Responses
         public DateTime? TrashedAt { get; set; }
 
         [JsonProperty]
-        // Возможно неверный тип
         public string Content { get; set; }
 
         [JsonProperty]
@@ -73,13 +72,20 @@ namespace MySafe.Models.Responses
         public bool IsImage => FileExtension == null;
 
         [JsonIgnore]
-        public ImageSource ImageSource => _imageSource ??= _imageSourceLazy.Value;
+        public ImageSource ImageSource
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Preview)) return null;
+                return _imageSource ??= _imageSourceLazy.Value;
+            }
+        }
 
         [JsonIgnore]
         private ImageSource _imageSource;
 
         [JsonIgnore] 
-        private Lazy<ImageSource> _imageSourceLazy => new Lazy<ImageSource>(() => 
+        private Lazy<ImageSource> _imageSourceLazy => new Lazy<ImageSource>(() =>
         {
             var reg = new Regex(".*base64,");
             var base64 = reg.Replace(Preview, "").Replace("\\n", "");

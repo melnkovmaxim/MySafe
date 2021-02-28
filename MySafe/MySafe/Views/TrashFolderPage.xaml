@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MySafe.Views.TrashFolderPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="Trash"
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=TrashViewModel}">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout>
+                <Frame
+                    Margin="20,20,20,10"
+                    BackgroundColor="#E4E8FB"
+                    CornerRadius="24"
+                    HeightRequest="22"
+                    HorizontalOptions="Fill">
+                    <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                        <Image Margin="-150,0,0,0" Source="docs.png" />
+                        <Label
+                            Margin="45,-33,0,0"
+                            FontSize="24"
+                            Text="{Binding FolderName}" />
+                    </StackLayout>
+                </Frame>
+                <SearchBar
+                    Margin="10,10,10,20"
+                    HorizontalOptions="Fill"
+                    IsEnabled="False"
+                    Opacity="0.8"
+                    Placeholder="Название документа"
+                    PlaceholderColor="#7e7e7e" />
+                <CollectionView
+                    x:Name="MyList"
+                    ItemsSource="{Binding TrashItems}"
+                    VerticalOptions="FillAndExpand">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            
+                            HorizontalItemSpacing="10"
+                            Orientation="Vertical"
+                            Span="2"
+                            VerticalItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                                <Frame>
+                                    <Button
+                                        ImageSource="{Binding ImageSource}"
+                                        Margin="-20,-20,-20,-20"
+                                        BackgroundColor="#E4E8FB"
+                                        Command="{Binding BindingContext.ShowActionMenu, Source={x:Reference Trash}}"
+                                        CommandParameter="{Binding .}"
+                                        HeightRequest="75"
+                                        Text="{Binding Name}" />
+                                </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Button HeightRequest="50" BackgroundColor="Yellow" Command="{Binding ClearTrashCommand}" Text="Очистить корзину"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

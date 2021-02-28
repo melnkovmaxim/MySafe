@@ -51,7 +51,7 @@ namespace MySafe.ViewModels
 
             
             var safeFolders = await _mediator.Send(new SafeInfoQuery(_jwtToken));
-            var folderName = safeFolders?.Folders.FirstOrDefault(x => x.Id == queryResponse.Id);
+            FolderName = safeFolders?.Folders.FirstOrDefault(x => x.Id == queryResponse.Id)?.Name;
         }
 
         public AsyncCommand<DocumentResponse> MoveToDocumentCommand => _moveToDocumentCommand 
