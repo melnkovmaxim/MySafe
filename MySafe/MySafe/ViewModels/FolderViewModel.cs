@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -65,9 +66,8 @@ namespace MySafe.ViewModels
                 return;
             }
 
-            Documents.Clear();
             DocumentsList = queryResponse.Documents;
-            Filter = string.Empty;
+            queryResponse.Documents.ForEach(Documents.Add);
 
             
             var safeFolders = await _mediator.Send(new SafeInfoQuery(_jwtToken));
@@ -84,10 +84,10 @@ namespace MySafe.ViewModels
         });
 
         public AsyncCommand AddDocumentCommand => _addDocumentCommand ??= new AsyncCommand(async () =>
-        {
-            var result = await Application.Current.MainPage.DisplayPromptAsync("Введите название", null);
+        {  
+            bool answer = await Application.Current.MainPage.DisplayAlert ("Создать новый документ?", null, "Да", "Нет");
+            if (!answer) return;
 
-            if (string.IsNullOrEmpty(result)) return;
             var response = await _mediator.Send(new CreateDocumentCommand(_jwtToken, folderId));
 
             if (response.HasError)
