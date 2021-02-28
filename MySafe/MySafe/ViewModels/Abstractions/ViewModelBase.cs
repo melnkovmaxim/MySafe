@@ -5,6 +5,7 @@ using MySafe.Models.Responses;
 using MySafe.Repositories.Abstractions;
 using NetStandardCommands;
 using Prism.Navigation;
+using Prism.Services.Dialogs;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using BindableBase = Prism.Mvvm.BindableBase;
@@ -47,6 +48,5 @@ namespace MySafe.ViewModels.Abstractions
                 await _navigationService.NavigateAsync(pageName, @params);
             }
         }
-
     }
 }

@@ -26,10 +26,15 @@ namespace MySafe.Mediator.Sheets.UploadFile
 
         public async Task<IRestResponse> Handle(UploadFileCommand request, CancellationToken cancellationToken)
         {
+            await using var stream = await request.FilePickerResult.OpenReadAsync();
+            await using var memoryStream = new MemoryStream();
+            stream.CopyTo(memoryStream);
+            var bytes= memoryStream.ToArray();
+            var pickerResult = request.FilePickerResult;
+
             var httpRequest = new RestRequest($"/api/v1/documents/{request.DocumentId}/sheets", Method.POST);
             _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-            httpRequest.RequestFormat = DataFormat.Json;
-            httpRequest.AddFileBytes(Path.GetFileNameWithoutExtension(request.FileName), request.File, request.FileName + ".xlsx");
+            httpRequest.AddFileBytes(Path.GetFileNameWithoutExtension(pickerResult.FileName), bytes, pickerResult.FileName, pickerResult.ContentType);
             //httpRequest.AddParameter("Content-Disposition", $"form-data; name=\"file\"; filename=$\"{request.FileName}+.xlsx\"");
             //httpRequest.AddOrUpdateParameter("Content-Type", $"'application\\xlsx'");
 

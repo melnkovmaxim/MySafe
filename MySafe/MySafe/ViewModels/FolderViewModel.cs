@@ -16,7 +16,6 @@ using NetStandardCommands;
 using Prism.Navigation;
 using Xamarin.Forms;
 using Document = MySafe.Models.Document;
-using File = MySafe.Models.File;
 
 namespace MySafe.ViewModels
 {

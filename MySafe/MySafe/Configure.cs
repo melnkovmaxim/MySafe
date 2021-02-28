@@ -18,6 +18,7 @@ using MySafe.Views;
 using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
+using Prism.Services.Dialogs;
 using RestSharp;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
@@ -65,13 +66,12 @@ namespace MySafe
 
             containerRegistry.RegisterForNavigation<AuthPage, AuthViewModel>();
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
-            containerRegistry.RegisterForNavigation<FolderPage, DocumentViewModel>();
+            containerRegistry.RegisterForNavigation<DocumentPage, DocumentViewModel>();
             containerRegistry.RegisterForNavigation<UtilPage, UtilViewModel>();
             containerRegistry.RegisterForNavigation<NotePage, NoteViewModel>();
             containerRegistry.RegisterForNavigation<SignInPage, SignInViewModel>();
             containerRegistry.RegisterForNavigation<TwoFactorPage, TwoFactorViewModel>();
             containerRegistry.RegisterForNavigation<FolderPage, FolderViewModel>();
-            containerRegistry.RegisterForNavigation<DocumentPage, DocumentViewModel>();
 
             return containerRegistry;
         }
