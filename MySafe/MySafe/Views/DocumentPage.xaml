@@ -12,7 +12,11 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding ImageSource}" />
+                    <Image Source="{Binding ImageSource}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BindingContext.DownloadFileCommand, Source={x:Reference Document}}" CommandParameter="{Binding .}" />
+                        </Image.GestureRecognizers>
+                    </Image>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

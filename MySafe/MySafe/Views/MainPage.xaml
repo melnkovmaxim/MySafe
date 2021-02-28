@@ -145,7 +145,7 @@
                 HeightRequest="220"
                 HorizontalOptions="CenterAndExpand"
                 Orientation="Horizontal">
-                <uniformGrid:UniformGrid VerticalOptions="FillAndExpand" BindableLayout.ItemsSource="{Binding Folders}" >
+                <uniformGrid:UniformGrid VerticalOptions="FillAndExpand" BindableLayout.ItemsSource="{Binding Folders}"  >
                     <BindableLayout.EmptyView>
                         <Label Text="Пожалуйста, подождите..."/>
                     </BindableLayout.EmptyView>

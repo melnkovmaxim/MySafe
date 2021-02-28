@@ -12,7 +12,8 @@ namespace MySafe.Services
     {
         public RestClientWrapper()
             :base(MySafeApp.Resources.ServerHost)
-        {
+        { 
+            Timeout = 10 * 1000; // 10 sec
         }
     }
 }
