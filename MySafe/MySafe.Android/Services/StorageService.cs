@@ -9,7 +9,7 @@ using Xamarin.Essentials;
 
 namespace MySafe.Droid.Services
 {
-    public class StorageService: IStorageService
+    public class StorageService
     {
         public void SaveFileToStorage(byte[] bytes, string filename, string extension)
         {            

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Models.Responses
+namespace MySafe.Repositories.Abstractions
 {
-    public class ImageResponse: BaseResponse
+    public interface IStoragePathesRepository
     {
+        string DownloadPath { get; }
     }
 }

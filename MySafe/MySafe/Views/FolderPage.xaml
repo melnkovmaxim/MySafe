@@ -29,9 +29,16 @@
                     <Label
                         Margin="45,-33,0,0"
                         FontSize="24"
-                        Text="Документы" />
+                        Text="{Binding FolderName}" />
                 </StackLayout>
             </Frame>
+            <SearchBar
+                Margin="10,10,10,20"
+                HorizontalOptions="Fill"
+                IsEnabled="False"
+                Opacity="0.8"
+                Placeholder="Название документа"
+                PlaceholderColor="#7e7e7e" />
             <CollectionView
                 x:Name="MyList"
                 ItemsSource="{Binding Documents}"

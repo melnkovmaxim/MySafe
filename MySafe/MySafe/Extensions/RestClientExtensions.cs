@@ -26,8 +26,15 @@ namespace MySafe.Extensions
             {
                 var response = await client.ExecuteAsync(request, cancellationToken)
                     .ConfigureAwait(false);
-                
-                cmdResponse = JsonConvert.DeserializeObject<T>(response.Content);
+
+                if (response.ContentType.Contains("application/json"))
+                {
+                    cmdResponse = JsonConvert.DeserializeObject<T>(response.Content);
+                }
+                else
+                {
+                    cmdResponse.FileBytes = response.RawBytes;
+                }
 
                 if (response.IsSuccessful && cmdResponse is UserResponse userResponse)
                 {

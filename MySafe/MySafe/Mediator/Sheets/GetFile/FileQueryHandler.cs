@@ -6,13 +6,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using MySafe.Extensions;
 using MySafe.Models.Responses;
 using RestSharp;
 using RestSharp.Authenticators;
 
 namespace MySafe.Mediator.Sheets.GetFile
 {
-    public class FileQueryHandler: IRequestHandler<FileQuery, byte[]>
+    public class FileQueryHandler: IRequestHandler<FileQuery, SheetResponse>
     {
         private readonly IRestClient _restClient;
         private readonly IMapper _mapper;
@@ -23,14 +24,13 @@ namespace MySafe.Mediator.Sheets.GetFile
             _mapper = mapper;
         }
 
-        public Task<byte[]> Handle(FileQuery request, CancellationToken cancellationToken)
+        public async Task<SheetResponse> Handle(FileQuery request, CancellationToken cancellationToken)
         {
             var httpRequest = new RestRequest($"/api/v1/sheets/{request.SheetId}/download", Method.GET);
             _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-            var bytes = _restClient.DownloadData(httpRequest);
+            var response = await _restClient.GetResponseAsync<SheetResponse>(httpRequest, cancellationToken);
 
-
-            return Task.FromResult(bytes);
+            return response;
         }
     }
 }

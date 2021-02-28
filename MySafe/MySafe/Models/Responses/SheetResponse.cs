@@ -8,6 +8,5 @@ namespace MySafe.Models.Responses
 {
     public class SheetResponse: BaseResponse
     {
-        
     }
 }

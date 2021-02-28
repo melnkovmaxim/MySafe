@@ -116,13 +116,6 @@
                     Margin="-335,40,0,0"
                     Source="loopa.png"
                     WidthRequest="20" />-->
-                <SearchBar
-                    Margin="10,10,10,20"
-                    HorizontalOptions="Fill"
-                    IsEnabled="True"
-                    Opacity="0.8"
-                    Placeholder=" Название документа"
-                    PlaceholderColor="#7e7e7e" />
                 <!--<Entry
                     Margin="50,-37,20,20"
                     HorizontalOptions="Fill"

@@ -9,7 +9,7 @@ using MySafe.Models.Responses;
 
 namespace MySafe.Mediator.Sheets.GetFile
 {
-    public class FileQuery: IRequest<byte[]>
+    public class FileQuery: IRequest<SheetResponse>
     {
         public JwtSecurityToken JwtToken { get; set; }
         public int SheetId { get; set; }

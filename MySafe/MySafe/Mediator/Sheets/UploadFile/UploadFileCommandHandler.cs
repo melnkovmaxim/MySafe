@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,12 +35,11 @@ namespace MySafe.Mediator.Sheets.UploadFile
 
             var httpRequest = new RestRequest($"/api/v1/documents/{request.DocumentId}/sheets", Method.POST);
             _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-            httpRequest.AddFileBytes(Path.GetFileNameWithoutExtension(pickerResult.FileName), bytes, pickerResult.FileName, pickerResult.ContentType);
-            //httpRequest.AddParameter("Content-Disposition", $"form-data; name=\"file\"; filename=$\"{request.FileName}+.xlsx\"");
-            //httpRequest.AddOrUpdateParameter("Content-Type", $"'application\\xlsx'");
+            httpRequest.AddFile(Path.GetFileNameWithoutExtension(pickerResult.FileName), bytes, pickerResult.FileName, pickerResult.ContentType);
+            //httpRequest.AddHeader("Content-Disposition", $"form-data; name=file; filename={pickerResult.FileName}");
+            //httpRequest.AddHeader("Content-Type", pickerResult.ContentType);
 
             httpRequest.AlwaysMultipartFormData = true;
-
             var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken);
             return response;
         }

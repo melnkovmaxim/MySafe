@@ -29,12 +29,18 @@
                 HeightRequest="50"
                 HorizontalOptions="FillAndExpand"
                 Orientation="Horizontal">
-                <Button Text="Открыть оригинал документа" />
+                <Button
+                    Command="{Binding OpenFileCommand}"
+                    CommandParameter="{Binding CurrentAttachment}"
+                    Text="Открыть оригинал документа" />
                 <Button
                     Command="{Binding DownloadFileCommand}"
                     CommandParameter="{Binding CurrentAttachment}"
                     Text="Down" />
-                <Button Text="Del" />
+                <Button
+                    Command="{Binding MoveToTrashCommand}"
+                    CommandParameter="{Binding CurrentAttachment}"
+                    Text="Del" />
             </StackLayout>
         </StackLayout>
         <!--<CollectionView ItemsSource="{Binding Attachments}" VerticalOptions="FillAndExpand">

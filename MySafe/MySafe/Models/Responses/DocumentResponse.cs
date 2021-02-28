@@ -63,11 +63,14 @@ namespace MySafe.Models.Responses
         [JsonProperty]
         public int ViewHeight { get; set; }
 
-        [JsonProperty]
-        public string FileExtensions { get; set; }
+        [JsonProperty("file_extension")]
+        public string FileExtension { get; set; }
 
         [JsonProperty]
         public int PagesCount { get; set; }
+
+        [JsonIgnore] 
+        public bool IsImage => FileExtension == null;
 
         [JsonIgnore]
         public ImageSource ImageSource => _imageSource ??= _imageSourceLazy.Value;

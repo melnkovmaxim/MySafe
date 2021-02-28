@@ -10,5 +10,6 @@ namespace MySafe.Models.Responses
     {
         string Error { get; set; }
         bool HasError { get; }
+        byte[] FileBytes { get; set; }
     }
 }

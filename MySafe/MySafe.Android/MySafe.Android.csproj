@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="MainApplication.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Repositories\StoragePathesRepository.cs" />
     <Compile Include="Services\StorageService.cs" />
     <Compile Include="SplashActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

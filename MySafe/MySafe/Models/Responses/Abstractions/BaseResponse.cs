@@ -1,13 +1,13 @@
-﻿using DryIoc;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace MySafe.Models.Responses
 {
     [JsonObject]
-    public abstract class BaseResponse: IResponse
+    public class BaseResponse: IResponse
     {
         [JsonProperty("error")]
         public string Error { get; set; }
         public bool HasError => !string.IsNullOrEmpty(Error);
+        public byte[] FileBytes { get; set; }
     }
 }

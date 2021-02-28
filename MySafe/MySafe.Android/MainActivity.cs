@@ -9,7 +9,9 @@ using Android.Runtime;
 using DLToolkit.Forms.Controls;
 using DryIoc;
 using Java.IO;
+using MySafe.Droid.Repositories;
 using MySafe.Droid.Services;
+using MySafe.Repositories.Abstractions;
 using MySafe.Services.Abstractions;
 using Plugin.CurrentActivity;
 using Plugin.Fingerprint;
@@ -44,7 +46,7 @@ namespace MySafe.Droid
 
             LoadApplication(new App(new AndroidInitializer()));
 
-            PrismApplicationBase.Current.Container.GetContainer().Register<IStorageService, StorageService>();
+            PrismApplicationBase.Current.Container.GetContainer().Register<IStoragePathesRepository, StoragePathesRepository>();
         }
 
         private void AndroidEnvironmentOnUnhandledException(object sender, RaiseThrowableEventArgs e)
