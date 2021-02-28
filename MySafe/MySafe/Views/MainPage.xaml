@@ -6,7 +6,8 @@
     xmlns:behaviors="http://prismlibrary.com"
     xmlns:uniformGrid="clr-namespace:UniformGrid;assembly=UniformGrid"
     x:Name="Main"
-    BindingContext="{Binding Source={StaticResource VmLocator}, Path=MainViewModel}">
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=MainViewModel}"
+    NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Resources>
         <Style TargetType="Button">

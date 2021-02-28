@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
@@ -76,16 +77,18 @@ namespace MySafe.ViewModels
             var result = await Application.Current.MainPage
                 .DisplayActionSheet ("Опции", "Отмена", null, restore, destroy);
 
+            if (string.IsNullOrEmpty(result)) return;
+
             BaseResponse response = null;
 
             if (result.Contains(restore))
             {
-                response = await DestroyTrashItem(trashItem);
+                response = await RestoreTrashItem(trashItem);
             }
             
             if (result.Contains(destroy))
             {
-                response = await RestoreTrashItem(trashItem);
+                response = await DestroyTrashItem(trashItem);
             }
 
             if (response?.HasError != false)

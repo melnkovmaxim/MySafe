@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Name="Trash"
+    NavigationPage.HasNavigationBar="False"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=TrashViewModel}">
     <ContentPage.Content>
         <StackLayout>
@@ -22,13 +23,6 @@
                             Text="{Binding FolderName}" />
                     </StackLayout>
                 </Frame>
-                <SearchBar
-                    Margin="10,10,10,20"
-                    HorizontalOptions="Fill"
-                    IsEnabled="False"
-                    Opacity="0.8"
-                    Placeholder="Название документа"
-                    PlaceholderColor="#7e7e7e" />
                 <CollectionView
                     x:Name="MyList"
                     ItemsSource="{Binding TrashItems}"
@@ -48,7 +42,7 @@
                                         ImageSource="{Binding ImageSource}"
                                         Margin="-20,-20,-20,-20"
                                         BackgroundColor="#E4E8FB"
-                                        Command="{Binding BindingContext.ShowActionMenu, Source={x:Reference Trash}}"
+                                        Command="{Binding BindingContext.ShowItemActionMenuCommand, Source={x:Reference Trash}}"
                                         CommandParameter="{Binding .}"
                                         HeightRequest="75"
                                         Text="{Binding Name}" />
