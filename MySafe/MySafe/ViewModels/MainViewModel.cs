@@ -57,7 +57,11 @@ namespace MySafe.ViewModels
             SafeSizeInfo = $"{_usedCapacity}/{_maxCapacity} MB";
 
             Folders.Clear();
-            queryResponse.Folders.ForEach(Folders.Add);
+            //queryResponse.Folders.ForEach(Folders.Add);
+            queryResponse.Folders.ForEach(x => {
+                x.Name = x.Name.Split(":").FirstOrDefault();
+                Folders.Add(x);
+            });
         }
 
         public AsyncCommand<FolderResponse> MoveToFolderCommand => 
