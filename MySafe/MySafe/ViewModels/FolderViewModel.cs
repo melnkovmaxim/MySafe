@@ -73,7 +73,7 @@ namespace MySafe.ViewModels
             
             var safeFolders = await _mediator.Send(new SafeInfoQuery(_jwtToken));
             var currentFolder = safeFolders?.Folders.FirstOrDefault(x => x.Id == queryResponse.Id);
-            FolderName = currentFolder?.Name;
+            FolderName = currentFolder?.Name.Split(":").FirstOrDefault();
             folderId = currentFolder?.Id ?? int.MinValue;
         }
 

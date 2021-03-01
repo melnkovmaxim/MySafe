@@ -33,15 +33,18 @@
                 <Button
                     Command="{Binding OpenFileCommand}"
                     CommandParameter="{Binding CurrentAttachment}"
-                    Text="Открыть оригинал документа" />
+                    ImageSource="clockwise.png"
+                    Text="Открыть оригинал" />
                 <Button
                     Command="{Binding DownloadFileCommand}"
                     CommandParameter="{Binding CurrentAttachment}"
-                    Text="Down" />
+                    ImageSource="download.png"
+                    Text="Скачать" />
                 <Button
                     Command="{Binding MoveToTrashCommand}"
                     CommandParameter="{Binding CurrentAttachment}"
-                    Text="Del" />
+                    ImageSource="delete.png"
+                    Text="Удалить" />
             </StackLayout>
         </StackLayout>
         <!--<CollectionView ItemsSource="{Binding Attachments}" VerticalOptions="FillAndExpand">

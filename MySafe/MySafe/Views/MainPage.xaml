@@ -125,59 +125,73 @@
                     Placeholder=" Название документа"
                     PlaceholderColor="#7e7e7e" />-->
                 <!--  20,-35,20,0  -->
-                <BoxView
+                <!--<BoxView
                     Margin="20,-28,20,0"
                     HeightRequest="2"
                     HorizontalOptions="Fill"
                     Opacity="0.87"
-                    Color="#3465C4" />
+                    Color="#3465C4" /> -->
                 <!--<RefreshView BackgroundColor="Aqua" HorizontalOptions="Fill" HeightRequest="50"></RefreshView>-->
             </StackLayout>
             <StackLayout
                 Grid.Row="2"
-                Margin="0,50,0,0"
-                HeightRequest="220"
+                Margin="20,0,0,20"
                 HorizontalOptions="CenterAndExpand"
+                HeightRequest="220"
                 Orientation="Horizontal">
-                <uniformGrid:UniformGrid BindableLayout.ItemsSource="{Binding Folders}" VerticalOptions="FillAndExpand">
+                <!-- WidthRequest="380" -->
+                <uniformGrid:UniformGrid BindableLayout.ItemsSource="{Binding Folders}" ColumnSpacing="20" RowSpacing="20" VerticalOptions="FillAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="120" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
                     <BindableLayout.EmptyView>
                         <Label Text="Пожалуйста, подождите..." />
                     </BindableLayout.EmptyView>
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <Button
-                                BackgroundColor="#E4E8FB"
-                                Command="{Binding BindingContext.MoveToFolderCommand, Source={x:Reference Main}}"
-                                CommandParameter="{Binding .}"
-                                Text="{Binding Name}" />
+                            <Frame>
+                                <Button
+                                    Margin="-20,-20,-20,-20"
+                                    BackgroundColor="#E4E8FB"
+                                    Command="{Binding BindingContext.MoveToFolderCommand, Source={x:Reference Main}}"
+                                    CommandParameter="{Binding .}"
+                                    Text="{Binding Name}" />
+                            </Frame>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </uniformGrid:UniformGrid>
 
-                <Frame Margin="20,0,0,0">
+                <Frame Margin="20,0,20,0">
                     <Button
                         Margin="-20,-20,-20,-20"
                         Padding="0,0,0,0"
                         BackgroundColor="#FFC46B"
-                        ImageSource="note1.png" />
+                        ImageSource="note.png" />
                 </Frame>
 
             </StackLayout>
             <StackLayout
                 Grid.Row="3"
                 HeightRequest="30"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Fill"
                 Orientation="Horizontal">
-                <Frame Margin="0,15,0,10">
+                <Frame Grid.Row="2" Margin="20,0,20,20">
                     <Button
                         Margin="-20,-20,-20,-20"
                         Padding="0,0,0,0"
                         BackgroundColor="#E4E8FB"
                         Command="{behaviors:NavigateTo 'NavigationPage/TrashFolderPage',
                                                        SourcePage={x:Reference Main}}"
-                        HorizontalOptions="Center"
-                        ImageSource="info.png"
-                        WidthRequest="380" />
+                        HorizontalOptions="CenterAndExpand"
+                        ImageSource="bin.png"
+                        WidthRequest="380"
+                         />
                 </Frame>
             </StackLayout>
 

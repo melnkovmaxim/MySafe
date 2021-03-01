@@ -6,17 +6,22 @@
     x:Name="Trash"
     NavigationPage.HasNavigationBar="False"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=TrashViewModel}">
+    <ContentPage.Resources>
+        <Style TargetType="Frame">
+            <Setter Property="CornerRadius" Value="25" />
+            <Setter Property="HasShadow" Value="True" />
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <StackLayout>
                 <Frame
                     Margin="20,20,20,10"
                     BackgroundColor="#E4E8FB"
-                    CornerRadius="24"
                     HeightRequest="22"
                     HorizontalOptions="Fill">
                     <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                        <Image Margin="-150,0,0,0" Source="docs.png" />
+                        <Image Margin="-120,0,0,0" Source="docs.png" />
                         <Label
                             Margin="45,-33,0,0"
                             FontSize="24"
@@ -26,14 +31,15 @@
                 <CollectionView
                     x:Name="MyList"
                     ItemsSource="{Binding TrashItems}"
-                    VerticalOptions="FillAndExpand">
+                    VerticalOptions="FillAndExpand"
+                    Margin="20,0,20,0">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout
                             
                             HorizontalItemSpacing="10"
                             Orientation="Vertical"
                             Span="2"
-                            VerticalItemSpacing="10" />
+                            VerticalItemSpacing="15" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
@@ -41,6 +47,7 @@
                                     <Button
                                         ImageSource="{Binding ImageSource}"
                                         Margin="-20,-20,-20,-20"
+                                        Padding="20,20,20,20"
                                         BackgroundColor="#E4E8FB"
                                         Command="{Binding BindingContext.ShowItemActionMenuCommand, Source={x:Reference Trash}}"
                                         CommandParameter="{Binding .}"
