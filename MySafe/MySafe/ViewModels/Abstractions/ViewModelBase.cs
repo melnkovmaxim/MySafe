@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
+using MySafe.Extensions;
 using MySafe.Models.Responses;
 using MySafe.Repositories.Abstractions;
 using NetStandardCommands;
@@ -22,16 +23,6 @@ namespace MySafe.ViewModels.Abstractions
             _navigationService = navigationService;
         }
 
-        protected virtual bool IsValidToken(JwtSecurityToken jwtToken)
-        {
-            if (jwtToken?.ValidTo.ToUniversalTime() > DateTime.UtcNow.AddMinutes(5))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         protected virtual async Task HandleResponse(IResponse response, string pageName = null, JwtSecurityToken token = null)
         {
             if (response.HasError)
@@ -42,7 +33,7 @@ namespace MySafe.ViewModels.Abstractions
 
             if (string.IsNullOrEmpty(pageName)) return;
 
-            if (IsValidToken(token))
+            if (token.IsValidToken())
             {
                 var @params = new NavigationParameters {{nameof(JwtSecurityToken), token}};
                 await _navigationService.NavigateAsync(pageName, @params);

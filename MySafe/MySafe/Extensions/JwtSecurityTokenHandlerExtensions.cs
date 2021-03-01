@@ -21,5 +21,14 @@ namespace MySafe.Extensions
 
             return jwtToken;
         }
+        public static bool IsValidToken(this JwtSecurityToken jwtToken)
+        {
+            if (jwtToken?.ValidTo.ToUniversalTime() > DateTime.UtcNow.AddMinutes(5))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

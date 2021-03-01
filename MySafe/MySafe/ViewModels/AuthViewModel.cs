@@ -5,15 +5,15 @@ using MySafe.ViewModels.Abstractions;
 using MySafe.Views;
 using Prism.Commands;
 using System;
+using MySafe.Extensions;
 using DelegateCommand = Prism.Commands.DelegateCommand;
 using INavigationService = Prism.Navigation.INavigationService;
 
 namespace MySafe.ViewModels
 {
-    public class AuthViewModel : ViewModelBase
+    public class AuthViewModel : AuthorizedViewModelBase
     {
         public DelegateCommand RemoveLastNumberCommand{ get; }
-        public DelegateCommand LoadedCommand { get; }
         public DelegateCommand FingerPrintScanCommand { get; }
         public DelegateCommand RestorePasswordCommand { get; }
         public DelegateCommand<string> NumberInputCommand { get; }
@@ -34,7 +34,6 @@ namespace MySafe.ViewModels
             _deviceAuthService = deviceAuthService;
             _vibrationDuration = TimeSpan.FromSeconds(0.2);
 
-            LoadedCommand = new DelegateCommand(Loaded);
             RemoveLastNumberCommand = new DelegateCommand(() => PasswordManager.RemoveLast());
             FingerPrintScanCommand = new DelegateCommand(FingerPrintScan);
             RestorePasswordCommand = new DelegateCommand(RestorePassword);
@@ -48,12 +47,12 @@ namespace MySafe.ViewModels
         {
             var storageRepository = Ioc.Resolve<ISecureStorageRepository>();
             var token = await storageRepository.GetJstTokenAsync();
-            await _navigationService.NavigateAsync(IsValidToken(token)
+            await _navigationService.NavigateAsync(token.IsValidToken()
                 ? nameof(MainPage)
                 : nameof(SignInPage));
         }
-
-        private async void Loaded()
+        
+        protected override async void ActionAfterLoadPage()
         {
             var passwordFromStorage = await Ioc.Resolve<ISecureStorageRepository>().GetLocalPasswordAsync();
             IsRegistered = !string.IsNullOrEmpty(passwordFromStorage);
@@ -88,7 +87,7 @@ namespace MySafe.ViewModels
             var secureStorage = Ioc.Resolve<ISecureStorageRepository>();
             await secureStorage.RemovePasswordAsync();
             await secureStorage.RemoveToken();
-            await _navigationService.NavigateAsync(nameof(AuthPage));
+            await _navigationService.NavigateAsync(nameof(SignInPage));
         }
     }
 }

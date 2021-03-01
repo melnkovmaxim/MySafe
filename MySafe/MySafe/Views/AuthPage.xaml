@@ -7,9 +7,6 @@
     BackgroundColor="#E4E8FB"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=AuthViewModel}"
     NavigationPage.HasNavigationBar="False">
-    <ContentPage.Behaviors>
-        <behaviors:EventToCommandBehavior Command="{Binding LoadedCommand}" EventName="Appearing" />
-    </ContentPage.Behaviors>
     <ContentPage.Resources>
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="Roboto-Regular" />

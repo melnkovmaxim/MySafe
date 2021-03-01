@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using DLToolkit.Forms.Controls;
 using DryIoc;
+using MySafe.Extensions;
+using MySafe.Repositories.Abstractions;
 using MySafe.Services;
 using MySafe.Services.Abstractions;
 using Prism;
@@ -34,7 +36,9 @@ namespace MySafe
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync($"NavigationPage/{nameof(AuthPage)}");
+            var token = await Ioc.Resolve<ISecureStorageRepository>().GetJstTokenAsync();
+            var startPage = token.IsValidToken() ? nameof(AuthPage) : nameof(SignInPage);
+            await NavigationService.NavigateAsync($"NavigationPage/{startPage}");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySafe.Core;
+using MySafe.Extensions;
 using MySafe.Repositories.Abstractions;
 using MySafe.Views;
 using Prism.Commands;
@@ -54,7 +55,7 @@ namespace MySafe.ViewModels.Abstractions
             _jwtToken ??= await Ioc.Resolve<ISecureStorageRepository>()
                 .GetJstTokenAsync();
 
-            if (!IsValidToken(_jwtToken))
+            if (!_jwtToken.IsValidToken())
             {
                 await _navigationService.NavigateAsync(nameof(SignInPage));
                 return;
