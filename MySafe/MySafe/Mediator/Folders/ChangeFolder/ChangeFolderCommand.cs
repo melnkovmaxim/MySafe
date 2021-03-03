@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Folders.ChangeFolder
+namespace MySafe.Presentation.Mediator.Folders.ChangeFolder
 {
     public class ChangeFolderCommand
     {

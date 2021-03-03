@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Fody;
+﻿using Fody;
 using MediatR;
-using MySafe.Extensions;
-using MySafe.Models.Responses;
-using MySafe.Repositories.Abstractions;
-using MySafe.Services.Abstractions;
-using Newtonsoft.Json;
+using MySafe.Presentation.Models.Responses;
+using MySafe.Presentation.Repositories.Abstractions;
 using RestSharp;
 using RestSharp.Authenticators;
+using System.Threading;
+using System.Threading.Tasks;
+using MySafe.Presentation.Extensions;
 
-namespace MySafe.Mediator.Users.SignOut
+namespace MySafe.Presentation.Mediator.Users.SignOut
 {
     [ConfigureAwait(false)]
     public class SignOutCommandHandler : IRequestHandler<SignOutCommand, UserResponse>

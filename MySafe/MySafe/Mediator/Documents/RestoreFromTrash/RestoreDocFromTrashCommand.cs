@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MediatR;
+using MySafe.Presentation.Models.Responses;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Models.Responses;
 
-namespace MySafe.Mediator.Documents.RestoreFromTrash
+namespace MySafe.Presentation.Mediator.Documents.RestoreFromTrash
 {
     public class RestoreDocFromTrashCommand: IRequest<DocumentResponse>
     {

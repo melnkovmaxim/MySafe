@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MediatR;
+using MySafe.Presentation.Models.Responses;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Extensions;
-using MySafe.Models.Responses;
 
-namespace MySafe.Mediator.Users.SignOut
+namespace MySafe.Presentation.Mediator.Users.SignOut
 {
     public class SignOutCommand : IRequest<UserResponse>
     {

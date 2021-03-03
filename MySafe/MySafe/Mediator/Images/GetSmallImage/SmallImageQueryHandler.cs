@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Images.GetSmallImage
+namespace MySafe.Presentation.Mediator.Images.GetSmallImage
 {
     public class SmallImageQueryHandler
     {

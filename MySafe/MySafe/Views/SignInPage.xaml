@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="MySafe.Views.SignInPage"
+    x:Class="MySafe.Presentation.Views.SignInPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=SignInViewModel}"
@@ -32,40 +32,48 @@
         </StackLayout>
         <StackLayout Grid.Row="1" VerticalOptions="CenterAndExpand">
             <Label
-                    Margin="80,0,80,40"
-                    HorizontalOptions="Center"
-                    FontSize="18"
-                    HorizontalTextAlignment="Center">
+                Margin="80,0,80,40"
+                FontSize="18"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center">
                 Введите логин и пароль, используемые для входа на сайт
             </Label>
         </StackLayout>
         <StackLayout Grid.Row="2" VerticalOptions="CenterAndExpand">
-            
-            <Frame Margin="80,20,80,0" HeightRequest="15" CornerRadius="25" BackgroundColor="#FFFFFF">
-                <StackLayout  Margin="0,-16,0,0">
+
+            <Frame
+                Margin="80,20,80,0"
+                BackgroundColor="#FFFFFF"
+                CornerRadius="25"
+                HeightRequest="15">
+                <StackLayout Margin="0,-16,0,0">
                     <Entry
-                
-                HorizontalTextAlignment="Center"
-                Placeholder="Логин"
-                Text="{Binding Login}" />
+                        HorizontalTextAlignment="Center"
+                        Placeholder="Логин"
+                        Text="{Binding Login}" />
                 </StackLayout>
             </Frame>
 
         </StackLayout>
         <StackLayout Grid.Row="3" VerticalOptions="CenterAndExpand">
-            <Frame Margin="80,0,80,20" HasShadow="True" HeightRequest="15" CornerRadius="25" BackgroundColor="#FFFFFF">
-                <StackLayout  Margin="0,-16,0,0">
-                <Entry
-                HorizontalTextAlignment="Center" IsPassword="True"
-                Placeholder="Пароль"
-                Text="{Binding Password}" />
+            <Frame
+                Margin="80,0,80,20"
+                BackgroundColor="#FFFFFF"
+                CornerRadius="25"
+                HasShadow="True"
+                HeightRequest="15">
+                <StackLayout Margin="0,-16,0,0">
+                    <Entry
+                        HorizontalTextAlignment="Center"
+                        IsPassword="True"
+                        Placeholder="Пароль"
+                        Text="{Binding Password}" />
                 </StackLayout>
             </Frame>
 
         </StackLayout>
         <StackLayout Grid.Row="4" VerticalOptions="CenterAndExpand">
             <Button
-                
                 Margin="100,0,100,0"
                 BackgroundColor="#3D6CC7"
                 Command="{Binding SignInCommand}"

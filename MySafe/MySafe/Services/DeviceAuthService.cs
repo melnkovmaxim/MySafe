@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Fody;
+﻿using Fody;
 using MySafe.Core;
-using MySafe.Repositories.Abstractions;
 using MySafe.Services.Abstractions;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using MySafe.Presentation.Repositories.Abstractions;
 using Xamarin.Essentials;
 
 namespace MySafe.Services

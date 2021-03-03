@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Fody;
 using MediatR;
-using MySafe.Extensions;
-using MySafe.Mediator.Folders.GetFolderInfo;
-using MySafe.Models.Responses;
+using MySafe.Presentation.Models.Responses;
 using RestSharp;
 using RestSharp.Authenticators;
+using System.Threading;
+using System.Threading.Tasks;
+using MySafe.Presentation.Extensions;
 
-namespace MySafe.Mediator.Folders.FolderInfo
+namespace MySafe.Presentation.Mediator.Folders.GetFolderInfo
 {
     [ConfigureAwait(false)]
     public class FolderInfoQueryHandler : IRequestHandler<FolderInfoQuery, FolderResponse>

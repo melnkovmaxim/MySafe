@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
-using MySafe.Extensions;
-using MySafe.Models.Responses;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using MySafe.Presentation.Models.Responses;
 
-namespace MySafe.Mediator.Trash.GetTrashInfo
+namespace MySafe.Presentation.Mediator.Trash.GetTrashInfo
 {
     public class TrashInfoQueryHandler: IRequestHandler<TrashInfoQuery, List<TrashResponse>>
     {

@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Fody;
+using MySafe.Presentation.Repositories.Abstractions;
 using System.IdentityModel.Tokens.Jwt;
-using MySafe.Repositories.Abstractions;
 using System.Threading.Tasks;
-using Fody;
 using Xamarin.Essentials;
 
-namespace MySafe.Repositories
+namespace MySafe.Presentation.Repositories
 {
     [ConfigureAwait(false)]
     public class SecureStorageRepository : ISecureStorageRepository

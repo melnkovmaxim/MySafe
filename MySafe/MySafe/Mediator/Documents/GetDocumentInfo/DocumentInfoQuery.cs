@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using MySafe.Models.Responses;
+using MySafe.Presentation.Models.Responses;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace MySafe.Mediator.Documents.GetDocumentInfo
+namespace MySafe.Presentation.Mediator.Documents.GetDocumentInfo
 {
     public class DocumentInfoQuery : IRequest<DocumentResponse>
     {

@@ -1,26 +1,13 @@
-using System;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using DLToolkit.Forms.Controls;
-using DryIoc;
-using MySafe.Extensions;
-using MySafe.Repositories.Abstractions;
-using MySafe.Services;
-using MySafe.Services.Abstractions;
+using MySafe.Presentation.Extensions;
+using MySafe.Presentation.Repositories.Abstractions;
+using MySafe.Presentation.Views;
 using Prism;
 using Prism.Ioc;
-using MySafe.ViewModels;
-using MySafe.Views;
-using Prism.DryIoc;
-using Prism.Navigation;
-using Xamarin.Essentials;
-using Xamarin.Essentials.Interfaces;
-using Xamarin.Essentials.Implementation;
 using Xamarin.Forms;
 
-[assembly: ExportFont("Montserrat-Regular.ttf", Alias= "Montserrat")]
-[assembly: ExportFont("Roboto-Medium.ttf", Alias= "Roboto-Medium")]
-[assembly: ExportFont("Roboto-Regular.ttf", Alias= "Roboto-Regular")]
+[assembly: ExportFont("Montserrat-Regular.ttf", Alias = "Montserrat")]
+[assembly: ExportFont("Roboto-Medium.ttf", Alias = "Roboto-Medium")]
+[assembly: ExportFont("Roboto-Regular.ttf", Alias = "Roboto-Regular")]
 namespace MySafe
 {
     public partial class App

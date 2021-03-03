@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using MySafe.Models.Responses;
+using MySafe.Presentation.Models.Responses;
 
-namespace MySafe.Mediator.Users.SignIn
+namespace MySafe.Presentation.Mediator.Users.SignIn
 {
     public class SignInCommand : IRequest<UserResponse>
     {

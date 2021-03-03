@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Fody;
 using MediatR;
-using MySafe.Extensions;
-using MySafe.Models.Requests;
-using MySafe.Models.Responses;
-using MySafe.Repositories.Abstractions;
+using MySafe.Presentation.Models.Requests;
+using MySafe.Presentation.Models.Responses;
+using MySafe.Presentation.Repositories.Abstractions;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
+using System.Threading;
+using System.Threading.Tasks;
+using MySafe.Presentation.Extensions;
 
-namespace MySafe.Mediator.Users.SignInTwoFactor
+namespace MySafe.Presentation.Mediator.Users.SignInTwoFactor
 {
     [ConfigureAwait(false)]
     public class TwoFactorCommandHandler : IRequestHandler<TwoFactorCommand, UserResponse>

@@ -1,23 +1,17 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
-using DLToolkit.Forms.Controls;
 using DryIoc;
-using Java.IO;
 using MySafe.Droid.Repositories;
-using MySafe.Droid.Services;
-using MySafe.Repositories.Abstractions;
-using MySafe.Services.Abstractions;
 using Plugin.CurrentActivity;
 using Plugin.Fingerprint;
 using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
+using System;
+using System.Threading.Tasks;
+using MySafe.Presentation.Repositories.Abstractions;
 using Xamarin.Forms;
 
 namespace MySafe.Droid

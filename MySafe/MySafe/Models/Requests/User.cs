@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace MySafe.Models.Requests
+namespace MySafe.Presentation.Models.Requests
 {
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class User : JsonObjectBase

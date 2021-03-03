@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace MySafe.Models
+namespace MySafe.Presentation.Models
 {
     public abstract class JsonObjectBase
     {

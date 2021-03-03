@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Folders.GetFolderList
+namespace MySafe.Presentation.Mediator.Folders.GetFolderList
 {
     public class FolderListQuery
     {

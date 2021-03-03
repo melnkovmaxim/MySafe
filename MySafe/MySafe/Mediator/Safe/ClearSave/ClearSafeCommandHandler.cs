@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Safe.ClearSave
+namespace MySafe.Presentation.Mediator.Safe.ClearSave
 {
     public class ClearSafeCommandHandler
     {

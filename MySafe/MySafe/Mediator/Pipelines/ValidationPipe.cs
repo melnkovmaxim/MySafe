@@ -1,15 +1,13 @@
-﻿using System;
+﻿using FluentValidation;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
-using FluentValidation.Validators;
-using MediatR;
-using MySafe.Models.Responses;
+using MySafe.Presentation.Models.Responses.Abstractions;
 
-namespace MySafe.Mediator.Pipelines
+namespace MySafe.Presentation.Mediator.Pipelines
 {
     public class ValidationPipe<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
         where TRequest: IRequest<TResponse>

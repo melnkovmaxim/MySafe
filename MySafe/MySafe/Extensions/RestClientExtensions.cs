@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using MySafe.Models.Responses;
-using MySafe.Repositories.Abstractions;
+﻿using MySafe.Presentation.Models.Responses;
+using MySafe.Presentation.Models.Responses.Abstractions;
 using Newtonsoft.Json;
 using RestSharp;
-using RestSharp.Authenticators;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace MySafe.Extensions
+namespace MySafe.Presentation.Extensions
 {
     public static class RestClientExtensions
     {

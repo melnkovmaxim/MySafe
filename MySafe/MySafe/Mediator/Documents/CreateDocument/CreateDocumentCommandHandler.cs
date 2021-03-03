@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
-using MySafe.Extensions;
-using MySafe.Models.Responses;
+using MySafe.Presentation.Models.Responses;
 using RestSharp;
 using RestSharp.Authenticators;
+using System.Threading;
+using System.Threading.Tasks;
+using MySafe.Presentation.Extensions;
 
-namespace MySafe.Mediator.Documents.CreateDocument
+namespace MySafe.Presentation.Mediator.Documents.CreateDocument
 {
     public class CreateDocumentCommandHandler: IRequestHandler<CreateDocumentCommand, DocumentResponse>
     {

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MediatR;
+using MySafe.Presentation.Models.Responses;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Models.Responses;
 
-namespace MySafe.Mediator.Sheets.RestoreFromTrash
+namespace MySafe.Presentation.Mediator.Sheets.RestoreFromTrash
 {
     public class RestoreFileFromTrashCommand: IRequest<SheetResponse>
     {

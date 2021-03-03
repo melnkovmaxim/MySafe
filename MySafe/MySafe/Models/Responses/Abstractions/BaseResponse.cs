@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MySafe.Models.Responses
+namespace MySafe.Presentation.Models.Responses.Abstractions
 {
     [JsonObject]
     public class BaseResponse: IResponse

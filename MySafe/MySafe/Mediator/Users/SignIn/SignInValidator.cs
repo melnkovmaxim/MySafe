@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace MySafe.Mediator.Users.SignIn
+namespace MySafe.Presentation.Mediator.Users.SignIn
 {
     public class SignInValidator : AbstractValidator<SignInCommand>
     {

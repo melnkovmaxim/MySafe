@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
-using MySafe.Models.Responses;
 using RestSharp;
 using RestSharp.Authenticators;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Sheets.UploadFile
+namespace MySafe.Presentation.Mediator.Sheets.UploadFile
 {
     public class UploadFileCommandHandler: IRequestHandler<UploadFileCommand, IRestResponse>
     {

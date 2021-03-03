@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Notes.ChangeNote
+namespace MySafe.Presentation.Mediator.Notes.ChangeNote
 {
     public class ChangeNoteCommandHandler
     {

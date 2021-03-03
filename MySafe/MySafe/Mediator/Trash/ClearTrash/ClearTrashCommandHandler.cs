@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
-using MySafe.Extensions;
-using MySafe.Models.Responses;
+using MySafe.Presentation.Extensions;
+using MySafe.Presentation.Models.Responses.Abstractions;
 using RestSharp;
 using RestSharp.Authenticators;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Trash.ClearTrash
+namespace MySafe.Presentation.Mediator.Trash.ClearTrash
 {
     public class ClearTrashCommandHandler: IRequestHandler<ClearTrashCommand, BaseResponse>
     {

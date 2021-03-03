@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Repositories.Abstractions
+namespace MySafe.Presentation.Repositories.Abstractions
 {
     public interface IStoragePathesRepository
     {

@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using MySafe.Presentation.Models.Responses.Abstractions;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 
-namespace MySafe.Models.Responses
+namespace MySafe.Presentation.Models.Responses
 {
     [JsonObject]
     public class DocumentResponse: BaseResponse

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Notes.RemoveNote
+namespace MySafe.Presentation.Mediator.Notes.RemoveNote
 {
     public class RemoveNoteCommandHandler
     {

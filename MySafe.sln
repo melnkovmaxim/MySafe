@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySafe", "MySafe\MySafe\MySafe.csproj", "{901721FD-DAA6-4823-BAA4-0E139E748E56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySafe.Presentation", "MySafe\MySafe\MySafe.Presentation.csproj", "{901721FD-DAA6-4823-BAA4-0E139E748E56}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySafe.Android", "MySafe\MySafe.Android\MySafe.Android.csproj", "{AE02A8FE-558B-48DC-814C-CF64B897608E}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySafe.iOS", "MySafe\MySafe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySafe.Core", "MySafe.Core\MySafe.Core.csproj", "{AF3A9516-8BDC-4BC6-BD0B-CB8818D3258C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySafe.Tests", "MySafe.Tests\MySafe.Tests.csproj", "{FA3B93B0-BA18-4215-855C-1DC3ABA6E98F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySafe.Tests", "MySafe.Tests\MySafe.Tests.csproj", "{FA3B93B0-BA18-4215-855C-1DC3ABA6E98F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

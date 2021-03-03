@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MediatR;
+using MySafe.Presentation.Models.Responses;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Models.Responses;
-using RestSharp;
 
-namespace MySafe.Mediator.Users.SignInTwoFactor
+namespace MySafe.Presentation.Mediator.Users.SignInTwoFactor
 {
     public class TwoFactorCommand : IRequest<UserResponse>
     {

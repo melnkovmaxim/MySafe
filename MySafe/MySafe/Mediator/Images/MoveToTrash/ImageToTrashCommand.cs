@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MediatR;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Models.Responses;
+using MySafe.Presentation.Models.Responses;
 
-namespace MySafe.Mediator.Images.MoveToTrash
+namespace MySafe.Presentation.Mediator.Images.MoveToTrash
 {
     public class ImageToTrashCommand: IRequest<ImageResponse>
     {

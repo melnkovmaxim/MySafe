@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Models.Responses
+namespace MySafe.Presentation.Models.Responses.Abstractions
 {
     public interface IResponse
     {

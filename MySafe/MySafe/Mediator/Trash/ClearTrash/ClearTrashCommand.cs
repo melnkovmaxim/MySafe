@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MediatR;
+using MySafe.Presentation.Models.Responses.Abstractions;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Models.Responses;
 
-namespace MySafe.Mediator.Trash.ClearTrash
+namespace MySafe.Presentation.Mediator.Trash.ClearTrash
 {
     public class ClearTrashCommand: IRequest<BaseResponse>
     {

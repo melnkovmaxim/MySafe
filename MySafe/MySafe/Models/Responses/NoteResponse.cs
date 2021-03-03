@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySafe.Presentation.Models.Responses.Abstractions;
 using Newtonsoft.Json;
 
-namespace MySafe.Models.Responses
+namespace MySafe.Presentation.Models.Responses
 {
     [JsonObject]
     public class NoteResponse: BaseResponse

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace MySafe.Models.Responses
+namespace MySafe.Presentation.Models.Responses
 {
     [JsonObject]
     public class TrashResponse: Attachment

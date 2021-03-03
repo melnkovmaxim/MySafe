@@ -1,11 +1,10 @@
-﻿
-using MySafe.Repositories.Abstractions;
-using MySafe.Services.Abstractions;
+﻿using MySafe.Services.Abstractions;
 using MySafe.ViewModels.Abstractions;
-using MySafe.Views;
 using Prism.Commands;
 using System;
-using MySafe.Extensions;
+using MySafe.Presentation.Extensions;
+using MySafe.Presentation.Repositories.Abstractions;
+using MySafe.Presentation.Views;
 using DelegateCommand = Prism.Commands.DelegateCommand;
 using INavigationService = Prism.Navigation.INavigationService;
 

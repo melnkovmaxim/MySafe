@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Prism.Mvvm;
 using PropertyChanged;
 
-namespace MySafe.Models.DiskInfo
+namespace MySafe.Presentation.Models.DiskInfo
 {
     [JsonObject]
     public class DiskInfo : BindableBase

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Documents.ChangeDocument
+namespace MySafe.Presentation.Mediator.Documents.ChangeDocument
 {
     public class ChangeDocumentCommand
     {

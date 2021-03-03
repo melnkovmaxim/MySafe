@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RestSharp;
 
-namespace MySafe.Extensions
+namespace MySafe.Presentation.Extensions
 {
     public static class JwtSecurityTokenHandlerExtensions
     {

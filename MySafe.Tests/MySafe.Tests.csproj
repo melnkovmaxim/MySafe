@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MySafe\MySafe\MySafe.csproj" />
+    <ProjectReference Include="..\MySafe\MySafe\MySafe.Presentation.csproj" />
   </ItemGroup>
 
 </Project>

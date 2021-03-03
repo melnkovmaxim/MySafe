@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="MySafe.Views.TwoFactorPage"
+    x:Class="MySafe.Presentation.Views.TwoFactorPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=TwoFactorViewModel}"

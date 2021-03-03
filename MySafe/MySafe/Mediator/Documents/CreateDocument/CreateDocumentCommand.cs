@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MediatR;
+using MySafe.Presentation.Models.Responses;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Models.Responses;
 
-namespace MySafe.Mediator.Documents.CreateDocument
+namespace MySafe.Presentation.Mediator.Documents.CreateDocument
 {
     /// <summary>
     /// Создание папки (документа) в ячейке сейфа

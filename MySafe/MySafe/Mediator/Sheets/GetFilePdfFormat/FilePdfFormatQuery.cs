@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Sheets.GetFilePdfFormat
+namespace MySafe.Presentation.Mediator.Sheets.GetFilePdfFormat
 {
     public class FilePdfFormatQuery
     {

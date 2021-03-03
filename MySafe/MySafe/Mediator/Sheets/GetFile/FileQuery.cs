@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MediatR;
+using MySafe.Presentation.Models.Responses;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Models.Responses;
 
-namespace MySafe.Mediator.Sheets.GetFile
+namespace MySafe.Presentation.Mediator.Sheets.GetFile
 {
     public class FileQuery: IRequest<SheetResponse>
     {

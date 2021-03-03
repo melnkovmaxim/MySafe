@@ -1,14 +1,8 @@
-﻿using System;
+﻿using Prism.Navigation;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
-using MySafe.Extensions;
-using MySafe.Models.Responses;
-using MySafe.Repositories.Abstractions;
-using NetStandardCommands;
-using Prism.Navigation;
-using Prism.Services.Dialogs;
-using Xamarin.Essentials;
-using Xamarin.Forms;
+using MySafe.Presentation.Extensions;
+using MySafe.Presentation.Models.Responses.Abstractions;
 using BindableBase = Prism.Mvvm.BindableBase;
 
 namespace MySafe.ViewModels.Abstractions

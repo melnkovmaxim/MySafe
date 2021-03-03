@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Users.GetGuideForConfirmRegister
+namespace MySafe.Presentation.Mediator.Users.GetGuideForConfirmRegister
 {
     public class GuideForConfirmRegisterQuery
     {

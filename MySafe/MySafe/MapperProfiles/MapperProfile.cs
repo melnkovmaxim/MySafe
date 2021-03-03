@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using MySafe.Mediator.Users.SignIn;
-using MySafe.Mediator.Users.SignInTwoFactor;
-using MySafe.Models.Requests;
+using MySafe.Presentation.Mediator.Users.SignIn;
+using MySafe.Presentation.Mediator.Users.SignInTwoFactor;
+using MySafe.Presentation.Models.Requests;
 
-namespace MySafe.MapperProfiles
+namespace MySafe.Presentation.MapperProfiles
 {
     public class MapperProfile : Profile
     {

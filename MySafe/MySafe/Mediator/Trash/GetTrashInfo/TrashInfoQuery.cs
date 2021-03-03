@@ -1,13 +1,9 @@
-﻿using System;
+﻿using MediatR;
+using MySafe.Presentation.Models.Responses;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Models.Responses;
 
-namespace MySafe.Mediator.Trash.GetTrashInfo
+namespace MySafe.Presentation.Mediator.Trash.GetTrashInfo
 {
     public class TrashInfoQuery: IRequest<List<TrashResponse>>
     {

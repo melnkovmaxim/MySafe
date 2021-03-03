@@ -10,7 +10,7 @@ using MediatR;
 using RestSharp;
 using RestSharp.Authenticators;
 
-namespace MySafe.Mediator.Images.UploadImage
+namespace MySafe.Presentation.Mediator.Images.UploadImage
 {
     public class UploadImageCommandHandler: IRequestHandler<UploadImageCommand, IRestResponse>
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Images.ChangeImage
+namespace MySafe.Presentation.Mediator.Images.ChangeImage
 {
     public class ChangeImageCommand
     {

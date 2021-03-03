@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Mediator.Notes.GetNoteInfo
+namespace MySafe.Presentation.Mediator.Notes.GetNoteInfo
 {
     public class NoteInfoQueryHandler
     {

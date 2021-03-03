@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Models.Responses;
+﻿using MediatR;
 using RestSharp;
+using System.IdentityModel.Tokens.Jwt;
 using Xamarin.Essentials;
 
-namespace MySafe.Mediator.Sheets.UploadFile
+namespace MySafe.Presentation.Mediator.Sheets.UploadFile
 {
     public class UploadFileCommand: IRequest<IRestResponse>
     {

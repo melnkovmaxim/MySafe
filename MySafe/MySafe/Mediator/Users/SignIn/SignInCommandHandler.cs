@@ -1,22 +1,14 @@
-﻿using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using DryIoc;
+﻿using AutoMapper;
 using Fody;
 using MediatR;
-using MySafe.Extensions;
-using MySafe.Models.Requests;
-using MySafe.Models.Responses;
-using Newtonsoft.Json;
 using RestSharp;
-using RestSharp.Authenticators;
-using Xamarin.Essentials;
+using System.Threading;
+using System.Threading.Tasks;
+using MySafe.Presentation.Extensions;
+using MySafe.Presentation.Models.Requests;
+using MySafe.Presentation.Models.Responses;
 
-namespace MySafe.Mediator.Users.SignIn
+namespace MySafe.Presentation.Mediator.Users.SignIn
 {
     [ConfigureAwait(false)]
     public class SignInCommandHandler : IRequestHandler<SignInCommand, UserResponse>

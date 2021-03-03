@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MySafe.Presentation.Repositories.Abstractions;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySafe.Repositories.Abstractions;
 
 namespace MySafe.Droid.Repositories
 {

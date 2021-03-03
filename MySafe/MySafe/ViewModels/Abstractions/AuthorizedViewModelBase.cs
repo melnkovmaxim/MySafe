@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySafe.Core;
-using MySafe.Extensions;
-using MySafe.Repositories.Abstractions;
-using MySafe.Views;
+﻿using MySafe.Core;
 using Prism.Commands;
 using Prism.Navigation;
+using System.IdentityModel.Tokens.Jwt;
+using MySafe.Presentation.Extensions;
+using MySafe.Presentation.Repositories.Abstractions;
+using MySafe.Presentation.Views;
 
 namespace MySafe.ViewModels.Abstractions
 {

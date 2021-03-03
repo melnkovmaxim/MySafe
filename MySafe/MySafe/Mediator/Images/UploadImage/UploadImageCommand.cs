@@ -8,7 +8,7 @@ using MediatR;
 using RestSharp;
 using Xamarin.Essentials;
 
-namespace MySafe.Mediator.Images.UploadImage
+namespace MySafe.Presentation.Mediator.Images.UploadImage
 {
     public class UploadImageCommand: IRequest<IRestResponse>
     {

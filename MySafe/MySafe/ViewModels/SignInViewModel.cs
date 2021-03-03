@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using MySafe.Mediator.Users.SignIn;
+using MySafe.Presentation.Mediator.Users.SignIn;
+using MySafe.Presentation.Views;
 using MySafe.ViewModels.Abstractions;
-using MySafe.Views;
 using NetStandardCommands;
 using Prism.Navigation;
 

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MySafe.Models.Requests
+namespace MySafe.Presentation.Models.Requests
 {
     [JsonObject]
     public class TwoFactor : JsonObjectBase

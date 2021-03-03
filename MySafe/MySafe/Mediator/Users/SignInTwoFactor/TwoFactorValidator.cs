@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace MySafe.Mediator.Users.SignInTwoFactor
+namespace MySafe.Presentation.Mediator.Users.SignInTwoFactor
 {
     public class TwoFactorValidator : AbstractValidator<TwoFactorCommand>
     {
