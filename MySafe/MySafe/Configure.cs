@@ -2,22 +2,23 @@
 using DryIoc;
 using FluentValidation;
 using MediatR;
-using MySafe.Services;
-using MySafe.Services.Abstractions;
-using MySafe.ViewModels;
+using MySafe.Presentation.Repositories;
+using MySafe.Presentation.ViewModels;
+using MySafe.Presentation.Views;
 using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
 using RestSharp;
 using System.Linq;
-using MySafe.Presentation.Repositories;
-using MySafe.Presentation.Repositories.Abstractions;
-using MySafe.Presentation.Views;
+using System.Reflection;
+using MySafe.Business.Services;
+using MySafe.Business.Services.Abstractions;
+using MySafe.Data.Abstractions;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
 
-namespace MySafe
+namespace MySafe.Presentation
 {
     public static class Configure
     {
@@ -105,6 +106,9 @@ namespace MySafe
 
             foreach (var mediatrOpenType in mediatrOpenTypes)
             {
+                var types = Assembly.GetAssembly(typeof(IMediator)).GetTypes()
+                    .Where(t => t.GetInterfaces()
+                        .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == mediatrOpenType)).ToList();
                 container.RegisterMany(
                     typeof(Configure).Assembly.GetTypes()
                         .Where(t => t.GetInterfaces()

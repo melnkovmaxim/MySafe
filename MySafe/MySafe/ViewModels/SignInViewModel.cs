@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using MySafe.Presentation.Mediator.Users.SignIn;
+using MySafe.Business.Mediator.Users.SignIn;
+using MySafe.Core.Commands;
+using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
-using MySafe.ViewModels.Abstractions;
-using NetStandardCommands;
 using Prism.Navigation;
 
-namespace MySafe.ViewModels
+namespace MySafe.Presentation.ViewModels
 {
     public class SignInViewModel : ViewModelBase
     {

@@ -1,11 +1,11 @@
 ﻿using Prism.Navigation;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
-using MySafe.Presentation.Extensions;
-using MySafe.Presentation.Models.Responses.Abstractions;
+using MySafe.Business.Extensions;
+using MySafe.Core.Entities.Responses.Abstractions;
 using BindableBase = Prism.Mvvm.BindableBase;
 
-namespace MySafe.ViewModels.Abstractions
+namespace MySafe.Presentation.ViewModels.Abstractions
 {
     public abstract class ViewModelBase : BindableBase
     {

@@ -1,14 +1,14 @@
-﻿using MySafe.Services.Abstractions;
-using MySafe.ViewModels.Abstractions;
+﻿using MySafe.Presentation.Views;
 using Prism.Commands;
 using System;
-using MySafe.Presentation.Extensions;
-using MySafe.Presentation.Repositories.Abstractions;
-using MySafe.Presentation.Views;
+using MySafe.Business.Extensions;
+using MySafe.Business.Services.Abstractions;
+using MySafe.Data.Abstractions;
+using MySafe.Presentation.ViewModels.Abstractions;
 using DelegateCommand = Prism.Commands.DelegateCommand;
 using INavigationService = Prism.Navigation.INavigationService;
 
-namespace MySafe.ViewModels
+namespace MySafe.Presentation.ViewModels
 {
     public class DeviceAuthViewModel : AuthorizedViewModelBase
     {

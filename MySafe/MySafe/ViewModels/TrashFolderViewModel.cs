@@ -1,38 +1,43 @@
-﻿using MediatR;
-using MySafe.ViewModels.Abstractions;
-using NetStandardCommands;
+﻿using System.Collections.Generic;
+using MediatR;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using MySafe.Presentation.Mediator.Documents.RemoveFromTrash;
-using MySafe.Presentation.Mediator.Documents.RestoreFromTrash;
-using MySafe.Presentation.Mediator.Images.RemoveFromTrash;
-using MySafe.Presentation.Mediator.Images.RestoreFromTrash;
-using MySafe.Presentation.Mediator.Sheets.RemoveFromTrash;
-using MySafe.Presentation.Mediator.Sheets.RestoreFromTrash;
-using MySafe.Presentation.Mediator.Trash.ClearTrash;
-using MySafe.Presentation.Mediator.Trash.GetTrashInfo;
-using MySafe.Presentation.Models.Responses;
-using MySafe.Presentation.Models.Responses.Abstractions;
+using MySafe.Business.Mediator.Documents.RemoveFromTrash;
+using MySafe.Business.Mediator.Documents.RestoreFromTrash;
+using MySafe.Business.Mediator.Images.RemoveFromTrash;
+using MySafe.Business.Mediator.Images.RestoreFromTrash;
+using MySafe.Business.Mediator.Sheets.RemoveFromTrash;
+using MySafe.Business.Mediator.Sheets.RestoreFromTrash;
+using MySafe.Business.Mediator.Trash.ClearTrash;
+using MySafe.Business.Mediator.Trash.GetTrashInfo;
+using MySafe.Core.Commands;
+using MySafe.Core.Entities.Responses;
+using MySafe.Core.Entities.Responses.Abstractions;
+using MySafe.Presentation.Models;
+using MySafe.Presentation.ViewModels.Abstractions;
 using Xamarin.Forms;
+using IMapper = AutoMapper.IMapper;
 
-namespace MySafe.ViewModels
+namespace MySafe.Presentation.ViewModels
 {
     public class TrashFolderViewModel: AuthorizedViewModelBase
     {
         public string FolderName => "Корзина";
-        public ObservableCollection<TrashResponse> TrashItems { get; set; }
+        public ObservableCollection<Trash> TrashItems { get; set; }
 
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
         private AsyncCommand _clearTrashCommand;
-        private AsyncCommand<TrashResponse> _showItemActionMenuCommand;
+        private AsyncCommand<Trash> _showItemActionMenuCommand;
 
-        public TrashFolderViewModel(INavigationService navigationService, IMediator mediator) 
+        public TrashFolderViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper) 
             : base(navigationService)
         {
             _mediator = mediator;
+            _mapper = mapper;
 
-            TrashItems = new ObservableCollection<TrashResponse>();
+            TrashItems = new ObservableCollection<Trash>();
         }
 
 
@@ -45,8 +50,9 @@ namespace MySafe.ViewModels
                 return;
             }
 
+            var trashes = _mapper.Map<List<Trash>>(queryResponse);
             TrashItems.Clear();
-            queryResponse.ForEach(TrashItems.Add);
+            trashes.ForEach(TrashItems.Add);
         }
 
         public AsyncCommand ClearTrashCommand => _clearTrashCommand ??= new AsyncCommand(async () =>
@@ -62,8 +68,8 @@ namespace MySafe.ViewModels
             TrashItems.Clear();
         });
 
-        public AsyncCommand<TrashResponse> ShowItemActionMenuCommand => 
-            _showItemActionMenuCommand ??= new AsyncCommand<TrashResponse>(async (trashItem) =>
+        public AsyncCommand<Trash> ShowItemActionMenuCommand => 
+            _showItemActionMenuCommand ??= new AsyncCommand<Trash>(async (trashItem) =>
         {
             const string restore = "Восстановить";
             const string destroy = "Уничтожить";
@@ -93,7 +99,7 @@ namespace MySafe.ViewModels
             TrashItems.Remove(trashItem);
         });
 
-        private async Task<BaseResponse> DestroyTrashItem(TrashResponse trashItem)
+        private async Task<BaseResponse> DestroyTrashItem(Trash trashItem)
         {
             if (trashItem.IsFolder)
             {
@@ -110,7 +116,7 @@ namespace MySafe.ViewModels
             }
         }
 
-        private async Task<BaseResponse> RestoreTrashItem(TrashResponse trashItem)
+        private async Task<BaseResponse> RestoreTrashItem(Trash trashItem)
         {
             if (trashItem.IsFolder)
             {

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySafe.Services.Abstractions;
-using Xamarin.Essentials;
+﻿using System.IO;
 
 namespace MySafe.Droid.Services
 {

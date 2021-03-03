@@ -1,20 +1,20 @@
 ﻿using MediatR;
-using MySafe.ViewModels.Abstractions;
-using NetStandardCommands;
+using MySafe.Presentation.Views;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using MySafe.Presentation.Mediator.Documents.CreateDocument;
-using MySafe.Presentation.Mediator.Folders.GetFolderInfo;
-using MySafe.Presentation.Mediator.Safe.SafeInfo;
-using MySafe.Presentation.Models.Responses;
-using MySafe.Presentation.Views;
+using MySafe.Business.Mediator.Documents.CreateDocument;
+using MySafe.Business.Mediator.Folders.GetFolderInfo;
+using MySafe.Business.Mediator.Safe.SafeInfo;
+using MySafe.Core.Commands;
+using MySafe.Core.Entities.Responses;
+using MySafe.Presentation.ViewModels.Abstractions;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
-namespace MySafe.ViewModels
+namespace MySafe.Presentation.ViewModels
 {
     public class FolderViewModel: AuthorizedViewModelBase
     {

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -12,48 +12,13 @@
 
   <ItemGroup>
     <None Remove="Quirlycues.ttf" />
-    <None Remove="Resources\bin.png" />
-    <None Remove="Resources\clockwise.png" />
-    <None Remove="Resources\delete.png" />
-    <None Remove="Resources\docs.png" />
-    <None Remove="Resources\download.png" />
-    <None Remove="Resources\Fonts\Roboto-Medium.ttf" />
-    <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
-    <None Remove="Resources\info.png" />
-    <None Remove="Resources\jam_menu.png" />
-    <None Remove="Resources\jam_menu1.png" />
-    <None Remove="Resources\loopa.png" />
-    <None Remove="Resources\note.png" />
-    <None Remove="Resources\note.svg" />
-    <None Remove="Resources\note1.png" />
-    <None Remove="Resources\pen.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Fonts\Montserrat-Regular.ttf" />
-    <EmbeddedResource Include="Resources\Fonts\Roboto-Medium.ttf" />
-    <EmbeddedResource Include="Resources\Fonts\Roboto-Regular.ttf" />
-    <Resource Include="Resources\bin.png" />
-    <Resource Include="Resources\clockwise.png" />
-    <Resource Include="Resources\delete.png" />
-    <Resource Include="Resources\docs.png" />
-    <Resource Include="Resources\download.png" />
-    <Resource Include="Resources\info.png" />
-    <Resource Include="Resources\jam_menu1.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="ConfigureAwait.Fody" Version="3.3.1" />
-    <PackageReference Include="FluentValidation" Version="9.4.0" />
     <PackageReference Include="Jouna77.UniformGrid" Version="1.0.1" />
-    <PackageReference Include="MediatR" Version="9.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Plugin.Fingerprint" Version="2.1.3" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.2.0.1422" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.3.1" />
-    <PackageReference Include="RestSharp" Version="106.11.7" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
     <PackageReference Include="Xamarin.Auth" Version="1.7.0" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
     <PackageReference Include="Xamarin.Forms" Version="4.7.0.1239" />
@@ -61,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\MySafe.Business\MySafe.Business.csproj" />
     <ProjectReference Include="..\..\MySafe.Core\MySafe.Core.csproj" />
   </ItemGroup>
 
@@ -104,21 +70,6 @@
     <EmbeddedResource Update="Views\TwoFactorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="NetStandardCommands">
-      <HintPath>NetStandardCommands.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resources\jam_menu.png" />
-    <Resource Include="Resources\loopa.png" />
-    <Resource Include="Resources\note.png" />
-    <Resource Include="Resources\note.svg" />
-    <Resource Include="Resources\note1.png" />
-    <Resource Include="Resources\pen.png" />
   </ItemGroup>
 
   <ItemGroup>

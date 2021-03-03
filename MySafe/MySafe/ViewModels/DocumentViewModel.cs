@@ -1,41 +1,45 @@
-﻿using MediatR;
-using MySafe.ViewModels.Abstractions;
-using NetStandardCommands;
+﻿using System.Collections.ObjectModel;
+using System.IO;
+using AutoMapper;
+using MediatR;
+using MySafe.Business.Mediator.Documents.GetDocumentInfo;
+using MySafe.Business.Mediator.Images.GetOriginalImage;
+using MySafe.Business.Mediator.Images.MoveToTrash;
+using MySafe.Business.Mediator.Images.UploadImage;
+using MySafe.Business.Mediator.Sheets.GetFile;
+using MySafe.Business.Mediator.Sheets.MoveToTrash;
+using MySafe.Business.Mediator.Sheets.UploadFile;
+using MySafe.Core.Commands;
+using MySafe.Core.Entities.Responses;
+using MySafe.Core.Entities.Responses.Abstractions;
+using MySafe.Data.Abstractions;
+using MySafe.Presentation.Models;
+using MySafe.Presentation.ViewModels.Abstractions;
 using Prism.Navigation;
 using RestSharp;
-using System.Collections.ObjectModel;
-using System.IO;
-using MySafe.Presentation.Mediator.Documents.GetDocumentInfo;
-using MySafe.Presentation.Mediator.Images.GetOriginalImage;
-using MySafe.Presentation.Mediator.Images.MoveToTrash;
-using MySafe.Presentation.Mediator.Images.UploadImage;
-using MySafe.Presentation.Mediator.Sheets.GetFile;
-using MySafe.Presentation.Mediator.Sheets.MoveToTrash;
-using MySafe.Presentation.Mediator.Sheets.UploadFile;
-using MySafe.Presentation.Models.Responses;
-using MySafe.Presentation.Models.Responses.Abstractions;
-using MySafe.Presentation.Repositories.Abstractions;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace MySafe.ViewModels
+namespace MySafe.Presentation.ViewModels
 {
     public class DocumentViewModel : AuthorizedViewModelBase
     {
         public static int ID { get; set; }
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
         private AsyncCommand<Attachment> _downloadFileCommand;
         private AsyncCommand _uploadFileCommand;
         private AsyncCommand<Attachment> _moveToTrashCommand;
 
-        public DocumentResponse Document { get; set; }
+        public Document Document { get; set; }
         public ObservableCollection<Attachment> Attachments { get; set; }
         public Attachment CurrentAttachment { get; set; }
 
-        public DocumentViewModel(INavigationService navigationService, IMediator mediator)
+        public DocumentViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper)
             : base(navigationService)
         {
             _mediator = mediator;
+            _mapper = mapper;
             Attachments = new ObservableCollection<Attachment>();
         }
 
@@ -49,9 +53,9 @@ namespace MySafe.ViewModels
                 return;
             }
 
-            Document = queryResponse;
+            Document = _mapper.Map<Document>(queryResponse);
             Attachments.Clear();
-            queryResponse.Attachments.ForEach(Attachments.Add);
+            Document.Attachments.ForEach(Attachments.Add);
         }
 
         public AsyncCommand<Attachment> DownloadFileCommand =>
@@ -94,15 +98,21 @@ namespace MySafe.ViewModels
             _uploadFileCommand ??= new AsyncCommand(async () =>
         {
             var result = await FilePicker.PickAsync(PickOptions.Default);
+
+            await using var stream = await result.OpenReadAsync();
+            await using var memoryStream = new MemoryStream();
+            stream.CopyTo(memoryStream);
+            var bytes= memoryStream.ToArray();
+
             IRestResponse response;
 
             if (result.ContentType.Split('\\')[0] == "image")
             {
-                response = await _mediator.Send(new UploadImageCommand(_jwtToken, Document.Id, result));
+                response = await _mediator.Send(new UploadImageCommand(_jwtToken, Document.Id, result.FileName, result.ContentType, bytes));
             }
             else
             {
-                response = await _mediator.Send(new UploadFileCommand(_jwtToken, Document.Id, result));
+                response = await _mediator.Send(new UploadFileCommand(_jwtToken, Document.Id, result.FileName, result.ContentType, bytes));
             }
 
 

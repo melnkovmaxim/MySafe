@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MediatR;
+using MySafe.Presentation.Views;
+using Prism.Navigation;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using MediatR;
-using MySafe.Presentation.Mediator.Safe.SafeInfo;
-using MySafe.Presentation.Models.Responses;
-using MySafe.Presentation.Views;
-using MySafe.Services.Abstractions;
-using MySafe.ViewModels.Abstractions;
-using NetStandardCommands;
-using Prism.Commands;
-using Prism.Navigation;
+using MySafe.Business.Mediator.Safe.SafeInfo;
+using MySafe.Core.Commands;
+using MySafe.Core.Entities.Responses;
+using MySafe.Presentation.ViewModels.Abstractions;
 using Xamarin.Forms.Internals;
 
-namespace MySafe.ViewModels
+namespace MySafe.Presentation.ViewModels
 {
     public class MainViewModel : AuthorizedViewModelBase
     {

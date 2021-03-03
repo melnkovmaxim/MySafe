@@ -1,12 +1,12 @@
 ﻿using MySafe.Core;
+using MySafe.Presentation.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using System.IdentityModel.Tokens.Jwt;
-using MySafe.Presentation.Extensions;
-using MySafe.Presentation.Repositories.Abstractions;
-using MySafe.Presentation.Views;
+using MySafe.Business.Extensions;
+using MySafe.Data.Abstractions;
 
-namespace MySafe.ViewModels.Abstractions
+namespace MySafe.Presentation.ViewModels.Abstractions
 {
     public abstract class AuthorizedViewModelBase : ViewModelBase, INavigatedAware
     {

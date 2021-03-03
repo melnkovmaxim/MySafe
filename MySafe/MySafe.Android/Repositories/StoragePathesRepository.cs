@@ -1,5 +1,5 @@
-﻿using MySafe.Presentation.Repositories.Abstractions;
-using System.IO;
+﻿using System.IO;
+using MySafe.Data.Abstractions;
 
 namespace MySafe.Droid.Repositories
 {

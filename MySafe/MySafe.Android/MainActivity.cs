@@ -3,7 +3,9 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using DryIoc;
+using MySafe.Data.Abstractions;
 using MySafe.Droid.Repositories;
+using MySafe.Presentation;
 using Plugin.CurrentActivity;
 using Plugin.Fingerprint;
 using Prism;
@@ -11,7 +13,6 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using System;
 using System.Threading.Tasks;
-using MySafe.Presentation.Repositories.Abstractions;
 using Xamarin.Forms;
 
 namespace MySafe.Droid

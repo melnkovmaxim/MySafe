@@ -1,4 +1,4 @@
-﻿namespace MySafe
+﻿namespace MySafe.Presentation
 {
     public partial class App
     {

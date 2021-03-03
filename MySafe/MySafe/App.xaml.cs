@@ -1,5 +1,5 @@
-using MySafe.Presentation.Extensions;
-using MySafe.Presentation.Repositories.Abstractions;
+using MySafe.Business.Extensions;
+using MySafe.Data.Abstractions;
 using MySafe.Presentation.Views;
 using Prism;
 using Prism.Ioc;
@@ -8,7 +8,7 @@ using Xamarin.Forms;
 [assembly: ExportFont("Montserrat-Regular.ttf", Alias = "Montserrat")]
 [assembly: ExportFont("Roboto-Medium.ttf", Alias = "Roboto-Medium")]
 [assembly: ExportFont("Roboto-Regular.ttf", Alias = "Roboto-Regular")]
-namespace MySafe
+namespace MySafe.Presentation
 {
     public partial class App
     {

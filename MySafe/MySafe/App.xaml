@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <prism:PrismApplication
-    x:Class="MySafe.App"
+    x:Class="MySafe.Presentation.App"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
-    xmlns:mySafe1="clr-namespace:MySafe;assembly=MySafe.Presentation"
+    xmlns:presentation="clr-namespace:MySafe.Presentation;assembly=MySafe.Presentation"
     NavigationPage.HasNavigationBar="False">
     <Application.Resources>
-        <mySafe1:VmLocator x:Key="VmLocator" />
+        <presentation:VmLocator x:Key="VmLocator" />
     </Application.Resources>
 </prism:PrismApplication>

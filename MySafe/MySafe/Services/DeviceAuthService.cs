@@ -1,15 +1,15 @@
-﻿using Fody;
-using MySafe.Core;
-using MySafe.Services.Abstractions;
-using Plugin.Fingerprint;
-using Plugin.Fingerprint.Abstractions;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MySafe.Presentation.Repositories.Abstractions;
+using Fody;
+using MySafe.Business.Services.Abstractions;
+using MySafe.Core;
+using MySafe.Data.Abstractions;
+using Plugin.Fingerprint;
+using Plugin.Fingerprint.Abstractions;
 using Xamarin.Essentials;
 
-namespace MySafe.Services
+namespace MySafe.Business.Services
 {
     public class DeviceAuthService : IDeviceAuthService, ITransientService
     {

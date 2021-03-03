@@ -132,6 +132,10 @@
     <AndroidResource Include="Resources\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MySafe.Data\MySafe.Data.csproj">
+      <Project>{DD64C806-0A98-4ABD-82E0-F8B933224084}</Project>
+      <Name>MySafe.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MySafe\MySafe.Presentation.csproj">
       <Project>{901721FD-DAA6-4823-BAA4-0E139E748E56}</Project>
       <Name>MySafe.Presentation</Name>
