@@ -11,7 +11,7 @@ using INavigationService = Prism.Navigation.INavigationService;
 
 namespace MySafe.ViewModels
 {
-    public class AuthViewModel : AuthorizedViewModelBase
+    public class DeviceAuthViewModel : AuthorizedViewModelBase
     {
         public DelegateCommand RemoveLastNumberCommand{ get; }
         public DelegateCommand FingerPrintScanCommand { get; }
@@ -27,7 +27,7 @@ namespace MySafe.ViewModels
         private readonly Action _actionOnLogin;
         private readonly Action _actionOnRegister;
 
-        public AuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager, IDeviceAuthService deviceAuthService)
+        public DeviceAuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager, IDeviceAuthService deviceAuthService)
             :base(navigationService)
         {
             PasswordManager = passwordManager;
@@ -40,7 +40,7 @@ namespace MySafe.ViewModels
             NumberInputCommand = new DelegateCommand<string>(NumberInput);
 
             _actionOnLogin = Login;
-            _actionOnRegister = async () => await _navigationService.NavigateAsync(nameof(AuthPage));
+            _actionOnRegister = async () => await _navigationService.NavigateAsync(nameof(DeviceAuthPage));
         }
 
         private async void Login()

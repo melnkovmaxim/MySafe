@@ -7,9 +7,9 @@ using Xamarin.Forms.Xaml;
 namespace MySafe.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AuthPage : ContentPage, INavigationAware
+    public partial class DeviceAuthPage : ContentPage, INavigationAware
     {
-        public AuthPage()
+        public DeviceAuthPage()
         {
             InitializeComponent();
         }

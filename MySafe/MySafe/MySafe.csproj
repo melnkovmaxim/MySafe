@@ -70,8 +70,8 @@
     <Compile Update="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\AuthPage.xaml.cs">
-      <DependentUpon>AuthPage.xaml</DependentUpon>
+    <Compile Update="Views\DeviceAuthPage.xaml.cs">
+      <DependentUpon>DeviceAuthPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\FolderPage.xaml.cs">
       <DependentUpon>FolderPage.xaml</DependentUpon>
@@ -82,7 +82,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\AuthPage.xaml">
+    <EmbeddedResource Update="Views\DeviceAuthPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\DocumentPage.xaml">
@@ -98,9 +98,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\SignInPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\TrashDocumentPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TrashFolderPage.xaml">

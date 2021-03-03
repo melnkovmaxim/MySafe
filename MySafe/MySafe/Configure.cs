@@ -64,7 +64,7 @@ namespace MySafe
             //    containerRegistry.RegisterForNavigation(viewModel page.Name);
             //}
 
-            containerRegistry.RegisterForNavigation<AuthPage, AuthViewModel>();
+            containerRegistry.RegisterForNavigation<DeviceAuthPage, DeviceAuthViewModel>();
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
             containerRegistry.RegisterForNavigation<DocumentPage, DocumentViewModel>();
             containerRegistry.RegisterForNavigation<NotePage, NoteViewModel>();
@@ -137,7 +137,7 @@ namespace MySafe
 
     public class VmLocator
     {
-        public static AuthViewModel AuthViewModel => Ioc.Resolve<AuthViewModel>();
+        public static DeviceAuthViewModel DeviceAuthViewModel => Ioc.Resolve<DeviceAuthViewModel>();
         public static MainViewModel MainViewModel => Ioc.Resolve<MainViewModel>();
         public static DocumentViewModel DocumentViewModel => Ioc.Resolve<DocumentViewModel>();
         public static SignInViewModel SignInViewModel => Ioc.Resolve<SignInViewModel>();

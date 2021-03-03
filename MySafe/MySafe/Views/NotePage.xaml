@@ -1,163 +1,90 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="MySafe.Views.NotePage"
+    x:Class="MySafe.Views.SignInPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=SignInViewModel}"
     NavigationPage.HasNavigationBar="False">
 
-    <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <StackLayout Grid.Row="0">
+    <Grid BackgroundColor="#E4E8FB">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="90" />
+            <RowDefinition Height="120" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout Grid.Row="0">
+            <Label
+                Margin="0,55,0,0"
+                FontFamily="Montserrat"
+                FontSize="36"
+                HorizontalOptions="Center"
+                Text="MySafe"
+                TextColor="Black" />
+            <Label
+                Margin="0,-15,0,0"
+                FontFamily="Montserrat"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="online"
+                TextColor="Black" />
+        </StackLayout>
+        <StackLayout Grid.Row="1" VerticalOptions="CenterAndExpand">
+            <Label
+                Margin="80,0,80,40"
+                FontSize="18"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center">
+                Введите логин и пароль, используемые для входа на сайт
+            </Label>
+        </StackLayout>
+        <StackLayout Grid.Row="2" VerticalOptions="CenterAndExpand">
+
             <Frame
-                Margin="20,15,20,-10"
-                BackgroundColor="#E4E8FB"
-                CornerRadius="24"
-                HeightRequest="24"
-                HorizontalOptions="Fill">
-                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                    <Image Margin="-120,0,0,0" Source="docs.png" />
-                    <Label
-                        Margin="45,-33,0,0"
-                        FontSize="24"
-                        Text="Блокнот" />
+                Margin="80,20,80,0"
+                BackgroundColor="#FFFFFF"
+                CornerRadius="25"
+                HeightRequest="15">
+                <StackLayout Margin="0,-16,0,0">
+                    <Entry
+                        HorizontalTextAlignment="Center"
+                        Placeholder="Логин"
+                        Text="{Binding Login}" />
                 </StackLayout>
             </Frame>
-            </StackLayout>
-            <StackLayout Grid.Row="1">
-                <Frame
-                Margin="20,10,20,15"
-                BackgroundColor="#F3F5FF"
-                BorderColor="#3465C4"
-                CornerRadius="10"
+
+        </StackLayout>
+        <StackLayout Grid.Row="3" VerticalOptions="CenterAndExpand">
+            <Frame
+                Margin="80,0,80,20"
+                BackgroundColor="#FFFFFF"
+                CornerRadius="25"
                 HasShadow="True"
-                HeightRequest="530"
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill">
-                <Editor
-                    BackgroundColor="#F3F5FF"
-                    HorizontalOptions="FillAndExpand"
-                    VerticalOptions="Fill" />
+                HeightRequest="15">
+                <StackLayout Margin="0,-16,0,0">
+                    <Entry
+                        HorizontalTextAlignment="Center"
+                        IsPassword="True"
+                        Placeholder="Пароль"
+                        Text="{Binding Password}" />
+                </StackLayout>
             </Frame>
-            <BoxView
-                Margin="40,-540,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-                <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-                <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-                <BoxView
-                Margin="40,13,40,0"
-                HeightRequest="2"
-                Opacity="0.4"
-                Color="Black" />
-            </StackLayout>
+
+        </StackLayout>
+        <StackLayout Grid.Row="4" VerticalOptions="CenterAndExpand">
+            <Button
+                Margin="100,0,100,0"
+                BackgroundColor="#3D6CC7"
+                Command="{Binding SignInCommand}"
+                CornerRadius="15"
+                FontSize="18"
+                Text="Войти"
+                TextColor="White" />
+            <Label
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                Text="{Binding Error}" />
+        </StackLayout>
     </Grid>
-    </ContentPage.Content>
 </ContentPage>
