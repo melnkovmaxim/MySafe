@@ -140,24 +140,25 @@
                 HeightRequest="220"
                 Orientation="Horizontal">
                 <!-- WidthRequest="380" -->
-                <uniformGrid:UniformGrid BindableLayout.ItemsSource="{Binding Folders}" ColumnSpacing="20" RowSpacing="20" VerticalOptions="FillAndExpand">
+                <uniformGrid:UniformGrid BindableLayout.ItemsSource="{Binding Folders}" ColumnSpacing="20" RowSpacing="20">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="110" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <BindableLayout.EmptyView>
                         <Label Text="Пожалуйста, подождите..." />
                     </BindableLayout.EmptyView>
-                    <BindableLayout.ItemTemplate>
+                    <BindableLayout.ItemTemplate >
                         <DataTemplate>
                             <Frame>
                                 <Button
                                     Margin="-20,-20,-20,-20"
+                                    HorizontalOptions="Fill"
+                                    
                                     BackgroundColor="#E4E8FB"
                                     Command="{Binding BindingContext.MoveToFolderCommand, Source={x:Reference Main}}"
                                     CommandParameter="{Binding .}"

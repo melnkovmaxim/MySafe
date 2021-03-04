@@ -57,7 +57,7 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-                <Button HeightRequest="50" BackgroundColor="Yellow" Command="{Binding ClearTrashCommand}" Text="Очистить корзину"/>
+                <Button HeightRequest="50" BackgroundColor="#F1BE74" Command="{Binding ClearTrashCommand}" Text="Очистить корзину"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

@@ -5,11 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Name="Document"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=DocumentViewModel}"
-    NavigationPage.HasNavigationBar="False">
+    >
     <ContentPage.Content>
         <StackLayout>
             <Button
-                BackgroundColor="Yellow"
+                BackgroundColor="#F1BE74"
                 Command="{Binding UploadFileCommand}"
                 HeightRequest="50"
                 HorizontalOptions="FillAndExpand"
@@ -26,25 +26,32 @@
                 </CarouselView.ItemTemplate>
             </CarouselView>
             <StackLayout
-                BackgroundColor="Yellow"
+                BackgroundColor="#F1BE74"
                 HeightRequest="50"
                 HorizontalOptions="FillAndExpand"
+                
                 Orientation="Horizontal">
                 <Button
+                    Margin="50,0,0,0"
                     Command="{Binding OpenFileCommand}"
                     CommandParameter="{Binding CurrentAttachment}"
+                    BackgroundColor="Transparent"
                     ImageSource="clockwise.png"
                     Text="Открыть оригинал" />
                 <Button
+                    
                     Command="{Binding DownloadFileCommand}"
                     CommandParameter="{Binding CurrentAttachment}"
+                    BackgroundColor="Transparent"
                     ImageSource="download.png"
-                    Text="Скачать" />
+                    Text="" />
                 <Button
+                    Margin="0,0,50,0"
                     Command="{Binding MoveToTrashCommand}"
                     CommandParameter="{Binding CurrentAttachment}"
+                    BackgroundColor="Transparent"
                     ImageSource="delete.png"
-                    Text="Удалить" />
+                    Text="" />
             </StackLayout>
         </StackLayout>
         <!--<CollectionView ItemsSource="{Binding Attachments}" VerticalOptions="FillAndExpand">

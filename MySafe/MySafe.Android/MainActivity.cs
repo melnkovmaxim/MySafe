@@ -32,7 +32,10 @@ namespace MySafe.Droid
             //ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+
             
+            this.RequestedOrientation = ScreenOrientation.Portrait;
+
             Forms.SetFlags("Shapes_Experimental");
             
 
