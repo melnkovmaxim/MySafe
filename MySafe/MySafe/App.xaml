@@ -5,8 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
     xmlns:presentation="clr-namespace:MySafe.Presentation;assembly=MySafe.Presentation"
+    xmlns:mySafe="clr-namespace:MySafe;assembly=MySafe.Presentation"
     NavigationPage.HasNavigationBar="False">
     <Application.Resources>
-        <presentation:VmLocator x:Key="VmLocator" />
+        <mySafe:VmLocator x:Key="VmLocator" />
     </Application.Resources>
 </prism:PrismApplication>

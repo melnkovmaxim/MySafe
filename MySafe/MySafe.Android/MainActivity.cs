@@ -28,7 +28,7 @@ namespace MySafe.Droid
 
             base.OnCreate(savedInstanceState);
             
-            Forms.SetFlags("Shapes_Experimental");
+            Forms.SetFlags(new []{"CarouselView_Experimental", "Shapes_Experimental"});
             
 
             CrossCurrentActivity.Current.Init(this, savedInstanceState);

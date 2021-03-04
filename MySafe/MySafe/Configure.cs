@@ -1,7 +1,12 @@
-﻿using AutoMapper;
+﻿using System;
+using System.IO;
+using AutoMapper;
 using DryIoc;
 using FluentValidation;
 using MediatR;
+using MySafe.Business.Services;
+using MySafe.Business.Services.Abstractions;
+using MySafe.Data.Abstractions;
 using MySafe.Presentation.Repositories;
 using MySafe.Presentation.ViewModels;
 using MySafe.Presentation.Views;
@@ -11,14 +16,12 @@ using Prism.Ioc;
 using RestSharp;
 using System.Linq;
 using System.Reflection;
-using MySafe.Business.Services;
-using MySafe.Business.Services.Abstractions;
-using MySafe.Data.Abstractions;
+using ImTools;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
 
-namespace MySafe.Presentation
+namespace MySafe
 {
     public static class Configure
     {
@@ -71,13 +74,13 @@ namespace MySafe.Presentation
         }
 
         public static IContainerRegistry AddMapper(this IContainerRegistry containerRegistry)
-        { 
+        {
             var mapperConfig = new MapperConfiguration(cfg =>
             {
                 var profiles = typeof(Configure).Assembly
                     .GetTypes()
                     .Where(t => t.GetBaseType() == typeof(Profile));
-                
+
                 foreach (var profile in profiles)
                 {
                     cfg.AddMaps(profile);
@@ -104,15 +107,17 @@ namespace MySafe.Presentation
                 typeof(AbstractValidator<>)
             };
 
+            var types = Assembly.GetAssembly(typeof(Configure)).GetReferencedAssemblies()
+                .Where(x => x.Name.Contains(nameof(MySafe.Business)))
+                .Select(Assembly.Load)
+                .SelectMany(x => x.GetTypes())
+                .ToList();
+
             foreach (var mediatrOpenType in mediatrOpenTypes)
             {
-                var types = Assembly.GetAssembly(typeof(IMediator)).GetTypes()
-                    .Where(t => t.GetInterfaces()
-                        .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == mediatrOpenType)).ToList();
-                container.RegisterMany(
-                    typeof(Configure).Assembly.GetTypes()
+                container.RegisterMany(types
                         .Where(t => t.GetInterfaces()
-                            .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == mediatrOpenType)), 
+                            .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == mediatrOpenType)),
                     serviceTypeCondition: Registrator.Interfaces);
             }
 
@@ -120,7 +125,7 @@ namespace MySafe.Presentation
         }
 
         public static IContainerRegistry AddApplication(this IContainerRegistry containerRegistry)
-        { 
+        {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
             return containerRegistry;
@@ -134,7 +139,7 @@ namespace MySafe.Presentation
 
     public class VmLocator
     {
-        public static DeviceAuthViewModel DeviceAuthViewModel => Ioc.Resolve<DeviceAuthViewModel>();
+        public static DeviceAuthViewModel AuthViewModel => Ioc.Resolve<DeviceAuthViewModel>();
         public static MainViewModel MainViewModel => Ioc.Resolve<MainViewModel>();
         public static DocumentViewModel DocumentViewModel => Ioc.Resolve<DocumentViewModel>();
         public static SignInViewModel SignInViewModel => Ioc.Resolve<SignInViewModel>();
