@@ -4,6 +4,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using MySafe.Business.Mediator.Safe.SafeInfo;
 using MySafe.Core.Commands;
 using MySafe.Core.Entities.Responses;
@@ -34,7 +35,7 @@ namespace MySafe.Presentation.ViewModels
             Folders = new ObservableCollection<FolderResponse>();
         }
 
-        protected override async void ActionAfterLoadPage()
+        protected override async Task ActionAfterLoadPage()
         {
             var queryResponse = await _mediator.Send(new SafeInfoQuery(_jwtToken));
 

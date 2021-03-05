@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using MySafe.Business.Mediator.Documents.CreateDocument;
 using MySafe.Business.Mediator.Folders.GetFolderInfo;
 using MySafe.Business.Mediator.Safe.SafeInfo;
@@ -50,7 +51,7 @@ namespace MySafe.Presentation.ViewModels
         }
 
 
-        protected override async void ActionAfterLoadPage()
+        protected override async Task ActionAfterLoadPage()
         {
             var queryResponse = await _mediator.Send(new FolderInfoQuery(_jwtToken, _itemId.Value));
 

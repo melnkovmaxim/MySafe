@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using MySafe.Business.Mediator.Documents.GetDocumentInfo;
@@ -43,7 +44,7 @@ namespace MySafe.Presentation.ViewModels
             Attachments = new ObservableCollection<Attachment>();
         }
 
-        protected override async void ActionAfterLoadPage()
+        protected override async Task ActionAfterLoadPage()
         {
             var queryResponse = await _mediator.Send(new DocumentInfoQuery(_jwtToken, _itemId.Value));
 

@@ -41,7 +41,7 @@ namespace MySafe.Presentation.ViewModels
         }
 
 
-        protected override async void ActionAfterLoadPage()
+        protected override async Task ActionAfterLoadPage()
         {
             var queryResponse = await _mediator.Send(new TrashInfoQuery(_jwtToken));
 

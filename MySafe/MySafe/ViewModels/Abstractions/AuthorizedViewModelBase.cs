@@ -1,10 +1,12 @@
 ﻿using MySafe.Core;
 using MySafe.Presentation.Views;
-using Prism.Commands;
 using Prism.Navigation;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 using MySafe.Business.Extensions;
+using MySafe.Core.Commands;
 using MySafe.Data.Abstractions;
+using DelegateCommand = Prism.Commands.DelegateCommand;
 
 namespace MySafe.Presentation.ViewModels.Abstractions
 {
@@ -14,15 +16,15 @@ namespace MySafe.Presentation.ViewModels.Abstractions
         protected INavigationParameters _parameters;
         protected int? _itemId;
         protected string _itemName;
-        private DelegateCommand _loadedCommand { get; }
+        public AsyncCommand LoadedCommand { get; }
 
         protected AuthorizedViewModelBase(INavigationService navigationService) 
             : base(navigationService)
         {
-            _loadedCommand ??= new DelegateCommand(ActionAfterLoadPage);
+            LoadedCommand ??= new AsyncCommand(ActionAfterLoadPage);
         }
 
-        protected abstract void ActionAfterLoadPage();
+        protected abstract Task ActionAfterLoadPage();
 
         protected NavigationParameters GetItemNaviigationParams(int itemId, string itemName)
         {
@@ -56,7 +58,7 @@ namespace MySafe.Presentation.ViewModels.Abstractions
                 return;
             }
 
-            _loadedCommand.Execute();
+            await LoadedCommand.ExecuteAsync(null);
         }
     }
 }

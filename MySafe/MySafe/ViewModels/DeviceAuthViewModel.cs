@@ -1,6 +1,7 @@
 ﻿using MySafe.Presentation.Views;
 using Prism.Commands;
 using System;
+using System.Threading.Tasks;
 using MySafe.Business.Extensions;
 using MySafe.Business.Services.Abstractions;
 using MySafe.Data.Abstractions;
@@ -51,7 +52,7 @@ namespace MySafe.Presentation.ViewModels
                 : nameof(SignInPage));
         }
         
-        protected override async void ActionAfterLoadPage()
+        protected override async Task ActionAfterLoadPage()
         {
             var passwordFromStorage = await Ioc.Resolve<ISecureStorageRepository>().GetLocalPasswordAsync();
             IsRegistered = !string.IsNullOrEmpty(passwordFromStorage);

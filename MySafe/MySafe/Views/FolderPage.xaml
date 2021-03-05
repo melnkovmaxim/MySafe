@@ -21,75 +21,80 @@
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
-
         <StackLayout>
-            <Frame
-                Margin="20,20,20,10"
-                BackgroundColor="#E4E8FB"
-                CornerRadius="24"
-                HeightRequest="22"
-                HorizontalOptions="Fill">
-                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="20" />
-                        </Grid.RowDefinitions>
-                        <Image  Grid.Column="0" Source="docs.png" />
-                        <Label
-                            Margin="0,-9,0,0"
-                            Grid.Column="1"
-                            FontSize="24"
-                            VerticalTextAlignment="Start"
-                            HorizontalTextAlignment="Start"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Start"
-                            Text="{Binding FolderName}" />
-                    </Grid>
-                </StackLayout>
-            </Frame>
-            <SearchBar
-                Margin="10,10,10,10"
-                HorizontalOptions="Fill"
-                Opacity="0.8"
-                Placeholder="Название документа"
-                
-                Text="{Binding Filter, Mode=TwoWay}" />
-            <Grid Margin="20,10,20,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50*" />
-                    <ColumnDefinition Width="50*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60" />
-                </Grid.RowDefinitions>
-                <Frame 
-                    Grid.Column="0"
-                    Margin="0,0,-2,0">
-                    <Button
-                        Margin="-20,-20,-20,-20"
-                        Command="{Binding AddDocumentCommand}"
-                        BackgroundColor="#E4E8FB"
-                        ImageSource="other.png" />
-                </Frame>
-                <Frame 
-                    Grid.Column="1" 
-                    Margin="5,0,0,0" >
-                    <Button 
-                        Margin="-20,-20,-20,-20"
-                        ImageSource="pen.png" 
-                        BackgroundColor="#E4E8FB" />
-                </Frame>
-            </Grid>
-            
+            <RefreshView
+                Command="{Binding LoadedCommand}"
+                CommandParameter="{Null}"
+                IsRefreshing="{Binding LoadedCommand.IsExecuting}"
+                RefreshColor="Red">
+                <ScrollView VerticalOptions="FillAndExpand">
+                    <StackLayout>
+                        <Frame
+                            Margin="20,20,20,10"
+                            BackgroundColor="#E4E8FB"
+                            CornerRadius="24"
+                            HeightRequest="22"
+                            HorizontalOptions="Fill">
+                            <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20" />
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Column="0" Source="docs.png" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Margin="0,-9,0,0"
+                                        FontSize="24"
+                                        HorizontalOptions="Start"
+                                        HorizontalTextAlignment="Start"
+                                        Text="{Binding FolderName}"
+                                        VerticalOptions="Start"
+                                        VerticalTextAlignment="Start" />
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                        <SearchBar
+                            Margin="10,10,10,10"
+                            HorizontalOptions="Fill"
+                            Opacity="0.8"
+                            Placeholder="Название документа"
+                            Text="{Binding Filter, Mode=TwoWay}" />
+                        <Grid Margin="20,10,20,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*" />
+                                <ColumnDefinition Width="50*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60" />
+                            </Grid.RowDefinitions>
+                            <Frame Grid.Column="0" Margin="0,0,-2,0">
+                                <Button
+                                    Margin="-20,-20,-20,-20"
+                                    BackgroundColor="#E4E8FB"
+                                    Command="{Binding AddDocumentCommand}"
+                                    ImageSource="other.png" />
+                            </Frame>
+                            <Frame Grid.Column="1" Margin="5,0,0,0">
+                                <Button
+                                    Margin="-20,-20,-20,-20"
+                                    BackgroundColor="#E4E8FB"
+                                    ImageSource="pen.png" />
+                            </Frame>
+                        </Grid>
+                    </StackLayout>
+                </ScrollView>
+            </RefreshView>
+
+
             <CollectionView
                 x:Name="MyList"
+                Margin="20,0,20,0"
                 ItemsSource="{Binding Documents}"
-                VerticalOptions="FillAndExpand"
-                Margin="20,0,20,0">
+                VerticalOptions="FillAndExpand">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
                         HorizontalItemSpacing="10"
@@ -101,7 +106,8 @@
                     <DataTemplate>
                         <Frame>
                             <Button
-                                Margin="-20,-20,-20,-20" Padding="0,-45,0,0"
+                                Margin="-20,-20,-20,-20"
+                                Padding="0,-45,0,0"
                                 BackgroundColor="#E4E8FB"
                                 Command="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}"
                                 CommandParameter="{Binding .}"
@@ -112,5 +118,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </StackLayout>
+
+
     </ContentPage.Content>
 </ContentPage>

@@ -24,182 +24,209 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="120" />
-                <RowDefinition Height="30" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="75" />
-            </Grid.RowDefinitions>
+            <RefreshView
+                Command="{Binding LoadedCommand}"
+                CommandParameter="{Null}"
+                HorizontalOptions="FillAndExpand"
+                IsRefreshing="{Binding LoadedCommand.IsExecuting}"
+                RefreshColor="Red"
+                VerticalOptions="FillAndExpand">
+                <ScrollView>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="120" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="75" />
+                        </Grid.RowDefinitions>
 
-            <Frame
-                Margin="20,20,20,-20"
-                BackgroundColor="#E4E8FB"
-                CornerRadius="24"
-                HasShadow="True"
-                WidthRequest="380">
+                        <Frame
+                            Margin="20,20,20,-20"
+                            BackgroundColor="#E4E8FB"
+                            CornerRadius="24"
+                            HasShadow="True"
+                            WidthRequest="380">
 
-                <StackLayout
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    HorizontalOptions="FillAndExpand"
-                    Orientation="Horizontal"
-                    VerticalOptions="FillAndExpand">
-                    <Label
-                        Margin="20,0,0,0"
-                        FontFamily="Montserrat"
-                        FontSize="24"
-                        HorizontalOptions="StartAndExpand"
-                        Text="MySafe"
-                        TextColor="Black"
-                        WidthRequest="150" />
-                    <Label
-                        Margin="-138,24,0,0"
-                        FontFamily="Montserrat"
-                        FontSize="18"
-                        HorizontalOptions="Start"
-                        Text="online"
-                        TextColor="Black"
-                        WidthRequest="150" />
-                    <Button
-                        Margin="120,0,20,30"
-                        Padding="0,0,0,0"
-                        BackgroundColor="#F2F4FF"
-                        Command="{Binding SignOutCommand}"
-                        CornerRadius="50"
-                        HeightRequest="10"
-                        HorizontalOptions="End"
-                        ImageSource="jam_menu.png"
-                        WidthRequest="50" />
+                            <StackLayout
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                HorizontalOptions="FillAndExpand"
+                                Orientation="Horizontal"
+                                VerticalOptions="FillAndExpand">
+                                <Label
+                                    Margin="20,0,0,0"
+                                    FontFamily="Montserrat"
+                                    FontSize="24"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="MySafe"
+                                    TextColor="Black"
+                                    WidthRequest="150" />
+                                <Label
+                                    Margin="-138,24,0,0"
+                                    FontFamily="Montserrat"
+                                    FontSize="18"
+                                    HorizontalOptions="Start"
+                                    Text="online"
+                                    TextColor="Black"
+                                    WidthRequest="150" />
+                                <Button
+                                    Margin="120,0,20,30"
+                                    Padding="0,0,0,0"
+                                    BackgroundColor="#F2F4FF"
+                                    Command="{Binding SignOutCommand}"
+                                    CornerRadius="50"
+                                    HeightRequest="10"
+                                    HorizontalOptions="End"
+                                    ImageSource="jam_menu.png"
+                                    WidthRequest="50" />
 
-                </StackLayout>
-            </Frame>
-            <StackLayout>
-                <BoxView
-                    Margin="56,97,56,0"
-                    CornerRadius="24"
-                    HeightRequest="9"
-                    HorizontalOptions="Fill"
-                    Opacity="0.20"
-                    Color="Black" />
-                <BoxView
-                    Margin="58,-13,58,0"
-                    CornerRadius="24"
-                    HeightRequest="5"
-                    HorizontalOptions="Fill"
-                    Opacity="0.75"
-                    Color="White" />
-                <ProgressBar
-                    Margin="60,-95,60,0"
-                    HorizontalOptions="Fill"
-                    Progress="{Binding Progress}"
-                    ProgressColor="#FFC772"
-                    VerticalOptions="EndAndExpand" />
-                <Grid Margin="60,-10,-85,0">
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        FontSize="10"
-                        Text="Память хранилища"
-                        TextColor="#7e7e7e" />
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        FontSize="10"
-                        Text="{Binding SafeSizeInfo}"
-                        TextColor="#7e7e7e" />
-                </Grid>
+                            </StackLayout>
+                        </Frame>
+                        <StackLayout>
+                            <BoxView
+                                Margin="56,97,56,0"
+                                CornerRadius="24"
+                                HeightRequest="9"
+                                HorizontalOptions="Fill"
+                                Opacity="0.20"
+                                Color="Black" />
+                            <BoxView
+                                Margin="58,-13,58,0"
+                                CornerRadius="24"
+                                HeightRequest="5"
+                                HorizontalOptions="Fill"
+                                Opacity="0.75"
+                                Color="White" />
+                            <ProgressBar
+                                Margin="60,-95,60,0"
+                                HorizontalOptions="Fill"
+                                Progress="{Binding Progress}"
+                                ProgressColor="#FFC772"
+                                VerticalOptions="EndAndExpand" />
+                            <Grid Margin="60,-10,-85,0">
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    FontSize="10"
+                                    Text="Память хранилища"
+                                    TextColor="#7e7e7e" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontSize="10"
+                                    Text="{Binding SafeSizeInfo}"
+                                    TextColor="#7e7e7e" />
+                            </Grid>
 
-            </StackLayout>
-            <StackLayout Grid.Row="1" Grid.Column="0">
-                <!-- <Image
+                        </StackLayout>
+                        <StackLayout Grid.Row="1" Grid.Column="0">
+                            <!-- <Image
                     Margin="-335,40,0,0"
                     Source="loopa.png"
                     WidthRequest="20" />-->
-                <!--<Entry
+                            <!--<Entry
                     Margin="50,-37,20,20"
                     HorizontalOptions="Fill"
                     IsEnabled="True"
                     Opacity="0.8"
                     Placeholder=" Название документа"
                     PlaceholderColor="#7e7e7e" />-->
-                <!--  20,-35,20,0  -->
-                <!--<BoxView
+                            <!--  20,-35,20,0  -->
+                            <!--<BoxView
                     Margin="20,-28,20,0"
                     HeightRequest="2"
                     HorizontalOptions="Fill"
                     Opacity="0.87"
-                    Color="#3465C4" /> -->
-                <!--<RefreshView BackgroundColor="Aqua" HorizontalOptions="Fill" HeightRequest="50"></RefreshView>-->
-            </StackLayout>
-            <StackLayout
-                Grid.Row="2"
-                Margin="20,0,0,20"
-                HorizontalOptions="CenterAndExpand"
-                HeightRequest="220"
-                Orientation="Horizontal">
-                <!-- WidthRequest="380" -->
-                <uniformGrid:UniformGrid BindableLayout.ItemsSource="{Binding Folders}" ColumnSpacing="20" RowSpacing="20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="110" />
-                        <ColumnDefinition Width="110" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <BindableLayout.EmptyView>
-                        <Label Text="Пожалуйста, подождите..." />
-                    </BindableLayout.EmptyView>
-                    <BindableLayout.ItemTemplate >
-                        <DataTemplate>
-                            <Frame>
+                    Color="#3465C4" />-->
+                            <!--<RefreshView BackgroundColor="Aqua" HorizontalOptions="Fill" HeightRequest="50"></RefreshView>-->
+                        </StackLayout>
+                        <StackLayout
+                            Grid.Row="2"
+                            Margin="20,0,0,20"
+                            HeightRequest="220"
+                            HorizontalOptions="CenterAndExpand"
+                            Orientation="Horizontal">
+                            <!--  WidthRequest="380"  -->
+                            <uniformGrid:UniformGrid
+                                BindableLayout.ItemsSource="{Binding Folders}"
+                                ColumnSpacing="20"
+                                RowSpacing="20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="110" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <BindableLayout.EmptyView>
+                                    <Label Text="Пожалуйста, подождите..." />
+                                </BindableLayout.EmptyView>
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Frame>
+                                            <Button
+                                                Margin="-20,-20,-20,-20"
+                                                BackgroundColor="#E4E8FB"
+                                                Command="{Binding BindingContext.MoveToFolderCommand, Source={x:Reference Main}}"
+                                                CommandParameter="{Binding .}"
+                                                HorizontalOptions="Fill"
+                                                Text="{Binding Name}" />
+
+
+                                        </Frame>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </uniformGrid:UniformGrid>
+
+                            <Frame Margin="20,0,20,0">
                                 <Button
                                     Margin="-20,-20,-20,-20"
-                                    HorizontalOptions="Fill"
-                                    
-                                    BackgroundColor="#E4E8FB"
-                                    Command="{Binding BindingContext.MoveToFolderCommand, Source={x:Reference Main}}"
-                                    CommandParameter="{Binding .}"
-                                    Text="{Binding Name}" />
-
-
+                                    Padding="0,0,0,0"
+                                    BackgroundColor="#FFC46B"
+                                    ImageSource="note.png" />
                             </Frame>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </uniformGrid:UniformGrid>
 
-                <Frame Margin="20,0,20,0">
-                    <Button
-                        Margin="-20,-20,-20,-20"
-                        Padding="0,0,0,0"
-                        BackgroundColor="#FFC46B"
-                        ImageSource="note.png" />
-                </Frame>
+                        </StackLayout>
+                        <StackLayout
+                            Grid.Row="3"
+                            HeightRequest="30"
+                            HorizontalOptions="Fill"
+                            Orientation="Horizontal">
+                            <Frame Grid.Row="2" Margin="20,0,20,20">
+                                <Button
+                                    Margin="-20,-20,-20,-20"
+                                    Padding="0,0,0,0"
+                                    BackgroundColor="#E4E8FB"
+                                    Command="{behaviors:NavigateTo 'NavigationPage/TrashFolderPage',
+                                                                   SourcePage={x:Reference Main}}"
+                                    HorizontalOptions="CenterAndExpand"
+                                    ImageSource="bin.png"
+                                    WidthRequest="380" />
+                            </Frame>
+                        </StackLayout>
 
-            </StackLayout>
-            <StackLayout
-                Grid.Row="3"
-                HeightRequest="30"
-                HorizontalOptions="Fill"
-                Orientation="Horizontal">
-                <Frame Grid.Row="2" Margin="20,0,20,20">
-                    <Button
-                        Margin="-20,-20,-20,-20"
-                        Padding="0,0,0,0"
-                        BackgroundColor="#E4E8FB"
-                        Command="{behaviors:NavigateTo 'NavigationPage/TrashFolderPage',
-                                                       SourcePage={x:Reference Main}}"
-                        HorizontalOptions="CenterAndExpand"
-                        ImageSource="bin.png"
-                        WidthRequest="380"
-                         />
-                </Frame>
-            </StackLayout>
+                    </Grid>
+                </ScrollView>
 
+            </RefreshView>
+            <Frame
+                IsVisible="{Binding LoadedCommand.IsExecuting}"
+                BackgroundColor="Green"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+
+                <Image
+                    HorizontalOptions="Center"
+                    Source="icon.png"
+                    VerticalOptions="Center" />
+            </Frame>
         </Grid>
+
+
 
     </ContentPage.Content>
 </ContentPage>
