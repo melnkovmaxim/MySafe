@@ -29,6 +29,9 @@ namespace MySafe.Droid
             base.OnCreate(savedInstanceState);
             
             Forms.SetFlags(new []{"CarouselView_Experimental", "Shapes_Experimental"});
+
+            
+            this.RequestedOrientation = ScreenOrientation.Portrait;
             
 
             CrossCurrentActivity.Current.Init(this, savedInstanceState);

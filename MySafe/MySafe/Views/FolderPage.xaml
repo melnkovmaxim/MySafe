@@ -30,15 +30,25 @@
                 HeightRequest="22"
                 HorizontalOptions="Fill">
                 <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                    <Image Margin="-130,0,0,0" Source="docs.png" />
-                    <Label
-                        Margin="50,-33,0,0"
-                        FontSize="24"
-                        VerticalTextAlignment="Start"
-                        HorizontalTextAlignment="Start"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Start"
-                        Text="{Binding FolderName}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20" />
+                        </Grid.RowDefinitions>
+                        <Image  Grid.Column="0" Source="docs.png" />
+                        <Label
+                            Margin="0,-9,0,0"
+                            Grid.Column="1"
+                            FontSize="24"
+                            VerticalTextAlignment="Start"
+                            HorizontalTextAlignment="Start"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start"
+                            Text="{Binding FolderName}" />
+                    </Grid>
                 </StackLayout>
             </Frame>
             <SearchBar
@@ -54,7 +64,7 @@
                     <ColumnDefinition Width="50*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50" />
+                    <RowDefinition Height="60" />
                 </Grid.RowDefinitions>
                 <Frame 
                     Grid.Column="0"
@@ -95,7 +105,7 @@
                                 BackgroundColor="#E4E8FB"
                                 Command="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}"
                                 CommandParameter="{Binding .}"
-                                HeightRequest="75"
+                                HeightRequest="110"
                                 Text="{Binding Name}" />
                         </Frame>
                     </DataTemplate>
