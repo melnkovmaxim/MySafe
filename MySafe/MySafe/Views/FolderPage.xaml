@@ -64,7 +64,7 @@
                     <ColumnDefinition Width="50*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50" />
+                    <RowDefinition Height="60" />
                 </Grid.RowDefinitions>
                 <Frame 
                     Grid.Column="0"
@@ -105,7 +105,7 @@
                                 BackgroundColor="#E4E8FB"
                                 Command="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}"
                                 CommandParameter="{Binding .}"
-                                HeightRequest="75"
+                                HeightRequest="110"
                                 Text="{Binding Name}" />
                         </Frame>
                     </DataTemplate>

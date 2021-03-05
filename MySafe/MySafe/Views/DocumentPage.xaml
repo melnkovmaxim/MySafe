@@ -27,7 +27,7 @@
             </CarouselView>
             <StackLayout
                 BackgroundColor="#F1BE74"
-                HeightRequest="50"
+                HeightRequest="60"
                 HorizontalOptions="FillAndExpand"
                 
                 Orientation="Horizontal">
