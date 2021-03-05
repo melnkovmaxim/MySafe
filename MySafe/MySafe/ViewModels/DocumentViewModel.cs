@@ -31,6 +31,7 @@ namespace MySafe.Presentation.ViewModels
         private AsyncCommand<Attachment> _downloadFileCommand;
         private AsyncCommand _uploadFileCommand;
         private AsyncCommand<Attachment> _moveToTrashCommand;
+        private AsyncCommand<Attachment> _openFileCommand;
 
         public Document Document { get; set; }
         public ObservableCollection<Attachment> Attachments { get; set; }
@@ -75,7 +76,7 @@ namespace MySafe.Presentation.ViewModels
                 response = await _mediator.Send(new OriginalImageQuery(_jwtToken, attachment.Id));
             }
             else
-            {  
+            {
                 response = await _mediator.Send(new FileQuery(_jwtToken, attachment.Id));
             }
 
@@ -90,10 +91,25 @@ namespace MySafe.Presentation.ViewModels
             await File.WriteAllBytesAsync(
                 Path.Combine(downloadPath, filename),
                 response.FileBytes);
-
-            var file = await FileSystem.OpenAppPackageFileAsync(Path.Combine(downloadPath, filename));
-            
         });
+
+        public AsyncCommand<Attachment> OpenFileCommand =>
+            _openFileCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
+            {
+                var downloadPath = Ioc.Resolve<IStoragePathesRepository>().DownloadPath;
+                var filename = attachment.Name + (attachment.FileExtension ?? ".jpeg");
+                var path = Path.Combine(downloadPath, filename);
+
+                if (!File.Exists(path))
+                    await _downloadFileCommand.ExecuteAsync(attachment);
+
+                await Launcher.OpenAsync
+                (new OpenFileRequest()
+                {
+                    File = new ReadOnlyFile(path)
+                }
+                );
+            });
 
         public AsyncCommand UploadFileCommand =>
             _uploadFileCommand ??= new AsyncCommand(async () =>
@@ -103,7 +119,7 @@ namespace MySafe.Presentation.ViewModels
             await using var stream = await result.OpenReadAsync();
             await using var memoryStream = new MemoryStream();
             stream.CopyTo(memoryStream);
-            var bytes= memoryStream.ToArray();
+            var bytes = memoryStream.ToArray();
 
             IRestResponse response;
 
@@ -122,11 +138,11 @@ namespace MySafe.Presentation.ViewModels
                 ActionAfterLoadPage();
                 return;
             }
-            
+
             await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось загрузить файл, что-то пошло не так... ", "Ok");
         });
 
-        public AsyncCommand<Attachment> MoveToTrashCommand => 
+        public AsyncCommand<Attachment> MoveToTrashCommand =>
             _moveToTrashCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
         {
             BaseResponse response;
