@@ -52,8 +52,6 @@
                             WidthRequest="380">
 
                             <StackLayout
-                                Grid.Row="0"
-                                Grid.Column="0"
                                 HorizontalOptions="FillAndExpand"
                                 Orientation="Horizontal"
                                 VerticalOptions="FillAndExpand">
@@ -200,7 +198,6 @@
                             <Frame Grid.Row="2" Margin="20,0,20,20">
 
                                 <presentation:GradientButton
-                                    x:Name="btnLogin"
                                     Margin="-20,-20,-20,-20"
                                     Padding="0,0,0,0"
                                     BackgroundColor="#3D6CC7"
@@ -221,7 +218,7 @@
                 </ScrollView>
 
             </RefreshView>
-            <Frame
+            <!--<Frame
                 BackgroundColor="Green"
                 HorizontalOptions="FillAndExpand"
                 IsVisible="{Binding LoadedCommand.IsExecuting}"
@@ -231,7 +228,7 @@
                     HorizontalOptions="Center"
                     Source="icon.png"
                     VerticalOptions="Center" />
-            </Frame>
+            </Frame>-->
         </Grid>
 
 

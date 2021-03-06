@@ -90,7 +90,6 @@
         <StackLayout Grid.Row="4" VerticalOptions="CenterAndExpand">
             <Frame Margin="100,0,100,0">
                 <presentation:GradientButton
-                    x:Name="btnLogin"
                     Margin="-20,-20,-20,-20"
                     BackgroundColor="#3D6CC7"
                     Command="{Binding SignInCommand}"

@@ -13,8 +13,8 @@
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <RefreshView Command="{Binding LoadedCommand}" IsRefreshing="{Binding LoadedCommand.IsExecuting}" RefreshColor="Red">
-            <ScrollView>
+        <!--<RefreshView Command="{Binding LoadedCommand}" IsRefreshing="{Binding LoadedCommand.IsExecuting}" RefreshColor="Red">
+            <ScrollView>-->
                 <StackLayout>
                         <Frame
                             Margin="20,20,20,10"
@@ -63,7 +63,7 @@
                             HeightRequest="50"
                             Text="Очистить корзину" />
                     </StackLayout>
-            </ScrollView>
-        </RefreshView>
+            <!--</ScrollView>
+        </RefreshView>-->
     </ContentPage.Content>
 </ContentPage>

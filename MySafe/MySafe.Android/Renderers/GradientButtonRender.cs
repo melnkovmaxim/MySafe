@@ -68,8 +68,7 @@ namespace MySafe.Droid.Renderers
                 //_defaultGradient.Alpha = 200;
                 Control.SetBackground(_backgroundColor);
             }
-
-            if (e.Event.Action == MotionEventActions.Cancel)
+            else if (e.Event.Action == MotionEventActions.Up)
             {
                 Control.SetBackground(_defaultGradient);
             }
