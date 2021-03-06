@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:behaviors="http://prismlibrary.com"
+    xmlns:presentation="clr-namespace:MySafe.Presentation;assembly=MySafe.Presentation"
     xmlns:uniformGrid="clr-namespace:UniformGrid;assembly=UniformGrid"
     x:Name="Main"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=MainViewModel}"
@@ -197,14 +198,21 @@
                             HorizontalOptions="Fill"
                             Orientation="Horizontal">
                             <Frame Grid.Row="2" Margin="20,0,20,20">
-                                <Button
+
+                                <presentation:GradientButton
+                                    x:Name="btnLogin"
                                     Margin="-20,-20,-20,-20"
                                     Padding="0,0,0,0"
-                                    BackgroundColor="#E4E8FB"
+                                    BackgroundColor="#3D6CC7"
                                     Command="{behaviors:NavigateTo 'NavigationPage/TrashFolderPage',
                                                                    SourcePage={x:Reference Main}}"
-                                    HorizontalOptions="CenterAndExpand"
+                                    EndColor="#3D6CC7"
+                                    FontSize="18"
+                                    GradientOrientation="Horizontal"
+                                    HorizontalOptions="FillAndExpand"
                                     ImageSource="bin.png"
+                                    StartColor="#b7ccef"
+                                    TextColor="White"
                                     WidthRequest="380" />
                             </Frame>
                         </StackLayout>
@@ -214,9 +222,9 @@
 
             </RefreshView>
             <Frame
-                IsVisible="{Binding LoadedCommand.IsExecuting}"
                 BackgroundColor="Green"
                 HorizontalOptions="FillAndExpand"
+                IsVisible="{Binding LoadedCommand.IsExecuting}"
                 VerticalOptions="FillAndExpand">
 
                 <Image

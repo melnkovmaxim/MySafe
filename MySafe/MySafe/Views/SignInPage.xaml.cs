@@ -1,5 +1,7 @@
 ﻿
+using System;
 using Xamarin.Forms;
+using Xamarin.Forms.Markup;
 using Xamarin.Forms.Xaml;
 
 namespace MySafe.Presentation.Views

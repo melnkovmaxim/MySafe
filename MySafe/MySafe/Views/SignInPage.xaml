@@ -3,8 +3,23 @@
     x:Class="MySafe.Presentation.Views.SignInPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:presentation="clr-namespace:MySafe.Presentation;assembly=MySafe.Presentation"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=SignInViewModel}"
     NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="CornerRadius" Value="25" />
+            <Setter Property="Padding" Value="0,-60,0,0" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Opacity" Value="0.8" />
+
+        </Style>
+        <Style TargetType="Frame">
+            <Setter Property="CornerRadius" Value="25" />
+            <Setter Property="HasShadow" Value="True" />
+        </Style>
+    </ContentPage.Resources>
 
     <Grid BackgroundColor="#E4E8FB">
         <Grid.RowDefinitions>
@@ -73,14 +88,20 @@
 
         </StackLayout>
         <StackLayout Grid.Row="4" VerticalOptions="CenterAndExpand">
-            <Button
-                Margin="100,0,100,0"
-                BackgroundColor="#3D6CC7"
-                Command="{Binding SignInCommand}"
-                CornerRadius="15"
-                FontSize="18"
-                Text="Войти"
-                TextColor="White" />
+            <Frame Margin="100,0,100,0">
+                <presentation:GradientButton
+                    x:Name="btnLogin"
+                    Margin="-20,-20,-20,-20"
+                    BackgroundColor="#3D6CC7"
+                    Command="{Binding SignInCommand}"
+                    EndColor="#3D6CC7"
+                    FontSize="18"
+                    GradientOrientation="Horizontal"
+                    StartColor="#b7ccef"
+                    Text="Войти"
+                    TextColor="White"
+                    WidthRequest="150" />
+            </Frame>
             <Label
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center"
