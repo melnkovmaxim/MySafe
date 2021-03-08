@@ -10,7 +10,7 @@ using MySafe.Core.Entities.Responses;
 namespace MySafe.Business.Mediator.Folders.FolderInfoQuery
 {
     [ConfigureAwait(false)]
-    public class FolderInfoQueryHandler : IRequestHandler<FolderInfoQuery, FolderResponse>
+    public class FolderInfoQueryHandler : IRequestHandler<FolderInfoQuery, Folder>
     {
         private readonly IRestClient _restClient;
         
@@ -19,11 +19,11 @@ namespace MySafe.Business.Mediator.Folders.FolderInfoQuery
             _restClient = restClient;
         }
 
-        public async Task<FolderResponse> Handle(FolderInfoQuery request, CancellationToken cancellationToken)
+        public async Task<Folder> Handle(FolderInfoQuery request, CancellationToken cancellationToken)
         {
             _restClient.Authenticator = new JwtAuthenticator(request.JwtToken);
             var httpRequest = new RestRequest($"api/v1/folders/{request.DocumentId}", Method.GET);
-            var cmdResponse = await _restClient.GetResponseAsync<FolderResponse>(httpRequest, cancellationToken);
+            var cmdResponse = await _restClient.GetResponseAsync<Folder>(httpRequest, cancellationToken);
 
             return cmdResponse;
         }

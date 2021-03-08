@@ -1,14 +1,14 @@
 ﻿using MediatR;
+using MySafe.Core.Commands;
+using MySafe.Core.Entities.Responses;
+using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
 using Prism.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using MySafe.Business.Mediator.Safe.SafeInfo;
-using MySafe.Core.Commands;
-using MySafe.Core.Entities.Responses;
-using MySafe.Presentation.ViewModels.Abstractions;
+using MySafe.Business.Mediator.Safe.SafeInfoQuery;
 using Xamarin.Forms.Internals;
 
 namespace MySafe.Presentation.ViewModels
@@ -22,17 +22,17 @@ namespace MySafe.Presentation.ViewModels
         private int _maxCapacity;
         private int _usedCapacity;
 
-        public ObservableCollection<FolderResponse> Folders { get; set; }
+        public ObservableCollection<Folder> Folders { get; set; }
 
         private readonly IMediator _mediator;
         private AsyncCommand _signOutCommand;
-        private AsyncCommand<FolderResponse> _moveToFolderCommand;
+        private AsyncCommand<Folder> _moveToFolderCommand;
 
         public MainViewModel(INavigationService navigationService, IMediator mediator)
             : base(navigationService)
         {
             _mediator = mediator;
-            Folders = new ObservableCollection<FolderResponse>();
+            Folders = new ObservableCollection<Folder>();
         }
 
         protected override async Task ActionAfterLoadPage()
@@ -59,8 +59,8 @@ namespace MySafe.Presentation.ViewModels
             });
         }
 
-        public AsyncCommand<FolderResponse> MoveToFolderCommand => 
-            _moveToFolderCommand ??= new AsyncCommand<FolderResponse>(async (folder) =>
+        public AsyncCommand<Folder> MoveToFolderCommand => 
+            _moveToFolderCommand ??= new AsyncCommand<Folder>(async (folder) =>
         {
             var @params = GetItemNaviigationParams(folder.Id, folder.Name);
             await _navigationService.NavigateAsync(nameof(FolderPage), @params);

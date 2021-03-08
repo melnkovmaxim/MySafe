@@ -8,7 +8,7 @@ namespace MySafe.Business.Mediator.Folders.FolderInfoQuery
     /// <summary>
     /// Получить содержимое ячейки
     /// </summary>
-    public class FolderInfoQuery : AuthorizedRequestBase<FolderResponse>
+    public class FolderInfoQuery : AuthorizedRequestBase<Folder>
     {
         public int DocumentId { get; set; }
 

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MySafe.Business.Mediator.Users.SignIn;
+using MySafe.Business.Mediator.Users.SignInCommand;
 using MySafe.Core.Commands;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;

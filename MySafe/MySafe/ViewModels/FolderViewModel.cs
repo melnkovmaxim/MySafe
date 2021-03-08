@@ -1,17 +1,16 @@
 ﻿using MediatR;
+using MySafe.Core.Commands;
+using MySafe.Core.Entities.Responses;
+using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
 using Prism.Navigation;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using MySafe.Business.Mediator.Documents.CreateDocument;
-using MySafe.Business.Mediator.Folders.GetFolderInfo;
-using MySafe.Business.Mediator.Safe.SafeInfo;
-using MySafe.Core.Commands;
-using MySafe.Core.Entities.Responses;
-using MySafe.Presentation.ViewModels.Abstractions;
+using MySafe.Business.Mediator.Documents.CreateDocumentCommand;
+using MySafe.Business.Mediator.Folders.FolderInfoQuery;
+using MySafe.Business.Mediator.Safe.SafeInfoQuery;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
@@ -35,11 +34,11 @@ namespace MySafe.Presentation.ViewModels
 
         private string _filter;
 
-        public ObservableCollection<DocumentResponse> Documents { get; set; }
-        private List<DocumentResponse> DocumentsList { get; set; }
+        public ObservableCollection<Document> Documents { get; set; }
+        private List<Document> DocumentsList { get; set; }
 
         private readonly IMediator _mediator;
-        private AsyncCommand<DocumentResponse> _moveToDocumentCommand;
+        private AsyncCommand<Document> _moveToDocumentCommand;
         private AsyncCommand _addDocumentCommand;
 
         public FolderViewModel(INavigationService navigationService, IMediator mediator) 
@@ -47,13 +46,13 @@ namespace MySafe.Presentation.ViewModels
         {
             _mediator = mediator;
 
-            Documents = new ObservableCollection<DocumentResponse>();
+            Documents = new ObservableCollection<Document>();
         }
 
 
         protected override async Task ActionAfterLoadPage()
         {
-            var queryResponse = await _mediator.Send(new FolderInfoQuery(_jwtToken, _itemId.Value));
+            var queryResponse = await _mediator.Send(new FolderInfoQuery(_jwtToken.RawData, _itemId.Value));
 
             if (queryResponse.HasError)
             {
@@ -72,8 +71,8 @@ namespace MySafe.Presentation.ViewModels
             folderId = currentFolder?.Id ?? int.MinValue;
         }
 
-        public AsyncCommand<DocumentResponse> MoveToDocumentCommand => _moveToDocumentCommand 
-            ??= new AsyncCommand<DocumentResponse>(async (document) =>
+        public AsyncCommand<Document> MoveToDocumentCommand => _moveToDocumentCommand 
+            ??= new AsyncCommand<Document>(async (document) =>
         {
             var @params = GetItemNaviigationParams(document.Id, document.Name);
             await _navigationService.NavigateAsync(nameof(DocumentPage), @params);
@@ -84,7 +83,7 @@ namespace MySafe.Presentation.ViewModels
             bool answer = await Application.Current.MainPage.DisplayAlert ("Создать новый документ?", null, "Да", "Нет");
             if (!answer) return;
 
-            var response = await _mediator.Send(new CreateDocumentCommand(_jwtToken, folderId));
+            var response = await _mediator.Send(new CreateDocumentCommand(_jwtToken.RawData, folderId));
 
             if (response.HasError)
             {

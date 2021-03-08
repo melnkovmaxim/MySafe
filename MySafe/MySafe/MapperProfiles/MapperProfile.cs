@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
-using MySafe.Business.Mediator.Users.SignIn;
-using MySafe.Business.Mediator.Users.SignInTwoFactor;
+using MySafe.Business.Mediator.Users.SignInCommand;
+using MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand;
 using MySafe.Core.Entities.Requests;
 using MySafe.Core.Entities.Responses;
 using MySafe.Presentation.Models;
+using Document = MySafe.Core.Entities.Responses.Document;
+using Folder = MySafe.Core.Entities.Responses.Folder;
+using User = MySafe.Core.Entities.Requests.User;
 
 namespace MySafe.Presentation.MapperProfiles
 {
@@ -15,7 +18,7 @@ namespace MySafe.Presentation.MapperProfiles
                 .ForMember(d => d.Login, opt => opt.MapFrom(x => x.Login))
                 .ForMember(d => d.Password, opt => opt.MapFrom(x => x.Password));
 
-            CreateMap<TwoFactorCommand, TwoFactor>()
+            CreateMap<TwoFactorAuthenticationCommand, TwoFactor>()
                 .ForMember(d => d.Code, opt => opt.MapFrom(x => x.Code));
 
             CreateMap<AttachmentResponse, Attachment>()
@@ -25,7 +28,7 @@ namespace MySafe.Presentation.MapperProfiles
                 .ForMember(d => d.FileExtension, mo => mo.MapFrom(s => s.FileExtension))
                 ;
 
-            CreateMap<DocumentResponse, Document>()
+            CreateMap<Document, Models.Document>()
                 .ForMember(d => d.Id, mo => mo.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, mo => mo.MapFrom(s => s.Name))
                 .ForMember(d => d.Attachments, mo => mo.MapFrom(s => s.Attachments))
@@ -33,7 +36,7 @@ namespace MySafe.Presentation.MapperProfiles
                 .ForMember(d => d.FolderId, mo => mo.MapFrom(s => s.FolderId))
                 ;
 
-            CreateMap<FolderResponse, Folder>()
+            CreateMap<Folder, Models.Folder>()
                 .ForMember(d => d.Id, mo => mo.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, mo => mo.MapFrom(s => s.Name))
                 .ForMember(d => d.Documents, mo => mo.MapFrom(s => s.Documents))

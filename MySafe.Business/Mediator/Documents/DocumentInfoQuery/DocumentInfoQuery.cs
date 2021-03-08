@@ -5,7 +5,7 @@ using MySafe.Core.Entities.Responses;
 
 namespace MySafe.Business.Mediator.Documents.DocumentInfoQuery
 {
-    public class DocumentInfoQuery: AuthorizedRequestBase<DocumentResponse>
+    public class DocumentInfoQuery: AuthorizedRequestBase<Document>
     {
         public int FileId { get; set; }
 

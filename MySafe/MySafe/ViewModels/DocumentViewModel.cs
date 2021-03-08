@@ -1,23 +1,22 @@
-﻿using System.Collections.ObjectModel;
-using System.IO;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
-using MySafe.Business.Mediator.Documents.GetDocumentInfo;
-using MySafe.Business.Mediator.Images.GetOriginalImage;
-using MySafe.Business.Mediator.Images.MoveToTrash;
-using MySafe.Business.Mediator.Images.UploadImage;
-using MySafe.Business.Mediator.Sheets.GetFile;
-using MySafe.Business.Mediator.Sheets.MoveToTrash;
-using MySafe.Business.Mediator.Sheets.UploadFile;
+using MySafe.Business.Mediator.Documents.DocumentInfoQuery;
+using MySafe.Business.Mediator.Images.OriginalImageQuery;
+using MySafe.Business.Mediator.Images.UploadImageCommand;
+using MySafe.Business.Mediator.Sheets.OriginalSheetQuery;
+using MySafe.Business.Mediator.Sheets.SheetMoveToTrashCommand;
+using MySafe.Business.Mediator.Sheets.UploadSheetCommand;
 using MySafe.Core.Commands;
-using MySafe.Core.Entities.Responses;
 using MySafe.Core.Entities.Responses.Abstractions;
-using MySafe.Data.Abstractions;
 using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
 using Prism.Navigation;
 using RestSharp;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Threading.Tasks;
+using MySafe.Business.Mediator.Images.ImageMoveToTrashCommand;
+using MySafe.Data.Abstractions;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -47,7 +46,7 @@ namespace MySafe.Presentation.ViewModels
 
         protected override async Task ActionAfterLoadPage()
         {
-            var queryResponse = await _mediator.Send(new DocumentInfoQuery(_jwtToken, _itemId.Value));
+            var queryResponse = await _mediator.Send(new DocumentInfoQuery(_jwtToken.RawData, _itemId.Value));
 
             if (queryResponse.HasError)
             {
@@ -70,14 +69,14 @@ namespace MySafe.Presentation.ViewModels
                 if (status != PermissionStatus.Granted) return;
             }
 
-            BaseResponse response;
+            ResponseBase response;
             if (attachment.IsImage)
             {
                 response = await _mediator.Send(new OriginalImageQuery(_jwtToken, attachment.Id));
             }
             else
             {
-                response = await _mediator.Send(new FileQuery(_jwtToken, attachment.Id));
+                response = await _mediator.Send(new OriginalSheetQuery(_jwtToken, attachment.Id));
             }
 
             if (response?.HasError != false)
@@ -129,7 +128,7 @@ namespace MySafe.Presentation.ViewModels
             }
             else
             {
-                response = await _mediator.Send(new UploadFileCommand(_jwtToken, Document.Id, result.FileName, result.ContentType, bytes));
+                response = await _mediator.Send(new UploadSheetCommand(_jwtToken, Document.Id, result.FileName, result.ContentType, bytes));
             }
 
 
@@ -145,15 +144,15 @@ namespace MySafe.Presentation.ViewModels
         public AsyncCommand<Attachment> MoveToTrashCommand =>
             _moveToTrashCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
         {
-            BaseResponse response;
+            ResponseBase response;
 
             if (attachment.IsImage)
             {
-                response = await _mediator.Send(new ImageToTrashCommand(_jwtToken, attachment.Id));
+                response = await _mediator.Send(new ImageMoveToTrashCommand(_jwtToken, attachment.Id));
             }
             else
             {
-                response = await _mediator.Send(new MoveFileToTrashCommand(_jwtToken, attachment.Id));
+                response = await _mediator.Send(new SheetMoveToTrashCommand(_jwtToken, attachment.Id));
             }
 
             if (response.HasError)

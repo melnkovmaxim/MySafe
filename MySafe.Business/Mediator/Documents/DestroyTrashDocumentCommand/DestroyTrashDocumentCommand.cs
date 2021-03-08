@@ -8,7 +8,7 @@ namespace MySafe.Business.Mediator.Documents.DestroyTrashDocumentCommand
     /// <summary>
     /// Уничтожить документ в корзине
     /// </summary>
-    public class DestroyTrashDocumentCommand: AuthorizedRequestBase<DocumentResponse>
+    public class DestroyTrashDocumentCommand: AuthorizedRequestBase<Document>
     {
         public int DocumentId { get; set; }
 

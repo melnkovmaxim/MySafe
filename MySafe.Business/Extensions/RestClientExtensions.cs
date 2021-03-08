@@ -31,7 +31,7 @@ namespace MySafe.Business.Extensions
                     cmdResponse.FileBytes = response.RawBytes;
                 }
 
-                if (response.IsSuccessful && cmdResponse is UserResponse userResponse)
+                if (response.IsSuccessful && cmdResponse is User userResponse)
                 {
                     var jwtToken = new JwtSecurityTokenHandler()
                         .GetJwtTokenFromResponse(response);

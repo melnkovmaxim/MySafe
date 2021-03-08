@@ -1,10 +1,10 @@
 ﻿using MediatR;
+using MySafe.Core.Commands;
+using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
 using Prism.Navigation;
 using System.IdentityModel.Tokens.Jwt;
-using MySafe.Business.Mediator.Users.SignInTwoFactor;
-using MySafe.Core.Commands;
-using MySafe.Presentation.ViewModels.Abstractions;
+using MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand;
 
 namespace MySafe.Presentation.ViewModels
 {
@@ -24,7 +24,7 @@ namespace MySafe.Presentation.ViewModels
 
         public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
         {
-            var response = await _mediator.Send(new TwoFactorCommand(Code, _tempToken));
+            var response = await _mediator.Send(new TwoFactorAuthenticationCommand(Code, _tempToken));
             await HandleResponse(response, nameof(DeviceAuthPage), response.JwtToken);
         });
 
