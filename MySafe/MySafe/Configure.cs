@@ -27,7 +27,7 @@ namespace MySafe
     {
         public static IContainerRegistry AddServices(this IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<IPasswordManagerService, PasswordManagerService>();
+            containerRegistry.Register<IPasswordManagerService, PasswordManager>();
             containerRegistry.Register<ISecureStorageRepository, SecureStorageRepository>();
             containerRegistry.Register<IDeviceAuthService, DeviceAuthService>();
             containerRegistry.Register<IRestClient, RestClientWrapper>();

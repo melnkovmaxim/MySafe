@@ -123,7 +123,7 @@ namespace MySafe.Presentation.ViewModels
 
             IRestResponse response;
 
-            if (result.ContentType.Split('\\')[0] == "image")
+            if (result.ContentType.Split('/')[0] == "image")
             {
                 response = await _mediator.Send(new UploadImageCommand(_jwtToken, Document.Id, result.FileName, result.ContentType, bytes));
             }

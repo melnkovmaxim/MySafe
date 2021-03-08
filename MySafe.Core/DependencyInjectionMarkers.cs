@@ -1,4 +1,4 @@
-﻿namespace MySafe.Business.Services.Abstractions
+﻿namespace MySafe.Core
 {
     public interface ISingletonService { }
     public interface IScopedService { }

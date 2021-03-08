@@ -60,7 +60,7 @@ namespace MySafe.Business.Services
         [ConfigureAwait(false)]
         public async Task RegisterAsync(string password, Action actionOnRegister)
         {
-            if (password.Length == MySafeApp.Resources.RequiredLengthDevicePwd)
+            if (password.Length == MySafeApp.Resources.DefaultApplicationPasswordLength)
             {
                 await _secureStorage.SetLocalPasswordAsync(password);
 

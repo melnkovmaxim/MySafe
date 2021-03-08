@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Business.Mediator.Documents.ChangeDocument
+namespace MySafe.Business.Mediator.Folders.ChangeFolderCommand
 {
-    public class ChangeDocumentCommandHandler
+    public class ChangeFolderCommandHandler
     {
         
     }

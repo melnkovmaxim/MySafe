@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Business.Mediator.Documents.MoveToTrash
+namespace MySafe.Business.Mediator.Documents.DocumentMoveToTrashCommand
 {
-    public class DocumentToTrashCommandHandler
+    public class DocumentMoveToTrashCommandHandler
     {
         
     }

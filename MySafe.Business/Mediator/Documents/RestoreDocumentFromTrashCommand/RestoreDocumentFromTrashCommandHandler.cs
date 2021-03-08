@@ -4,12 +4,11 @@ using RestSharp.Authenticators;
 using System.Threading;
 using System.Threading.Tasks;
 using MySafe.Business.Extensions;
-using MySafe.Business.Mediator.Documents.RemoveFromTrash;
 using MySafe.Core.Entities.Responses;
 
-namespace MySafe.Business.Mediator.Documents.RestoreFromTrash
+namespace MySafe.Business.Mediator.Documents.RestoreDocumentFromTrashCommand
 {
-    public class RestoreDocFromTrashCommandHandler: IRequestHandler<RemoveDocFromTrashCommand, DocumentResponse>
+    public class RestoreDocFromTrashCommandHandler: IRequestHandler<RestoreDocFromTrashCommand, DocumentResponse>
     {
         private readonly IRestClient _restClient;
         
@@ -18,9 +17,9 @@ namespace MySafe.Business.Mediator.Documents.RestoreFromTrash
             _restClient = restClient;
         }
 
-        public async Task<DocumentResponse> Handle(RemoveDocFromTrashCommand request, CancellationToken cancellationToken)
+        public async Task<DocumentResponse> Handle(RestoreDocFromTrashCommand request, CancellationToken cancellationToken)
         {
-            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
+            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken);
             var httpRequest = new RestRequest($"/api/v1/documents/{request.DocumentId}/restore", Method.PUT);
             var cmdResponse = await _restClient.GetResponseAsync<DocumentResponse>(httpRequest, cancellationToken);
 

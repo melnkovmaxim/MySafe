@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bogus;
-using Moq;
+﻿using Bogus;
 using MySafe.Core;
-using MySafe.Repositories.Abstractions;
-using MySafe.Services;
-using MySafe.Services.Abstractions;
 using NUnit.Framework;
+using System.Threading.Tasks;
+using MySafe.Business.Services.Abstractions;
 
 namespace MySafe.Tests.ServiceTests
 {
@@ -31,7 +23,7 @@ namespace MySafe.Tests.ServiceTests
             for (var i = 0; i < 10; i++)
             {
                 var password = faker.Random.String(0, 10, '0', '9');
-                var expectedResult = password.Length == MySafeApp.Resources.RequiredLengthDevicePwd;
+                var expectedResult = password.Length == MySafeApp.Resources.DefaultApplicationPasswordLength;
                 var isCompleteAction = false;
 
                 await _deviceAuthService.RegisterAsync(password, () => isCompleteAction = true);

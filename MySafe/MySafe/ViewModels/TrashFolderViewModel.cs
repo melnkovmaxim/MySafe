@@ -3,6 +3,7 @@ using MediatR;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using MySafe.Business.Mediator.Documents.DestroyTrashDocumentCommand;
 using MySafe.Business.Mediator.Documents.RemoveFromTrash;
 using MySafe.Business.Mediator.Documents.RestoreFromTrash;
 using MySafe.Business.Mediator.Images.RemoveFromTrash;
@@ -103,7 +104,7 @@ namespace MySafe.Presentation.ViewModels
         {
             if (trashItem.IsFolder)
             {
-                return await _mediator.Send(new RemoveDocFromTrashCommand(_jwtToken, trashItem.Id)).ConfigureAwait(false);
+                return await _mediator.Send(new DestroyTrashDocumentCommand(_jwtToken.RawData, trashItem.Id)).ConfigureAwait(false);
             }
             
             if (trashItem.IsImage)
@@ -120,7 +121,7 @@ namespace MySafe.Presentation.ViewModels
         {
             if (trashItem.IsFolder)
             {
-                return await _mediator.Send(new RestoreDocFromTrashCommand(_jwtToken, trashItem.Id)).ConfigureAwait(false);
+                return await _mediator.Send(new DestroyTrashDocumentCommand(_jwtToken.RawData, trashItem.Id)).ConfigureAwait(false);
             }
 
             if (trashItem.IsImage)

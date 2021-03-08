@@ -6,15 +6,15 @@ using System.Linq;
 
 namespace MySafe.Business.Services
 {
-    public class PasswordManagerService : BindableBase, IPasswordManagerService, ITransientService
+    public class PasswordManager : BindableBase, IPasswordManagerService, ITransientService
     {
         public ObservableCollection<string> PasswordCollection { get; }
         public string Password => string.Join("", PasswordCollection.Reverse());
-        public int PasswordMaxLength => MySafeApp.Resources.RequiredLengthDevicePwd;
+        public int PasswordMaxLength => MySafeApp.Resources.DefaultApplicationPasswordLength;
         public int PasswordLength => PasswordCollection.Count(x => !string.IsNullOrEmpty(x));
 
 
-        public PasswordManagerService()
+        public PasswordManager()
         {
             PasswordCollection = new ObservableCollection<string>();
             SetPasswordLength(PasswordMaxLength);

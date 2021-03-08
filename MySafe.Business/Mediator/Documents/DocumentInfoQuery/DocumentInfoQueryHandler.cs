@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MySafe.Business.Extensions;
 using MySafe.Core.Entities.Responses;
 
-namespace MySafe.Business.Mediator.Documents.GetDocumentInfo
+namespace MySafe.Business.Mediator.Documents.DocumentInfoQuery
 {
     public class DocumentInfoQueryHandler : IRequestHandler<DocumentInfoQuery, DocumentResponse>
     {
@@ -19,8 +19,7 @@ namespace MySafe.Business.Mediator.Documents.GetDocumentInfo
 
         public async Task<DocumentResponse> Handle(DocumentInfoQuery request, CancellationToken cancellationToken)
         {
-            
-            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
+            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken);
             var httpRequest = new RestRequest($"api/v1/documents/{request.FileId}", Method.GET);
             var cmdResponse = await _restClient.GetResponseAsync<DocumentResponse>(httpRequest, cancellationToken);
 

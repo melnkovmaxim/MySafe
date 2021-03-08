@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +23,9 @@ namespace MySafe.Business.Mediator.Images.UploadImage
 
         public async Task<IRestResponse> Handle(UploadImageCommand request, CancellationToken cancellationToken)
         {
-
             var httpRequest = new RestRequest($"/api/v1/images", Method.POST);
             _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-            httpRequest.AddFile(Path.GetFileNameWithoutExtension(request.FileName), request.ImageBytes, request.FileName, request.ContentType);
+            httpRequest.AddFile("file", request.ImageBytes, request.FileName, request.ContentType);
             //httpRequest.AddParameter(pickerResult.FileName, Convert.ToBase64String(bytes));
             //httpRequest.AddParameter(pickerResult.FileName, bytes);
             httpRequest.AddParameter("document_id", request.DocumentId);

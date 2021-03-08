@@ -21,9 +21,7 @@ namespace MySafe.Business.Mediator.Sheets.UploadFile
 
             var httpRequest = new RestRequest($"/api/v1/documents/{request.DocumentId}/sheets", Method.POST);
             _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-            httpRequest.AddFile(Path.GetFileNameWithoutExtension(request.FileName), request.FileBytes, request.FileName, request.ContentType);
-            //httpRequest.AddHeader("Content-Disposition", $"form-data; name=file; filename={pickerResult.FileName}");
-            //httpRequest.AddHeader("Content-Type", pickerResult.ContentType);
+            httpRequest.AddFile("file", request.FileBytes, request.FileName, request.ContentType);
 
             httpRequest.AlwaysMultipartFormData = true;
             var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken);

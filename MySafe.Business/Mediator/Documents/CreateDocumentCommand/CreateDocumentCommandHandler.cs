@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MySafe.Business.Extensions;
 
-namespace MySafe.Business.Mediator.Documents.CreateDocument
+namespace MySafe.Business.Mediator.Documents.CreateDocumentCommand
 {
     public class CreateDocumentCommandHandler: IRequestHandler<CreateDocumentCommand, DocumentResponse>
     {
@@ -19,7 +19,7 @@ namespace MySafe.Business.Mediator.Documents.CreateDocument
 
         public async Task<DocumentResponse> Handle(CreateDocumentCommand request, CancellationToken cancellationToken)
         {
-            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
+            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken);
             var httpRequest = new RestRequest($"/api/v1/folders/{request.FolderId}/documents", Method.POST);
             var cmdResponse = await _restClient.GetResponseAsync<DocumentResponse>(httpRequest, cancellationToken);
 

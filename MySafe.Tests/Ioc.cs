@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using MySafe.Repositories;
-using MySafe.Repositories.Abstractions;
-using MySafe.Services.Abstractions;
+using System;
+using System.Linq;
+using MySafe.Core;
+using MySafe.Data.Abstractions;
+using MySafe.Presentation.Repositories;
 using Xamarin.Forms.Internals;
 
 namespace MySafe.Tests
