@@ -1,21 +1,24 @@
 ﻿using MediatR;
 using System.IdentityModel.Tokens.Jwt;
+using MySafe.Business.Mediator.Abstractions;
 using MySafe.Core.Entities.Responses;
+using RestSharp;
 
 namespace MySafe.Business.Mediator.Sheets.SheetMoveToTrashCommand
 {
     /// <summary>
     /// Отправить файл в корзину
     /// </summary>
-    public class SheetMoveToTrashCommand: IRequest<Sheet>
+    public class SheetMoveToTrashCommand: BearerRequestBase<Sheet>
     {
-        public JwtSecurityToken JwtToken { get; set; }
-        public int SheetId { get; set; } // attachment 
+        public int SheetId { get; set; }
 
-        public SheetMoveToTrashCommand(JwtSecurityToken jwtToken, int sheetId)
+        public SheetMoveToTrashCommand(string jwtToken, int sheetId) : base(jwtToken)
         {
-            JwtToken = jwtToken;
             SheetId = sheetId;
         }
+
+        public override Method RequestMethod => Method.PUT;
+        public override string RequestResource => $"/api/v1/sheets/{SheetId}/trash";
     }
 }

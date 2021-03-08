@@ -1,21 +1,24 @@
 ﻿using MediatR;
 using System.IdentityModel.Tokens.Jwt;
+using MySafe.Business.Mediator.Abstractions;
 using MySafe.Core.Entities.Responses;
+using RestSharp;
 
 namespace MySafe.Business.Mediator.Sheets.RestoreTrashSheetCommand
 {
     /// <summary>
     /// Восстановить файл из корзины
     /// </summary>
-    public class RestoreTrashSheetCommand: IRequest<Sheet>
+    public class RestoreTrashSheetCommand: BearerRequestBase<Sheet>
     {
-        public JwtSecurityToken JwtToken { get; set; }
-        public int SheetId { get; set; } // attachment 
+        public int SheetId { get; set; }
 
-        public RestoreTrashSheetCommand(JwtSecurityToken jwtToken, int sheetId)
+        public RestoreTrashSheetCommand(string jwtToken, int sheetId) : base(jwtToken)
         {
-            JwtToken = jwtToken;
             SheetId = sheetId;
         }
+
+        public override Method RequestMethod => Method.DELETE;
+        public override string RequestResource => $"/api/v1/sheets/{SheetId}";
     }
 }

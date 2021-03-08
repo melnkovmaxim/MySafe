@@ -1,4 +1,6 @@
+using MediatR;
 using MySafe.Business.Extensions;
+using MySafe.Business.Mediator.Trash.TrashContentQuery;
 using MySafe.Data.Abstractions;
 using MySafe.Presentation.Views;
 using Prism;

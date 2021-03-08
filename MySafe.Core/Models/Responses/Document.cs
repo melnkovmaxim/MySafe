@@ -39,7 +39,7 @@ namespace MySafe.Core.Entities.Responses
     }
     
     [JsonObject]
-    public class AttachmentResponse
+    public class AttachmentResponse: ResponseBase
     {
         [JsonProperty]
         public int Id { get; set; }

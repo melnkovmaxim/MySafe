@@ -9,10 +9,8 @@ namespace MySafe.Business.Mediator.Documents.CreateDocumentCommand
     /// <summary>
     /// Создать новый документ
     /// </summary>
-    public class CreateDocumentCommand: AuthorizedRequestBase<Document>
+    public class CreateDocumentCommand: BearerRequestBase<Document>
     {
-        public override Method RequestMethod => Method.POST;
-        public override string RequestResource => $"/api/v1/folders/{FolderId}/documents";
 
         public int FolderId { get; set; }
 
@@ -20,6 +18,7 @@ namespace MySafe.Business.Mediator.Documents.CreateDocumentCommand
         {
             FolderId = folderId;
         }
-
+        public override Method RequestMethod => Method.POST;
+        public override string RequestResource => $"/api/v1/folders/{FolderId}/documents";
     }
 }

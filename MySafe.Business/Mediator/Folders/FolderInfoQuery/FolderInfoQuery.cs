@@ -2,13 +2,14 @@
 using System.IdentityModel.Tokens.Jwt;
 using MySafe.Business.Mediator.Abstractions;
 using MySafe.Core.Entities.Responses;
+using RestSharp;
 
 namespace MySafe.Business.Mediator.Folders.FolderInfoQuery
 {
     /// <summary>
     /// Получить содержимое ячейки
     /// </summary>
-    public class FolderInfoQuery : AuthorizedRequestBase<Folder>
+    public class FolderInfoQuery : BearerRequestBase<Folder>
     {
         public int DocumentId { get; set; }
 
@@ -16,5 +17,8 @@ namespace MySafe.Business.Mediator.Folders.FolderInfoQuery
         {
             DocumentId = documentId;
         }
+
+        public override Method RequestMethod => Method.GET;
+        public override string RequestResource => $"api/v1/folders/{DocumentId}";
     }
 }

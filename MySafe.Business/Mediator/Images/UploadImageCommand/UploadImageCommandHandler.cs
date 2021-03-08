@@ -6,33 +6,19 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
+using MySafe.Business.Mediator.Abstractions;
+using MySafe.Core.Entities.Responses;
 using RestSharp;
 using RestSharp.Authenticators;
 
 namespace MySafe.Business.Mediator.Images.UploadImageCommand
 {
-    public class UploadImageCommandHandler: IRequestHandler<UploadImageCommand, IRestResponse>
+    public class UploadImageCommandHandler: RequestHandlerBase<UploadImageCommand, Image>
     {
-        private readonly IRestClient _restClient;
-        
-        public UploadImageCommandHandler(IRestClient restClient)
+        public UploadImageCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
         {
-            _restClient = restClient;
-        }
-
-        public async Task<IRestResponse> Handle(UploadImageCommand request, CancellationToken cancellationToken)
-        {
-            var httpRequest = new RestRequest($"/api/v1/images", Method.POST);
-            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-            httpRequest.AddFile("file", request.ImageBytes, request.FileName, request.ContentType);
-            //httpRequest.AddParameter(pickerResult.FileName, Convert.ToBase64String(bytes));
-            //httpRequest.AddParameter(pickerResult.FileName, bytes);
-            httpRequest.AddParameter("document_id", request.DocumentId);
-
-            httpRequest.AlwaysMultipartFormData = true;
-            var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken);
-            return response;
         }
     }
 }

@@ -10,13 +10,13 @@ using User = MySafe.Core.Entities.Requests.User;
 
 namespace MySafe.Presentation.MapperProfiles
 {
-    public class MapperProfile : Profile
+    public class PresentationProfile : Profile
     {
-        public MapperProfile()
+        public PresentationProfile()
         {
             CreateMap<SignInCommand, User>()
-                .ForMember(d => d.Login, opt => opt.MapFrom(x => x.Login))
-                .ForMember(d => d.Password, opt => opt.MapFrom(x => x.Password));
+                .ForMember(d => d.Login, opt => opt.MapFrom(x => x.User.Login))
+                .ForMember(d => d.Password, opt => opt.MapFrom(x => x.User.Password));
 
             CreateMap<TwoFactorAuthenticationCommand, TwoFactor>()
                 .ForMember(d => d.Code, opt => opt.MapFrom(x => x.Code));
@@ -42,7 +42,7 @@ namespace MySafe.Presentation.MapperProfiles
                 .ForMember(d => d.Documents, mo => mo.MapFrom(s => s.Documents))
                 ;
 
-            CreateMap<TrashResponse, Trash>()
+            CreateMap<MySafe.Core.Entities.Responses.Trash, MySafe.Presentation.Models.Trash>()
                 .ForMember(d => d.FolderId, mo => mo.MapFrom(s => s.FolderId))
                 .ForMember(d => d.ConstainsAttachments, mo => mo.MapFrom(s => s.ConstainsAttachments))
                 .ForMember(d => d.Content, mo => mo.MapFrom(s => s.Content))

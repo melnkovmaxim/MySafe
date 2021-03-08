@@ -6,12 +6,13 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading;
 using System.Threading.Tasks;
+using RestSharp.Serialization;
 
 namespace MySafe.Business.Extensions
 {
     public static class RestClientExtensions
     {
-        public static async Task<T> GetResponseAsync<T>(this IRestClient client,
+        public static async Task<T> SendAndGetResponseAsync<T>(this IRestClient client,
             IRestRequest request, CancellationToken cancellationToken) 
             where T : IResponse
         {
@@ -22,13 +23,20 @@ namespace MySafe.Business.Extensions
                 var response = await client.ExecuteAsync(request, cancellationToken)
                     .ConfigureAwait(false);
 
-                if (response.ContentType.Contains("application/json"))
+                if (!response.ContentType.Contains(ContentType.Json))
                 {
-                    cmdResponse = JsonConvert.DeserializeObject<T>(response.Content);
+                    cmdResponse.FileBytes = response.RawBytes;
+                    return cmdResponse;
+                }
+
+                if (typeof(T) == typeof(IArrayResponse<IResponse>) && response.ContentType == ContentType.Json)
+                {
+                    var responseArray = (IArrayResponse<IResponse>) cmdResponse;
+                    responseArray.ResponseArray = JsonConvert.DeserializeObject<IResponse[]>(response.Content);
                 }
                 else
                 {
-                    cmdResponse.FileBytes = response.RawBytes;
+                    cmdResponse = JsonConvert.DeserializeObject<T>(response.Content);
                 }
 
                 if (response.IsSuccessful && cmdResponse is User userResponse)

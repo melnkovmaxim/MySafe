@@ -65,7 +65,7 @@ namespace MySafe.Presentation.ViewModels
             queryResponse.Documents.ForEach(Documents.Add);
 
             
-            var safeFolders = await _mediator.Send(new SafeInfoQuery(_jwtToken));
+            var safeFolders = await _mediator.Send(new SafeInfoQuery(_jwtToken.RawData));
             var currentFolder = safeFolders?.Folders.FirstOrDefault(x => x.Id == queryResponse.Id);
             FolderName = currentFolder?.Name.Split(":").FirstOrDefault();
             folderId = currentFolder?.Id ?? int.MinValue;

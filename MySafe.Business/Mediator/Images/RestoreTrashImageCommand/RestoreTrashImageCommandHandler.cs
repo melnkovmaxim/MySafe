@@ -3,27 +3,17 @@ using RestSharp;
 using RestSharp.Authenticators;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MySafe.Business.Extensions;
+using MySafe.Business.Mediator.Abstractions;
 using MySafe.Core.Entities.Responses;
 
 namespace MySafe.Business.Mediator.Images.RestoreTrashImageCommand
 {
-    public class RestoreTrashImageCommandHandler: IRequestHandler<RestoreTrashImageCommand, Image>
+    public class RestoreTrashImageCommandHandler: RequestHandlerBase<RestoreTrashImageCommand, Image>
     {
-        private readonly IRestClient _restClient;
-        
-        public RestoreTrashImageCommandHandler(IRestClient restClient)
+        public RestoreTrashImageCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
         {
-            _restClient = restClient;
-        }
-
-        public async Task<Image> Handle(RestoreTrashImageCommand request, CancellationToken cancellationToken)
-        {
-            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-            var httpRequest = new RestRequest($"/api/v1/images/{request.ImageId}/restore", Method.PUT);
-            var cmdResponse = await _restClient.GetResponseAsync<Image>(httpRequest, cancellationToken);
-
-            return cmdResponse;
         }
     }
 }

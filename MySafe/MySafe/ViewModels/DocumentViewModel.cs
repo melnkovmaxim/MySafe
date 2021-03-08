@@ -19,6 +19,7 @@ using MySafe.Business.Mediator.Images.ImageMoveToTrashCommand;
 using MySafe.Data.Abstractions;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Image = MySafe.Core.Entities.Responses.Image;
 
 namespace MySafe.Presentation.ViewModels
 {
@@ -72,11 +73,11 @@ namespace MySafe.Presentation.ViewModels
             ResponseBase response;
             if (attachment.IsImage)
             {
-                response = await _mediator.Send(new OriginalImageQuery(_jwtToken, attachment.Id));
+                response = await _mediator.Send(new OriginalImageQuery(_jwtToken.RawData, attachment.Id));
             }
             else
             {
-                response = await _mediator.Send(new OriginalSheetQuery(_jwtToken, attachment.Id));
+                response = await _mediator.Send(new OriginalSheetQuery(_jwtToken.RawData, attachment.Id));
             }
 
             if (response?.HasError != false)
@@ -120,21 +121,21 @@ namespace MySafe.Presentation.ViewModels
             stream.CopyTo(memoryStream);
             var bytes = memoryStream.ToArray();
 
-            IRestResponse response;
+            IResponse response;
 
             if (result.ContentType.Split('/')[0] == "image")
             {
-                response = await _mediator.Send(new UploadImageCommand(_jwtToken, Document.Id, result.FileName, result.ContentType, bytes));
+                response = await _mediator.Send(new UploadImageCommand(_jwtToken.RawData, Document.Id, result.FileName, result.ContentType, bytes));
             }
             else
             {
-                response = await _mediator.Send(new UploadSheetCommand(_jwtToken, Document.Id, result.FileName, result.ContentType, bytes));
+                response = await _mediator.Send(new UploadSheetCommand(_jwtToken.RawData, Document.Id, result.FileName, result.ContentType, bytes));
             }
 
 
-            if (response.IsSuccessful)
+            if (!response.HasError)
             {
-                ActionAfterLoadPage();
+                await ActionAfterLoadPage();
                 return;
             }
 
@@ -148,11 +149,11 @@ namespace MySafe.Presentation.ViewModels
 
             if (attachment.IsImage)
             {
-                response = await _mediator.Send(new ImageMoveToTrashCommand(_jwtToken, attachment.Id));
+                response = await _mediator.Send(new ImageMoveToTrashCommand(_jwtToken.RawData, attachment.Id));
             }
             else
             {
-                response = await _mediator.Send(new SheetMoveToTrashCommand(_jwtToken, attachment.Id));
+                response = await _mediator.Send(new SheetMoveToTrashCommand(_jwtToken.RawData, attachment.Id));
             }
 
             if (response.HasError)

@@ -4,28 +4,16 @@ using RestSharp.Authenticators;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using MySafe.Business.Mediator.Abstractions;
+using MySafe.Core.Entities.Responses;
 
 namespace MySafe.Business.Mediator.Sheets.UploadSheetCommand
 {
-    public class UploadFileCommandHandler: IRequestHandler<UploadSheetCommand, IRestResponse>
+    public class UploadFileCommandHandler: RequestHandlerBase<UploadSheetCommand, Sheet>
     {
-        private readonly IRestClient _restClient;
-        
-        public UploadFileCommandHandler(IRestClient restClient)
+        public UploadFileCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
         {
-            _restClient = restClient;
-        }
-
-        public async Task<IRestResponse> Handle(UploadSheetCommand request, CancellationToken cancellationToken)
-        {
-
-            var httpRequest = new RestRequest($"/api/v1/documents/{request.DocumentId}/sheets", Method.POST);
-            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-            httpRequest.AddFile("file", request.FileBytes, request.FileName, request.ContentType);
-
-            httpRequest.AlwaysMultipartFormData = true;
-            var response = await _restClient.ExecuteAsync(httpRequest, cancellationToken);
-            return response;
         }
     }
 }

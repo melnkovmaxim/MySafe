@@ -2,16 +2,23 @@
 using System.IdentityModel.Tokens.Jwt;
 using MySafe.Business.Mediator.Abstractions;
 using MySafe.Core.Entities.Responses;
+using RestSharp;
 
 namespace MySafe.Business.Mediator.Documents.DocumentInfoQuery
 {
-    public class DocumentInfoQuery: AuthorizedRequestBase<Document>
+    /// <summary>
+    /// Получить информацию о документе
+    /// </summary>
+    public class DocumentInfoQuery: BearerRequestBase<Document>
     {
-        public int FileId { get; set; }
+        public int DocumentId { get; set; }
 
-        public DocumentInfoQuery(string jwtToken, int fileId) : base(jwtToken)
+        public DocumentInfoQuery(string jwtToken, int documentId) : base(jwtToken)
         {
-            FileId = fileId;
+            DocumentId = documentId;
         }
+
+        public override Method RequestMethod => Method.GET;
+        public override string RequestResource => $"api/v1/documents/{DocumentId}";
     }
 }

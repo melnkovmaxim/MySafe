@@ -1,27 +1,31 @@
 ﻿using MediatR;
 using RestSharp;
 using System.IdentityModel.Tokens.Jwt;
+using MySafe.Business.Mediator.Abstractions;
+using MySafe.Core.Entities.Responses;
 
 namespace MySafe.Business.Mediator.Sheets.UploadSheetCommand
 {
     /// <summary>
     /// Загрузка файла
     /// </summary>
-    public class UploadSheetCommand: IRequest<IRestResponse>
+    public class UploadSheetCommand: RequestUploadBase<Sheet>
     {
-        public JwtSecurityToken JwtToken { get; set; }
         public int DocumentId { get; set; }
-        public string FileName { get; }
-        public string ContentType { get; }
-        public byte[] FileBytes { get; }
 
-        public UploadSheetCommand(JwtSecurityToken jwtToken, int documentId, string fileName, string contentType, byte[] fileBytes)
+        public UploadSheetCommand(string jwtToken, int documentId, string fileName, string contentType, byte[] fileBytes)
+            : base(jwtToken)
         {
-            JwtToken = jwtToken;
             DocumentId = documentId;
             FileName = fileName;
             ContentType = contentType;
             FileBytes = fileBytes;
         }
+
+        public override Method RequestMethod => Method.POST;
+        public override string RequestResource => $"/api/v1/documents/{DocumentId}/sheets";
+        public override string FileName { get; }
+        public override string ContentType { get; }
+        public override byte[] FileBytes { get; }
     }
 }

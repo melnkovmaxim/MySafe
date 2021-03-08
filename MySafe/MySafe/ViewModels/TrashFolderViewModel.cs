@@ -41,21 +41,21 @@ namespace MySafe.Presentation.ViewModels
 
         protected override async Task ActionAfterLoadPage()
         {
-            var queryResponse = await _mediator.Send(new TrashContentQuery(_jwtToken));
+            var queryResponse = await _mediator.Send(new TrashContentQuery(_jwtToken.RawData));
 
             if (queryResponse == null)
             {
                 return;
             }
 
-            var trashes = _mapper.Map<List<Trash>>(queryResponse);
+            var trashes = _mapper.Map<List<Trash>>(queryResponse.ResponseArray);
             TrashItems.Clear();
             trashes.ForEach(TrashItems.Add);
         }
 
         public AsyncCommand ClearTrashCommand => _clearTrashCommand ??= new AsyncCommand(async () =>
         {
-            var response = await _mediator.Send(new ClearTrashCommand(_jwtToken));
+            var response = await _mediator.Send(new ClearTrashCommand(_jwtToken.RawData));
 
             if (response.HasError)
             {
@@ -106,11 +106,11 @@ namespace MySafe.Presentation.ViewModels
             
             if (trashItem.IsImage)
             {
-                return await _mediator.Send(new DestroyTrashImageCommand(_jwtToken, trashItem.Id)).ConfigureAwait(false);
+                return await _mediator.Send(new DestroyTrashImageCommand(_jwtToken.RawData, trashItem.Id)).ConfigureAwait(false);
             }
             else
             {
-                return await _mediator.Send(new DestroyTrashSheetCommand(_jwtToken, trashItem.Id)).ConfigureAwait(false);
+                return await _mediator.Send(new DestroyTrashSheetCommand(_jwtToken.RawData, trashItem.Id)).ConfigureAwait(false);
             }
         }
 
@@ -123,11 +123,11 @@ namespace MySafe.Presentation.ViewModels
 
             if (trashItem.IsImage)
             {
-                return await _mediator.Send(new RestoreTrashImageCommand(_jwtToken, trashItem.Id)).ConfigureAwait(false);
+                return await _mediator.Send(new RestoreTrashImageCommand(_jwtToken.RawData, trashItem.Id)).ConfigureAwait(false);
             }
             else
             {
-                return await _mediator.Send(new RestoreTrashSheetCommand(_jwtToken, trashItem.Id)).ConfigureAwait(false);
+                return await _mediator.Send(new RestoreTrashSheetCommand(_jwtToken.RawData, trashItem.Id)).ConfigureAwait(false);
             }
         }
     }

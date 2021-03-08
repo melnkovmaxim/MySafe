@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using AutoMapper;
 using DryIoc;
@@ -15,8 +16,18 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using RestSharp;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using ImTools;
+using MediatR.Pipeline;
+using MySafe.Business.MapperProfiles;
+using MySafe.Business.Mediator.Abstractions;
+using MySafe.Business.Mediator.Documents.CreateDocumentCommand;
+using MySafe.Business.Mediator.Documents.DocumentInfoQuery;
+using MySafe.Business.Mediator.Folders.FolderInfoQuery;
+using MySafe.Business.Mediator.Users.SignInCommand;
+using MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand;
+using MySafe.Core.Entities.Responses;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -85,6 +96,8 @@ namespace MySafe
                 {
                     cfg.AddMaps(profile);
                 }
+
+                cfg.AddMaps(typeof(ApiProfile));
             });
 
             containerRegistry.RegisterInstance(typeof(IMapper), new Mapper(mapperConfig));
@@ -100,12 +113,13 @@ namespace MySafe
             container.RegisterMany(
                 new[] { typeof(IMediator).GetAssembly(), typeof(Configure).GetAssembly() }, Registrator.Interfaces);
 
-            var mediatrOpenTypes = new[]
+            var mediatrInterfaces = new[]
             {
                 typeof(IRequestHandler<,>),
                 typeof(IPipelineBehavior<,>),
-                typeof(AbstractValidator<>)
+                typeof(IValidator<>)
             };
+
 
             var types = Assembly.GetAssembly(typeof(Configure)).GetReferencedAssemblies()
                 .Where(x => x.Name.Contains(nameof(MySafe.Business)))
@@ -113,14 +127,15 @@ namespace MySafe
                 .SelectMany(x => x.GetTypes())
                 .ToList();
 
-            foreach (var mediatrOpenType in mediatrOpenTypes)
+            foreach (var @interface in mediatrInterfaces)
             {
                 container.RegisterMany(types
-                        .Where(t => t.GetInterfaces()
-                            .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == mediatrOpenType)),
+                        .Where(t => !t.IsAbstract && t.GetInterfaces()
+                            .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == @interface)),
                     serviceTypeCondition: Registrator.Interfaces);
             }
 
+            Ioc.Resolve<IMediator>().Send(new TwoFactorAuthenticationCommand("123", "123"));
             return containerRegistry;
         }
 

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using MySafe.Business.Mediator.Abstractions;
+using MySafe.Core.Entities.Responses;
 using RestSharp;
 
 namespace MySafe.Business.Mediator.Images.UploadImageCommand
@@ -12,21 +14,23 @@ namespace MySafe.Business.Mediator.Images.UploadImageCommand
     /// <summary>
     /// Загрузка изображения
     /// </summary>
-    public class UploadImageCommand: IRequest<IRestResponse>
+    public class UploadImageCommand: RequestUploadBase<Image>
     {
-        public JwtSecurityToken JwtToken { get; }
         public int DocumentId { get; }
-        public string FileName { get; }
-        public string ContentType { get; }
-        public byte[] ImageBytes { get; }
 
-        public UploadImageCommand(JwtSecurityToken jwtToken, int documentId, string fileName, string contentType, byte[] imageBytes)
+        public UploadImageCommand(string jwtToken, int documentId, string fileName, string contentType, byte[] imageBytes) 
+            : base(jwtToken)
         {
-            JwtToken = jwtToken;
             DocumentId = documentId;
             FileName = fileName;
             ContentType = contentType;
-            ImageBytes = imageBytes;
+            FileBytes = imageBytes;
         }
+
+        public override Method RequestMethod => Method.POST;
+        public override string RequestResource => $"/api/v1/images?document_id={DocumentId}";
+        public override string FileName { get; }
+        public override string ContentType { get; }
+        public override byte[] FileBytes { get; }
     }
 }

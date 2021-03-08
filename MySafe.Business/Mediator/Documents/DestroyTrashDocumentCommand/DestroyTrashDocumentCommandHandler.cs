@@ -8,11 +8,11 @@ using MySafe.Business.Extensions;
 using MySafe.Business.Mediator.Abstractions;
 using MySafe.Core.Entities.Responses;
 
-namespace MySafe.Business.Mediator.Sheets.RestoreTrashSheetCommand
+namespace MySafe.Business.Mediator.Documents.DestroyTrashDocumentCommand
 {
-    public class RestoreTrashSheetCommandHandler: RequestHandlerBase<RestoreTrashSheetCommand, Sheet>
+    public class DestroyInTrashCommandHandler: RequestHandlerBase<DestroyTrashDocumentCommand, Document>
     {
-        public RestoreTrashSheetCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public DestroyInTrashCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
         {
         }
     }

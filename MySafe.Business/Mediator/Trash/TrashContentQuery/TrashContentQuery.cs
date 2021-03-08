@@ -1,20 +1,22 @@
 ﻿using MediatR;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using MySafe.Business.Mediator.Abstractions;
 using MySafe.Core.Entities.Responses;
+using RestSharp;
 
 namespace MySafe.Business.Mediator.Trash.TrashContentQuery
 {
     /// <summary>
     /// Получить содержимое корзины
     /// </summary>
-    public class TrashContentQuery: IRequest<List<TrashResponse>>
+    public class TrashContentQuery: BearerRequestBase<TrashResponse>
     {
-        public JwtSecurityToken JwtToken { get; set; }
-
-        public TrashContentQuery(JwtSecurityToken jwtToken)
+        public TrashContentQuery(string jwtToken) : base(jwtToken)
         {
-            JwtToken = jwtToken;
         }
+
+        public override Method RequestMethod => Method.GET;
+        public override string RequestResource => "/api/v1/trash";
     }
 }

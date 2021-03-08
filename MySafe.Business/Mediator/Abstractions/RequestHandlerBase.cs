@@ -4,16 +4,56 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using Fody;
 using MediatR;
+using MySafe.Business.Extensions;
+using MySafe.Core.Entities.Responses;
+using MySafe.Core.Entities.Responses.Abstractions;
+using Newtonsoft.Json;
+using RestSharp;
+using RestSharp.Authenticators;
+using RestSharp.Serialization;
 
 namespace MySafe.Business.Mediator.Abstractions
 {
-    public class RequestHandlerBase<TRequest, TResponse>: IRequestHandler<TRequest, TResponse>
-    where TRequest: IRequest<TResponse>
+    [ConfigureAwait(false)]
+    public abstract class RequestHandlerBase<TRequest, TResponse>: IRequestHandler<TRequest, TResponse>
+        where TRequest : RequestBase<TResponse>
+        where TResponse: IResponse
     {
-        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
+        private readonly IRestClient _restClient;
+        private readonly IMapper _mapper;
+
+        protected RequestHandlerBase(IRestClient restClient, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _restClient = restClient;
+            _mapper = mapper;
+        }
+
+        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
+        {
+            if (request is BearerRequestBase<TResponse> bearerRequest && !string.IsNullOrEmpty(bearerRequest.JwtToken))
+            {
+                _restClient.Authenticator = new JwtAuthenticator(bearerRequest.JwtToken);
+            }
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpRequest = new RestRequest(request.RequestResource, request.RequestMethod)
+                .AddJsonBody(json);
+
+            if (request is RequestUploadBase<TResponse> uploadRequest)
+            {
+                httpRequest.AddFile("file", uploadRequest.FileBytes, uploadRequest.FileName, uploadRequest.ContentType);
+                httpRequest.AlwaysMultipartFormData = true;
+            }
+
+            //var response = await _restClient.SendAndGetResponseAsync<TResponse>(httpRequest, cancellationToken);
+            var response = new RestResponse() {Content = "{\"message\":\"need_second_factor_confirmation.code_sent\"}", ContentType = ContentType.Json};
+            //var result = _mapper.Map<List<IResponse>>(response);
+             
+
+            return _mapper.Map<TResponse>(response);
         }
     }
 }

@@ -3,27 +3,17 @@ using RestSharp;
 using RestSharp.Authenticators;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MySafe.Business.Extensions;
+using MySafe.Business.Mediator.Abstractions;
 using MySafe.Core.Entities.Responses;
 
 namespace MySafe.Business.Mediator.Sheets.DestroyTrashSheetCommand
 {
-    public class RemoveFileFromTrashCommandHandler: IRequestHandler<DestroyTrashSheetCommand, Sheet>
+    public class RemoveFileFromTrashCommandHandler: RequestHandlerBase<DestroyTrashSheetCommand, Sheet>
     {
-        private readonly IRestClient _restClient;
-        
-        public RemoveFileFromTrashCommandHandler(IRestClient restClient)
+        public RemoveFileFromTrashCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
         {
-            _restClient = restClient;
-        }
-
-        public async Task<Sheet> Handle(DestroyTrashSheetCommand request, CancellationToken cancellationToken)
-        {
-            _restClient.Authenticator = new JwtAuthenticator(request.JwtToken.RawData);
-            var httpRequest = new RestRequest($"/api/v1/sheets/{request.SheetId}", Method.DELETE);
-            var cmdResponse = await _restClient.GetResponseAsync<Sheet>(httpRequest, cancellationToken);
-
-            return cmdResponse;
         }
     }
 }
