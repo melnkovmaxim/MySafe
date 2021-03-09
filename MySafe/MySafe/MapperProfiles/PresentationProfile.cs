@@ -42,7 +42,7 @@ namespace MySafe.Presentation.MapperProfiles
                 .ForMember(d => d.Documents, mo => mo.MapFrom(s => s.Documents))
                 ;
 
-            CreateMap<MySafe.Core.Entities.Responses.Trash, MySafe.Presentation.Models.Trash>()
+            CreateMap<MySafe.Core.Entities.Responses.TrashResponse, MySafe.Presentation.Models.Trash>()
                 .ForMember(d => d.FolderId, mo => mo.MapFrom(s => s.FolderId))
                 .ForMember(d => d.ConstainsAttachments, mo => mo.MapFrom(s => s.ConstainsAttachments))
                 .ForMember(d => d.Content, mo => mo.MapFrom(s => s.Content))

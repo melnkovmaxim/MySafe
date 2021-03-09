@@ -31,7 +31,7 @@ namespace MySafe.Business.Mediator.Abstractions
             _mapper = mapper;
         }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
+        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
         {
             if (request is BearerRequestBase<TResponse> bearerRequest && !string.IsNullOrEmpty(bearerRequest.JwtToken))
             {
@@ -48,12 +48,7 @@ namespace MySafe.Business.Mediator.Abstractions
                 httpRequest.AlwaysMultipartFormData = true;
             }
 
-            //var response = await _restClient.SendAndGetResponseAsync<TResponse>(httpRequest, cancellationToken);
-            var response = new RestResponse() {Content = "{\"message\":\"need_second_factor_confirmation.code_sent\"}", ContentType = ContentType.Json};
-            //var result = _mapper.Map<List<IResponse>>(response);
-             
-
-            return _mapper.Map<TResponse>(response);
+            return _restClient.SendAndGetResponseAsync<TResponse>(httpRequest, cancellationToken);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR.Pipeline;
 using MySafe.Core.Entities.Responses.Abstractions;
 
 namespace MySafe.Business.Mediator.Pipelines
@@ -13,13 +14,15 @@ namespace MySafe.Business.Mediator.Pipelines
         where TRequest: IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
+        private readonly IEnumerable<IRequestPostProcessor<TRequest, TResponse>> _postProcessors;
 
-        public ValidationPipe(IEnumerable<IValidator<TRequest>> validators)
+        public ValidationPipe(IEnumerable<IValidator<TRequest>> validators, IEnumerable<IRequestPostProcessor<TRequest, TResponse>> postProcessors)
         {
             _validators = validators;
+            _postProcessors = postProcessors;
         }
 
-        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             var context = new ValidationContext<TRequest>(request);
             var failures = _validators
@@ -40,10 +43,17 @@ namespace MySafe.Business.Mediator.Pipelines
                 }
 
                 instance.Error = failures.First().ErrorMessage;
-                return Task.FromResult((TResponse) instance);
+                return (TResponse) instance;
             }
 
-            return next();
+            var response = await next().ConfigureAwait(false);
+
+            foreach (var processor in _postProcessors)
+            {
+                await processor.Process(request, response, cancellationToken).ConfigureAwait(false);
+            }
+
+            return response;
         }
     }
 }

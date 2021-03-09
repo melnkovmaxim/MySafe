@@ -23,23 +23,19 @@ namespace MySafe.Business.Extensions
                 var response = await client.ExecuteAsync(request, cancellationToken)
                     .ConfigureAwait(false);
 
-                if (!response.ContentType.Contains(ContentType.Json))
-                {
-                    cmdResponse.FileBytes = response.RawBytes;
-                    return cmdResponse;
-                }
+                //TODO !!! Добавить CancellationToken при переходе на другую страницу отменять таск !!!
+                if (!response.IsSuccessful) throw response.ErrorException;
 
-                if (typeof(T) == typeof(IArrayResponse<IResponse>) && response.ContentType == ContentType.Json)
-                {
-                    var responseArray = (IArrayResponse<IResponse>) cmdResponse;
-                    responseArray.ResponseArray = JsonConvert.DeserializeObject<IResponse[]>(response.Content);
-                }
-                else
+                if (response.ContentType.Contains(ContentType.Json) == true)
                 {
                     cmdResponse = JsonConvert.DeserializeObject<T>(response.Content);
                 }
+                else
+                {
+                    cmdResponse.FileBytes = response.RawBytes;
+                }
 
-                if (response.IsSuccessful && cmdResponse is User userResponse)
+                if (cmdResponse is User userResponse)
                 {
                     var jwtToken = new JwtSecurityTokenHandler()
                         .GetJwtTokenFromResponse(response);

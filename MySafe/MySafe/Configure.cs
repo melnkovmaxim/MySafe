@@ -25,6 +25,7 @@ using MySafe.Business.Mediator.Abstractions;
 using MySafe.Business.Mediator.Documents.CreateDocumentCommand;
 using MySafe.Business.Mediator.Documents.DocumentInfoQuery;
 using MySafe.Business.Mediator.Folders.FolderInfoQuery;
+using MySafe.Business.Mediator.Pipelines;
 using MySafe.Business.Mediator.Users.SignInCommand;
 using MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand;
 using MySafe.Core.Entities.Responses;
@@ -117,6 +118,8 @@ namespace MySafe
             {
                 typeof(IRequestHandler<,>),
                 typeof(IPipelineBehavior<,>),
+                typeof(IRequestPostProcessor<,>),
+                typeof(IRequestExceptionHandler<,>),
                 typeof(IValidator<>)
             };
 
@@ -135,7 +138,6 @@ namespace MySafe
                     serviceTypeCondition: Registrator.Interfaces);
             }
 
-            Ioc.Resolve<IMediator>().Send(new TwoFactorAuthenticationCommand("123", "123"));
             return containerRegistry;
         }
 

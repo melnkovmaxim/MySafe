@@ -8,13 +8,7 @@ using Newtonsoft.Json;
 
 namespace MySafe.Core.Entities.Responses
 {
-    public class TrashResponse: ResponseBase, IArrayResponse<Trash>
-    {
-        public Trash[] ResponseArray { get; set; }
-    }
-
-    [JsonObject]
-    public class Trash: AttachmentResponse
+    public class TrashResponse: AttachmentResponse
     {
         [JsonProperty]
         public string Location { get; set; }
@@ -36,10 +30,5 @@ namespace MySafe.Core.Entities.Responses
 
         [JsonIgnore] 
         public bool IsDocument => FolderId == null;
-    }
-
-    public interface IArrayResponse<T> where T: class
-    {
-        T[] ResponseArray { get; set; }
     }
 }

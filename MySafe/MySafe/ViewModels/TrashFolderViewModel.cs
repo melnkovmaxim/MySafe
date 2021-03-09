@@ -48,7 +48,7 @@ namespace MySafe.Presentation.ViewModels
                 return;
             }
 
-            var trashes = _mapper.Map<List<Trash>>(queryResponse.ResponseArray);
+            var trashes = _mapper.Map<List<Trash>>(queryResponse);
             TrashItems.Clear();
             trashes.ForEach(TrashItems.Add);
         }
