@@ -9,12 +9,16 @@ namespace MySafe.Data.Abstractions
 {
     public interface ISecureStorageRepository
     {
-        Task<string> GetLocalPasswordAsync();
-        Task SetLocalPasswordAsync(string password);
-        Task RemovePasswordAsync();
-        Task<string> GetTokenAsync();
-        Task<JwtSecurityToken> GetJstTokenAsync();
-        Task SetTokenAsync(string jwtToken);
-        Task RemoveToken();
+        Task<string> GetDevicePasswordAsync();
+        Task SetDevicePasswordAsync(string password);
+        Task RemoveDevicePasswordAsync();
+
+        Task<string> GetJwtTokenForTwoFactorAsync();
+        Task SetJwtTokenForTwoFactorAsync(string token);
+        
+        Task<JwtSecurityToken> GetJwtSecurityTokenAsync();
+        Task<string> GetJwtTokenAsync();
+        Task SetJwtTokenAsync(string jwtToken);
+        Task RemoveJwtToken();
     }
 }

@@ -17,7 +17,7 @@ namespace MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand
 
             RuleFor(s => s.JwtToken)
                 .NotEmpty()
-                .WithMessage("Что-то пошло не так...");
+                .WithMessage("Токен не найден");
         }
     }
 }

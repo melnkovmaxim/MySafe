@@ -25,7 +25,14 @@ namespace MySafe.Presentation.ViewModels
         public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
         {
             var response = await _mediator.Send(new SignInCommand(Login, Password));
-            await HandleResponse(response, nameof(TwoFactorPage), response.JwtToken);
+
+            if (response.HasError)
+            {
+                Error = response.Error;
+                return;
+            }
+
+            await _navigationService.NavigateAsync(nameof(TwoFactorPage));
         });
     }
 }

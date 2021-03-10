@@ -25,7 +25,7 @@ namespace MySafe.Presentation
         {
             InitializeComponent();
 
-            var token = await Ioc.Resolve<ISecureStorageRepository>().GetJstTokenAsync();
+            var token = await Ioc.Resolve<ISecureStorageRepository>().GetJwtSecurityTokenAsync();
             var startPage = token.IsValidToken() ? nameof(DeviceAuthPage) : nameof(SignInPage);
             await NavigationService.NavigateAsync($"NavigationPage/{startPage}");
         }

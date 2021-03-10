@@ -13,7 +13,7 @@ namespace MySafe.Business.Mediator.Sheets.OriginalSheetQuery
     {
         public int SheetId { get; set; }
 
-        public OriginalSheetQuery(string jwtToken, int sheetId) : base(jwtToken)
+        public OriginalSheetQuery(int sheetId)
         {
             SheetId = sheetId;
         }

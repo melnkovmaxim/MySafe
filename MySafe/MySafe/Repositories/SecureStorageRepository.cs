@@ -9,42 +9,54 @@ namespace MySafe.Presentation.Repositories
     [ConfigureAwait(false)]
     public class SecureStorageRepository : ISecureStorageRepository
     {
-        public Task<string> GetLocalPasswordAsync()
+        private const string TWO_FACTOR_JWT_TOKEN_KEY = "TwoFactorToken";
+        private const string MAIN_JWT_TOKEN_KEY = "MainToken";
+        private const string DEVICE_PASSWORD_KEY = "DevicePassword";
+
+        public Task<string> GetDevicePasswordAsync()
         {
-            return SecureStorage.GetAsync(App.Resources.PasswordPath);
+            return SecureStorage.GetAsync(DEVICE_PASSWORD_KEY);
         }
 
-        public Task SetLocalPasswordAsync(string password)
+        public Task SetDevicePasswordAsync(string password)
         {
-            return SecureStorage.SetAsync(App.Resources.PasswordPath, password);
+            return SecureStorage.SetAsync(DEVICE_PASSWORD_KEY, password);
         }
 
-        public Task RemovePasswordAsync()
+        public Task RemoveDevicePasswordAsync()
         {
-            return SetLocalPasswordAsync(string.Empty);
+            return SetDevicePasswordAsync(string.Empty);
         }
 
-        public Task<string> GetTokenAsync()
+        public Task<string> GetJwtTokenAsync()
         {
-            return SecureStorage.GetAsync(nameof(JwtSecurityToken));
+            return SecureStorage.GetAsync(MAIN_JWT_TOKEN_KEY);
         }
 
-        public async Task<JwtSecurityToken> GetJstTokenAsync()
+        public Task<string> GetJwtTokenForTwoFactorAsync()
         {
-            var token = await SecureStorage.GetAsync(nameof(JwtSecurityToken))
-                .ConfigureAwait(false);
+            return SecureStorage.GetAsync(TWO_FACTOR_JWT_TOKEN_KEY);
+        }
+        public Task SetJwtTokenForTwoFactorAsync(string token)
+        {
+            return SecureStorage.SetAsync(TWO_FACTOR_JWT_TOKEN_KEY, token);
+        }
+
+        public async Task<JwtSecurityToken> GetJwtSecurityTokenAsync()
+        {
+            var token = await SecureStorage.GetAsync(MAIN_JWT_TOKEN_KEY);
 
             return string.IsNullOrEmpty(token) ? null : new JwtSecurityToken(token); 
         }
 
-        public Task SetTokenAsync(string jwtToken)
+        public Task SetJwtTokenAsync(string jwtToken)
         {
-            return SecureStorage.SetAsync(nameof(JwtSecurityToken), jwtToken);
+            return SecureStorage.SetAsync(MAIN_JWT_TOKEN_KEY, jwtToken);
         }
 
-        public Task RemoveToken()
+        public Task RemoveJwtToken()
         {
-            return SecureStorage.SetAsync(nameof(JwtSecurityToken), string.Empty);
+            return SecureStorage.SetAsync(MAIN_JWT_TOKEN_KEY, string.Empty);
         }
     }
 }

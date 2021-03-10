@@ -15,7 +15,7 @@ namespace MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand
         [JsonProperty("code")]
         public string Code { get; set; }
 
-        public TwoFactorAuthenticationCommand(string jwtToken, string code) : base(jwtToken)
+        public TwoFactorAuthenticationCommand(string code)
         {
             Code = code;
         }

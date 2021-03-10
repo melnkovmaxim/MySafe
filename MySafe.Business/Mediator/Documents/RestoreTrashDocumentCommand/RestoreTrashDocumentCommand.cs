@@ -11,10 +11,11 @@ namespace MySafe.Business.Mediator.Documents.RestoreTrashDocumentCommand
     /// </summary>
     public class RestoreTrashDocumentCommand: BearerRequestBase<Document>
     {
-        public int DocumentId { get; set; }
+        public int DocumentId { get; }
 
-        public RestoreTrashDocumentCommand(string jwtToken) : base(jwtToken)
+        public RestoreTrashDocumentCommand(int documentId)
         {
+            DocumentId = documentId;
         }
 
         public override Method RequestMethod => Method.PUT;

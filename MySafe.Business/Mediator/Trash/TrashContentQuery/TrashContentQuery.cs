@@ -13,10 +13,6 @@ namespace MySafe.Business.Mediator.Trash.TrashContentQuery
     /// </summary>
     public class TrashContentQuery: BearerRequestBase<ResponseList<TrashResponse>>
     {
-        public TrashContentQuery(string jwtToken) : base(jwtToken)
-        {
-        }
-
         public override Method RequestMethod => Method.GET;
         public override string RequestResource => "/api/v1/trash";
     }

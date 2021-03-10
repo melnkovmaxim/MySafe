@@ -11,10 +11,9 @@ namespace MySafe.Business.Mediator.Documents.CreateDocumentCommand
     /// </summary>
     public class CreateDocumentCommand: BearerRequestBase<Document>
     {
-
         public int FolderId { get; set; }
 
-        public CreateDocumentCommand(string jwtToken, int folderId) : base(jwtToken)
+        public CreateDocumentCommand(int folderId)
         {
             FolderId = folderId;
         }

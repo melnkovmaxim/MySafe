@@ -18,8 +18,7 @@ namespace MySafe.Business.Mediator.Images.UploadImageCommand
     {
         public int DocumentId { get; }
 
-        public UploadImageCommand(string jwtToken, int documentId, string fileName, string contentType, byte[] imageBytes) 
-            : base(jwtToken)
+        public UploadImageCommand(int documentId, string fileName, string contentType, byte[] imageBytes) 
         {
             DocumentId = documentId;
             FileName = fileName;

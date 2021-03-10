@@ -46,7 +46,7 @@ namespace MySafe.Presentation.ViewModels
         private async void Login()
         {
             var storageRepository = Ioc.Resolve<ISecureStorageRepository>();
-            var token = await storageRepository.GetJstTokenAsync();
+            var token = await storageRepository.GetJwtSecurityTokenAsync();
             await _navigationService.NavigateAsync(token.IsValidToken()
                 ? nameof(MainPage)
                 : nameof(SignInPage));
@@ -54,7 +54,7 @@ namespace MySafe.Presentation.ViewModels
         
         protected override async Task ActionAfterLoadPage()
         {
-            var passwordFromStorage = await Ioc.Resolve<ISecureStorageRepository>().GetLocalPasswordAsync();
+            var passwordFromStorage = await Ioc.Resolve<ISecureStorageRepository>().GetDevicePasswordAsync();
             IsRegistered = !string.IsNullOrEmpty(passwordFromStorage);
         }
 
@@ -85,8 +85,8 @@ namespace MySafe.Presentation.ViewModels
         private async void RestorePassword()
         {
             var secureStorage = Ioc.Resolve<ISecureStorageRepository>();
-            await secureStorage.RemovePasswordAsync();
-            await secureStorage.RemoveToken();
+            await secureStorage.RemoveDevicePasswordAsync();
+            await secureStorage.RemoveJwtToken();
             await _navigationService.NavigateAsync(nameof(SignInPage));
         }
     }

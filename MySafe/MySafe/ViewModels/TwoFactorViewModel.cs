@@ -8,10 +8,9 @@ using MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand;
 
 namespace MySafe.Presentation.ViewModels
 {
-    public class TwoFactorViewModel : ViewModelBase, INavigatedAware
+    public class TwoFactorViewModel : ViewModelBase
     {
         private readonly IMediator _mediator;
-        private JwtSecurityToken _tempToken;
         private AsyncCommand _signInCommand;
 
         public string Code { get; set; }
@@ -24,17 +23,15 @@ namespace MySafe.Presentation.ViewModels
 
         public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
         {
-            var response = await _mediator.Send(new TwoFactorAuthenticationCommand(_tempToken.RawData, Code));
-            await HandleResponse(response, nameof(DeviceAuthPage), response.JwtToken);
+            var response = await _mediator.Send(new TwoFactorAuthenticationCommand(Code));
+
+            if (response.HasError)
+            {
+                Error = response.Error;
+                return;
+            }
+
+            await _navigationService.NavigateAsync(nameof(MainPage));
         });
-
-
-        public void OnNavigatedTo(INavigationParameters parameters)
-        {
-            _tempToken = (JwtSecurityToken) parameters[nameof(JwtSecurityToken)];
-        }
-        public void OnNavigatedFrom(INavigationParameters parameters)
-        {
-        }
     }
 }

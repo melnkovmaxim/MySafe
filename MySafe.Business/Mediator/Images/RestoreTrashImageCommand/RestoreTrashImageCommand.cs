@@ -13,7 +13,7 @@ namespace MySafe.Business.Mediator.Images.RestoreTrashImageCommand
     {
         public int ImageId { get; set; }
 
-        public RestoreTrashImageCommand(string jwtToken, int imageId) : base(jwtToken)
+        public RestoreTrashImageCommand(int imageId)
         {
             ImageId = imageId;
         }

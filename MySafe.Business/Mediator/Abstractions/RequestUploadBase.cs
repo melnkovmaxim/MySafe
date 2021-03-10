@@ -11,9 +11,5 @@ namespace MySafe.Business.Mediator.Abstractions
         public abstract string FileName { get; }
         public abstract string ContentType { get; }
         public abstract byte[] FileBytes { get; }
-
-        protected RequestUploadBase(string jwtToken) : base(jwtToken)
-        {
-        }
     }
 }

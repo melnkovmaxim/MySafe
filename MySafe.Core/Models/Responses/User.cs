@@ -7,6 +7,6 @@ namespace MySafe.Core.Entities.Responses
     [JsonObject]
     public class User : ResponseBase
     {
-        public JwtSecurityToken JwtToken { get; set; }
+        public string JwtToken { get; set; }
     }
 }

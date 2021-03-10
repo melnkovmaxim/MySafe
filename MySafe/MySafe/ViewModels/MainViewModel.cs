@@ -37,7 +37,7 @@ namespace MySafe.Presentation.ViewModels
 
         protected override async Task ActionAfterLoadPage()
         {
-            var queryResponse = await _mediator.Send(new SafeInfoQuery(_jwtToken.RawData));
+            var queryResponse = await _mediator.Send(new SafeInfoQuery());
 
             if (queryResponse.HasError)
             {

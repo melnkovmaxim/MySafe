@@ -12,7 +12,6 @@ namespace MySafe.Presentation.ViewModels.Abstractions
 {
     public abstract class AuthorizedViewModelBase : ViewModelBase, INavigatedAware
     {
-        protected JwtSecurityToken _jwtToken;
         protected INavigationParameters _parameters;
         protected int? _itemId;
         protected string _itemName;
@@ -48,11 +47,10 @@ namespace MySafe.Presentation.ViewModels.Abstractions
             _itemId = (int?) parameters[nameof(MySafeApp.Resources.ItemId)];
             _itemName = (string) parameters[nameof(MySafeApp.Resources.ItemName)];
 
-            _jwtToken ??= (JwtSecurityToken) parameters[nameof(JwtSecurityToken)];
-            _jwtToken ??= await Ioc.Resolve<ISecureStorageRepository>()
-                .GetJstTokenAsync();
+            var jwtToken = await Ioc.Resolve<ISecureStorageRepository>()
+                .GetJwtSecurityTokenAsync();
 
-            if (!_jwtToken.IsValidToken())
+            if (!jwtToken.IsValidToken())
             {
                 await _navigationService.NavigateAsync(nameof(SignInPage));
                 return;

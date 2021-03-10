@@ -25,7 +25,7 @@ namespace MySafe.Business.Services
         {
             await Task.Run(() => Thread.Sleep(500));
 
-            var correctPassword = await _secureStorage.GetLocalPasswordAsync();
+            var correctPassword = await _secureStorage.GetDevicePasswordAsync();
 
             if (password == correctPassword)
             {
@@ -62,7 +62,7 @@ namespace MySafe.Business.Services
         {
             if (password.Length == MySafeApp.Resources.DefaultApplicationPasswordLength)
             {
-                await _secureStorage.SetLocalPasswordAsync(password);
+                await _secureStorage.SetDevicePasswordAsync(password);
 
                 actionOnRegister?.Invoke();
             }
@@ -73,7 +73,7 @@ namespace MySafe.Business.Services
         [ConfigureAwait(false)]
         public async Task Logout()
         {
-            await _secureStorage.RemovePasswordAsync();
+            await _secureStorage.RemoveDevicePasswordAsync();
         }
     }
 }

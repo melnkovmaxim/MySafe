@@ -13,7 +13,7 @@ namespace MySafe.Business.Mediator.Images.OriginalImageQuery
     {
         public int ImageId { get; set; }
 
-        public OriginalImageQuery(string jwtToken, int imageId) : base(jwtToken)
+        public OriginalImageQuery(int imageId)
         {
             ImageId = imageId;
         }

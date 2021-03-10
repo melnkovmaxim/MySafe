@@ -16,7 +16,7 @@ namespace MySafe.Business.Extensions
             IRestRequest request, CancellationToken cancellationToken) 
             where T : IResponse
         {
-            var cmdResponse = (T) Activator.CreateInstance(typeof(T));
+            var commandResponse = (T) Activator.CreateInstance(typeof(T));
 
             try
             {
@@ -28,27 +28,24 @@ namespace MySafe.Business.Extensions
 
                 if (response.ContentType.Contains(ContentType.Json) == true)
                 {
-                    cmdResponse = JsonConvert.DeserializeObject<T>(response.Content);
+                    commandResponse = JsonConvert.DeserializeObject<T>(response.Content);
                 }
                 else
                 {
-                    cmdResponse.FileBytes = response.RawBytes;
+                    commandResponse.FileBytes = response.RawBytes;
                 }
 
-                if (cmdResponse is User userResponse)
+                if (commandResponse is User userResponse)
                 {
-                    var jwtToken = new JwtSecurityTokenHandler()
-                        .GetJwtTokenFromResponse(response);
-
-                    userResponse.JwtToken = jwtToken;
+                    userResponse.JwtToken = response.GetJwtToken();
                 }
             }
             catch (Exception ex)
             {
-                cmdResponse.Error = ex.Message;
+                commandResponse.Error = ex.Message;
             }
 
-            return cmdResponse;
+            return commandResponse;
         }
     }
 }

@@ -16,22 +16,5 @@ namespace MySafe.Presentation.ViewModels.Abstractions
         {
             _navigationService = navigationService;
         }
-
-        protected virtual async Task HandleResponse(IResponse response, string pageName = null, JwtSecurityToken token = null)
-        {
-            if (response.HasError)
-            {
-                Error = response.Error;
-                return;
-            }
-
-            if (string.IsNullOrEmpty(pageName)) return;
-
-            if (token.IsValidToken())
-            {
-                var @params = new NavigationParameters {{nameof(JwtSecurityToken), token}};
-                await _navigationService.NavigateAsync(pageName, @params);
-            }
-        }
     }
 }

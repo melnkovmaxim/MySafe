@@ -47,7 +47,7 @@ namespace MySafe.Presentation.ViewModels
 
         protected override async Task ActionAfterLoadPage()
         {
-            var queryResponse = await _mediator.Send(new DocumentInfoQuery(_jwtToken.RawData, _itemId.Value));
+            var queryResponse = await _mediator.Send(new DocumentInfoQuery(_itemId.Value));
 
             if (queryResponse.HasError)
             {
@@ -73,11 +73,11 @@ namespace MySafe.Presentation.ViewModels
             ResponseBase response;
             if (attachment.IsImage)
             {
-                response = await _mediator.Send(new OriginalImageQuery(_jwtToken.RawData, attachment.Id));
+                response = await _mediator.Send(new OriginalImageQuery(attachment.Id));
             }
             else
             {
-                response = await _mediator.Send(new OriginalSheetQuery(_jwtToken.RawData, attachment.Id));
+                response = await _mediator.Send(new OriginalSheetQuery(attachment.Id));
             }
 
             if (response?.HasError != false)
@@ -125,11 +125,11 @@ namespace MySafe.Presentation.ViewModels
 
             if (result.ContentType.Split('/')[0] == "image")
             {
-                response = await _mediator.Send(new UploadImageCommand(_jwtToken.RawData, Document.Id, result.FileName, result.ContentType, bytes));
+                response = await _mediator.Send(new UploadImageCommand(Document.Id, result.FileName, result.ContentType, bytes));
             }
             else
             {
-                response = await _mediator.Send(new UploadSheetCommand(_jwtToken.RawData, Document.Id, result.FileName, result.ContentType, bytes));
+                response = await _mediator.Send(new UploadSheetCommand(Document.Id, result.FileName, result.ContentType, bytes));
             }
 
 
@@ -149,11 +149,11 @@ namespace MySafe.Presentation.ViewModels
 
             if (attachment.IsImage)
             {
-                response = await _mediator.Send(new ImageMoveToTrashCommand(_jwtToken.RawData, attachment.Id));
+                response = await _mediator.Send(new ImageMoveToTrashCommand(attachment.Id));
             }
             else
             {
-                response = await _mediator.Send(new SheetMoveToTrashCommand(_jwtToken.RawData, attachment.Id));
+                response = await _mediator.Send(new SheetMoveToTrashCommand(attachment.Id));
             }
 
             if (response.HasError)
