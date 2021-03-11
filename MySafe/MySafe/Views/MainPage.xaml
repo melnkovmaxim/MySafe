@@ -60,17 +60,22 @@
                                     FontFamily="Montserrat"
                                     FontSize="24"
                                     HorizontalOptions="StartAndExpand"
+                                    HorizontalTextAlignment="Start"
                                     Text="MySafe"
                                     TextColor="Black"
-                                    WidthRequest="150" />
+                                    WidthRequest="200"
+                                    
+                                     />
                                 <Label
-                                    Margin="-138,24,0,0"
+                                    Margin="-75,24,0,0"
                                     FontFamily="Montserrat"
                                     FontSize="18"
-                                    HorizontalOptions="Start"
+                                    HorizontalOptions="StartAndExpand"
                                     Text="online"
                                     TextColor="Black"
-                                    WidthRequest="150" />
+                                    WidthRequest="200"
+                                    HorizontalTextAlignment="Start"
+                                     />
                                 <Button
                                     Margin="120,0,20,30"
                                     Padding="0,0,0,0"
@@ -145,47 +150,49 @@
                         <StackLayout
                             Grid.Row="2"
                             Margin="20,0,0,20"
-                            HeightRequest="220"
+                            HeightRequest="225"
                             HorizontalOptions="CenterAndExpand"
                             Orientation="Horizontal">
                             <!--  WidthRequest="380"  -->
-                            <uniformGrid:UniformGrid
-                                BindableLayout.ItemsSource="{Binding Folders}"
-                                ColumnSpacing="20"
-                                RowSpacing="20">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="110" />
-                                    <ColumnDefinition Width="110" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <BindableLayout.EmptyView>
-                                    <Label Text="Пожалуйста, подождите..." />
-                                </BindableLayout.EmptyView>
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
-                                        <Frame>
+                            <!---->
+                            <CollectionView
+                                x:Name="MyList"
+                                ItemsSource="{Binding Folders}"
+                                VerticalOptions="Fill">
+                                <CollectionView.ItemsLayout>
+                                     <GridItemsLayout
+                                        HorizontalItemSpacing="20"
+                                        Orientation="Vertical"
+                                        
+                                        Span="2"
+                                        VerticalItemSpacing="20" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate VerticalTextAlignment="Center">
+                                        <DataTemplate >
+                                        <Frame HeightRequest="118"  WidthRequest="110">
                                             <Button
                                                 Margin="-20,-20,-20,-20"
                                                 BackgroundColor="#E4E8FB"
                                                 Command="{Binding BindingContext.MoveToFolderCommand, Source={x:Reference Main}}"
                                                 CommandParameter="{Binding .}"
-                                                HorizontalOptions="Fill"
-                                                Text="{Binding Name}" />
-
-
+                                                HorizontalOptions="FillAndExpand"
+                                                
+                                                Text="{Binding Name}" 
+                                                
+                                                />
                                         </Frame>
                                     </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </uniformGrid:UniformGrid>
+                                     </CollectionView.ItemTemplate>  
+                            </CollectionView>
+                            <!---->
 
                             <Frame Margin="20,0,20,0">
                                 <Button
                                     Margin="-20,-20,-20,-20"
                                     Padding="0,0,0,0"
                                     BackgroundColor="#FFC46B"
+                                    Command="{behaviors:NavigateTo 'NavigationPage/NotePage',
+                                                                   SourcePage={x:Reference Main}}"
                                     ImageSource="note.png" />
                             </Frame>
 
@@ -195,11 +202,11 @@
                             HeightRequest="30"
                             HorizontalOptions="Fill"
                             Orientation="Horizontal">
-                            <Frame Grid.Row="2" Margin="20,0,20,20">
+                            <Frame Grid.Row="2" Margin="20,0,20,20" WidthRequest="360" >
 
                                 <presentation:GradientButton
                                     Margin="-20,-20,-20,-20"
-                                    Padding="0,0,0,0"
+                                    Padding="0,-5,0,0"
                                     BackgroundColor="#3D6CC7"
                                     Command="{behaviors:NavigateTo 'NavigationPage/TrashFolderPage',
                                                                    SourcePage={x:Reference Main}}"
@@ -210,7 +217,7 @@
                                     ImageSource="bin.png"
                                     StartColor="#b7ccef"
                                     TextColor="White"
-                                    WidthRequest="380" />
+                                    />
                             </Frame>
                         </StackLayout>
 
