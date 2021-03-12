@@ -29,11 +29,10 @@
             <RefreshView
                 x:Name="_refreshView"
                 Command="{Binding LoadedCommand}"
-                CommandParameter="{Null}"
                 HorizontalOptions="FillAndExpand"
                 IsRefreshing="{Binding LoadedCommand.IsExecuting}"
                 RefreshColor="Red"
-                Refreshing="RefreshView_OnRefreshing"
+                Refreshing=""
                 VerticalOptions="FillAndExpand">
 
                 <ScrollView>
@@ -214,7 +213,7 @@
 
             </RefreshView>
 
-            <Frame Opacity="0.5" IsVisible="{Binding LoadedCommand.IsExecuting}">
+            <Frame IsVisible="{Binding LoadedCommand.IsExecuting}" Opacity="0.5">
                 <Image
                     x:Name="_spinnetImage"
                     HorizontalOptions="Center"

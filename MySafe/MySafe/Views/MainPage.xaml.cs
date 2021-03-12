@@ -17,16 +17,12 @@ namespace MySafe.Presentation.Views
         {
             NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
-            RefreshView_OnRefreshing(null, null);
-        }
-
-        private async void RefreshView_OnRefreshing(object sender, EventArgs e)
-        {
-            await Task.Run(async () =>
+            
+            Task.Run(async () =>
             {
-                while (_spinnetImage.IsVisible)
+                while (true)
                 {
-                    await _spinnetImage.RelRotateTo(360, 1000); 
+                    await _spinnetImage.RelRotateTo(360, 3000); 
                 }
             });
         }
