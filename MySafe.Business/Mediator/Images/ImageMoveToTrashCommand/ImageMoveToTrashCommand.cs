@@ -10,7 +10,7 @@ namespace MySafe.Business.Mediator.Images.ImageMoveToTrashCommand
     {
         public int ImageId { get; set; } // attachment 
 
-        public ImageMoveToTrashCommand(string jwtToken, int imageId) : base(jwtToken)
+        public ImageMoveToTrashCommand(int imageId)
         {
             ImageId = imageId;
         }

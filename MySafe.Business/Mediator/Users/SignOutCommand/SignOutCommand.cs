@@ -11,10 +11,6 @@ namespace MySafe.Business.Mediator.Users.SignOutCommand
     /// </summary>
     public class SignOutCommand : BearerRequestBase<User>
     {
-        public SignOutCommand(string jwtToken) : base(jwtToken)
-        {
-        }
-
         public override Method RequestMethod => Method.DELETE;
         public override string RequestResource => "users/sign_out";
     }

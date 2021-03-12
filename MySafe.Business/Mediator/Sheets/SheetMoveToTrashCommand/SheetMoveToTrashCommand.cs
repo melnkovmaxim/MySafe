@@ -13,7 +13,7 @@ namespace MySafe.Business.Mediator.Sheets.SheetMoveToTrashCommand
     {
         public int SheetId { get; set; }
 
-        public SheetMoveToTrashCommand(string jwtToken, int sheetId) : base(jwtToken)
+        public SheetMoveToTrashCommand(int sheetId)
         {
             SheetId = sheetId;
         }

@@ -21,6 +21,7 @@ using System.Reflection;
 using ImTools;
 using MediatR.Pipeline;
 using MySafe.Business.MapperProfiles;
+using MySafe.Business.Mediator;
 using MySafe.Business.Mediator.Abstractions;
 using MySafe.Business.Mediator.Documents.CreateDocumentCommand;
 using MySafe.Business.Mediator.Documents.DocumentInfoQuery;
@@ -29,6 +30,7 @@ using MySafe.Business.Mediator.Pipelines;
 using MySafe.Business.Mediator.Users.SignInCommand;
 using MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand;
 using MySafe.Core.Entities.Responses;
+using MySafe.Core.Entities.Responses.Abstractions;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -118,13 +120,14 @@ namespace MySafe
             {
                 typeof(IRequestHandler<,>),
                 typeof(IPipelineBehavior<,>),
+                typeof(BearerRequestBase<>),
                 typeof(IRequestPostProcessor<,>),
                 typeof(IRequestExceptionHandler<,>),
                 typeof(IValidator<>)
             };
 
-
-            var types = Assembly.GetAssembly(typeof(Configure)).GetReferencedAssemblies()
+            var referencedAssemblies = Assembly.GetAssembly(typeof(Configure)).GetReferencedAssemblies();
+            var types = referencedAssemblies
                 .Where(x => x.Name.Contains(nameof(MySafe.Business)))
                 .Select(Assembly.Load)
                 .SelectMany(x => x.GetTypes())
@@ -136,7 +139,10 @@ namespace MySafe
                         .Where(t => !t.IsAbstract && t.GetInterfaces()
                             .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == @interface)),
                     serviceTypeCondition: Registrator.Interfaces);
+
             }
+
+            container.Register(typeof(BearerPreRequestHandler<>));
 
             return containerRegistry;
         }

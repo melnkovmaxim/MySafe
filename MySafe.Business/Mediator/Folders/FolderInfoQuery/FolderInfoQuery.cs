@@ -13,7 +13,7 @@ namespace MySafe.Business.Mediator.Folders.FolderInfoQuery
     {
         public int DocumentId { get; set; }
 
-        public FolderInfoQuery(string jwtToken, int documentId) : base(jwtToken)
+        public FolderInfoQuery(int documentId)
         {
             DocumentId = documentId;
         }

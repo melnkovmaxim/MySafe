@@ -52,7 +52,7 @@ namespace MySafe.Presentation.ViewModels
 
         protected override async Task ActionAfterLoadPage()
         {
-            var queryResponse = await _mediator.Send(new FolderInfoQuery(_jwtToken.RawData, _itemId.Value));
+            var queryResponse = await _mediator.Send(new FolderInfoQuery(_itemId.Value));
 
             if (queryResponse.HasError)
             {
@@ -65,7 +65,7 @@ namespace MySafe.Presentation.ViewModels
             queryResponse.Documents.ForEach(Documents.Add);
 
             
-            var safeFolders = await _mediator.Send(new SafeInfoQuery(_jwtToken.RawData));
+            var safeFolders = await _mediator.Send(new SafeInfoQuery());
             var currentFolder = safeFolders?.Folders.FirstOrDefault(x => x.Id == queryResponse.Id);
             FolderName = currentFolder?.Name.Split(":").FirstOrDefault();
             folderId = currentFolder?.Id ?? int.MinValue;
@@ -83,14 +83,14 @@ namespace MySafe.Presentation.ViewModels
             bool answer = await Application.Current.MainPage.DisplayAlert ("Создать новый документ?", null, "Да", "Нет");
             if (!answer) return;
 
-            var response = await _mediator.Send(new CreateDocumentCommand(_jwtToken.RawData, folderId));
+            var response = await _mediator.Send(new CreateDocumentCommand(folderId));
 
             if (response.HasError)
             {
                 await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось создать документ, что-то пошло не так... ", "Ok");
             }
 
-            ActionAfterLoadPage();
+            await ActionAfterLoadPage();
         });
     }
 }

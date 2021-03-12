@@ -70,10 +70,7 @@ namespace MySafe.Business.MapperProfiles
                     
                     if (s is User userResponse)
                     {
-                        var jwtToken = new JwtSecurityTokenHandler()
-                            .GetJwtTokenFromResponse(s);
-
-                        userResponse.JwtToken = jwtToken;
+                        userResponse.JwtToken = s.GetJwtToken();
                     }
                 });
         }

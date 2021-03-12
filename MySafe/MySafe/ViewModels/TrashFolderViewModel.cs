@@ -41,7 +41,7 @@ namespace MySafe.Presentation.ViewModels
 
         protected override async Task ActionAfterLoadPage()
         {
-            var queryResponse = await _mediator.Send(new TrashContentQuery(_jwtToken.RawData));
+            var queryResponse = await _mediator.Send(new TrashContentQuery());
 
             if (queryResponse == null)
             {
@@ -55,7 +55,7 @@ namespace MySafe.Presentation.ViewModels
 
         public AsyncCommand ClearTrashCommand => _clearTrashCommand ??= new AsyncCommand(async () =>
         {
-            var response = await _mediator.Send(new ClearTrashCommand(_jwtToken.RawData));
+            var response = await _mediator.Send(new ClearTrashCommand());
 
             if (response.HasError)
             {
@@ -101,16 +101,16 @@ namespace MySafe.Presentation.ViewModels
         {
             if (trashItem.IsFolder)
             {
-                return await _mediator.Send(new DestroyTrashDocumentCommand(_jwtToken.RawData, trashItem.Id)).ConfigureAwait(false);
+                return await _mediator.Send(new DestroyTrashDocumentCommand(trashItem.Id)).ConfigureAwait(false);
             }
             
             if (trashItem.IsImage)
             {
-                return await _mediator.Send(new DestroyTrashImageCommand(_jwtToken.RawData, trashItem.Id)).ConfigureAwait(false);
+                return await _mediator.Send(new DestroyTrashImageCommand(trashItem.Id)).ConfigureAwait(false);
             }
             else
             {
-                return await _mediator.Send(new DestroyTrashSheetCommand(_jwtToken.RawData, trashItem.Id)).ConfigureAwait(false);
+                return await _mediator.Send(new DestroyTrashSheetCommand(trashItem.Id)).ConfigureAwait(false);
             }
         }
 
@@ -118,16 +118,16 @@ namespace MySafe.Presentation.ViewModels
         {
             if (trashItem.IsFolder)
             {
-                return await _mediator.Send(new DestroyTrashDocumentCommand(_jwtToken.RawData, trashItem.Id)).ConfigureAwait(false);
+                return await _mediator.Send(new DestroyTrashDocumentCommand(trashItem.Id)).ConfigureAwait(false);
             }
 
             if (trashItem.IsImage)
             {
-                return await _mediator.Send(new RestoreTrashImageCommand(_jwtToken.RawData, trashItem.Id)).ConfigureAwait(false);
+                return await _mediator.Send(new RestoreTrashImageCommand(trashItem.Id)).ConfigureAwait(false);
             }
             else
             {
-                return await _mediator.Send(new RestoreTrashSheetCommand(_jwtToken.RawData, trashItem.Id)).ConfigureAwait(false);
+                return await _mediator.Send(new RestoreTrashSheetCommand(trashItem.Id)).ConfigureAwait(false);
             }
         }
     }

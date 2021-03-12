@@ -11,10 +11,6 @@ namespace MySafe.Business.Mediator.Trash.ClearTrashCommand
     /// </summary>
     public class ClearTrashCommand: BearerRequestBase<ResponseBase>
     {
-        public ClearTrashCommand(string jwtToken) : base(jwtToken)
-        {
-        }
-
         public override Method RequestMethod => Method.DELETE;
         public override string RequestResource => "/api/v1/trash";
     }

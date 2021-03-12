@@ -16,10 +16,5 @@ namespace MySafe.Business.Mediator.Abstractions
     {
         [JsonIgnore]
         public string JwtToken { get; set; }
-
-        protected BearerRequestBase(string jwtToken)
-        {
-            JwtToken = jwtToken;
-        }
     }
 }

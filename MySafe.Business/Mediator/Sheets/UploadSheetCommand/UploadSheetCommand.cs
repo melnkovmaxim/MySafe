@@ -13,8 +13,7 @@ namespace MySafe.Business.Mediator.Sheets.UploadSheetCommand
     {
         public int DocumentId { get; set; }
 
-        public UploadSheetCommand(string jwtToken, int documentId, string fileName, string contentType, byte[] fileBytes)
-            : base(jwtToken)
+        public UploadSheetCommand(int documentId, string fileName, string contentType, byte[] fileBytes)
         {
             DocumentId = documentId;
             FileName = fileName;

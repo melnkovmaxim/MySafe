@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MySafe.Business.Mediator.Users.SignInCommand;
+using MySafe.Business.Services.Abstractions;
 using MySafe.Core.Commands;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
@@ -24,8 +25,18 @@ namespace MySafe.Presentation.ViewModels
 
         public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
         {
+            //Ioc.Resolve<IPrintService>().ShowPrinterWebView();
+
+            //return;
             var response = await _mediator.Send(new SignInCommand(Login, Password));
-            await HandleResponse(response, nameof(TwoFactorPage), response.JwtToken);
+
+            if (response.HasError)
+            {
+                Error = response.Error;
+                return;
+            }
+
+            await _navigationService.NavigateAsync(nameof(TwoFactorPage));
         });
     }
 }

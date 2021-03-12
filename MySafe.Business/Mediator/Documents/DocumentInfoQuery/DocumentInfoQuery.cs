@@ -11,9 +11,9 @@ namespace MySafe.Business.Mediator.Documents.DocumentInfoQuery
     /// </summary>
     public class DocumentInfoQuery: BearerRequestBase<Document>
     {
-        public int DocumentId { get; set; }
+        public int DocumentId { get; }
 
-        public DocumentInfoQuery(string jwtToken, int documentId) : base(jwtToken)
+        public DocumentInfoQuery(int documentId)
         {
             DocumentId = documentId;
         }

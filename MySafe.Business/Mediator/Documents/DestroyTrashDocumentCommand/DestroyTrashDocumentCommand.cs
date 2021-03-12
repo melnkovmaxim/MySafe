@@ -13,7 +13,7 @@ namespace MySafe.Business.Mediator.Documents.DestroyTrashDocumentCommand
     {
         public int DocumentId { get; set; }
 
-        public DestroyTrashDocumentCommand(string jwtToken, int documentId) : base(jwtToken)
+        public DestroyTrashDocumentCommand(int documentId)
         {
             DocumentId = documentId;
         }
