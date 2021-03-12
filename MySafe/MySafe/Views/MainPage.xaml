@@ -214,7 +214,7 @@
 
             </RefreshView>
 
-            <Frame IsVisible="{Binding LoadedCommand.IsExecuting}">
+            <Frame Opacity="0.5" IsVisible="{Binding LoadedCommand.IsExecuting}">
                 <Image
                     x:Name="_spinnetImage"
                     HorizontalOptions="Center"

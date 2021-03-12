@@ -17,28 +17,18 @@ namespace MySafe.Presentation.Views
         {
             NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
+            RefreshView_OnRefreshing(null, null);
         }
 
-        private void Blue_Button_Clicked(object sender, EventArgs e)
+        private async void RefreshView_OnRefreshing(object sender, EventArgs e)
         {
-            Button button = (Button)sender;
-            button.BackgroundColor = Color.Blue;
-        }
-
-        private void RefreshView_OnRefreshing(object sender, EventArgs e)
-        {
-            var cancellationTokenSource = new CancellationTokenSource();
-            var token = cancellationTokenSource.Token;
-
-            Task.Run(async () =>
+            await Task.Run(async () =>
             {
-                while (token.IsCancellationRequested == false)
+                while (_spinnetImage.IsVisible)
                 {
                     await _spinnetImage.RelRotateTo(360, 1000); 
                 }
-            }, token);
-
-            cancellationTokenSource.Cancel();
+            });
         }
     }
 }
