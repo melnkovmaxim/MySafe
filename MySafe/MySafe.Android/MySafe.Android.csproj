@@ -93,6 +93,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\GradientButtonRender.cs" />
     <Compile Include="Repositories\StoragePathesRepository.cs" />
+    <Compile Include="Services\PrintService.cs" />
     <Compile Include="Services\StorageService.cs" />
     <Compile Include="SplashActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -133,6 +134,10 @@
     <AndroidResource Include="Resources\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MySafe.Business\MySafe.Business.csproj">
+      <Project>{F03CC458-E3B3-47AE-96D7-24981E38AF39}</Project>
+      <Name>MySafe.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MySafe.Data\MySafe.Data.csproj">
       <Project>{DD64C806-0A98-4ABD-82E0-F8B933224084}</Project>
       <Name>MySafe.Data</Name>

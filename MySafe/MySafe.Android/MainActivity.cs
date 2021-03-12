@@ -13,6 +13,8 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using System;
 using System.Threading.Tasks;
+using MySafe.Business.Services.Abstractions;
+using MySafe.Droid.Services;
 using Xamarin.Forms;
 
 namespace MySafe.Droid
@@ -45,6 +47,7 @@ namespace MySafe.Droid
             LoadApplication(new App(new AndroidInitializer()));
 
             PrismApplicationBase.Current.Container.GetContainer().Register<IStoragePathesRepository, StoragePathesRepository>();
+            PrismApplicationBase.Current.Container.GetContainer().Register<IPrintService, PrintService>();
         }
 
         private void AndroidEnvironmentOnUnhandledException(object sender, RaiseThrowableEventArgs e)
