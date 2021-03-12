@@ -24,15 +24,19 @@
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
+
         <Grid>
-            <RefreshView Command="{Binding LoadedCommand}"
+            <RefreshView
+                x:Name="_refreshView"
+                Command="{Binding LoadedCommand}"
                 CommandParameter="{Null}"
                 HorizontalOptions="FillAndExpand"
                 IsRefreshing="{Binding LoadedCommand.IsExecuting}"
                 RefreshColor="Red"
+                Refreshing="RefreshView_OnRefreshing"
                 VerticalOptions="FillAndExpand">
-            
-                    <ScrollView>
+
+                <ScrollView>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -57,7 +61,8 @@
                                 VerticalOptions="FillAndExpand">
                                 <Grid>
 
-                                    <Label Grid.Row="0"
+                                    <Label
+                                        Grid.Row="0"
                                         Margin="20,0,0,0"
                                         FontFamily="Montserrat"
                                         FontSize="24"
@@ -65,19 +70,17 @@
                                         HorizontalTextAlignment="Start"
                                         Text="MySafe"
                                         TextColor="Black"
-                                        WidthRequest="200"
-                                    
-                                         />
-                                    <Label Grid.Row="1"
+                                        WidthRequest="200" />
+                                    <Label
+                                        Grid.Row="1"
                                         Margin="20,-20,0,0"
                                         FontFamily="Montserrat"
                                         FontSize="18"
                                         HorizontalOptions="StartAndExpand"
+                                        HorizontalTextAlignment="Start"
                                         Text="online"
                                         TextColor="Black"
-                                        WidthRequest="200"
-                                        HorizontalTextAlignment="Start"
-                                         />
+                                        WidthRequest="200" />
                                 </Grid>
                                 <Button
                                     Margin="120,0,20,30"
@@ -130,9 +133,7 @@
                             </Grid>
 
                         </StackLayout>
-                        <StackLayout Grid.Row="1" Grid.Column="0">
-
-                        </StackLayout>
+                        <StackLayout Grid.Row="1" Grid.Column="0" />
                         <StackLayout
                             Grid.Row="2"
                             Margin="20,0,0,20"
@@ -140,37 +141,36 @@
                             HorizontalOptions="CenterAndExpand"
                             Orientation="Horizontal">
                             <!--  WidthRequest="380"  -->
-                            <!---->
+                            <!--    -->
                             <CollectionView
                                 x:Name="MyList"
+                                ItemSizingStrategy="MeasureFirstItem"
                                 ItemsSource="{Binding Folders}"
-                                VerticalOptions="Fill" ItemSizingStrategy="MeasureFirstItem">
+                                VerticalOptions="Fill">
                                 <CollectionView.ItemsLayout>
-                                     <GridItemsLayout
+                                    <GridItemsLayout
                                         HorizontalItemSpacing="10"
                                         Orientation="Vertical"
-                                         
                                         Span="2"
                                         VerticalItemSpacing="20" />
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        <Frame HeightRequest="115" >
+                                        <Frame HeightRequest="115">
                                             <Button
                                                 Margin="-20,-20,-20,-20"
+                                                Padding="20,0,20,0"
                                                 BackgroundColor="#E4E8FB"
                                                 Command="{Binding BindingContext.MoveToFolderCommand, Source={x:Reference Main}}"
                                                 CommandParameter="{Binding .}"
                                                 HorizontalOptions="FillAndExpand"
-                                                Padding="20,0,20,0"
-                                                VerticalOptions="Fill"
-                                                Text="{Binding Name}" 
-                                                />
+                                                Text="{Binding Name}"
+                                                VerticalOptions="Fill" />
                                         </Frame>
                                     </DataTemplate>
-                                </CollectionView.ItemTemplate>  
+                                </CollectionView.ItemTemplate>
                             </CollectionView>
-                            <!---->
+                            <!--    -->
 
                             <Frame Margin="20,0,20,0">
                                 <Button
@@ -188,7 +188,10 @@
                             HeightRequest="30"
                             HorizontalOptions="Fill"
                             Orientation="Horizontal">
-                            <Frame Grid.Row="2" Margin="20,0,20,20" WidthRequest="360" >
+                            <Frame
+                                Grid.Row="2"
+                                Margin="20,0,20,20"
+                                WidthRequest="360">
 
                                 <presentation:GradientButton
                                     Margin="-20,-20,-20,-20"
@@ -202,8 +205,7 @@
                                     HorizontalOptions="FillAndExpand"
                                     ImageSource="bin.png"
                                     StartColor="#b7ccef"
-                                    TextColor="White"
-                                    />
+                                    TextColor="White" />
                             </Frame>
                         </StackLayout>
 
@@ -211,6 +213,14 @@
                 </ScrollView>
 
             </RefreshView>
+
+            <Frame IsVisible="{Binding LoadedCommand.IsExecuting}">
+                <Image
+                    x:Name="_spinnetImage"
+                    HorizontalOptions="Center"
+                    Source="icon.png"
+                    VerticalOptions="Center" />
+            </Frame>
             <!--<Frame
                 BackgroundColor="Green"
                 HorizontalOptions="FillAndExpand"
@@ -223,7 +233,6 @@
                     VerticalOptions="Center" />
             </Frame>-->
         </Grid>
-
 
 
     </ContentPage.Content>
