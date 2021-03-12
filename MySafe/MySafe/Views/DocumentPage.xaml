@@ -31,27 +31,35 @@
                 HorizontalOptions="FillAndExpand"
                 
                 Orientation="Horizontal">
-                <Button
-                    Margin="50,0,0,0"
-                    Command="{Binding OpenFileCommand}"
-                    CommandParameter="{Binding CurrentAttachment}"
-                    BackgroundColor="Transparent"
-                    ImageSource="clockwise.png"
-                    Text="Открыть оригинал" />
-                <Button
-                    
-                    Command="{Binding DownloadFileCommand}"
-                    CommandParameter="{Binding CurrentAttachment}"
-                    BackgroundColor="Transparent"
-                    ImageSource="download.png"
-                    Text="" />
-                <Button
-                    Margin="0,0,50,0"
-                    Command="{Binding MoveToTrashCommand}"
-                    CommandParameter="{Binding CurrentAttachment}"
-                    BackgroundColor="Transparent"
-                    ImageSource="delete.png"
-                    Text="" />
+                <Grid HorizontalOptions="FillAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0"
+                        
+                        Command="{Binding OpenFileCommand}"
+                        CommandParameter="{Binding CurrentAttachment}"
+                        BackgroundColor="Transparent"
+                        ImageSource="clockwise.png"
+                         />
+                    <Button
+                    Grid.Column="1"
+                        Command="{Binding DownloadFileCommand}"
+                        CommandParameter="{Binding CurrentAttachment}"
+                        BackgroundColor="Transparent"
+                        ImageSource="download.png"
+                        Text="" />
+                    <Button
+                        Grid.Column="2"
+                        
+                        Command="{Binding MoveToTrashCommand}"
+                        CommandParameter="{Binding CurrentAttachment}"
+                        BackgroundColor="Transparent"
+                        ImageSource="delete.png"
+                        Text="" />
+                </Grid>
             </StackLayout>
         </StackLayout>
         <!--<CollectionView ItemsSource="{Binding Attachments}" VerticalOptions="FillAndExpand">

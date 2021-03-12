@@ -73,7 +73,7 @@
                 <Label
                     Margin="0,-15,0,0"
                     FontFamily="Montserrat"
-                    FontSize="36"
+                    FontSize="20"
                     HorizontalOptions="Center"
                     Text="online"
                     TextColor="Black" />

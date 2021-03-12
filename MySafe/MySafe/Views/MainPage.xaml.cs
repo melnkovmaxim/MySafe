@@ -14,6 +14,7 @@ namespace MySafe.Presentation.Views
         {
             NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
+
         }
 
         private void Blue_Button_Clicked(object sender, EventArgs e)

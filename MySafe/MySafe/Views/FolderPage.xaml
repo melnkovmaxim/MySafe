@@ -6,7 +6,7 @@
     xmlns:behaviors="http://prismlibrary.com"
     x:Name="Folder"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=FolderViewModel}"
-    NavigationPage.HasNavigationBar="False">
+    >
     <ContentPage.Resources>
         <Style TargetType="Button">
             <!-- <Setter Property="HeightRequest" Value="70" /> -->
@@ -33,7 +33,7 @@
                             Margin="20,20,20,10"
                             BackgroundColor="#E4E8FB"
                             CornerRadius="24"
-                            HeightRequest="22"
+                            HeightRequest="26"
                             HorizontalOptions="Fill">
                             <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
                                 <Grid>
@@ -42,19 +42,21 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="20" />
+                                        <RowDefinition Height="26" />
                                     </Grid.RowDefinitions>
                                     <Image Grid.Column="0" Source="docs.png" />
+                            <Frame Grid.Column="1" Margin="0,-6,0,0" CornerRadius="0" BackgroundColor="Transparent">
                                     <Label
-                                        Grid.Column="1"
-                                        Margin="0,-9,0,0"
+                                        
+                                        Margin="-20,-20,-20,-20"
                                         FontSize="24"
                                         HorizontalOptions="Start"
                                         HorizontalTextAlignment="Start"
                                         Text="{Binding FolderName}"
                                         VerticalOptions="Start"
                                         VerticalTextAlignment="Start" />
-                                </Grid>
+                                </Frame>
+                        </Grid>
                             </StackLayout>
                         </Frame>
                         <SearchBar
@@ -100,14 +102,14 @@
                         HorizontalItemSpacing="10"
                         Orientation="Vertical"
                         Span="2"
-                        VerticalItemSpacing="15" />
+                        VerticalItemSpacing="10" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame>
                             <Button
                                 Margin="-20,-20,-20,-20"
-                                Padding="0,-45,0,0"
+                                Padding="0,-40,0,0"
                                 BackgroundColor="#E4E8FB"
                                 Command="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}"
                                 CommandParameter="{Binding .}"
