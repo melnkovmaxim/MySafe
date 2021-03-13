@@ -12,33 +12,17 @@ using DelegateCommand = Prism.Commands.DelegateCommand;
 
 namespace MySafe.Presentation.ViewModels.Abstractions
 {
-    public abstract class AuthorizedViewModelBase<TMediatoResponse>: ViewModelBase, INavigatedAware
-        where TMediatoResponse: IResponse
+    public abstract class AuthorizedViewModelBase: ViewModelBase, INavigatedAware
     {
         protected INavigationParameters _parameters;
         protected int? _itemId;
         protected string _itemName;
-        public AsyncCommand LoadedCommand { get; }
+
+        protected AsyncCommand RefreshCommand { get; }
 
         protected AuthorizedViewModelBase(INavigationService navigationService) 
             : base(navigationService)
         {
-            LoadedCommand ??= new AsyncCommand(async () =>
-            {
-                var result = await GetRefreshTask();
-                var hasError = HandleRefreshResult(result);
-                if (!hasError) RefillObservableCollection(result);
-            });
-        }
-
-        protected abstract Task<TMediatoResponse> GetRefreshTask();
-        protected abstract void RefillObservableCollection(TMediatoResponse mediatorResponse);
-
-        protected virtual bool HandleRefreshResult(IResponse mediatorResponse)
-        {
-            Error = mediatorResponse.Error;
-
-            return mediatorResponse.HasError;
         }
 
         protected NavigationParameters GetItemNaviigationParams(int itemId, string itemName)
@@ -69,10 +53,9 @@ namespace MySafe.Presentation.ViewModels.Abstractions
             if (!jwtToken.IsValidToken())
             {
                 await _navigationService.NavigateAsync(nameof(SignInPage));
-                return;
             }
 
-            await LoadedCommand.ExecuteAsync(null);
+            RefreshCommand.Execute(null);
         }
     }
 }
