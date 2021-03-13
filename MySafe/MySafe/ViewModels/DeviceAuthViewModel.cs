@@ -51,12 +51,8 @@ namespace MySafe.Presentation.ViewModels
                 ? nameof(MainPage)
                 : nameof(SignInPage));
         }
-        
-        protected override async Task ActionAfterLoadPage()
-        {
-            var passwordFromStorage = await Ioc.Resolve<ISecureStorageRepository>().GetDevicePasswordAsync();
-            IsRegistered = !string.IsNullOrEmpty(passwordFromStorage);
-        }
+
+        protected override async Task GetRefreshTask() => IsRegistered = await _deviceAuthService.IsRegistered();
 
         private async void FingerPrintScan()
         {

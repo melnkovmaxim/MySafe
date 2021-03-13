@@ -39,7 +39,7 @@ namespace MySafe.Presentation.ViewModels
         }
 
 
-        protected override async Task ActionAfterLoadPage()
+        protected override async Task ReloadInformationAsync()
         {
             var queryResponse = await _mediator.Send(new TrashContentQuery());
 

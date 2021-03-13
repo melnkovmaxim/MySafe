@@ -3,14 +3,17 @@ using MySafe.Presentation.Views;
 using Prism.Navigation;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
+using MediatR;
 using MySafe.Business.Extensions;
 using MySafe.Core.Commands;
+using MySafe.Core.Entities.Responses.Abstractions;
 using MySafe.Data.Abstractions;
 using DelegateCommand = Prism.Commands.DelegateCommand;
 
 namespace MySafe.Presentation.ViewModels.Abstractions
 {
-    public abstract class AuthorizedViewModelBase : ViewModelBase, INavigatedAware
+    public abstract class AuthorizedViewModelBase<TMediatoResponse>: ViewModelBase, INavigatedAware
+        where TMediatoResponse: IResponse
     {
         protected INavigationParameters _parameters;
         protected int? _itemId;
@@ -20,10 +23,23 @@ namespace MySafe.Presentation.ViewModels.Abstractions
         protected AuthorizedViewModelBase(INavigationService navigationService) 
             : base(navigationService)
         {
-            LoadedCommand ??= new AsyncCommand(ActionAfterLoadPage);
+            LoadedCommand ??= new AsyncCommand(async () =>
+            {
+                var result = await GetRefreshTask();
+                var hasError = HandleRefreshResult(result);
+                if (!hasError) RefillObservableCollection(result);
+            });
         }
 
-        protected abstract Task ActionAfterLoadPage();
+        protected abstract Task<TMediatoResponse> GetRefreshTask();
+        protected abstract void RefillObservableCollection(TMediatoResponse mediatorResponse);
+
+        protected virtual bool HandleRefreshResult(IResponse mediatorResponse)
+        {
+            Error = mediatorResponse.Error;
+
+            return mediatorResponse.HasError;
+        }
 
         protected NavigationParameters GetItemNaviigationParams(int itemId, string itemName)
         {

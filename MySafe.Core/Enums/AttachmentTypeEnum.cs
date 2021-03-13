@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Presentation.Models
+namespace MySafe.Core.Enums
 {
-    public class Folder
+    public enum AttachmentTypeEnum
     {
+        Image,
+        Other
     }
 }

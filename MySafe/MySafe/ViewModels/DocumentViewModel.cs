@@ -16,6 +16,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using MySafe.Business.Mediator.Images.ImageMoveToTrashCommand;
+using MySafe.Business.Services.Abstractions;
+using MySafe.Core.Enums;
 using MySafe.Data.Abstractions;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -28,6 +30,8 @@ namespace MySafe.Presentation.ViewModels
         public static int ID { get; set; }
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
+        private readonly IPermissionService _permissionService;
+        private readonly IFileService _fileService;
         private AsyncCommand<Attachment> _downloadFileCommand;
         private AsyncCommand _uploadFileCommand;
         private AsyncCommand<Attachment> _moveToTrashCommand;
@@ -37,11 +41,13 @@ namespace MySafe.Presentation.ViewModels
         public ObservableCollection<Attachment> Attachments { get; set; }
         public Attachment CurrentAttachment { get; set; }
 
-        public DocumentViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper)
+        public DocumentViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IPermissionService permissionService, IFileService fileService)
             : base(navigationService)
         {
             _mediator = mediator;
             _mapper = mapper;
+            _permissionService = permissionService;
+            _fileService = fileService;
             Attachments = new ObservableCollection<Attachment>();
         }
 
@@ -63,50 +69,24 @@ namespace MySafe.Presentation.ViewModels
         public AsyncCommand<Attachment> DownloadFileCommand =>
             _downloadFileCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
         {
-            var status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
-            if (status != PermissionStatus.Granted)
-            {
-                status = await Permissions.RequestAsync<Permissions.StorageWrite>();
-                if (status != PermissionStatus.Granted) return;
-            }
+            var isPermissionGranted = await _permissionService.TryGetStorageWritePermissionAsync();
 
-            ResponseBase response;
-            if (attachment.IsImage)
-            {
-                response = await _mediator.Send(new OriginalImageQuery(attachment.Id));
-            }
-            else
-            {
-                response = await _mediator.Send(new OriginalSheetQuery(attachment.Id));
-            }
+            if (!isPermissionGranted) return;
 
-            if (response?.HasError != false)
-            {
-                await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось скачать файл, что-то пошло не так... ", "Ok");
-                return;
-            }
+            var isSuccessful = _fileService.TryDownloadAndSaveFile(attachment);
 
-            var downloadPath = Ioc.Resolve<IStoragePathesRepository>().DownloadPath;
-            var filename = attachment.Name + (attachment.FileExtension ?? ".jpeg");
-            await File.WriteAllBytesAsync(
-                Path.Combine(downloadPath, filename),
-                response.FileBytes);
+            await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось скачать файл, что-то пошло не так... ", "Ok");
         });
 
         public AsyncCommand<Attachment> OpenFileCommand =>
             _openFileCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
             {
-                var downloadPath = Ioc.Resolve<IStoragePathesRepository>().DownloadPath;
-                var filename = attachment.Name + (attachment.FileExtension ?? ".jpeg");
-                var path = Path.Combine(downloadPath, filename);
-
-                if (!File.Exists(path))
-                    await _downloadFileCommand.ExecuteAsync(attachment);
+                var result = await _fileService.DownloadFileAsync(attachment.Id, AttachmentTypeEnum.Image);
 
                 await Launcher.OpenAsync
                 (new OpenFileRequest()
                 {
-                    File = new ReadOnlyFile(path)
+                    File = new ReadOnlyFile(fullPath)
                 }
                 );
             });
@@ -115,7 +95,7 @@ namespace MySafe.Presentation.ViewModels
             _uploadFileCommand ??= new AsyncCommand(async () =>
         {
             var result = await FilePicker.PickAsync(PickOptions.Default);
-
+            
             await using var stream = await result.OpenReadAsync();
             await using var memoryStream = new MemoryStream();
             stream.CopyTo(memoryStream);
@@ -145,7 +125,7 @@ namespace MySafe.Presentation.ViewModels
         public AsyncCommand<Attachment> MoveToTrashCommand =>
             _moveToTrashCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
         {
-            ResponseBase response;
+            IResponse response;
 
             if (attachment.IsImage)
             {

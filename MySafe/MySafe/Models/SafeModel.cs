@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MySafe.Presentation.Models
 {
-    public class Folder
+    public class SafeModel
     {
+        
     }
 }
