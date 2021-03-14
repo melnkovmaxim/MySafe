@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MySafe.Presentation.Views.NotePage"
-             NavigationPage.HasNavigationBar="False">
+<ContentPage
+    x:Class="MySafe.Presentation.Views.NotePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout>
             <Frame
@@ -19,7 +20,9 @@
                         Text="Блокнот" />
                 </StackLayout>
             </Frame>
-            <!--<Grid > --><!--вот эту вот хуйню в новую вьюшку--> <!--
+            <!--<Grid > -->
+            <!--  вот эту вот хуйню в новую вьюшку  --> 
+            <!--
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
@@ -38,21 +41,33 @@
                         VerticalOptions="Fill"/>
                 </Frame>
             </Grid>-->
-            <Grid Margin="0,30,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Frame Grid.Row="0" BackgroundColor="#FBFFE9">
-                    <Button BorderColor="Gray" BackgroundColor="#FBFFE9" BorderWidth="1" Margin="-22,-20,-22,-20" Text="Название файла">
-                        
-                    </Button>
-                </Frame>
-                <Frame Grid.Row="1" BackgroundColor="#FBFFE9">
-                    <Button BorderColor="Gray" BackgroundColor="#FBFFE9" BorderWidth="1"  Margin="-22,-20,-22,-20" Text="Название файла2">
-                        
-                    </Button>
-                </Frame>
-            </Grid>
+
+
+            <CollectionView
+                Margin="20,0,20,0"
+                ItemsSource="{Binding TrashItems}"
+                VerticalOptions="FillAndExpand">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        HorizontalItemSpacing="5"
+                        Orientation="Vertical"
+                        Span="1"
+                        VerticalItemSpacing="15" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#FBFFE9">
+                            <Button
+                                Margin="-22,-20,-22,-20"
+                                BackgroundColor="#FBFFE9"
+                                BorderColor="Gray"
+                                BorderWidth="1"
+                                Text="Название файла" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
