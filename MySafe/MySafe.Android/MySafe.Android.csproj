@@ -93,6 +93,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\GradientButtonRender.cs" />
     <Compile Include="Repositories\StoragePathesRepository.cs" />
+    <Compile Include="Services\CustomPrintDocumentAdapter.cs" />
     <Compile Include="Services\PrintService.cs" />
     <Compile Include="Services\StorageService.cs" />
     <Compile Include="SplashActivity.cs" />

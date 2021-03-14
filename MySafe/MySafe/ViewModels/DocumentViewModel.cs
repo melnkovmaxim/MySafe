@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using MediatR;
 using MySafe.Business.Mediator.Documents.DocumentInfoQuery;
 using MySafe.Business.Mediator.Images.OriginalImageQuery;
@@ -32,22 +33,31 @@ namespace MySafe.Presentation.ViewModels
         private readonly IMapper _mapper;
         private readonly IPermissionService _permissionService;
         private readonly IFileService _fileService;
+        private readonly IPrintService _printService;
         private AsyncCommand<Attachment> _downloadFileCommand;
         private AsyncCommand _uploadFileCommand;
         private AsyncCommand<Attachment> _moveToTrashCommand;
         private AsyncCommand<Attachment> _openFileCommand;
+        private AsyncCommand<Attachment> _printCommand;
 
         public Document Document { get; set; }
         public ObservableCollection<Attachment> Attachments { get; set; }
         public Attachment CurrentAttachment { get; set; }
 
-        public DocumentViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IPermissionService permissionService, IFileService fileService)
+        public DocumentViewModel(
+            INavigationService navigationService, 
+            IMediator mediator, 
+            IMapper mapper, 
+            IPermissionService permissionService, 
+            IFileService fileService,
+            IPrintService printService)
             : base(navigationService)
         {
             _mediator = mediator;
             _mapper = mapper;
             _permissionService = permissionService;
             _fileService = fileService;
+            _printService = printService;
             Attachments = new ObservableCollection<Attachment>();
         }
 
@@ -61,7 +71,10 @@ namespace MySafe.Presentation.ViewModels
             var attachmentType = attachment.IsImage ? AttachmentTypeEnum.Image : AttachmentTypeEnum.Other;
             var isSuccessful = await _fileService.TryDownloadAndSaveFile(attachment.Id, attachmentType, attachment.Name, attachment.FileExtension);
 
-            await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось скачать файл, что-то пошло не так... ", "Ok");
+            if (!isSuccessful)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось скачать файл, что-то пошло не так... ", "Ok");
+            }
         });
 
         public AsyncCommand<Attachment> OpenFileCommand =>
@@ -98,7 +111,6 @@ namespace MySafe.Presentation.ViewModels
                 response = await _mediator.Send(new UploadSheetCommand(Document.Id, result.FileName, result.ContentType, bytes));
             }
 
-
             if (!response.HasError)
             {
                 var mediatorResult = await _refreshTask;
@@ -130,6 +142,35 @@ namespace MySafe.Presentation.ViewModels
             }
 
             Attachments.Remove(attachment);
+        });
+
+        public AsyncCommand<Attachment> PrintCommand => _printCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
+        {
+            await _downloadFileCommand.ExecuteAsync(attachment);
+            var path = _fileService.GetFullPathFileOnDevice(attachment.Name, attachment.FileExtension);
+
+            if (attachment.IsImage)
+            {
+                var bytes = await File.ReadAllBytesAsync(path);
+                
+                await Plugin.Printing.CrossPrinting.Current.PrintImageFromByteArrayAsync(
+                    bytes, 
+                    new Plugin.Printing.PrintJobConfiguration($"Printing {attachment.Name + attachment.FileExtension}"));
+                
+                return;
+            }
+            
+            if (attachment.FileExtension != ".pdf")
+            {
+                await using var stream = File.OpenRead(path);
+                await Plugin.Printing.CrossPrinting.Current.PrintPdfFromStreamAsync(stream,
+                    new Plugin.Printing.PrintJobConfiguration($"Printing {attachment.Name + attachment.FileExtension}"));
+
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("", "К печати допускаются только изображения и файлы формата pdf", "Ok");
+            }
         });
 
         protected override Task<Core.Entities.Responses.Document> _refreshTask => _mediator.Send(new DocumentInfoQuery(_itemId.Value));

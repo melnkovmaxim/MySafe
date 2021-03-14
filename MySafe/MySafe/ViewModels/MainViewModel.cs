@@ -55,6 +55,7 @@ namespace MySafe.Presentation.ViewModels
             //queryResponse.Folders.ForEach(Folders.Add);
             mediatorResponse.Folders.ForEach(x =>
             {
+                x.Name = x.Name.Split(':').FirstOrDefault();
                 Folders.Add(x);
             });
         }

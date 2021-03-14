@@ -11,6 +11,6 @@ namespace MySafe.Business.Services.Abstractions
     {
         void PrintImage(Stream imgStream);
         bool TryPrintPdfFile(Stream pdfFileStream);
-        void ShowPrinterWebView();
+        bool TryPrint(string filePath);
     }
 }

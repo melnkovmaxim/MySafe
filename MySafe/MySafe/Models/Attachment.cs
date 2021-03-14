@@ -26,13 +26,13 @@ namespace MySafe.Presentation.Models
             }
         }
 
+        public string Base64 => new Regex(".*base64,").Replace(Preview, "").Replace("\\n", "");
+
         private ImageSource _imageSource;
 
         private Lazy<ImageSource> _imageSourceLazy => new Lazy<ImageSource>(() =>
         {
-            var reg = new Regex(".*base64,");
-            var base64 = reg.Replace(Preview, "").Replace("\\n", "");
-            var @byte = Convert.FromBase64String(base64);
+            var @byte = Convert.FromBase64String(Base64);
             return ImageSource.FromStream(() => new MemoryStream(@byte));
         });
     }

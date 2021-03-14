@@ -17,10 +17,12 @@ namespace MySafe.Droid.Services
 {
     public class PrintService: IPrintService
     {
-        public void ShowPrinterWebView()
+        public bool TryPrint(string filePath)
         {
             var printManager = (PrintManager) CrossCurrentActivity.Current.Activity.GetSystemService(Context.PrintService);
-            printManager.Print("Razor HTML Hybrid", new WebView(CrossCurrentActivity.Current.Activity).CreatePrintDocumentAdapter(), null);
+            var result = printManager.Print($"Printing {filePath}", new CustomPrintDocumentAdapter(filePath), null);
+
+            return result.IsCompleted;
         }
 
         public void PrintImage(Stream imgStream)
