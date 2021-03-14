@@ -3,11 +3,13 @@ using MySafe.Core.Entities.Responses.Abstractions;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Crashes;
 using RestSharp.Serialization;
 
 namespace MySafe.Business.Extensions
@@ -28,21 +30,32 @@ namespace MySafe.Business.Extensions
                 //TODO !!! Добавить CancellationToken при переходе на другую страницу отменять таск !!!
                 if (!response.IsSuccessful)
                 {
-                    var from = new MailAddress("admin@justgarbage.ru", "admin");
-                    var to = new MailAddress("melnikovmaxim.nhk@gmail.com");
-                    var message = new MailMessage(from, to);
-                    message.Subject = response.ErrorMessage;
-                    message.Body = response.ResponseStatus + Environment.NewLine + response.StatusDescription + Environment.NewLine + response.ErrorMessage + Environment.NewLine + response.ErrorException?.Message + Environment.NewLine + response.ErrorException?.StackTrace;
-                    var smtp = new SmtpClient("mail.justgarbage.ru", 25);
-                    smtp.Credentials = new NetworkCredential("admin@justgarbage.ru", "Ssd17xDldD");
-                    await smtp.SendMailAsync(message);
-                    var neto = new MailAddress("maxim.melnikov.1996@yandex.ru");
-                    var nemessage = new MailMessage(from, neto);
-                    nemessage.Subject = response.ErrorMessage;
-                    nemessage.Body = response.ResponseStatus + Environment.NewLine + response.StatusDescription + Environment.NewLine + response.ErrorMessage + Environment.NewLine + response.ErrorException?.Message + Environment.NewLine + response.ErrorException?.StackTrace;
-                    await smtp.SendMailAsync(message);
-                    
-                    throw response.ErrorException;
+                    var properties = new Dictionary<string, string>
+                    {
+                        {"User login", MySafe.Core.MySafeApp.Resources.UserLogin},
+                        {"Url", response.ResponseUri.AbsoluteUri },
+                        {"Request method", request.Method.ToString() },
+                        {"Status code", response.StatusDescription},
+                        {"Content-Type", response.ContentType },
+                        {"Body", request.Body.Value.ToString() },
+                        {"ErrorMessage", response.ErrorMessage },
+                        {"ErrorExceptionMessage", response.ErrorException?.Message },
+                        {"ErrorExceptionStackTrace", response.ErrorException?.StackTrace }
+                    };
+
+                    foreach(var @param in request.Parameters)
+                    {
+                        properties.Add($"Parameter {@param.Name}", @param.Value.ToString());
+                    }
+
+                    foreach (var @file in request.Files)
+                    {
+                        properties.Add($"File {@file.FileName}", @file.ContentType);
+                    }
+
+                    Crashes.TrackError(new Exception("RestSharp http request error"), properties);
+
+                    throw response?.ErrorException;
                 }
 
                 if (response.ContentType.Contains(ContentType.Json) == true)

@@ -9,6 +9,8 @@ namespace MySafe.Data.Abstractions
 {
     public interface ISecureStorageRepository
     {
+        Task SetUserLogin(string login);
+        Task<string> GetUserLogin();
         Task<string> GetDevicePasswordAsync();
         Task SetDevicePasswordAsync(string password);
         Task RemoveDevicePasswordAsync();

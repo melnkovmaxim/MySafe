@@ -4,6 +4,7 @@
     {
         public class Resources
         {
+            public static string UserLogin { get; set; }
             public static string PasswordPath => "ApplicationPassword";
             public static string ServerHost => "https://mysafeonline.com/";
             public static int DefaultApplicationPasswordLength => 5;
