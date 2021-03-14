@@ -3,6 +3,8 @@
     x:Class="MySafe.Presentation.Views.NotePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="Note"
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=NoteViewModel}"
     NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout>
@@ -20,32 +22,10 @@
                         Text="Блокнот" />
                 </StackLayout>
             </Frame>
-            <!--<Grid > -->
-            <!--  вот эту вот хуйню в новую вьюшку  --> 
-            <!--
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Frame Grid.Row="0"
-                    Margin="20,10,20,15"
-                    BackgroundColor="#F3F5FF"
-                    BorderColor="#3465C4"
-                    CornerRadius="10"
-                    HasShadow="True"
-                    HeightRequest="460"
-                    HorizontalOptions="Fill"
-                    VerticalOptions="Fill">
-                    <Editor
-                        BackgroundColor="#F3F5FF"
-                        HorizontalOptions="FillAndExpand"
-                        VerticalOptions="Fill"/>
-                </Frame>
-            </Grid>-->
-
 
             <CollectionView
                 Margin="20,0,20,0"
-                ItemsSource="{Binding TrashItems}"
+                ItemsSource="{Binding Notes}"
                 VerticalOptions="FillAndExpand">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
@@ -62,7 +42,9 @@
                                 BackgroundColor="#FBFFE9"
                                 BorderColor="Gray"
                                 BorderWidth="1"
-                                Text="Название файла" />
+                                Command="{Binding BindingContext.MoveToNoteEditCommand, Source={x:Reference Note}}"
+                                CommandParameter="{Binding .}"
+                                Text="{Binding ClippedContent}" />
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

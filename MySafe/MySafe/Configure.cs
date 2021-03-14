@@ -83,6 +83,7 @@ namespace MySafe
             containerRegistry.RegisterForNavigation<TwoFactorPage, TwoFactorViewModel>();
             containerRegistry.RegisterForNavigation<FolderPage, FolderViewModel>();
             containerRegistry.RegisterForNavigation<TrashFolderPage, TrashFolderViewModel>();
+            containerRegistry.RegisterForNavigation<NoteEditPage, NoteEditViewModel>();
 
             return containerRegistry;
         }
@@ -169,5 +170,7 @@ namespace MySafe
         public static TwoFactorViewModel TwoFactorViewModel => Ioc.Resolve<TwoFactorViewModel>();
         public static FolderViewModel FolderViewModel => Ioc.Resolve<FolderViewModel>();
         public static TrashFolderViewModel TrashViewModel => Ioc.Resolve<TrashFolderViewModel>();
+        public static NoteViewModel NoteViewModel => Ioc.Resolve<NoteViewModel>();
+        public static NoteEditViewModel NoteEditViewModel => Ioc.Resolve<NoteEditViewModel>();
     }
 }

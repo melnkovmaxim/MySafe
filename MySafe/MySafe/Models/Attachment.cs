@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using MySafe.Core.Enums;
 using Xamarin.Forms;
 
 namespace MySafe.Presentation.Models
@@ -27,6 +28,7 @@ namespace MySafe.Presentation.Models
         }
 
         public string Base64 => new Regex(".*base64,").Replace(Preview, "").Replace("\\n", "");
+        public AttachmentTypeEnum Type => IsImage ? AttachmentTypeEnum.Image : AttachmentTypeEnum.Other;
 
         private ImageSource _imageSource;
 

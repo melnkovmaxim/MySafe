@@ -68,12 +68,11 @@ namespace MySafe.Presentation.ViewModels
             _downloadFileCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
         {
             var isPermissionGranted = await _permissionService.TryGetStorageWritePermissionAsync();
-
+            
             if (!isPermissionGranted) return;
 
-            var attachmentType = attachment.IsImage ? AttachmentTypeEnum.Image : AttachmentTypeEnum.Other;
-            var isSuccessful = await _fileService.TryDownloadAndSaveFile(attachment.Id, attachmentType, attachment.Name, attachment.FileExtension);
-
+            var isSuccessful = await _fileService.TryDownloadAndSaveFile(attachment.Id, attachment.Type, attachment.Name, attachment.FileExtension);
+            
             if (!isSuccessful)
             {
                 await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось скачать файл, что-то пошло не так... ", "Ok");
@@ -82,21 +81,25 @@ namespace MySafe.Presentation.ViewModels
 
         public AsyncCommand<Attachment> OpenFileCommand =>
             _openFileCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
+        {
+            var isPermissionGranted = await _permissionService.TryGetStorageWritePermissionAsync();
+            
+            if (!isPermissionGranted) return;
+
+            var isSuccessful = await _fileService.TryDownloadAndSaveIfNotExist(attachment.Id, attachment.Type, attachment.Name, attachment.FileExtension);
+
+            if (!isSuccessful)
             {
-                var path = _fileService.GetFullPathFileOnDevice(attachment.Name, attachment.FileExtension);
+                await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось скачать файл, что-то пошло не так... ", "Ok");
+                return;
+            }
 
-                if (!File.Exists(path))
-                {
-                    var result = await _fileService.DownloadFileAsync(attachment.Id, AttachmentTypeEnum.Image);
-                }
+            var path = _fileService.GetFullPathFileOnDevice(attachment.Name, attachment.FileExtension);
+            var readOnlyFile = new ReadOnlyFile(path);
+            var openFileRequest = new OpenFileRequest(attachment.Name, readOnlyFile);
 
-                await Launcher.OpenAsync
-                (new OpenFileRequest()
-                {
-                    File = new ReadOnlyFile(_fileService.GetFullPathFileOnDevice(attachment.Name, attachment.FileExtension))
-                }
-                );
-            });
+            await Launcher.OpenAsync(openFileRequest);
+        });
 
         public AsyncCommand UploadFileCommand =>
             _uploadFileCommand ??= new AsyncCommand(async () =>
@@ -154,6 +157,10 @@ namespace MySafe.Presentation.ViewModels
 
         public AsyncCommand<Attachment> PrintCommand => _printCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
         {
+            var isPermissionGranted = await _permissionService.TryGetStorageWritePermissionAsync();
+            
+            if (!isPermissionGranted) return;
+
             var path = _fileService.GetFullPathFileOnDevice(attachment.Name, attachment.FileExtension);
 
             if (!File.Exists(path))

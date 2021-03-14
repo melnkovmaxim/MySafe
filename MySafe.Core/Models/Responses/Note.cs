@@ -11,16 +11,16 @@ namespace MySafe.Core.Entities.Responses
     [JsonObject]
     public class Note: ResponseBase
     {
-        [JsonProperty]
+        [JsonProperty("id")]
         public int Id { get; set; }
 
-        [JsonProperty]
+        [JsonProperty("created_at")]
         public DateTime? CreatedAt { get; set; }
 
-        [JsonProperty]
+        [JsonProperty("content")]
         public string Content { get; set; }
 
-        [JsonProperty]
+        [JsonProperty("clipped_content")]
         public string ClippedContent { get; set; }
     }
 }

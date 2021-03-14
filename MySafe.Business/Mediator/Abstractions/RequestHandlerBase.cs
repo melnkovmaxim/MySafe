@@ -45,6 +45,7 @@ namespace MySafe.Business.Mediator.Abstractions
             {
                 httpRequest.AddFile("file", uploadRequest.FileBytes, uploadRequest.FileName, uploadRequest.ContentType);
                 httpRequest.AlwaysMultipartFormData = true;
+                //httpRequest.AddHeader("Content-Length", uploadRequest.FileBytes.Length.ToString());
             }
 
             return _restClient.SendAndGetResponseAsync<TResponse>(httpRequest, cancellationToken);

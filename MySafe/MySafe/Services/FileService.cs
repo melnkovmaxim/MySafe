@@ -56,6 +56,19 @@ namespace MySafe.Presentation.Services
             return await _mediator.Send(new OriginalSheetQuery(attachmentId));
         }
 
+        public Task<bool> TryDownloadAndSaveIfNotExist(int attachmentId, AttachmentTypeEnum attachmentType, string fileName,
+            string fileExtension)
+        {
+            var path = GetFullPathFileOnDevice(fileName, fileExtension);
+
+            if (!File.Exists(path))
+            {
+                return TryDownloadAndSaveFile(attachmentId, attachmentType, fileName, fileExtension);
+            }
+
+            return Task.FromResult(true);
+        }
+
         public async Task<bool> TryDownloadAndSaveFile(int attachmentId, AttachmentTypeEnum attachmentType, string fileName, string fileExtension)
         {
             var downloadResult = await DownloadFileAsync(attachmentId, attachmentType);
