@@ -84,8 +84,8 @@ namespace MySafe.Presentation.ViewModels
             
             await using var stream = await result.OpenReadAsync();
             await using var memoryStream = new MemoryStream();
-            stream.CopyTo(memoryStream);
-            var bytes = memoryStream.ToArray();
+            await stream.CopyToAsync(memoryStream);
+            var bytes = memoryStream.GetBuffer();
 
             IResponse response;
 
@@ -101,7 +101,8 @@ namespace MySafe.Presentation.ViewModels
 
             if (!response.HasError)
             {
-                await _refreshTask;
+                var mediatorResult = await _refreshTask;
+                RefillObservableCollection(mediatorResult);
                 return;
             }
 

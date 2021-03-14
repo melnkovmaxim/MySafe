@@ -68,7 +68,8 @@ namespace MySafe.Presentation.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось создать документ, что-то пошло не так... ", "Ok");
             }
 
-            await _refreshTask;
+            var mediatorResult = await _refreshTask;
+            RefillObservableCollection(mediatorResult);
         });
 
         protected override Task<Folder> _refreshTask => _mediator.Send(new FolderInfoQuery(_itemId.Value));
