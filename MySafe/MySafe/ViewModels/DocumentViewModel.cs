@@ -83,7 +83,12 @@ namespace MySafe.Presentation.ViewModels
         public AsyncCommand<Attachment> OpenFileCommand =>
             _openFileCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
             {
-                var result = await _fileService.DownloadFileAsync(attachment.Id, AttachmentTypeEnum.Image);
+                var path = _fileService.GetFullPathFileOnDevice(attachment.Name, attachment.FileExtension);
+
+                if (!File.Exists(path))
+                {
+                    var result = await _fileService.DownloadFileAsync(attachment.Id, AttachmentTypeEnum.Image);
+                }
 
                 await Launcher.OpenAsync
                 (new OpenFileRequest()
@@ -149,8 +154,12 @@ namespace MySafe.Presentation.ViewModels
 
         public AsyncCommand<Attachment> PrintCommand => _printCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
         {
-            await _downloadFileCommand.ExecuteAsync(attachment);
             var path = _fileService.GetFullPathFileOnDevice(attachment.Name, attachment.FileExtension);
+
+            if (!File.Exists(path))
+            {
+                await _downloadFileCommand.ExecuteAsync(attachment);
+            }
 
             if (attachment.IsImage)
             {
