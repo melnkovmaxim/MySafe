@@ -40,6 +40,9 @@ namespace MySafe.Presentation.ViewModels
         private AsyncCommand<Attachment> _openFileCommand;
         private AsyncCommand<Attachment> _printCommand;
 
+        public bool IsVisibleRefreshFrame => RefreshCommand.IsExecuting || DownloadFileCommand.IsExecuting ||
+                                             UploadFileCommand.IsExecuting || MoveToTrashCommand.IsExecuting ||
+                                             OpenFileCommand.IsExecuting || PrintCommand.IsExecuting;
         public Document Document { get; set; }
         public ObservableCollection<Attachment> Attachments { get; set; }
         public Attachment CurrentAttachment { get; set; }
@@ -160,7 +163,7 @@ namespace MySafe.Presentation.ViewModels
                 return;
             }
             
-            if (attachment.FileExtension != ".pdf")
+            if (attachment.FileExtension == ".pdf")
             {
                 await using var stream = File.OpenRead(path);
                 await Plugin.Printing.CrossPrinting.Current.PrintPdfFromStreamAsync(stream,
