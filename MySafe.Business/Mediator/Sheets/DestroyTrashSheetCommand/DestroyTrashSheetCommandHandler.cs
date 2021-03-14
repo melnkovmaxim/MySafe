@@ -12,7 +12,7 @@ namespace MySafe.Business.Mediator.Sheets.DestroyTrashSheetCommand
 {
     public class RemoveFileFromTrashCommandHandler: RequestHandlerBase<DestroyTrashSheetCommand, Sheet>
     {
-        public RemoveFileFromTrashCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public RemoveFileFromTrashCommandHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

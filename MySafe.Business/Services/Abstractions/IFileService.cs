@@ -12,7 +12,7 @@ namespace MySafe.Business.Services.Abstractions
 {
     public interface IFileService
     {
-        Task<bool> TryDownloadAndSaveFile(Attachment attachment);
+        Task<bool> TryDownloadAndSaveFile(int attachmentId, AttachmentTypeEnum attachmentType, string fileName, string fileExtension);
         Task<bool> TrySaveFileToDeviceMemoryAsync(string fileName, string fileExtension, byte[] bytes);
         Task<IResponse> DownloadFileAsync(int attachmentId, AttachmentTypeEnum attachmentType);
         bool TryGetFilePathOnDevice(out string filePath);

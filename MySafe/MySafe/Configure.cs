@@ -162,7 +162,7 @@ namespace MySafe
 
     public class VmLocator
     {
-        public static DeviceAuthViewModel AuthViewModel => Ioc.Resolve<DeviceAuthViewModel>();
+        public static DeviceAuthViewModel DeviceAuthViewModel => Ioc.Resolve<DeviceAuthViewModel>();
         public static MainViewModel MainViewModel => Ioc.Resolve<MainViewModel>();
         public static DocumentViewModel DocumentViewModel => Ioc.Resolve<DocumentViewModel>();
         public static SignInViewModel SignInViewModel => Ioc.Resolve<SignInViewModel>();

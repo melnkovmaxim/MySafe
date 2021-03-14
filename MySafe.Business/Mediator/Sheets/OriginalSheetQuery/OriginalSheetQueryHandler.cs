@@ -12,7 +12,7 @@ namespace MySafe.Business.Mediator.Sheets.OriginalSheetQuery
 {
     public class OriginalSheetQueryHandler: RequestHandlerBase<OriginalSheetQuery, Sheet>
     {
-        public OriginalSheetQueryHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public OriginalSheetQueryHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

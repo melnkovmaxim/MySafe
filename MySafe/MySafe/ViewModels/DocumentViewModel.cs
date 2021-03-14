@@ -25,7 +25,7 @@ using Image = MySafe.Core.Entities.Responses.Image;
 
 namespace MySafe.Presentation.ViewModels
 {
-    public class DocumentViewModel : AuthorizedViewModelBase
+    public class DocumentViewModel : AuthorizedRefreshViewModel<Core.Entities.Responses.Document>
     {
         public static int ID { get; set; }
         private readonly IMediator _mediator;
@@ -51,21 +51,6 @@ namespace MySafe.Presentation.ViewModels
             Attachments = new ObservableCollection<Attachment>();
         }
 
-        protected override async Task ActionAfterLoadPage()
-        {
-            var queryResponse = await _mediator.Send(new DocumentInfoQuery(_itemId.Value));
-
-            if (queryResponse.HasError)
-            {
-                Error = queryResponse.Error;
-                return;
-            }
-
-            Document = _mapper.Map<Document>(queryResponse);
-            Attachments.Clear();
-            Document.Attachments.ForEach(Attachments.Add);
-        }
-
         public AsyncCommand<Attachment> DownloadFileCommand =>
             _downloadFileCommand ??= new AsyncCommand<Attachment>(async (attachment) =>
         {
@@ -73,7 +58,8 @@ namespace MySafe.Presentation.ViewModels
 
             if (!isPermissionGranted) return;
 
-            var isSuccessful = _fileService.TryDownloadAndSaveFile(attachment);
+            var attachmentType = attachment.IsImage ? AttachmentTypeEnum.Image : AttachmentTypeEnum.Other;
+            var isSuccessful = await _fileService.TryDownloadAndSaveFile(attachment.Id, attachmentType, attachment.Name, attachment.FileExtension);
 
             await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось скачать файл, что-то пошло не так... ", "Ok");
         });
@@ -86,7 +72,7 @@ namespace MySafe.Presentation.ViewModels
                 await Launcher.OpenAsync
                 (new OpenFileRequest()
                 {
-                    File = new ReadOnlyFile(fullPath)
+                    File = new ReadOnlyFile(_fileService.GetFullPathFileOnDevice(attachment.Name, attachment.FileExtension))
                 }
                 );
             });
@@ -115,7 +101,7 @@ namespace MySafe.Presentation.ViewModels
 
             if (!response.HasError)
             {
-                await ActionAfterLoadPage();
+                await _refreshTask;
                 return;
             }
 
@@ -144,5 +130,14 @@ namespace MySafe.Presentation.ViewModels
 
             Attachments.Remove(attachment);
         });
+
+        protected override Task<Core.Entities.Responses.Document> _refreshTask => _mediator.Send(new DocumentInfoQuery(_itemId.Value));
+
+        protected override void RefillObservableCollection(Core.Entities.Responses.Document mediatorResponse)
+        {
+            Document = _mapper.Map<Document>(mediatorResponse);
+            Attachments.Clear();
+            Document.Attachments.ForEach(Attachments.Add);
+        }
     }
 }

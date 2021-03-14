@@ -16,7 +16,7 @@ using Xamarin.Forms.Internals;
 
 namespace MySafe.Presentation.ViewModels
 {
-    public class FolderViewModel: AuthorizedViewModelBase
+    public class FolderViewModel: AuthorizedRefreshViewModel<Folder>
     {
         public string FolderName { get; set; }
         private int folderId { get; set; }
@@ -49,28 +49,6 @@ namespace MySafe.Presentation.ViewModels
             Documents = new ObservableCollection<Document>();
         }
 
-
-        protected override async Task ActionAfterLoadPage()
-        {
-            var queryResponse = await _mediator.Send(new FolderInfoQuery(_itemId.Value));
-
-            if (queryResponse.HasError)
-            {
-                Error = queryResponse.Error;
-                return;
-            }
-
-            DocumentsList = queryResponse.Documents;
-            Documents.Clear();
-            queryResponse.Documents.ForEach(Documents.Add);
-
-            
-            var safeFolders = await _mediator.Send(new SafeInfoQuery());
-            var currentFolder = safeFolders?.Folders.FirstOrDefault(x => x.Id == queryResponse.Id);
-            FolderName = currentFolder?.Name.Split(":").FirstOrDefault();
-            folderId = currentFolder?.Id ?? int.MinValue;
-        }
-
         public AsyncCommand<Document> MoveToDocumentCommand => _moveToDocumentCommand 
             ??= new AsyncCommand<Document>(async (document) =>
         {
@@ -90,7 +68,21 @@ namespace MySafe.Presentation.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось создать документ, что-то пошло не так... ", "Ok");
             }
 
-            await ActionAfterLoadPage();
+            await _refreshTask;
         });
+
+        protected override Task<Folder> _refreshTask => _mediator.Send(new FolderInfoQuery(_itemId.Value));
+        protected override async void RefillObservableCollection(Folder mediatorResponse)
+        {
+            DocumentsList = mediatorResponse.Documents;
+            Documents.Clear();
+            mediatorResponse.Documents.ForEach(Documents.Add);
+
+            
+            var safeFolders = await _mediator.Send(new SafeInfoQuery());
+            var currentFolder = safeFolders?.Folders.FirstOrDefault(x => x.Id == mediatorResponse.Id);
+            FolderName = currentFolder?.Name.Split(":").FirstOrDefault();
+            folderId = currentFolder?.Id ?? int.MinValue;
+        }
     }
 }

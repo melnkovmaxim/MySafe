@@ -16,7 +16,7 @@ using Xamarin.Forms.Internals;
 
 namespace MySafe.Presentation.ViewModels
 {
-    public class MainViewModel : AuthorizedViewModelBase<Safe>
+    public class MainViewModel : AuthorizedRefreshViewModel<Safe>
     {
         public double Progress { get; set; }
         public string SafeSizeInfo { get; set; }
@@ -39,26 +39,24 @@ namespace MySafe.Presentation.ViewModels
             Folders = new ObservableCollection<Folder>();
         }
 
-        protected override Task<Safe> GetRefreshTask() => _mediator.Send(new SafeInfoQuery());
+        protected override Task<Safe> _refreshTask => _mediator.Send(new SafeInfoQuery());
 
         protected override void RefillObservableCollection(Safe mediatorResponse)
         {
-            _mapper.Map(Folders, mediatorResponse.Folders);
-        }
+            //_mapper.Map(Folders, mediatorResponse.Folders);
 
-        public void kk()
-        {
-            
-            //_maxCapacity = Convert.ToInt32(Math.Floor(queryResponse.Capacity));
-            //_usedCapacity = Convert.ToInt32(Math.Floor(queryResponse.UsedCapacity));
+            _maxCapacity = Convert.ToInt32(Math.Floor(mediatorResponse.Capacity));
+            _usedCapacity = Convert.ToInt32(Math.Floor(mediatorResponse.UsedCapacity));
 
-            //Progress = Math.Floor((double) _maxCapacity / _usedCapacity) / 100;
-            //SafeSizeInfo = $"{_usedCapacity}/{_maxCapacity} MB";
+            Progress = Math.Floor((double)_maxCapacity / _usedCapacity) / 100;
+            SafeSizeInfo = $"{_usedCapacity}/{_maxCapacity} MB";
 
-            //Folders.Clear();
-            ////queryResponse.Folders.ForEach(Folders.Add);
-            //queryResponse.Folders.ForEach(x => {
-            //});
+            Folders.Clear();
+            //queryResponse.Folders.ForEach(Folders.Add);
+            mediatorResponse.Folders.ForEach(x =>
+            {
+                Folders.Add(x);
+            });
         }
 
         public AsyncCommand<Folder> MoveToFolderCommand => 

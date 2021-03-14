@@ -12,7 +12,7 @@ namespace MySafe.Business.Mediator.Images.RestoreTrashImageCommand
 {
     public class RestoreTrashImageCommandHandler: RequestHandlerBase<RestoreTrashImageCommand, Image>
     {
-        public RestoreTrashImageCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public RestoreTrashImageCommandHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

@@ -12,7 +12,7 @@ namespace MySafe.Business.Mediator.Sheets.RestoreTrashSheetCommand
 {
     public class RestoreTrashSheetCommandHandler: RequestHandlerBase<RestoreTrashSheetCommand, Sheet>
     {
-        public RestoreTrashSheetCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public RestoreTrashSheetCommandHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

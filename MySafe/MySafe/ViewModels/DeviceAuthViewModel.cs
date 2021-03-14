@@ -26,6 +26,7 @@ namespace MySafe.Presentation.ViewModels
 
         private readonly Action _actionOnLogin;
         private readonly Action _actionOnRegister;
+        private readonly Action _actionOnLoadedPage;
 
         public DeviceAuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager, IDeviceAuthService deviceAuthService)
             :base(navigationService)
@@ -34,13 +35,14 @@ namespace MySafe.Presentation.ViewModels
             _deviceAuthService = deviceAuthService;
             _vibrationDuration = TimeSpan.FromSeconds(0.2);
 
+            _actionOnLogin = Login;
+            _actionOnRegister = async () => await _navigationService.NavigateAsync(nameof(DeviceAuthPage));
+
             RemoveLastNumberCommand = new DelegateCommand(() => PasswordManager.RemoveLast());
             FingerPrintScanCommand = new DelegateCommand(FingerPrintScan);
             RestorePasswordCommand = new DelegateCommand(RestorePassword);
             NumberInputCommand = new DelegateCommand<string>(NumberInput);
 
-            _actionOnLogin = Login;
-            _actionOnRegister = async () => await _navigationService.NavigateAsync(nameof(DeviceAuthPage));
         }
 
         private async void Login()
@@ -52,7 +54,10 @@ namespace MySafe.Presentation.ViewModels
                 : nameof(SignInPage));
         }
 
-        protected override async Task GetRefreshTask() => IsRegistered = await _deviceAuthService.IsRegistered();
+        protected override async void DoAfterNavigatedTo()
+        {
+            IsRegistered = await _deviceAuthService.IsRegistered();
+        }
 
         private async void FingerPrintScan()
         {

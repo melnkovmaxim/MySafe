@@ -12,7 +12,7 @@ namespace MySafe.Business.Mediator.Sheets.UploadSheetCommand
 {
     public class UploadFileCommandHandler: RequestHandlerBase<UploadSheetCommand, Sheet>
     {
-        public UploadFileCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public UploadFileCommandHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

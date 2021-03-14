@@ -13,7 +13,7 @@ namespace MySafe.Business.Mediator.Safe.SafeInfoQuery
 {
     public class SafeInfoQueryHandler : RequestHandlerBase<SafeInfoQuery, Core.Entities.Responses.Safe>
     {
-        public SafeInfoQueryHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public SafeInfoQueryHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

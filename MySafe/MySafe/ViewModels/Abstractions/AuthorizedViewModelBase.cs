@@ -1,4 +1,5 @@
-﻿using MySafe.Core;
+﻿using System;
+using MySafe.Core;
 using MySafe.Presentation.Views;
 using Prism.Navigation;
 using System.IdentityModel.Tokens.Jwt;
@@ -17,8 +18,6 @@ namespace MySafe.Presentation.ViewModels.Abstractions
         protected INavigationParameters _parameters;
         protected int? _itemId;
         protected string _itemName;
-
-        protected AsyncCommand RefreshCommand { get; }
 
         protected AuthorizedViewModelBase(INavigationService navigationService) 
             : base(navigationService)
@@ -42,20 +41,37 @@ namespace MySafe.Presentation.ViewModels.Abstractions
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
+            SaveParameters(parameters);
+            var isNavigated = await TryNavigateToSignInPage();
+            if (!isNavigated) DoAfterNavigatedTo();
+        }
+
+        protected virtual void DoAfterNavigatedTo()
+        {
+
+        }
+
+        protected void SaveParameters(INavigationParameters parameters)
+        {
             _parameters = parameters;
 
             _itemId = (int?) parameters[nameof(MySafeApp.Resources.ItemId)];
             _itemName = (string) parameters[nameof(MySafeApp.Resources.ItemName)];
 
+        }
+
+        protected async Task<bool> TryNavigateToSignInPage()
+        {
             var jwtToken = await Ioc.Resolve<ISecureStorageRepository>()
                 .GetJwtSecurityTokenAsync();
 
             if (!jwtToken.IsValidToken())
             {
                 await _navigationService.NavigateAsync(nameof(SignInPage));
+                return true;
             }
 
-            RefreshCommand.Execute(null);
+            return false;
         }
     }
 }

@@ -56,13 +56,13 @@ namespace MySafe.Presentation.Services
             return await _mediator.Send(new OriginalSheetQuery(attachmentId));
         }
 
-        public async Task<bool> TryDownloadAndSaveFile(Attachment attachment)
+        public async Task<bool> TryDownloadAndSaveFile(int attachmentId, AttachmentTypeEnum attachmentType, string fileName, string fileExtension)
         {
-            var downloadResult = await DownloadFileAsync(attachment.Id, AttachmentTypeEnum.Image);
+            var downloadResult = await DownloadFileAsync(attachmentId, attachmentType);
 
             if (downloadResult?.HasError != false) return false;
             
-            var saveResult = await TrySaveFileToDeviceMemoryAsync(attachment.Name, attachment.FileExtension, downloadResult.FileBytes);
+            var saveResult = await TrySaveFileToDeviceMemoryAsync(fileName, fileExtension, downloadResult.FileBytes);
 
             return saveResult;
         }

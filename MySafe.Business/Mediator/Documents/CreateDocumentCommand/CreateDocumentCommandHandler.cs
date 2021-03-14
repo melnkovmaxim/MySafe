@@ -12,7 +12,7 @@ namespace MySafe.Business.Mediator.Documents.CreateDocumentCommand
 {
     public class CreateDocumentCommandHandler: RequestHandlerBase<CreateDocumentCommand, Document>
     {
-        public CreateDocumentCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public CreateDocumentCommandHandler(IRestClient restClient) : base(restClient)
         {
         }
     }
