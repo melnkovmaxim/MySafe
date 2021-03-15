@@ -36,10 +36,10 @@
             </Label>
 
         </StackLayout>
-        <StackLayout Grid.Row="2" VerticalOptions="Center" WidthRequest="340">
+        <StackLayout Grid.Row="2" VerticalOptions="Center">
             <Frame  Margin="80,60,80,0" HasShadow="False" BackgroundColor="Transparent">
-            <Entry Margin="-20,-20,-20,-20" HorizontalTextAlignment="Start" FontSize="57" CharacterSpacing="6" Text="{Binding Code}" />
-            <!--<BoxView
+            <Entry Margin="-20,-20,-20,-20" HorizontalTextAlignment="Center" FontSize="50" CharacterSpacing="5" Text="{Binding Code}" />
+            <!--<BoxView  56
                     Margin="20,-28,20,0" 
                     HeightRequest="2"
                     HorizontalOptions="Fill"
@@ -47,11 +47,11 @@
             </Frame>
             <Grid  Margin="0,-16,0,0" RowSpacing="10" HorizontalOptions="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
                 <BoxView
                     Grid.Column="0" 
