@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Name="Note"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=NoteViewModel}"
+    Title="Назад"
     NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout>
@@ -24,7 +25,7 @@
             </Frame>
 
             <CollectionView
-                Margin="20,0,20,0"
+                Margin="0,25,0,0"
                 ItemsSource="{Binding Notes}"
                 VerticalOptions="FillAndExpand">
                 <CollectionView.ItemsLayout>
@@ -32,7 +33,7 @@
                         HorizontalItemSpacing="5"
                         Orientation="Vertical"
                         Span="1"
-                        VerticalItemSpacing="15" />
+                        VerticalItemSpacing="0" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -40,7 +41,7 @@
                             <Button
                                 Margin="-22,-20,-22,-20"
                                 BackgroundColor="#FBFFE9"
-                                BorderColor="Gray"
+                                BorderColor="#c2c5b5"
                                 BorderWidth="1"
                                 Command="{Binding BindingContext.MoveToNoteEditCommand, Source={x:Reference Note}}"
                                 CommandParameter="{Binding .}"

@@ -5,7 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:behaviors="http://prismlibrary.com"
     x:Name="Folder"
-    BindingContext="{Binding Source={StaticResource VmLocator}, Path=FolderViewModel}">
+    Title="Назад"
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=FolderViewModel}"
+    >
     <ContentPage.Resources>
         <Style TargetType="Button">
             <!-- <Setter Property="HeightRequest" Value="70" /> -->
@@ -27,70 +29,73 @@
                 IsRefreshing="{Binding LoadedCommand.IsExecuting}"
                 RefreshColor="Red">
                 <ScrollView VerticalOptions="FillAndExpand">-->
-            <StackLayout>
-                <Frame
-                    Margin="20,20,20,10"
-                    BackgroundColor="#E4E8FB"
-                    CornerRadius="24"
-                    HeightRequest="26"
-                    HorizontalOptions="Fill">
-                    <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                        <Grid>
+                    <StackLayout>
+                        <Frame
+                            Margin="20,20,20,10"
+                            BackgroundColor="#E4E8FB"
+                            CornerRadius="24"
+                            HeightRequest="26"
+                            HorizontalOptions="Fill">
+                            <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="26" />
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Column="0" Source="docs.png" />
+                            <Frame Grid.Column="1" Margin="0,-6,0,0" CornerRadius="0" BackgroundColor="Transparent">
+                                    <Label
+                                        
+                                        Margin="-20,-20,-20,-20"
+                                        FontSize="24"
+                                        HorizontalOptions="Start"
+                                        HorizontalTextAlignment="Start"
+                                        Text="{Binding FolderName}"
+                                        VerticalOptions="Start"
+                                        VerticalTextAlignment="Start" />
+                                </Frame>
+                        </Grid>
+                            </StackLayout>
+                        </Frame>
+                        <SearchBar
+                            Margin="10,10,10,10"
+                            HorizontalOptions="Fill"
+                            Opacity="0.8"
+                            Placeholder="Название документа"
+                            Text="{Binding Filter, Mode=TwoWay}" />
+                <BoxView
+                    Margin="20,-18,20,0"
+                    HeightRequest="2"
+                    HorizontalOptions="Fill"
+                    Opacity="0.87"
+                    Color="#3465C4" />
+                <Grid Margin="20,10,20,10">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="50*" />
+                                <ColumnDefinition Width="50*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="26" />
+                                <RowDefinition Height="60" />
                             </Grid.RowDefinitions>
-                            <Image Grid.Column="0" Source="docs.png" />
-                            <Frame
-                                Grid.Column="1"
-                                Margin="0,-6,0,0"
-                                BackgroundColor="Transparent"
-                                CornerRadius="0">
-                                <Label
+                            <Frame Grid.Column="0" Margin="0,0,-2,0">
+                                <Button
                                     Margin="-20,-20,-20,-20"
-                                    FontSize="24"
-                                    HorizontalOptions="Start"
-                                    HorizontalTextAlignment="Start"
-                                    Text="{Binding FolderName}"
-                                    VerticalOptions="Start"
-                                    VerticalTextAlignment="Start" />
+                                    BackgroundColor="#E4E8FB"
+                                    Command="{Binding AddDocumentCommand}"
+                                    ImageSource="other.png" />
+                            </Frame>
+                            <Frame Grid.Column="1" Margin="5,0,0,0">
+                                <Button
+                                    Margin="-20,-20,-20,-20"
+                                    BackgroundColor="#E4E8FB"
+                                    ImageSource="pen.png" />
                             </Frame>
                         </Grid>
                     </StackLayout>
-                </Frame>
-                <SearchBar
-                    Margin="10,10,10,10"
-                    HorizontalOptions="Fill"
-                    Opacity="0.8"
-                    Placeholder="Название документа"
-                    Text="{Binding Filter, Mode=TwoWay}" />
-                <Grid Margin="20,10,20,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*" />
-                        <ColumnDefinition Width="50*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="60" />
-                    </Grid.RowDefinitions>
-                    <Frame Grid.Column="0" Margin="0,0,-2,0">
-                        <Button
-                            Margin="-20,-20,-20,-20"
-                            BackgroundColor="#E4E8FB"
-                            Command="{Binding AddDocumentCommand}"
-                            ImageSource="other.png" />
-                    </Frame>
-                    <Frame Grid.Column="1" Margin="5,0,0,0">
-                        <Button
-                            Margin="-20,-20,-20,-20"
-                            BackgroundColor="#E4E8FB"
-                            ImageSource="pen.png" />
-                    </Frame>
-                </Grid>
-            </StackLayout>
-            <!--</ScrollView>
+                <!--</ScrollView>
             </RefreshView>-->
 
 

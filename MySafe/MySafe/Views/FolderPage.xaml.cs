@@ -14,9 +14,9 @@ namespace MySafe.Presentation.Views
     {
         public FolderPage()
         {
-            InitializeComponent();
             
-            NavigationPage.SetBackButtonTitle(this, "HELLO");
+            //NavigationPage.SetHasNavigationBar(this, false);
+            InitializeComponent();
         }
     }
 }
