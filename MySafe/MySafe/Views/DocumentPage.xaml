@@ -14,60 +14,67 @@
                 HorizontalOptions="FillAndExpand"
                 IsRefreshing="{Binding RefreshCommand.IsExecuting}"
                 RefreshColor="Red"
-                VerticalOptions="FillAndExpand">
+                VerticalOptions="Fill">
 
                 <ScrollView>
                     <StackLayout>
-                        <Button
-                            BackgroundColor="#F1BE74"
-                            Command="{Binding UploadFileCommand}"
-                            HeightRequest="50"
-                            HorizontalOptions="FillAndExpand"
-                            Text="Добавить файл" />
-                        <CarouselView CurrentItem="{Binding CurrentAttachment}" ItemsSource="{Binding Attachments}">
-                            <CarouselView.ItemTemplate>
-                                <DataTemplate>
-                                    <Image Source="{Binding ImageSource}">
-                                        <Image.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference Document}}" CommandParameter="{Binding .}" />
-                                        </Image.GestureRecognizers>
-                                    </Image>
-                                </DataTemplate>
-                            </CarouselView.ItemTemplate>
-                        </CarouselView>
-                        <StackLayout
-                            BackgroundColor="#F1BE74"
-                            HeightRequest="60"
-                            HorizontalOptions="FillAndExpand"
-                            Orientation="Horizontal">
-                            <Grid HorizontalOptions="FillAndExpand">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    Grid.Column="0"
-                                    BackgroundColor="Transparent"
-                                    Command="{Binding PrintCommand}"
-                                    CommandParameter="{Binding CurrentAttachment}"
-                                    ImageSource="clockwise.png" />
-                                <Button
-                                    Grid.Column="1"
-                                    BackgroundColor="Transparent"
-                                    Command="{Binding DownloadFileCommand}"
-                                    CommandParameter="{Binding CurrentAttachment}"
-                                    ImageSource="download.png"
-                                    Text="" />
-                                <Button
-                                    Grid.Column="2"
-                                    BackgroundColor="Transparent"
-                                    Command="{Binding MoveToTrashCommand}"
-                                    CommandParameter="{Binding CurrentAttachment}"
-                                    ImageSource="delete.png"
-                                    Text="" />
-                            </Grid>
-                        </StackLayout>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="60" />
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="0"
+                                BackgroundColor="#F1BE74"
+                                Command="{Binding UploadFileCommand}"
+                                HeightRequest="50"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Добавить файл" />
+                            <CarouselView CurrentItem="{Binding CurrentAttachment}" ItemsSource="{Binding Attachments}" Grid.Row="1" Margin="0,-102,0,-100">
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Image VerticalOptions="Start"  Source="{Binding ImageSource}">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference Document}}" CommandParameter="{Binding .}" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+                            <StackLayout Grid.Row="2"
+                                BackgroundColor="#F1BE74"
+                                HeightRequest="60"
+                                HorizontalOptions="FillAndExpand" VerticalOptions="End"
+                                Orientation="Horizontal">
+                                <Grid HorizontalOptions="FillAndExpand">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button
+                                        Grid.Column="0"
+                                        BackgroundColor="Transparent"
+                                        Command="{Binding PrintCommand}"
+                                        CommandParameter="{Binding CurrentAttachment}"
+                                        ImageSource="clockwise.png" />
+                                    <Button
+                                        Grid.Column="1"
+                                        BackgroundColor="Transparent"
+                                        Command="{Binding DownloadFileCommand}"
+                                        CommandParameter="{Binding CurrentAttachment}"
+                                        ImageSource="download.png"
+                                        Text="" />
+                                    <Button
+                                        Grid.Column="2"
+                                        BackgroundColor="Transparent"
+                                        Command="{Binding MoveToTrashCommand}"
+                                        CommandParameter="{Binding CurrentAttachment}"
+                                        ImageSource="delete.png"
+                                        Text="" />
+                                </Grid>
+                            </StackLayout>
+                        </Grid>
                     </StackLayout>
                     <!--<CollectionView ItemsSource="{Binding Attachments}" VerticalOptions="FillAndExpand">
             <CollectionView.ItemsLayout>
