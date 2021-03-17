@@ -92,7 +92,7 @@
             <Label
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center"
-                Text="{Binding Error}" />
+                Text="{Binding RemainingLifeTimeMessage}" />
         </StackLayout>
     </Grid>
 </ContentPage>
