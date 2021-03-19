@@ -61,7 +61,7 @@
 
                                     <Label
                                         Grid.Row="0"
-                                        Margin="20,0,0,0"
+                                        Margin="20,0,-40,0"
                                         FontFamily="Montserrat"
                                         FontSize="24"
                                         HorizontalOptions="StartAndExpand"
@@ -134,7 +134,7 @@
                         <StackLayout Grid.Row="1" Grid.Column="0" />
                         <StackLayout
                             Grid.Row="2"
-                            Margin="20,0,0,20"
+                            Margin="20,0,0,0"
                             HeightRequest="225"
                             HorizontalOptions="CenterAndExpand"
                             Orientation="Horizontal">
@@ -142,9 +142,9 @@
                             <!--    -->
                             <CollectionView
                                 x:Name="MyList"
-                                ItemSizingStrategy="MeasureFirstItem"
+                                ItemSizingStrategy="MeasureAllItems"
                                 ItemsSource="{Binding Folders}"
-                                VerticalOptions="Fill">
+                                VerticalOptions="FillAndExpand">
                                 <CollectionView.ItemsLayout>
                                     <GridItemsLayout
                                         HorizontalItemSpacing="10"
@@ -154,23 +154,23 @@
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        <Frame HeightRequest="115">
+                                        <Frame VerticalOptions="FillAndExpand" HeightRequest="115">
                                             <Button
                                                 Margin="-20,-20,-20,-20"
-                                                Padding="20,0,20,0"
+                                                Padding="5,0,5,0"
                                                 BackgroundColor="#E4E8FB"
                                                 Command="{Binding BindingContext.MoveToFolderCommand, Source={x:Reference Main}}"
                                                 CommandParameter="{Binding .}"
                                                 HorizontalOptions="FillAndExpand"
                                                 Text="{Binding Name}"
-                                                VerticalOptions="Fill" />
+                                                VerticalOptions="FillAndExpand" />
                                         </Frame>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
                             <!--    -->
 
-                            <Frame Margin="20,0,20,0">
+                            <Frame Margin="20,0,20,10">
                                 <Button
                                     Margin="-20,-20,-20,-20"
                                     Padding="0,0,0,0"

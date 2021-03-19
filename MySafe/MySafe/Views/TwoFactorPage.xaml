@@ -44,7 +44,12 @@
                     HeightRequest="2"
                     HorizontalOptions="Fill"
                     Color="White" /> -->
+                
             </Frame>
+            <BoxView
+                    HeightRequest="3" Margin="0,-16,0,0"
+                    HorizontalOptions="Fill"
+                    Color="#fafafa"></BoxView>
             <Grid  Margin="0,-16,0,0" RowSpacing="10" HorizontalOptions="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40" />

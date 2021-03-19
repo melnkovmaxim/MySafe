@@ -126,7 +126,7 @@
                                     <Frame>
                                         <Button
                                 Margin="-20,-20,-20,-20"
-                                Padding="0,-40,0,0"
+                                Padding="10,-40,10,0"
                                 BackgroundColor="#E4E8FB"
                                 Command="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}"
                                 CommandParameter="{Binding .}"
