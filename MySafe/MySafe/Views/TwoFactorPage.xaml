@@ -38,13 +38,47 @@
         </StackLayout>
         <StackLayout Grid.Row="2" VerticalOptions="Center">
             <Frame  Margin="80,60,80,0" HasShadow="False" BackgroundColor="Transparent">
-            <Entry Margin="-20,-20,-20,-20" HorizontalTextAlignment="Center" FontSize="35" CharacterSpacing="5" Text="{Binding Code}" />
-            <!--<BoxView
+            <Entry Margin="-20,-20,-20,-20" HorizontalTextAlignment="Center" FontSize="50" CharacterSpacing="5" Text="{Binding Code}" />
+            <!--<BoxView  56
                     Margin="20,-28,20,0" 
                     HeightRequest="2"
                     HorizontalOptions="Fill"
                     Color="White" /> -->
             </Frame>
+            <Grid  Margin="0,-16,0,0" RowSpacing="10" HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+                <BoxView
+                    Grid.Column="0" 
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
+                    Color="Black"></BoxView>
+                <BoxView
+                    Grid.Column="1"
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
+                    Color="Black"></BoxView>
+                <BoxView
+                    Grid.Column="2"
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
+                    Color="Black"></BoxView>
+                <BoxView
+                    Grid.Column="3"
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
+                    Color="Black"></BoxView>
+                <BoxView
+                    Grid.Column="4"
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
+                    Color="Black"></BoxView>
+            </Grid>
         </StackLayout>
         <StackLayout Grid.Row="3" VerticalOptions="Center">
             <Button
@@ -58,7 +92,7 @@
             <Label
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center"
-                Text="{Binding Error}" />
+                Text="{Binding RemainingLifeTimeMessage}" />
         </StackLayout>
     </Grid>
 </ContentPage>

@@ -35,12 +35,14 @@
                 FontFamily="Montserrat"
                 FontSize="36"
                 HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
                 Text="MySafe"
                 TextColor="Black" />
             <Label
                 Margin="0,-15,0,0"
                 FontFamily="Montserrat"
                 FontSize="20"
+                HorizontalTextAlignment="Center"
                 HorizontalOptions="Center"
                 Text="online"
                 TextColor="Black" />

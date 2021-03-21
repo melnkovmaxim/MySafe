@@ -35,7 +35,7 @@ namespace MySafe.Droid
             
             this.RequestedOrientation = ScreenOrientation.Portrait;
             
-
+            Plugin.Printing.PrintServiceAndroidHelper.ActivityInstance = this;
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             CrossFingerprint.SetCurrentActivityResolver(() => CrossCurrentActivity.Current.Activity);
             global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);

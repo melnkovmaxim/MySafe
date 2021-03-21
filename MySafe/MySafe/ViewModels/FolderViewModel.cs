@@ -16,7 +16,7 @@ using Xamarin.Forms.Internals;
 
 namespace MySafe.Presentation.ViewModels
 {
-    public class FolderViewModel: AuthorizedViewModelBase
+    public class FolderViewModel: AuthorizedRefreshViewModel<Folder>
     {
         public string FolderName { get; set; }
         private int folderId { get; set; }
@@ -41,34 +41,22 @@ namespace MySafe.Presentation.ViewModels
         private AsyncCommand<Document> _moveToDocumentCommand;
         private AsyncCommand _addDocumentCommand;
 
+        private readonly Dictionary<string, string> _parentsIconsDictionary = new Dictionary<string, string>
+        {
+            {"Документы", "download.png"},
+            {"Квартира, Машина, Дача", "download.png"},
+            {"Налоги, Аренда, Платежи", "download.png"},
+            {"Здоровье", "health.png"},
+            {"ЖКХ", "info.png"}
+        };
+
+        public string IconPath { get; set; }
+
         public FolderViewModel(INavigationService navigationService, IMediator mediator) 
             : base(navigationService)
         {
             _mediator = mediator;
-
             Documents = new ObservableCollection<Document>();
-        }
-
-
-        protected override async Task ActionAfterLoadPage()
-        {
-            var queryResponse = await _mediator.Send(new FolderInfoQuery(_itemId.Value));
-
-            if (queryResponse.HasError)
-            {
-                Error = queryResponse.Error;
-                return;
-            }
-
-            DocumentsList = queryResponse.Documents;
-            Documents.Clear();
-            queryResponse.Documents.ForEach(Documents.Add);
-
-            
-            var safeFolders = await _mediator.Send(new SafeInfoQuery());
-            var currentFolder = safeFolders?.Folders.FirstOrDefault(x => x.Id == queryResponse.Id);
-            FolderName = currentFolder?.Name.Split(":").FirstOrDefault();
-            folderId = currentFolder?.Id ?? int.MinValue;
         }
 
         public AsyncCommand<Document> MoveToDocumentCommand => _moveToDocumentCommand 
@@ -90,7 +78,25 @@ namespace MySafe.Presentation.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось создать документ, что-то пошло не так... ", "Ok");
             }
 
-            await ActionAfterLoadPage();
+            var mediatorResult = await _refreshTask;
+            RefillObservableCollection(mediatorResult);
         });
+
+        protected override Task<Folder> _refreshTask => _mediator.Send(new FolderInfoQuery(_itemId.Value));
+        protected override async void RefillObservableCollection(Folder mediatorResponse)
+        {
+            var isSuccess = _parentsIconsDictionary.TryGetValue(_itemName, out var iconPath);
+            IconPath = isSuccess ? iconPath : "icon.png";
+
+            DocumentsList = mediatorResponse.Documents;
+            Documents.Clear();
+            mediatorResponse.Documents.ForEach(Documents.Add);
+
+            
+            var safeFolders = await _mediator.Send(new SafeInfoQuery());
+            var currentFolder = safeFolders?.Folders.FirstOrDefault(x => x.Id == mediatorResponse.Id);
+            FolderName = currentFolder?.Name.Split(":").FirstOrDefault();
+            folderId = currentFolder?.Id ?? int.MinValue;
+        }
     }
 }

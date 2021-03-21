@@ -49,6 +49,9 @@
     <AndroidSigningStorePass>Ssd17xDldD</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>melnikovmaxim</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>Ssd17xDldD</AndroidSigningKeyPass>
+    <AndroidTlsProvider>btls</AndroidTlsProvider>
+    <AndroidHttpClientHandlerType>
+    </AndroidHttpClientHandlerType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,6 +75,9 @@
     <AndroidSigningStorePass>Ssd17xDldD</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>melnikovmaxim</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>Ssd17xDldD</AndroidSigningKeyPass>
+    <MandroidI18n />
+    <AndroidHttpClientHandlerType>
+    </AndroidHttpClientHandlerType>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -93,6 +99,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\GradientButtonRender.cs" />
     <Compile Include="Repositories\StoragePathesRepository.cs" />
+    <Compile Include="Services\CustomPrintDocumentAdapter.cs" />
     <Compile Include="Services\PrintService.cs" />
     <Compile Include="Services\StorageService.cs" />
     <Compile Include="SplashActivity.cs" />
@@ -227,6 +234,14 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\util.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\splash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\xml\appcenter_backup_rule.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

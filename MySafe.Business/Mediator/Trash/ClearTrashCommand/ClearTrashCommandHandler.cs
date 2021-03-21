@@ -12,7 +12,7 @@ namespace MySafe.Business.Mediator.Trash.ClearTrashCommand
 {
     public class ClearTrashCommandHandler: RequestHandlerBase<ClearTrashCommand, ResponseBase>
     {
-        public ClearTrashCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public ClearTrashCommandHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

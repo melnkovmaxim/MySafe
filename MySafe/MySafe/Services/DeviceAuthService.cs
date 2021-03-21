@@ -14,18 +14,24 @@ namespace MySafe.Business.Services
     public class DeviceAuthService : IDeviceAuthService, ITransientService
     {
         private const string FINGER_PRINT_SCAN_TITLE = "Вход в MySafe";
-        private readonly ISecureStorageRepository _secureStorage;
+        private readonly ISecureStorageRepository _secureStorageRepository;
 
-        public DeviceAuthService(ISecureStorageRepository secureStorage)
+        public DeviceAuthService(ISecureStorageRepository secureStorageRepository)
         {
-            _secureStorage = secureStorage;
+            _secureStorageRepository = secureStorageRepository;
+        }
+        public async Task<bool> IsRegistered()
+        {
+            var devicePassword = await _secureStorageRepository.GetDevicePasswordAsync();
+
+            return !string.IsNullOrEmpty(devicePassword);
         }
 
         public async Task<bool> TryLoginAsync(string password, Action actionOnLogin, TimeSpan vibrationDuration)
         {
             await Task.Run(() => Thread.Sleep(500));
 
-            var correctPassword = await _secureStorage.GetDevicePasswordAsync();
+            var correctPassword = await _secureStorageRepository.GetDevicePasswordAsync();
 
             if (password == correctPassword)
             {
@@ -62,7 +68,7 @@ namespace MySafe.Business.Services
         {
             if (password.Length == MySafeApp.Resources.DefaultApplicationPasswordLength)
             {
-                await _secureStorage.SetDevicePasswordAsync(password);
+                await _secureStorageRepository.SetDevicePasswordAsync(password);
 
                 actionOnRegister?.Invoke();
             }
@@ -73,7 +79,7 @@ namespace MySafe.Business.Services
         [ConfigureAwait(false)]
         public async Task Logout()
         {
-            await _secureStorage.RemoveDevicePasswordAsync();
+            await _secureStorageRepository.RemoveDevicePasswordAsync();
         }
     }
 }

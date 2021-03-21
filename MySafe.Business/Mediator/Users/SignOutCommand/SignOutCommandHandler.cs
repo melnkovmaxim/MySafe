@@ -14,7 +14,7 @@ namespace MySafe.Business.Mediator.Users.SignOutCommand
 {
     public class SignOutCommandHandler : RequestHandlerBase<SignOutCommand, User>
     {
-        public SignOutCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public SignOutCommandHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

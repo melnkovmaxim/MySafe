@@ -12,7 +12,7 @@ namespace MySafe.Business.Mediator.Documents.DestroyTrashDocumentCommand
 {
     public class DestroyInTrashCommandHandler: RequestHandlerBase<DestroyTrashDocumentCommand, Document>
     {
-        public DestroyInTrashCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public DestroyInTrashCommandHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

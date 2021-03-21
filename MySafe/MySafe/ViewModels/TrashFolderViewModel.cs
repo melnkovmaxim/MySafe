@@ -14,12 +14,14 @@ using MySafe.Business.Mediator.Sheets.DestroyTrashSheetCommand;
 using MySafe.Business.Mediator.Sheets.RestoreTrashSheetCommand;
 using MySafe.Business.Mediator.Trash.ClearTrashCommand;
 using MySafe.Business.Mediator.Trash.TrashContentQuery;
+using MySafe.Core.Entities.Responses;
+using MySafe.Core.Models.Responses.Abstractions;
 using Xamarin.Forms;
 using IMapper = AutoMapper.IMapper;
 
 namespace MySafe.Presentation.ViewModels
 {
-    public class TrashFolderViewModel: AuthorizedViewModelBase
+    public class TrashFolderViewModel: AuthorizedRefreshViewModel<ResponseList<TrashResponse>>
     {
         public string FolderName => "Корзина";
         public ObservableCollection<Trash> TrashItems { get; set; }
@@ -36,21 +38,6 @@ namespace MySafe.Presentation.ViewModels
             _mapper = mapper;
 
             TrashItems = new ObservableCollection<Trash>();
-        }
-
-
-        protected override async Task ActionAfterLoadPage()
-        {
-            var queryResponse = await _mediator.Send(new TrashContentQuery());
-
-            if (queryResponse == null)
-            {
-                return;
-            }
-
-            var trashes = _mapper.Map<List<Trash>>(queryResponse);
-            TrashItems.Clear();
-            trashes.ForEach(TrashItems.Add);
         }
 
         public AsyncCommand ClearTrashCommand => _clearTrashCommand ??= new AsyncCommand(async () =>
@@ -129,6 +116,14 @@ namespace MySafe.Presentation.ViewModels
             {
                 return await _mediator.Send(new RestoreTrashSheetCommand(trashItem.Id)).ConfigureAwait(false);
             }
+        }
+
+        protected override Task<ResponseList<TrashResponse>> _refreshTask => _mediator.Send(new TrashContentQuery());
+        protected override void RefillObservableCollection(ResponseList<TrashResponse> mediatorResponse)
+        {
+            var trashes = _mapper.Map<List<Trash>>(mediatorResponse);
+            TrashItems.Clear();
+            trashes.ForEach(TrashItems.Add);
         }
     }
 }

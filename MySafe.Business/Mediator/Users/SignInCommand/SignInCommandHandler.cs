@@ -14,7 +14,7 @@ namespace MySafe.Business.Mediator.Users.SignInCommand
 {
     public class SignInCommandHandler : RequestHandlerBase<SignInCommand, MySafe.Core.Entities.Responses.User>
     {
-        public SignInCommandHandler(IRestClient restClient, IMapper mapper): base(restClient, mapper)
+        public SignInCommandHandler(IRestClient restClient): base(restClient)
         {
         }
     }

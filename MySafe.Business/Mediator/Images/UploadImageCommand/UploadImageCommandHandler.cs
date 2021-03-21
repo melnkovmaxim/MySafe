@@ -17,7 +17,7 @@ namespace MySafe.Business.Mediator.Images.UploadImageCommand
 {
     public class UploadImageCommandHandler: RequestHandlerBase<UploadImageCommand, Image>
     {
-        public UploadImageCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public UploadImageCommandHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

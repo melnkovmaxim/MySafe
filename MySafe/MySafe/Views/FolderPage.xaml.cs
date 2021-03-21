@@ -14,6 +14,7 @@ namespace MySafe.Presentation.Views
     {
         public FolderPage()
         {
+            
             //NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
         }

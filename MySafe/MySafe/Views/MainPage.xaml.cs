@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using ImTools;
 using Prism.Navigation;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -14,12 +17,14 @@ namespace MySafe.Presentation.Views
         {
             NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
-        }
-
-        private void Blue_Button_Clicked(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            button.BackgroundColor = Color.Blue;
+            
+            Task.Run(async () =>
+            {
+                while (true)
+                {
+                    await _spinnetImage.RelRotateTo(360, 3000); 
+                }
+            });
         }
     }
 }

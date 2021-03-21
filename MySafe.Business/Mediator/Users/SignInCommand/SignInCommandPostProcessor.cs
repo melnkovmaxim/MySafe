@@ -18,9 +18,11 @@ namespace MySafe.Business.Mediator.Users.SignInCommand
             _secureStorageRepository = secureStorageRepository;
         }
 
-        public Task Process(SignInCommand request, Core.Entities.Responses.User response, CancellationToken cancellationToken)
+        public async Task Process(SignInCommand request, Core.Entities.Responses.User response, CancellationToken cancellationToken)
         {
-            return _secureStorageRepository.SetJwtTokenForTwoFactorAsync(response.JwtToken);
+            await _secureStorageRepository.SetJwtTokenForTwoFactorAsync(response.JwtToken);
+            await _secureStorageRepository.SetUserLogin(request.User.Login);
+            MySafe.Core.MySafeApp.Resources.UserLogin = request.User.Login;
         }
     }
 }

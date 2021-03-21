@@ -17,7 +17,7 @@ namespace MySafe.Business.Mediator.Trash.TrashContentQuery
     /// </summary>
     public class TrashContentQueryHandler: RequestHandlerBase<TrashContentQuery, ResponseList<TrashResponse>>
     {
-        public TrashContentQueryHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public TrashContentQueryHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

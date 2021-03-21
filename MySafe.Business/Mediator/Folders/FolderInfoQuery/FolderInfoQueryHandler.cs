@@ -13,7 +13,7 @@ namespace MySafe.Business.Mediator.Folders.FolderInfoQuery
 {
     public class FolderInfoQueryHandler : RequestHandlerBase<FolderInfoQuery, Folder>
     {
-        public FolderInfoQueryHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public FolderInfoQueryHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

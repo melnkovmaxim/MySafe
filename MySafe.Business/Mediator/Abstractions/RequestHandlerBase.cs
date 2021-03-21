@@ -23,30 +23,32 @@ namespace MySafe.Business.Mediator.Abstractions
         where TResponse: IResponse
     {
         private readonly IRestClient _restClient;
-        private readonly IMapper _mapper;
 
-        protected RequestHandlerBase(IRestClient restClient, IMapper mapper)
+        protected RequestHandlerBase(IRestClient restClient)
         {
             _restClient = restClient;
-            _mapper = mapper;
         }
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
         {
-            if (request is BearerRequestBase<TResponse> bearerRequest && !string.IsNullOrEmpty(bearerRequest.JwtToken))
-            {
-                _restClient.Authenticator = new JwtAuthenticator(bearerRequest.JwtToken);
-            }
 
             var json = JsonConvert.SerializeObject(request);
             var httpRequest = new RestRequest(request.RequestResource, request.RequestMethod)
                 .AddJsonBody(json);
 
+            if (request is BearerRequestBase<TResponse> bearerRequest && !string.IsNullOrEmpty(bearerRequest.JwtToken))
+            {
+                _restClient.Authenticator = new JwtAuthenticator(bearerRequest.JwtToken);
+            }
+
             if (request is RequestUploadBase<TResponse> uploadRequest)
             {
                 httpRequest.AddFile("file", uploadRequest.FileBytes, uploadRequest.FileName, uploadRequest.ContentType);
                 httpRequest.AlwaysMultipartFormData = true;
+                //httpRequest.AddHeader("Content-Length", uploadRequest.FileBytes.Length.ToString());
             }
+
+            cancellationToken.ThrowIfCancellationRequested();
 
             return _restClient.SendAndGetResponseAsync<TResponse>(httpRequest, cancellationToken);
         }

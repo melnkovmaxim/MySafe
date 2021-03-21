@@ -3,58 +3,73 @@
     x:Class="MySafe.Presentation.Views.DocumentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Name="Document"
-    BindingContext="{Binding Source={StaticResource VmLocator}, Path=DocumentViewModel}"
-    >
+    x:Name="Document" 
+    Title="Документы"
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=DocumentViewModel}">
     <ContentPage.Content>
-        <StackLayout>
-            <Button
-                BackgroundColor="#F1BE74"
-                Command="{Binding UploadFileCommand}"
-                HeightRequest="50"
+        <Grid>
+            <RefreshView
+                x:Name="_refreshView"
+                Command="{Binding RefreshCommand}"
                 HorizontalOptions="FillAndExpand"
-                Text="Добавить файл" />
-            <CarouselView CurrentItem="{Binding CurrentAttachment}" ItemsSource="{Binding Attachments}">
-                <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding ImageSource}">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding BindingContext.DownloadFileCommand, Source={x:Reference Document}}" CommandParameter="{Binding .}" />
-                            </Image.GestureRecognizers>
-                        </Image>
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
-            <StackLayout
-                BackgroundColor="#F1BE74"
-                HeightRequest="60"
-                HorizontalOptions="FillAndExpand"
-                
-                Orientation="Horizontal">
-                <Button
-                    Margin="50,0,0,0"
-                    Command="{Binding OpenFileCommand}"
-                    CommandParameter="{Binding CurrentAttachment}"
-                    BackgroundColor="Transparent"
-                    ImageSource="clockwise.png"
-                    Text="Открыть оригинал" />
-                <Button
-                    
-                    Command="{Binding DownloadFileCommand}"
-                    CommandParameter="{Binding CurrentAttachment}"
-                    BackgroundColor="Transparent"
-                    ImageSource="download.png"
-                    Text="" />
-                <Button
-                    Margin="0,0,50,0"
-                    Command="{Binding MoveToTrashCommand}"
-                    CommandParameter="{Binding CurrentAttachment}"
-                    BackgroundColor="Transparent"
-                    ImageSource="delete.png"
-                    Text="" />
-            </StackLayout>
-        </StackLayout>
-        <!--<CollectionView ItemsSource="{Binding Attachments}" VerticalOptions="FillAndExpand">
+                IsRefreshing="{Binding RefreshCommand.IsExecuting}"
+                RefreshColor="Red"
+                VerticalOptions="FillAndExpand">
+
+                <ScrollView>
+                    <StackLayout>
+                        <Button
+                            BackgroundColor="#F1BE74"
+                            Command="{Binding UploadFileCommand}"
+                            HeightRequest="50"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Добавить файл" />
+                        <CarouselView CurrentItem="{Binding CurrentAttachment}" ItemsSource="{Binding Attachments}">
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding ImageSource}">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference Document}}" CommandParameter="{Binding .}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
+                        <StackLayout
+                            BackgroundColor="#F1BE74"
+                            HeightRequest="60"
+                            HorizontalOptions="FillAndExpand"
+                            Orientation="Horizontal">
+                            <Grid HorizontalOptions="FillAndExpand">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button
+                                    Grid.Column="0"
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding PrintCommand}"
+                                    CommandParameter="{Binding CurrentAttachment}"
+                                    ImageSource="clockwise.png" />
+                                <Button
+                                    Grid.Column="1"
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding DownloadFileCommand}"
+                                    CommandParameter="{Binding CurrentAttachment}"
+                                    ImageSource="download.png"
+                                    Text="" />
+                                <Button
+                                    Grid.Column="2"
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding MoveToTrashCommand}"
+                                    CommandParameter="{Binding CurrentAttachment}"
+                                    ImageSource="delete.png"
+                                    Text="" />
+                            </Grid>
+                        </StackLayout>
+                    </StackLayout>
+                    <!--<CollectionView ItemsSource="{Binding Attachments}" VerticalOptions="FillAndExpand">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" />
             </CollectionView.ItemsLayout>
@@ -68,5 +83,99 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>-->
+                </ScrollView>
+            </RefreshView>
+
+            <Frame Opacity="0.5">
+
+                <Frame.Style>
+                    <Style TargetType="Frame">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding RefreshCommand.IsExecuting}"
+                                TargetType="Frame"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding DownloadFileCommand.IsExecuting}"
+                                TargetType="Frame"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding UploadFileCommand.IsExecuting}"
+                                TargetType="Frame"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding PrintCommand.IsExecuting}"
+                                TargetType="Frame"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding OpenFileCommand.IsExecuting}"
+                                TargetType="Frame"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding MoveToTrashCommand.IsExecuting}"
+                                TargetType="Frame"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+
+
+
+                            <DataTrigger
+                                Binding="{Binding RefreshCommand.IsExecuting}"
+                                TargetType="Frame"
+                                Value="False">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding DownloadFileCommand.IsExecuting}"
+                                TargetType="Frame"
+                                Value="False">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding UploadFileCommand.IsExecuting}"
+                                TargetType="Frame"
+                                Value="False">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding PrintCommand.IsExecuting}"
+                                TargetType="Frame"
+                                Value="False">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding OpenFileCommand.IsExecuting}"
+                                TargetType="Frame"
+                                Value="False">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding MoveToTrashCommand.IsExecuting}"
+                                TargetType="Frame"
+                                Value="False">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Frame.Style>
+                <Image
+                    x:Name="_spinnetImage"
+                    HorizontalOptions="Center"
+                    Source="splash.png"
+                    VerticalOptions="Center" />
+            </Frame>
+        </Grid>
+
     </ContentPage.Content>
 </ContentPage>

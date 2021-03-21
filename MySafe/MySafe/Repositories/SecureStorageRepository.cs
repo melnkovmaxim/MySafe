@@ -12,6 +12,7 @@ namespace MySafe.Presentation.Repositories
         private const string TWO_FACTOR_JWT_TOKEN_KEY = "TwoFactorToken";
         private const string MAIN_JWT_TOKEN_KEY = "MainToken";
         private const string DEVICE_PASSWORD_KEY = "DevicePassword";
+        private const string USER_LOGIN = "UserLogin";
 
         public Task<string> GetDevicePasswordAsync()
         {
@@ -48,6 +49,12 @@ namespace MySafe.Presentation.Repositories
 
             return string.IsNullOrEmpty(token) ? null : new JwtSecurityToken(token); 
         }
+        public async Task<JwtSecurityToken> GetJwtSecurityTokenTwoFactorAsync()
+        {
+            var token = await SecureStorage.GetAsync(TWO_FACTOR_JWT_TOKEN_KEY);
+
+            return string.IsNullOrEmpty(token) ? null : new JwtSecurityToken(token); 
+        }
 
         public Task SetJwtTokenAsync(string jwtToken)
         {
@@ -57,6 +64,20 @@ namespace MySafe.Presentation.Repositories
         public Task RemoveJwtToken()
         {
             return SecureStorage.SetAsync(MAIN_JWT_TOKEN_KEY, string.Empty);
+        }
+
+        public Task RemoveTwoFactorJwtToken()
+        {
+            return SecureStorage.SetAsync(TWO_FACTOR_JWT_TOKEN_KEY, string.Empty);
+        }
+
+        public Task SetUserLogin(string login)
+        {
+            return SecureStorage.SetAsync(USER_LOGIN, login);
+        }
+        public Task<string> GetUserLogin()
+        {
+            return SecureStorage.GetAsync(USER_LOGIN);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand
     [ConfigureAwait(false)]
     public class TwoFactorAuthenticationCommandHandler : RequestHandlerBase<TwoFactorAuthenticationCommand, User>
     {
-        public TwoFactorAuthenticationCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public TwoFactorAuthenticationCommandHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

@@ -12,7 +12,7 @@ namespace MySafe.Business.Mediator.Images.OriginalImageQuery
 {
     public class OriginalImageQueryHandler: RequestHandlerBase<OriginalImageQuery, Image>
     {
-        public OriginalImageQueryHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public OriginalImageQueryHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

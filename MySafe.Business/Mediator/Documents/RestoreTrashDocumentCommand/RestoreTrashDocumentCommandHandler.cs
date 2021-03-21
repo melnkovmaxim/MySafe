@@ -12,7 +12,7 @@ namespace MySafe.Business.Mediator.Documents.RestoreTrashDocumentCommand
 {
     public class RestoreTrashDocumentCommandHandler: RequestHandlerBase<RestoreTrashDocumentCommand, Document>
     {
-        public RestoreTrashDocumentCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public RestoreTrashDocumentCommandHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

@@ -12,7 +12,7 @@ namespace MySafe.Business.Mediator.Documents.DocumentInfoQuery
 {
     public class DocumentInfoQueryHandler : RequestHandlerBase<DocumentInfoQuery, Document>
     {
-        public DocumentInfoQueryHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public DocumentInfoQueryHandler(IRestClient restClient) : base(restClient)
         {
         }
     }
