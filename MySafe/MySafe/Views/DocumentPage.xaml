@@ -31,14 +31,13 @@
                                 HeightRequest="50"
                                 HorizontalOptions="FillAndExpand"
                                 Text="Добавить файл" />
-                            <Grid>
+                            <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="40" />
                                 </Grid.ColumnDefinitions>
                                 <CarouselView
                                     x:Name="Carousel"
-                                    Grid.Row="1"
                                     Grid.ColumnSpan="2"
                                     Margin="0,-102,0,-100"
                                     CurrentItem="{Binding CurrentAttachment}"
