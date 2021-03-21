@@ -49,6 +49,12 @@ namespace MySafe.Presentation.Repositories
 
             return string.IsNullOrEmpty(token) ? null : new JwtSecurityToken(token); 
         }
+        public async Task<JwtSecurityToken> GetJwtSecurityTokenTwoFactorAsync()
+        {
+            var token = await SecureStorage.GetAsync(TWO_FACTOR_JWT_TOKEN_KEY);
+
+            return string.IsNullOrEmpty(token) ? null : new JwtSecurityToken(token); 
+        }
 
         public Task SetJwtTokenAsync(string jwtToken)
         {
@@ -58,6 +64,11 @@ namespace MySafe.Presentation.Repositories
         public Task RemoveJwtToken()
         {
             return SecureStorage.SetAsync(MAIN_JWT_TOKEN_KEY, string.Empty);
+        }
+
+        public Task RemoveTwoFactorJwtToken()
+        {
+            return SecureStorage.SetAsync(TWO_FACTOR_JWT_TOKEN_KEY, string.Empty);
         }
 
         public Task SetUserLogin(string login)

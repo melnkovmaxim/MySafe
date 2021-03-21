@@ -16,27 +16,29 @@ namespace MySafe.Presentation.ViewModels
 {
     public class TwoFactorViewModel : ViewModelBase
     {
+        private const int TIMER_TICKS = 181;
+        private const int TIMER_INTERVAL_IN_SECONDS = 1;
         private readonly IMediator _mediator;
-        private AsyncCommand _signInCommand;
-
-        private int _remainingLifeTime;
+        public AsyncCommand SignInCommand { get; }
         public string RemainingLifeTimeMessage { get; set; }
-
         public string Code { get; set; }
+        private int _remainingLifeTime;
 
         public TwoFactorViewModel(INavigationService navigationService, IMediator mediator)
             :base(navigationService)
         {
             _mediator = mediator;
-            _remainingLifeTime = 60;
-            Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
+            _remainingLifeTime = TIMER_TICKS;
+            SignInCommand = new AsyncCommand(SignInCommandTask);
+
+            Device.StartTimer(TimeSpan.FromSeconds(TIMER_INTERVAL_IN_SECONDS), TimerCallback);
         }
         
         private bool TimerCallback()
         {
             if (_remainingLifeTime > 0)
             {
-                RemainingLifeTimeMessage = $"Осталось {--_remainingLifeTime}";
+                RemainingLifeTimeMessage = $"SMS код отправлен: {--_remainingLifeTime}";
                 return true;
             }
 
@@ -44,8 +46,7 @@ namespace MySafe.Presentation.ViewModels
             return false;
         }
 
-
-        public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
+        private async Task SignInCommandTask()
         {
             var response = await _mediator.Send(new TwoFactorAuthenticationCommand(Code));
 
@@ -56,6 +57,6 @@ namespace MySafe.Presentation.ViewModels
             }
 
             await _navigationService.NavigateAsync(nameof(MainPage));
-        });
+        }
     }
 }

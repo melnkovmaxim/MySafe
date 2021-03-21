@@ -19,8 +19,10 @@ namespace MySafe.Data.Abstractions
         Task SetJwtTokenForTwoFactorAsync(string token);
         
         Task<JwtSecurityToken> GetJwtSecurityTokenAsync();
+        Task<JwtSecurityToken> GetJwtSecurityTokenTwoFactorAsync();
         Task<string> GetJwtTokenAsync();
         Task SetJwtTokenAsync(string jwtToken);
         Task RemoveJwtToken();
+        Task RemoveTwoFactorJwtToken();
     }
 }
