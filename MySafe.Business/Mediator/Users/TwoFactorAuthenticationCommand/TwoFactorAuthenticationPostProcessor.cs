@@ -21,8 +21,11 @@ namespace MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand
 
         public async Task Process(TwoFactorAuthenticationCommand request, User response, CancellationToken cancellationToken)
         {
-            await _secureStorageRepository.RemoveTwoFactorJwtToken();
-            await _secureStorageRepository.SetJwtTokenAsync(response.JwtToken);
+            if (!response.HasError)
+            {
+                await _secureStorageRepository.RemoveTwoFactorJwtToken();
+                await _secureStorageRepository.SetJwtTokenAsync(response.JwtToken);
+            }
         }
     }
 }

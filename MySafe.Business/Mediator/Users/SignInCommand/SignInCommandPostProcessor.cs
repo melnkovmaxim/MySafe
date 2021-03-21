@@ -20,9 +20,12 @@ namespace MySafe.Business.Mediator.Users.SignInCommand
 
         public async Task Process(SignInCommand request, Core.Entities.Responses.User response, CancellationToken cancellationToken)
         {
-            await _secureStorageRepository.SetJwtTokenForTwoFactorAsync(response.JwtToken);
-            await _secureStorageRepository.SetUserLogin(request.User.Login);
-            MySafe.Core.MySafeApp.Resources.UserLogin = request.User.Login;
+            if (!response.HasError)
+            {
+                await _secureStorageRepository.SetJwtTokenForTwoFactorAsync(response.JwtToken);
+                await _secureStorageRepository.SetUserLogin(request.User.Login);
+                MySafe.Core.MySafeApp.Resources.UserLogin = request.User.Login;
+            }
         }
     }
 }

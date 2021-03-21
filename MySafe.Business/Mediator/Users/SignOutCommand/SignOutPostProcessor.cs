@@ -21,7 +21,7 @@ namespace MySafe.Business.Mediator.Users.SignOutCommand
 
         public Task Process(SignOutCommand request, User response, CancellationToken cancellationToken)
         {
-            return _secureStorageRepository.RemoveJwtToken();
+            return response.HasError ? Task.CompletedTask : _secureStorageRepository.RemoveJwtToken();
         }
     }
 }

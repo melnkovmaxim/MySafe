@@ -16,6 +16,7 @@ using RestSharp;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
+using MySafe.Business.Mediator.Images.ChangeImageCommand;
 using MySafe.Business.Mediator.Images.ImageMoveToTrashCommand;
 using MySafe.Business.Services.Abstractions;
 using MySafe.Core.Enums;
@@ -46,6 +47,9 @@ namespace MySafe.Presentation.ViewModels
         public Document Document { get; set; }
         public ObservableCollection<Attachment> Attachments { get; set; }
         public Attachment CurrentAttachment { get; set; }
+        
+        public AsyncCommand RotatePlusCommand { get; }
+        public AsyncCommand RotateMinusCommand { get; }
 
         public DocumentViewModel(
             INavigationService navigationService, 
@@ -62,6 +66,9 @@ namespace MySafe.Presentation.ViewModels
             _fileService = fileService;
             _printService = printService;
             Attachments = new ObservableCollection<Attachment>();
+
+            RotatePlusCommand = new AsyncCommand(() => _mediator.Send(new ChangeImageCommand(CurrentAttachment.Id, "+")));
+            RotateMinusCommand = new AsyncCommand(() => _mediator.Send(new ChangeImageCommand(CurrentAttachment.Id, "-")));
         }
 
         public AsyncCommand<Attachment> DownloadFileCommand =>
