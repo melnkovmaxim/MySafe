@@ -18,6 +18,7 @@
             <Entry Text="{Binding User.PhoneNumber}" />
             <Label Text="Соглашаюсь с правилами" />
             <CheckBox IsChecked="{Binding User.IsAgree}" />
+            <Button Command="{Binding RegisterCommand}" Text="Регистрация" />
             <Label Text="{Binding Error}" />
         </StackLayout>
     </ContentPage.Content>

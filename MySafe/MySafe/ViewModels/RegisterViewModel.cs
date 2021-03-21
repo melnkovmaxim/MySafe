@@ -22,6 +22,8 @@ namespace MySafe.Presentation.ViewModels
         public RegisterViewModel(INavigationService navigationService, IMediator mediator) : base(navigationService)
         {
             _mediator = mediator;
+
+            User = new User() { Email = "dragonglist@mail.ru", IsAgree = true, Login = "vladxakep", Password = "123456", PasswordConfirmation = "123456", PhoneNumber = "88005553535"};
             RegisterCommand = new AsyncCommand(RegisterCommandTask);
         }
 

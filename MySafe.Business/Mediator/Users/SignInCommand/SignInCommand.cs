@@ -26,22 +26,22 @@ namespace MySafe.Business.Mediator.Users.SignInCommand
     public class User
     {
         [JsonProperty("login")]
-        public string Login { get; }
+        public string Login { get; set; }
 
         [JsonProperty("password")]
-        public string Password { get; }
+        public string Password  { get; set; }
 
         [JsonProperty("password_confirmation")]
-        public string PasswordConfirmation { get; }
+        public string PasswordConfirmation { get; set; }
 
         [JsonProperty("email")]
-        public string Email { get; }
+        public string Email { get; set; }
 
         [JsonProperty("phone_number")]
-        public string PhoneNumber { get; }
+        public string PhoneNumber { get; set; }
 
         [JsonProperty("user_agreement")]
-        public bool IsAgree { get; }
+        public bool IsAgree { get; set; }
 
         public User(string login, string password)
         {
@@ -57,6 +57,11 @@ namespace MySafe.Business.Mediator.Users.SignInCommand
             Email = email;
             PhoneNumber = phoneNumber;
             IsAgree = isAgree;
+        }
+
+        public User()
+        {
+            
         }
     }
 }
