@@ -192,7 +192,7 @@ namespace MySafe.Presentation.ViewModels
             }
         });
 
-        protected override Task<Core.Entities.Responses.Document> _refreshTask => _mediator.Send(new DocumentInfoQuery(_itemId.Value));
+        protected override Task<Core.Entities.Responses.Document> _refreshTask => _mediator.Send(new DocumentInfoQuery(_itemId.Value), GetCancellationToken());
 
         protected override void RefillObservableCollection(Core.Entities.Responses.Document mediatorResponse)
         {

@@ -45,7 +45,7 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="26" />
                                     </Grid.RowDefinitions>
-                                    <Image Grid.Column="0" Source="docs.png" />
+                                    <Image Grid.Column="0" Source="{Binding IconPath}" />
                             <Frame Grid.Column="1" Margin="0,-6,0,0" CornerRadius="0" BackgroundColor="Transparent">
                                     <Label
                                         

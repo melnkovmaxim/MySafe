@@ -36,6 +36,7 @@ namespace MySafe.Business.Extensions
                         {"Url", response.ResponseUri.AbsoluteUri },
                         {"Request method", request.Method.ToString() },
                         {"Status code", response.StatusDescription},
+                        {"Content", response.Content },
                         {"Content-Type", response.ContentType },
                         {"Body", request.Body.Value.ToString() },
                         {"ErrorMessage", response.ErrorMessage },
@@ -55,7 +56,7 @@ namespace MySafe.Business.Extensions
 
                     Crashes.TrackError(new Exception("RestSharp http request error"), properties);
 
-                    throw response?.ErrorException;
+                    //throw response?.ErrorException;
                 }
 
                 if (response.ContentType.Contains(ContentType.Json) == true)

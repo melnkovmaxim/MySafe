@@ -3,6 +3,7 @@ using MySafe.Core;
 using MySafe.Presentation.Views;
 using Prism.Navigation;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using MySafe.Business.Extensions;
@@ -16,12 +17,14 @@ namespace MySafe.Presentation.ViewModels.Abstractions
     public abstract class AuthorizedViewModelBase: ViewModelBase, INavigatedAware
     {
         protected INavigationParameters _parameters;
+        private CancellationTokenSource _cancellationTokenSource;
         protected int? _itemId;
         protected string _itemName;
 
         protected AuthorizedViewModelBase(INavigationService navigationService) 
             : base(navigationService)
         {
+            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         protected NavigationParameters GetItemNaviigationParams(int itemId, string itemName)
@@ -33,10 +36,19 @@ namespace MySafe.Presentation.ViewModels.Abstractions
             };
         }
 
+        protected CancellationToken GetCancellationToken()
+        {
+            if (_cancellationTokenSource.IsCancellationRequested)
+            {
+                _cancellationTokenSource = new CancellationTokenSource();
+            }
+
+            return _cancellationTokenSource.Token;
+        }
+
         public void OnNavigatedFrom(INavigationParameters parameters)
         {
-            parameters.Add(nameof(MySafeApp.Resources.ItemId), _itemId);
-            parameters.Add(nameof(MySafeApp.Resources.ItemName), _itemName);
+            _cancellationTokenSource.Cancel();
         }
 
         public async void OnNavigatedTo(INavigationParameters parameters)

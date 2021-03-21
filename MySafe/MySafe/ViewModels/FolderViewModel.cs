@@ -41,11 +41,21 @@ namespace MySafe.Presentation.ViewModels
         private AsyncCommand<Document> _moveToDocumentCommand;
         private AsyncCommand _addDocumentCommand;
 
+        private readonly Dictionary<string, string> _parentsIconsDictionary = new Dictionary<string, string>
+        {
+            {"Документы", "download.png"},
+            {"Квартира, Машина, Дача", "download.png"},
+            {"Налоги, Аренда, Платежи", "download.png"},
+            {"Здоровье", "health.png"},
+            {"ЖКХ", "info.png"}
+        };
+
+        public string IconPath { get; set; }
+
         public FolderViewModel(INavigationService navigationService, IMediator mediator) 
             : base(navigationService)
         {
             _mediator = mediator;
-
             Documents = new ObservableCollection<Document>();
         }
 
@@ -75,6 +85,9 @@ namespace MySafe.Presentation.ViewModels
         protected override Task<Folder> _refreshTask => _mediator.Send(new FolderInfoQuery(_itemId.Value));
         protected override async void RefillObservableCollection(Folder mediatorResponse)
         {
+            var isSuccess = _parentsIconsDictionary.TryGetValue(_itemName, out var iconPath);
+            IconPath = isSuccess ? iconPath : "icon.png";
+
             DocumentsList = mediatorResponse.Documents;
             Documents.Clear();
             mediatorResponse.Documents.ForEach(Documents.Add);

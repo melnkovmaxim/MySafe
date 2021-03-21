@@ -1,5 +1,6 @@
 ﻿using Prism.Navigation;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading;
 using System.Threading.Tasks;
 using MySafe.Business.Extensions;
 using MySafe.Core.Entities.Responses.Abstractions;
@@ -10,6 +11,7 @@ namespace MySafe.Presentation.ViewModels.Abstractions
     public abstract class ViewModelBase : BindableBase
     {
         protected readonly INavigationService _navigationService;
+
         public string Error { get; set; }
 
         protected ViewModelBase(INavigationService navigationService)

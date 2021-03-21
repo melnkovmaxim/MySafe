@@ -30,13 +30,16 @@ namespace MySafe.Presentation.ViewModels
 
         private async Task SignInCommandTask()
         {
-            var twoFactorToken = await Ioc.Resolve<ISecureStorageRepository>().GetJwtSecurityTokenTwoFactorAsync();
-            if (twoFactorToken.IsValidToken()) await _navigationService.NavigateAsync(nameof(TwoFactorPage));
-
             var response = await _mediator.Send(new SignInCommand(Login, Password));
 
             if (response.HasError)
             {
+                if (response.Error == "code_already_sent")
+                {
+                    var twoFactorToken = await Ioc.Resolve<ISecureStorageRepository>().GetJwtSecurityTokenTwoFactorAsync();
+                    if (twoFactorToken.IsValidToken()) await _navigationService.NavigateAsync(nameof(TwoFactorPage));
+
+                }
                 Error = response.Error;
                 return;
             }

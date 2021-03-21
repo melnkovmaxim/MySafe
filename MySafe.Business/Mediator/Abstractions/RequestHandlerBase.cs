@@ -48,6 +48,8 @@ namespace MySafe.Business.Mediator.Abstractions
                 //httpRequest.AddHeader("Content-Length", uploadRequest.FileBytes.Length.ToString());
             }
 
+            cancellationToken.ThrowIfCancellationRequested();
+
             return _restClient.SendAndGetResponseAsync<TResponse>(httpRequest, cancellationToken);
         }
     }
