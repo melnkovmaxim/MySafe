@@ -31,7 +31,7 @@ namespace MySafe.Presentation.ViewModels
                 return;
             }
 
-            await _navigationService.NavigateAsync(nameof(MainPage));
+            await _navigationService.NavigateAsync(nameof(DeviceAuthPage));
         });
     }
 }
