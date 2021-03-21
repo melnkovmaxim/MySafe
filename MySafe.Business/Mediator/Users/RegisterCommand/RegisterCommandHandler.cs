@@ -11,7 +11,7 @@ namespace MySafe.Business.Mediator.Users.RegisterCommand
 {
     public class RegisterCommandHandler : RequestHandlerBase<RegisterCommand, MySafe.Core.Entities.Responses.User>
     {
-        public RegisterCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
+        public RegisterCommandHandler(IRestClient restClient) : base(restClient)
         {
         }
     }

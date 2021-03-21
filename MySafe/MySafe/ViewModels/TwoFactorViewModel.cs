@@ -57,6 +57,6 @@ namespace MySafe.Presentation.ViewModels
             }
 
             await _navigationService.NavigateAsync(nameof(DeviceAuthPage));
-        });
+        }
     }
 }
