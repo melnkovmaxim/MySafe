@@ -25,9 +25,6 @@ namespace MySafe.Presentation.ViewModels
 
         public AsyncCommand SignInCommand => _signInCommand ??= new AsyncCommand(async () =>
         {
-            //Ioc.Resolve<IPrintService>().ShowPrinterWebView();
-
-            //return;
             var response = await _mediator.Send(new SignInCommand(Login, Password));
 
             if (response.HasError)

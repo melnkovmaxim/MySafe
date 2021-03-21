@@ -27,13 +27,36 @@ namespace MySafe.Business.Mediator.Users.SignInCommand
     {
         [JsonProperty("login")]
         public string Login { get; }
+
         [JsonProperty("password")]
         public string Password { get; }
+
+        [JsonProperty("password_confirmation")]
+        public string PasswordConfirmation { get; }
+
+        [JsonProperty("email")]
+        public string Email { get; }
+
+        [JsonProperty("phone_number")]
+        public string PhoneNumber { get; }
+
+        [JsonProperty("user_agreement")]
+        public bool IsAgree { get; }
 
         public User(string login, string password)
         {
             Login = login;
             Password = password;
+        }
+
+        public User(string login, string password, string passwordConfirmation, string email, string phoneNumber, bool isAgree)
+        {
+            Login = login;
+            Password = password;
+            PasswordConfirmation = passwordConfirmation;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            IsAgree = isAgree;
         }
     }
 }

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MySafe.Presentation.Views.RegisterPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=RegisterViewModel}">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Логин" />
+            <Entry Text="{Binding User.Login}" />
+            <Label Text="Пароль" />
+            <Entry Text="{Binding User.Password}" />
+            <Label Text="Повторите пароль" />
+            <Entry Text="{Binding User.PasswordConfirmation}" />
+            <Label Text="Почта" />
+            <Entry Text="{Binding User.Email}" />
+            <Label Text="Номер телефона" />
+            <Entry Text="{Binding User.PhoneNumber}" />
+            <Label Text="Соглашаюсь с правилами" />
+            <CheckBox IsChecked="{Binding User.IsAgree}" />
+            <Label Text="{Binding Error}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
