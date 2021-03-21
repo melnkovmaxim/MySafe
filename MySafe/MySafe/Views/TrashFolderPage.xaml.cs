@@ -15,6 +15,14 @@ namespace MySafe.Presentation.Views
         public TrashFolderPage()
         {
             InitializeComponent();
+
+            Task.Run(async () =>
+            {
+                while (true)
+                {
+                    await _spinnetImage.RelRotateTo(360, 3000);
+                }
+            });
         }
     }
 }
