@@ -15,6 +15,7 @@ namespace MySafe.Presentation.ViewModels
     {
         private readonly IMediator _mediator;
         public AsyncCommand SignInCommand { get; }
+        public AsyncCommand MoveToRegisterPage { get; }
 
         public string Login { get; set; }
         public string Password { get; set; }
@@ -26,6 +27,7 @@ namespace MySafe.Presentation.ViewModels
             _mediator = mediator;
 
             SignInCommand = new AsyncCommand(SignInCommandTask);
+            MoveToRegisterPage = new AsyncCommand(async () => await _navigationService.NavigateAsync(nameof(RegisterPage)));
         }
 
         private async Task SignInCommandTask()

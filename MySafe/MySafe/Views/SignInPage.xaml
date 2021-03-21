@@ -42,8 +42,8 @@
                 Margin="0,-15,0,0"
                 FontFamily="Montserrat"
                 FontSize="20"
-                HorizontalTextAlignment="Center"
                 HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
                 Text="online"
                 TextColor="Black" />
         </StackLayout>
@@ -107,6 +107,17 @@
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center"
                 Text="{Binding Error}" />
+
+
+            <Label
+                FontFamily="Roboto-Medium"
+                HorizontalOptions="Center"
+                Text="Регистрация"
+                TextColor="#3969C6">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MoveToRegisterPage}" />
+                </Label.GestureRecognizers>
+            </Label>
         </StackLayout>
     </Grid>
 </ContentPage>
