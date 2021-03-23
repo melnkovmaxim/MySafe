@@ -71,7 +71,7 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidKeyStore>true</AndroidKeyStore>
-    <AndroidSigningKeyStore>C:\Users\Maks\AppData\Local\Xamarin\Mono for Android\Keystore\melnikovmaxim\melnikovmaxim.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>F:\Downloads\melnikovmaxim.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>Ssd17xDldD</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>melnikovmaxim</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>Ssd17xDldD</AndroidSigningKeyPass>
@@ -243,7 +243,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AndroidResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\print.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

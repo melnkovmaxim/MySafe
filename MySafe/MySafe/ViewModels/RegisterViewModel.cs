@@ -23,7 +23,7 @@ namespace MySafe.Presentation.ViewModels
         {
             _mediator = mediator;
 
-            User = new User() { Email = "dragonglist@mail.ru", IsAgree = true, Login = "vladxakep", Password = "123456", PasswordConfirmation = "123456", PhoneNumber = "88005553535"};
+            User = new User() { Email = "Ваша почта", IsAgree = true, Login = "Ваш логин", Password = "123456", PasswordConfirmation = "123456", PhoneNumber = "81234567890"};
             RegisterCommand = new AsyncCommand(RegisterCommandTask);
         }
 

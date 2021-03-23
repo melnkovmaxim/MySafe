@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <None Remove="Quirlycues.ttf" />
+    <None Remove="Resources\print.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -87,6 +88,10 @@
 
   <ItemGroup>
     <Folder Include="PresentationModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\print.png" />
   </ItemGroup>
 
 </Project>
