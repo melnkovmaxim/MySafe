@@ -54,7 +54,7 @@
                                 </CarouselView>
                                 <StackLayout Grid.Column="1">
                                     <Button
-                                        x:Name="ButtonRotateRight"
+                                        
                                         Command="{Binding RotatePlusCommand}"
                                         HeightRequest="40"
                                         IsVisible="{Binding CurrentAttachment.IsImage}"
@@ -89,7 +89,7 @@
                                         ImageSource="print.png" />
                                     <Button
                                         Grid.Column="1"
-                                        BackgroundColor="Transparent"
+                                        BackgroundColor="Transparent" x:Name="ButtonRotateRight"
                                         Command="{Binding RotatePlusCommand}"
                                         CommandParameter="{Binding CurrentAttachment}"
                                         ImageSource="clockwise.png" IsVisible="{Binding CurrentAttachment.IsImage}"

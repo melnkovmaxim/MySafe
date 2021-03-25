@@ -21,7 +21,8 @@
         <StackLayout>
             <Frame
                 Margin="20,15,20,-10"
-                BackgroundColor="#E4E8FB"
+                BackgroundColor="#FBFFE9"
+                BorderColor="#c2c5b5"
                 CornerRadius="24"
                 HeightRequest="24"
                 HorizontalOptions="Fill">
@@ -33,9 +34,34 @@
                         Text="Блокнот" />
                 </StackLayout>
             </Frame>
-
-            <CollectionView
-                Margin="0,25,0,0"
+                        <Grid Margin="20,20,20,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*" />
+                                <ColumnDefinition Width="50*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60" />
+                            </Grid.RowDefinitions>
+                            <Frame Grid.Column="0" CornerRadius="24" BorderColor="#c2c5b5" Margin="0,0,-2,0">
+                                <Button
+                                    Margin="-20,-20,-20,-20"
+                                    BackgroundColor="#FBFFE9"
+                                BorderColor="#c2c5b5" BorderWidth="1"
+                                    CornerRadius="24"
+                                    Command=""
+                                    ImageSource="other.png" />
+                            </Frame>
+                            <Frame Grid.Column="1" CornerRadius="24" BorderColor="#c2c5b5" Margin="5,0,0,0">
+                                <Button
+                                    Margin="-20,-20,-20,-20"
+                                    CornerRadius="24"
+                                    BackgroundColor="#FBFFE9"
+                                BorderColor="#c2c5b5" BorderWidth="1"
+                                    ImageSource="pen.png" />
+                            </Frame>
+                        </Grid>
+                        <CollectionView
+                Margin="0,0,0,0"
                 ItemsSource="{Binding Notes}"
                 VerticalOptions="FillAndExpand">
                 <CollectionView.ItemsLayout>
@@ -47,9 +73,9 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="#FBFFE9">
+                        <Frame BackgroundColor="#FBFFE9"> <!-- -22,-20,-22, -20 -->
                             <Button
-                                Margin="-22,-20,-22,-20" Padding="0,-5,0,-5"
+                                Margin="0,-20,0,-20" Padding="0,-5,0,-5"
                                 BackgroundColor="#FBFFE9"
                                 BorderColor="#c2c5b5"
                                 BorderWidth="1"
