@@ -43,11 +43,11 @@ namespace MySafe.Presentation.ViewModels
 
         private readonly Dictionary<string, string> _parentsIconsDictionary = new Dictionary<string, string>
         {
-            {"Документы", "download.png"},
-            {"Квартира, Машина, Дача", "download.png"},
-            {"Налоги, Аренда, Платежи", "download.png"},
+            {"Документы", "docs.png"},
+            {"Квартира, Машина, Дача", "auto.png"},
+            {"Налоги, Аренда, Платежи", "tax.png"},
             {"Здоровье", "health.png"},
-            {"ЖКХ", "info.png"}
+            {"ЖКХ", "util.png"}
         };
 
         public string IconPath { get; set; }
@@ -86,7 +86,7 @@ namespace MySafe.Presentation.ViewModels
         protected override async void RefillObservableCollection(Folder mediatorResponse)
         {
             var isSuccess = _parentsIconsDictionary.TryGetValue(_itemName, out var iconPath);
-            IconPath = isSuccess ? iconPath : "icon.png";
+            IconPath = isSuccess ? iconPath : "other.png";
 
             DocumentsList = mediatorResponse.Documents;
             Documents.Clear();

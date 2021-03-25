@@ -34,7 +34,7 @@
                         Text="Блокнот" />
                 </StackLayout>
             </Frame>
-                        <Grid Margin="20,20,20,10">
+                        <!--<Grid Margin="20,20,20,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50*" />
                                 <ColumnDefinition Width="50*" />
@@ -59,26 +59,35 @@
                                 BorderColor="#c2c5b5" BorderWidth="1"
                                     ImageSource="pen.png" />
                             </Frame>
-                        </Grid>
+                        </Grid> -->
+                        <Frame BackgroundColor="#FBFFE9" Margin="0,25,0,0">
+                            <!-- -22,-20,-22, -20 -->
+                            <Button
+                                Margin="0,-20,0,-20" Padding="30,-5,0,-5"
+                                BackgroundColor="#FBFFE9"
+                                BorderColor="#c2c5b5"
+                                BorderWidth="1"   HorizontalOptions="FillAndExpand"
+                                Text="Добавить новую заметку" />
+                        </Frame>
                         <CollectionView
-                Margin="0,0,0,0"
+                Margin="0,-8,0,0"
                 ItemsSource="{Binding Notes}"
                 VerticalOptions="FillAndExpand">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout
                         HorizontalItemSpacing="5"
-                        Orientation="Vertical"
+                        Orientation="Vertical" 
                         Span="1"
                         VerticalItemSpacing="0" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="#FBFFE9"> <!-- -22,-20,-22, -20 -->
+                        <Frame BackgroundColor="#FBFFE9" > <!-- -22,-20,-22, -20 -->
                             <Button
                                 Margin="0,-20,0,-20" Padding="0,-5,0,-5"
                                 BackgroundColor="#FBFFE9"
                                 BorderColor="#c2c5b5"
-                                BorderWidth="1"
+                                BorderWidth="1"  
                                 Command="{Binding BindingContext.MoveToNoteEditCommand, Source={x:Reference Note}}"
                                 CommandParameter="{Binding .}"
                                 Text="{Binding ClippedContent}" />
