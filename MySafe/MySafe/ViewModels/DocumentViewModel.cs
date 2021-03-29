@@ -15,9 +15,11 @@ using Prism.Navigation;
 using RestSharp;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using MySafe.Business.Mediator.Images.ChangeImageCommand;
 using MySafe.Business.Mediator.Images.ImageMoveToTrashCommand;
+using MySafe.Business.Mediator.Sheets.SheetPdfFormatQuery;
 using MySafe.Business.Services.Abstractions;
 using MySafe.Core.Enums;
 using MySafe.Data.Abstractions;
@@ -179,24 +181,28 @@ namespace MySafe.Presentation.ViewModels
             {
                 var bytes = await File.ReadAllBytesAsync(path);
                 
-                await Plugin.Printing.CrossPrinting.Current.PrintImageFromByteArrayAsync(
-                    bytes, 
+                await Plugin.Printing.CrossPrinting.Current.PrintImageFromByteArrayAsync(bytes, 
                     new Plugin.Printing.PrintJobConfiguration($"Printing {attachment.Name + attachment.FileExtension}"));
                 
                 return;
             }
-            
+
+            Stream stream;
+
             if (attachment.FileExtension == ".pdf")
             {
-                await using var stream = File.OpenRead(path);
-                await Plugin.Printing.CrossPrinting.Current.PrintPdfFromStreamAsync(stream,
-                    new Plugin.Printing.PrintJobConfiguration($"Printing {attachment.Name + attachment.FileExtension}"));
-
+                stream = File.OpenRead(path);
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("", "К печати допускаются только изображения и файлы формата pdf", "Ok");
+                var result = await _mediator.Send(new SheetPdfFormatQuery(attachment.Id));
+                stream = new MemoryStream(result.FileBytes);
             }
+
+            _ = await Plugin.Printing.CrossPrinting.Current.PrintPdfFromStreamAsync(stream,
+                new Plugin.Printing.PrintJobConfiguration($"Printing {attachment.Name + attachment.FileExtension}"));
+
+            await stream.DisposeAsync();
         });
 
         protected override Task<Core.Entities.Responses.Document> _refreshTask => _mediator.Send(new DocumentInfoQuery(_itemId.Value), GetCancellationToken());
