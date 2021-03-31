@@ -24,7 +24,7 @@ namespace MySafe.Presentation.Views
             _rotatedImages = new List<Image>();
 
             RefreshView.Refreshing += (s, e) => Refreshing();
-            ButtonRotateLeft.Clicked += (s, e) => Rotate(RotateEnum.Left);
+            //ButtonRotateLeft.Clicked += (s, e) => Rotate(RotateEnum.Left);
             ButtonRotateRight.Clicked += (s, e) => Rotate(RotateEnum.Right);
 
             Task.Run(async () =>

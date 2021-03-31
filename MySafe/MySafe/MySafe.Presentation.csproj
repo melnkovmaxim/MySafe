@@ -12,6 +12,9 @@
 
   <ItemGroup>
     <None Remove="Quirlycues.ttf" />
+    <None Remove="Resources\add.png" />
+    <None Remove="Resources\docs1.png" />
+    <None Remove="Resources\doc_b.png" />
     <None Remove="Resources\print.png" />
   </ItemGroup>
 
@@ -91,6 +94,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\add.png" />
+    <Resource Include="Resources\docs1.png" />
+    <Resource Include="Resources\doc_b.png" />
     <Resource Include="Resources\print.png" />
   </ItemGroup>
 

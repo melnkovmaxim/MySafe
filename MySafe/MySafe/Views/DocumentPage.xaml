@@ -52,7 +52,7 @@
                                         </DataTemplate>
                                     </CarouselView.ItemTemplate>
                                 </CarouselView>
-                                <StackLayout Grid.Column="1">
+                                <!--<StackLayout Grid.Column="1">
                                     <Button
                                         
                                         Command="{Binding RotatePlusCommand}"
@@ -65,7 +65,7 @@
                                         HeightRequest="40"
                                         IsVisible="{Binding CurrentAttachment.IsImage}"
                                         Text="&lt;-" />
-                                </StackLayout>
+                                </StackLayout>-->
                             </Grid>
                             <StackLayout
                                 Grid.Row="2"
