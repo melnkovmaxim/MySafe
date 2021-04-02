@@ -16,29 +16,39 @@ namespace MySafe.Presentation.ViewModels
 {
     public class TwoFactorViewModel : ViewModelBase
     {
-        private const int TIMER_TICKS = 181;
+        private const int TIMER_TICKS = 60; //181
         private const int TIMER_INTERVAL_IN_SECONDS = 1;
         private readonly IMediator _mediator;
         public AsyncCommand SignInCommand { get; }
         public string RemainingLifeTimeMessage { get; set; }
         public string Code { get; set; }
         private int _remainingLifeTime;
+        private int _remainingMinutes = 2;//
 
         public TwoFactorViewModel(INavigationService navigationService, IMediator mediator)
             :base(navigationService)
         {
             _mediator = mediator;
             _remainingLifeTime = TIMER_TICKS;
-            SignInCommand = new AsyncCommand(SignInCommandTask);
+            //_remainingMinutes = TIMER_TICKS / 60;
+            
+           SignInCommand = new AsyncCommand(SignInCommandTask);
 
             Device.StartTimer(TimeSpan.FromSeconds(TIMER_INTERVAL_IN_SECONDS), TimerCallback);
         }
         
         private bool TimerCallback()
         {
-            if (_remainingLifeTime > 0)
+            
+            if ((_remainingLifeTime == 0) && (_remainingMinutes > 0))
             {
-                RemainingLifeTimeMessage = $"SMS код отправлен: {--_remainingLifeTime}";
+                _remainingMinutes--;
+                _remainingLifeTime += 60;
+            }
+            _remainingMinutes++;
+            if ((_remainingLifeTime > 0) && (_remainingMinutes >= 0))
+            {
+                RemainingLifeTimeMessage = $"SMS код отправлен: {--_remainingMinutes} : {--_remainingLifeTime}";
                 return true;
             }
 
