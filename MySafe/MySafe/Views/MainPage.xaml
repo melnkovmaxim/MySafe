@@ -141,8 +141,6 @@
                             HeightRequest="225"
                             HorizontalOptions="CenterAndExpand"
                             Orientation="Horizontal">
-                            <!--  WidthRequest="380"  -->
-                            <!--    -->
                             <controls:UniformGrid
                                 BindableLayout.ItemsSource="{Binding Folders}"
                                 ColumnSpacing="0"
@@ -164,35 +162,6 @@
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </controls:UniformGrid>
-                            <!--<CollectionView
-                                x:Name="MyList"
-                                ItemSizingStrategy="MeasureAllItems"
-                                ItemsSource="{Binding Folders}"
-                                VerticalOptions="FillAndExpand">
-                                <CollectionView.ItemsLayout>
-                                    <GridItemsLayout
-                                        HorizontalItemSpacing="10"
-                                        Orientation="Vertical"
-                                        Span="2"
-                                        VerticalItemSpacing="20" />
-                                </CollectionView.ItemsLayout>
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Frame VerticalOptions="FillAndExpand" HeightRequest="115">
-                                            <Button
-                                                Margin="-20,-20,-20,-20"
-                                                Padding="5,0,5,0"
-                                                BackgroundColor="#E4E8FB"
-                                                Command="{Binding BindingContext.MoveToFolderCommand, Source={x:Reference Main}}"
-                                                CommandParameter="{Binding .}"
-                                                HorizontalOptions="FillAndExpand"
-                                                Text="{Binding Name}"
-                                                VerticalOptions="FillAndExpand" />
-                                        </Frame>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>-->
-                            <!--    -->
 
                             <Frame Margin="20,0,20,10">
                                 <Button
