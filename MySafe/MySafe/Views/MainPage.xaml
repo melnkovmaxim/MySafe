@@ -8,7 +8,6 @@
     xmlns:controls="clr-namespace:MySafe.Presentation.Controls;assembly=MySafe.Presentation"
     xmlns:presentation="clr-namespace:MySafe.Presentation;assembly=MySafe.Presentation"
     xmlns:views="http://xamarin.com/schemas/2020/toolkit"
-    xmlns:xamPane="clr-namespace:XamPane;assembly=XamPane"
     x:Name="Main"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=MainViewModel}"
     NavigationPage.HasNavigationBar="False">
