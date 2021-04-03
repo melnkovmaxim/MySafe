@@ -1,22 +1,20 @@
-﻿using MediatR;
-using MySafe.Core.Entities.Responses;
-using System.IdentityModel.Tokens.Jwt;
-using MySafe.Business.Mediator.Abstractions;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
-namespace MySafe.Business.Mediator.Images.RestoreTrashImageCommand
+namespace MySafe.Services.Mediator.Images.RestoreTrashImageCommand
 {
     /// <summary>
-    /// Восстановить изображение из корзины
+    ///     Восстановить изображение из корзины
     /// </summary>
-    public class RestoreTrashImageCommand: BearerRequestBase<Image>
+    public class RestoreTrashImageCommand : BearerRequestBase<Image>
     {
-        public int ImageId { get; set; }
-
         public RestoreTrashImageCommand(int imageId)
         {
             ImageId = imageId;
         }
+
+        public int ImageId { get; set; }
 
         public override Method RequestMethod => Method.PUT;
         public override string RequestResource => $"/api/v1/images/{ImageId}/restore";

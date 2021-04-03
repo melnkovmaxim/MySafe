@@ -1,19 +1,10 @@
 ﻿using Fody;
-using MediatR;
-using Newtonsoft.Json;
-using RestSharp;
-using RestSharp.Authenticators;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MySafe.Business.Extensions;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Requests;
 using MySafe.Core.Entities.Responses;
-using MySafe.Data.Abstractions;
-using User = MySafe.Core.Entities.Responses.User;
+using MySafe.Core.Models.Responses;
+using MySafe.Services.Mediator.Abstractions;
+using RestSharp;
 
-namespace MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand
+namespace MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand
 {
     [ConfigureAwait(false)]
     public class TwoFactorAuthenticationCommandHandler : RequestHandlerBase<TwoFactorAuthenticationCommand, User>

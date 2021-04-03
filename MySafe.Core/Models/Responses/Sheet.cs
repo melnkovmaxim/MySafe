@@ -2,7 +2,7 @@
 
 namespace MySafe.Core.Entities.Responses
 {
-    public class Sheet: ResponseBase
+    public class Sheet : ResponseBase
     {
     }
 }

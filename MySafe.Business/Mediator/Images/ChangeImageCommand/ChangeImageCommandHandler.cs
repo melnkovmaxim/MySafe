@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
-namespace MySafe.Business.Mediator.Images.ChangeImageCommand
+namespace MySafe.Services.Mediator.Images.ChangeImageCommand
 {
-    public class ChangeImageCommandHandler: RequestHandlerBase<ChangeImageCommand, Image>
+    public class ChangeImageCommandHandler : RequestHandlerBase<ChangeImageCommand, Image>
     {
         public ChangeImageCommandHandler(IRestClient restClient) : base(restClient)
         {

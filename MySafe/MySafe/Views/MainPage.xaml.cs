@@ -1,11 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using ImTools;
-using Prism.Navigation;
+﻿using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace MySafe.Presentation.Views
@@ -17,13 +11,10 @@ namespace MySafe.Presentation.Views
         {
             NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
-            
+
             Task.Run(async () =>
             {
-                while (true)
-                {
-                    await _spinnetImage.RelRotateTo(360, 3000); 
-                }
+                while (true) await _spinnetImage.RelRotateTo(360, 3000);
             });
         }
     }

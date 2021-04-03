@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySafe.Core;
+﻿using MySafe.Core;
 using RestSharp;
 
-namespace MySafe.Business.Services
+namespace MySafe.Services.Services
 {
-    public class RestClientWrapper: RestClient
+    public class RestClientWrapper : RestClient
     {
         public RestClientWrapper()
-            :base(MySafeApp.Resources.ServerHost)
-        { 
+            : base(MySafeApp.Resources.ServerHost)
+        {
             Timeout = 120 * 1000; // 10 sec
         }
     }

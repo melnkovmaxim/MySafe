@@ -1,19 +1,17 @@
-﻿using MediatR;
-using MySafe.Core.Entities.Responses;
-using System.IdentityModel.Tokens.Jwt;
-using MySafe.Business.Mediator.Abstractions;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
-namespace MySafe.Business.Mediator.Images.ImageMoveToTrashCommand
+namespace MySafe.Services.Mediator.Images.ImageMoveToTrashCommand
 {
-    public class ImageMoveToTrashCommand: BearerRequestBase<Image>
+    public class ImageMoveToTrashCommand : BearerRequestBase<Image>
     {
-        public int ImageId { get; set; } // attachment 
-
         public ImageMoveToTrashCommand(int imageId)
         {
             ImageId = imageId;
         }
+
+        public int ImageId { get; set; } // attachment 
 
         public override Method RequestMethod => Method.PUT;
         public override string RequestResource => $"/api/v1/images/{ImageId}/trash";

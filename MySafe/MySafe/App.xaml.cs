@@ -1,26 +1,27 @@
 using System;
 using System.Net;
 using System.Net.Mail;
-using MediatR;
-using MySafe.Business.Extensions;
-using MySafe.Business.Mediator.Trash.TrashContentQuery;
-using MySafe.Data.Abstractions;
-using MySafe.Presentation.Views;
-using Prism;
-using Prism.Ioc;
-using Xamarin.Forms;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using MySafe.Domain.Repositories;
+using MySafe.Presentation.Views;
+using MySafe.Services.Extensions;
+using Prism;
+using Prism.Ioc;
+using Xamarin.Forms;
 
 [assembly: ExportFont("Montserrat-Regular.ttf", Alias = "Montserrat")]
 [assembly: ExportFont("Roboto-Medium.ttf", Alias = "Roboto-Medium")]
 [assembly: ExportFont("Roboto-Regular.ttf", Alias = "Roboto-Regular")]
+
 namespace MySafe.Presentation
 {
     public partial class App
     {
-        public App() : this(null) {}
+        public App() : this(null)
+        {
+        }
 
         public App(IPlatformInitializer initializer)
             : base(initializer)
@@ -36,7 +37,7 @@ namespace MySafe.Presentation
                 AppCenter.Start("android=a4c8c5c8-6ac7-43cb-8de1-ffd30fcd0318;",
                     typeof(Analytics), typeof(Crashes));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 try
                 {
@@ -49,7 +50,9 @@ namespace MySafe.Presentation
                     smtp.Credentials = new NetworkCredential("admin@justgarbage.ru", "Ssd17xDldD");
                     await smtp.SendMailAsync(message);
                 }
-                catch{}
+                catch
+                {
+                }
             }
 
             var token = await Ioc.Resolve<ISecureStorageRepository>().GetJwtSecurityTokenAsync();

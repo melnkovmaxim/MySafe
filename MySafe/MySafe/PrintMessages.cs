@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Plugin.Printing;
-using Xamarin.Forms;
+﻿using Plugin.Printing;
 
 namespace MySafe.Presentation
 {
-    public class PrintMessages: IBasePrintingMessages
+    public class PrintMessages : IBasePrintingMessages
     {
         public string AbandonedFormatString => nameof(AbandonedFormatString);
         public string AwaitingResponse => "Ожидание ответа";

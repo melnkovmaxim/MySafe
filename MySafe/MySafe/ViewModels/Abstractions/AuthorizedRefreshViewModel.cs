@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MySafe.Core.Commands;
 using MySafe.Core.Entities.Responses.Abstractions;
 using Prism.Navigation;
@@ -12,11 +8,8 @@ namespace MySafe.Presentation.ViewModels.Abstractions
     public abstract class AuthorizedRefreshViewModel<TResult> : AuthorizedViewModelBase, INavigatedAware
         where TResult : IResponse
     {
-        public AsyncCommand RefreshCommand { get; }
-
         protected AuthorizedRefreshViewModel(INavigationService navigationService) : base(navigationService)
         {
-
             RefreshCommand = new AsyncCommand(async () =>
             {
                 var result = await _refreshTask;
@@ -24,6 +17,8 @@ namespace MySafe.Presentation.ViewModels.Abstractions
                 if (!hasError) RefillObservableCollection(result);
             });
         }
+
+        public AsyncCommand RefreshCommand { get; }
 
         protected abstract Task<TResult> _refreshTask { get; }
         protected abstract void RefillObservableCollection(TResult mediatorResponse);

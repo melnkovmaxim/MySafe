@@ -1,35 +1,27 @@
-﻿using MySafe.Presentation.Views;
-using Prism.Commands;
-using System;
-using System.Threading.Tasks;
-using MySafe.Business.Extensions;
-using MySafe.Business.Services.Abstractions;
-using MySafe.Data.Abstractions;
+﻿using System;
+using MySafe.Domain.Repositories;
+using MySafe.Domain.Services;
 using MySafe.Presentation.ViewModels.Abstractions;
-using DelegateCommand = Prism.Commands.DelegateCommand;
-using INavigationService = Prism.Navigation.INavigationService;
+using MySafe.Presentation.Views;
+using MySafe.Services.Extensions;
+using Prism.Commands;
+using Prism.Navigation;
 
 namespace MySafe.Presentation.ViewModels
 {
     public class DeviceAuthViewModel : AuthorizedViewModelBase
     {
-        public DelegateCommand RemoveLastNumberCommand{ get; }
-        public DelegateCommand FingerPrintScanCommand { get; }
-        public DelegateCommand RestorePasswordCommand { get; }
-        public DelegateCommand<string> NumberInputCommand { get; }
-        
-        public IPasswordManagerService PasswordManager { get; }
-        public bool IsRegistered { get; set; }
+        private readonly Action _actionOnLoadedPage;
+
+        private readonly Action _actionOnLogin;
+        private readonly Action _actionOnRegister;
 
         private readonly IDeviceAuthService _deviceAuthService;
         private readonly TimeSpan _vibrationDuration;
 
-        private readonly Action _actionOnLogin;
-        private readonly Action _actionOnRegister;
-        private readonly Action _actionOnLoadedPage;
-
-        public DeviceAuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager, IDeviceAuthService deviceAuthService)
-            :base(navigationService)
+        public DeviceAuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager,
+            IDeviceAuthService deviceAuthService)
+            : base(navigationService)
         {
             PasswordManager = passwordManager;
             _deviceAuthService = deviceAuthService;
@@ -42,8 +34,15 @@ namespace MySafe.Presentation.ViewModels
             FingerPrintScanCommand = new DelegateCommand(FingerPrintScan);
             RestorePasswordCommand = new DelegateCommand(RestorePassword);
             NumberInputCommand = new DelegateCommand<string>(NumberInput);
-
         }
+
+        public DelegateCommand RemoveLastNumberCommand { get; }
+        public DelegateCommand FingerPrintScanCommand { get; }
+        public DelegateCommand RestorePasswordCommand { get; }
+        public DelegateCommand<string> NumberInputCommand { get; }
+
+        public IPasswordManagerService PasswordManager { get; }
+        public bool IsRegistered { get; set; }
 
         private async void Login()
         {

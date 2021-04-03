@@ -1,18 +1,14 @@
-﻿using MediatR;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
-using System.IdentityModel.Tokens.Jwt;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Responses;
 
-namespace MySafe.Business.Mediator.Sheets.UploadSheetCommand
+namespace MySafe.Services.Mediator.Sheets.UploadSheetCommand
 {
     /// <summary>
-    /// Загрузка файла
+    ///     Загрузка файла
     /// </summary>
-    public class UploadSheetCommand: RequestUploadBase<Sheet>
+    public class UploadSheetCommand : RequestUploadBase<Sheet>
     {
-        public int DocumentId { get; set; }
-
         public UploadSheetCommand(int documentId, string fileName, string contentType, byte[] fileBytes)
         {
             DocumentId = documentId;
@@ -20,6 +16,8 @@ namespace MySafe.Business.Mediator.Sheets.UploadSheetCommand
             ContentType = contentType;
             FileBytes = fileBytes;
         }
+
+        public int DocumentId { get; set; }
 
         public override Method RequestMethod => Method.POST;
         public override string RequestResource => $"/api/v1/documents/{DocumentId}/sheets";

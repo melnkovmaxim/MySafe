@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MySafe.Core\MySafe.Core.csproj" />
+    <PackageReference Include="ConfigureAwait.Fody" Version="3.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MySafe.Domain\MySafe.Domain.csproj" />
   </ItemGroup>
 
 </Project>

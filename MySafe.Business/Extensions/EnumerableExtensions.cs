@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MySafe.Business.Extensions
+namespace MySafe.Services.Extensions
 {
     public static class EnumerableExtensions
     {
-        public static bool TryCast<TSource, TResult>(this IEnumerable<TSource> enumerable, out IEnumerable<TResult> result)
+        public static bool TryCast<TSource, TResult>(this IEnumerable<TSource> enumerable,
+            out IEnumerable<TResult> result)
         {
             result = null;
 

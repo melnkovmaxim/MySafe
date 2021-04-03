@@ -1,12 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using MediatR;
-using MySafe.Business.Mediator.Notes.NoteListQuery;
 using MySafe.Core.Commands;
 using MySafe.Core.Entities.Responses;
 using MySafe.Core.Models.Responses.Abstractions;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
+using MySafe.Services.Mediator.Notes.NoteListQuery;
 using Prism.Navigation;
 
 namespace MySafe.Presentation.ViewModels
@@ -14,7 +14,8 @@ namespace MySafe.Presentation.ViewModels
     public class NoteViewModel : AuthorizedRefreshViewModel<ResponseList<Note>>
     {
         private readonly IMediator _mediator;
-        public ObservableCollection<Note> Notes { get; set; }
+
+        private AsyncCommand<Note> _moveToNoteEditCommand;
 
         public NoteViewModel(INavigationService navigationService, IMediator mediator) : base(navigationService)
         {
@@ -22,15 +23,17 @@ namespace MySafe.Presentation.ViewModels
             Notes = new ObservableCollection<Note>();
         }
 
-        public AsyncCommand<Note> MoveToNoteEditCommand => _moveToNoteEditCommand ??= new AsyncCommand<Note>(async (note) =>
-        {
-            var @params = GetItemNaviigationParams(note.Id, note.ClippedContent);
-            await _navigationService.NavigateAsync(nameof(NoteEditPage), @params);
-        });
+        public ObservableCollection<Note> Notes { get; set; }
 
-        private AsyncCommand<Note> _moveToNoteEditCommand;
+        public AsyncCommand<Note> MoveToNoteEditCommand => _moveToNoteEditCommand ??= new AsyncCommand<Note>(
+            async note =>
+            {
+                var @params = GetItemNaviigationParams(note.Id, note.ClippedContent);
+                await _navigationService.NavigateAsync(nameof(NoteEditPage), @params);
+            });
 
         protected override Task<ResponseList<Note>> _refreshTask => _mediator.Send(new NoteListQuery());
+
         protected override void RefillObservableCollection(ResponseList<Note> mediatorResponse)
         {
             Notes.Clear();

@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
 using MediatR.Pipeline;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand;
 using MySafe.Core.Entities.Responses.Abstractions;
-using MySafe.Data.Abstractions;
+using MySafe.Domain.Repositories;
+using MySafe.Services.Mediator.Abstractions;
+using MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand;
 
-namespace MySafe.Business.Mediator
+namespace MySafe.Services.Mediator
 {
-    public class BearerPreRequestHandler<TResponse>: IRequestPreProcessor<BearerRequestBase<TResponse>>
-        where TResponse: IResponse
+    public class BearerPreRequestHandler<TResponse> : IRequestPreProcessor<BearerRequestBase<TResponse>>
+        where TResponse : IResponse
     {
         private readonly ISecureStorageRepository _secureStorageRepository;
 

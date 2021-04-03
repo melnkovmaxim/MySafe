@@ -1,49 +1,24 @@
-﻿using System;
-using MySafe.Core;
-using MySafe.Presentation.Views;
-using Prism.Navigation;
-using System.IdentityModel.Tokens.Jwt;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using MySafe.Business.Extensions;
-using MySafe.Core.Commands;
-using MySafe.Core.Entities.Responses.Abstractions;
-using MySafe.Data.Abstractions;
-using DelegateCommand = Prism.Commands.DelegateCommand;
+using MySafe.Core;
+using MySafe.Domain.Repositories;
+using MySafe.Presentation.Views;
+using MySafe.Services.Extensions;
+using Prism.Navigation;
 
 namespace MySafe.Presentation.ViewModels.Abstractions
 {
-    public abstract class AuthorizedViewModelBase: ViewModelBase, INavigatedAware
+    public abstract class AuthorizedViewModelBase : ViewModelBase, INavigatedAware
     {
-        protected INavigationParameters _parameters;
         private CancellationTokenSource _cancellationTokenSource;
         protected int? _itemId;
         protected string _itemName;
+        protected INavigationParameters _parameters;
 
-        protected AuthorizedViewModelBase(INavigationService navigationService) 
+        protected AuthorizedViewModelBase(INavigationService navigationService)
             : base(navigationService)
         {
             _cancellationTokenSource = new CancellationTokenSource();
-        }
-
-        protected NavigationParameters GetItemNaviigationParams(int itemId, string itemName)
-        {
-            return new NavigationParameters()
-            {
-                { MySafeApp.Resources.ItemId, itemId },
-                { MySafeApp.Resources.ItemName, itemName }
-            };
-        }
-
-        protected CancellationToken GetCancellationToken()
-        {
-            if (_cancellationTokenSource.IsCancellationRequested)
-            {
-                _cancellationTokenSource = new CancellationTokenSource();
-            }
-
-            return _cancellationTokenSource.Token;
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
@@ -58,9 +33,25 @@ namespace MySafe.Presentation.ViewModels.Abstractions
             if (!isNavigated) DoAfterNavigatedTo();
         }
 
+        protected NavigationParameters GetItemNaviigationParams(int itemId, string itemName)
+        {
+            return new NavigationParameters
+            {
+                {MySafeApp.Resources.ItemId, itemId},
+                {MySafeApp.Resources.ItemName, itemName}
+            };
+        }
+
+        protected CancellationToken GetCancellationToken()
+        {
+            if (_cancellationTokenSource.IsCancellationRequested)
+                _cancellationTokenSource = new CancellationTokenSource();
+
+            return _cancellationTokenSource.Token;
+        }
+
         protected virtual void DoAfterNavigatedTo()
         {
-
         }
 
         protected void SaveParameters(INavigationParameters parameters)
@@ -69,7 +60,6 @@ namespace MySafe.Presentation.ViewModels.Abstractions
 
             _itemId = (int?) parameters[nameof(MySafeApp.Resources.ItemId)];
             _itemName = (string) parameters[nameof(MySafeApp.Resources.ItemName)];
-
         }
 
         protected async Task<bool> TryNavigateToSignInPage()

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using RestSharp;
 
-namespace MySafe.Business.Extensions
+namespace MySafe.Services.Extensions
 {
     public static class RestResponseExtensions
     {
@@ -14,7 +10,7 @@ namespace MySafe.Business.Extensions
             var jwtToken = response.Headers
                 .FirstOrDefault(x => x.Name == "Authorization")?.Value
                 .ToString()
-                .Replace("Bearer ", String.Empty);
+                .Replace("Bearer ", string.Empty);
 
             return jwtToken;
         }

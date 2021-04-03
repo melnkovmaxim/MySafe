@@ -1,12 +1,11 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
-using MySafe.Business.Extensions;
-using MySafe.Business.Mediator.Users.SignInCommand;
-using MySafe.Business.Services.Abstractions;
 using MySafe.Core.Commands;
-using MySafe.Data.Abstractions;
+using MySafe.Domain.Repositories;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
+using MySafe.Services.Extensions;
+using MySafe.Services.Mediator.Users.SignInCommand;
 using Prism.Navigation;
 
 namespace MySafe.Presentation.ViewModels
@@ -14,21 +13,23 @@ namespace MySafe.Presentation.ViewModels
     public class SignInViewModel : ViewModelBase
     {
         private readonly IMediator _mediator;
+
+
+        public SignInViewModel(INavigationService navigationService, IMediator mediator)
+            : base(navigationService)
+        {
+            _mediator = mediator;
+
+            SignInCommand = new AsyncCommand(SignInCommandTask);
+            MoveToRegisterPage =
+                new AsyncCommand(async () => await _navigationService.NavigateAsync(nameof(RegisterPage)));
+        }
+
         public AsyncCommand SignInCommand { get; }
         public AsyncCommand MoveToRegisterPage { get; }
 
         public string Login { get; set; }
         public string Password { get; set; }
-
-
-        public SignInViewModel(INavigationService navigationService, IMediator mediator)
-            :base(navigationService)
-        {
-            _mediator = mediator;
-
-            SignInCommand = new AsyncCommand(SignInCommandTask);
-            MoveToRegisterPage = new AsyncCommand(async () => await _navigationService.NavigateAsync(nameof(RegisterPage)));
-        }
 
         private async Task SignInCommandTask()
         {
@@ -38,10 +39,11 @@ namespace MySafe.Presentation.ViewModels
             {
                 if (response.Error == "code_already_sent")
                 {
-                    var twoFactorToken = await Ioc.Resolve<ISecureStorageRepository>().GetJwtSecurityTokenTwoFactorAsync();
+                    var twoFactorToken =
+                        await Ioc.Resolve<ISecureStorageRepository>().GetJwtSecurityTokenTwoFactorAsync();
                     if (twoFactorToken.IsValidToken()) await _navigationService.NavigateAsync(nameof(TwoFactorPage));
-
                 }
+
                 Error = response.Error;
                 return;
             }

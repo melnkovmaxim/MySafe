@@ -5,8 +5,8 @@ using AndroidX.AppCompat.App;
 namespace MySafe.Droid
 {
     [Activity(Theme = "@style/MainTheme.Splash",
-              MainLauncher = true,
-              NoHistory = true)]
+        MainLauncher = true,
+        NoHistory = true)]
     public class SplashActivity : AppCompatActivity
     {
         // Launches the startup task

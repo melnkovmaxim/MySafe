@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Prism.Navigation;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace MySafe.Presentation.Views

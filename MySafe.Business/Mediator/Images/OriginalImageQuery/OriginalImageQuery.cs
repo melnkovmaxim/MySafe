@@ -1,22 +1,20 @@
-﻿using MediatR;
-using MySafe.Core.Entities.Responses;
-using System.IdentityModel.Tokens.Jwt;
-using MySafe.Business.Mediator.Abstractions;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
-namespace MySafe.Business.Mediator.Images.OriginalImageQuery
+namespace MySafe.Services.Mediator.Images.OriginalImageQuery
 {
     /// <summary>
-    /// Получить оригинальное изображение
+    ///     Получить оригинальное изображение
     /// </summary>
-    public class OriginalImageQuery: BearerRequestBase<Image>
+    public class OriginalImageQuery : BearerRequestBase<Image>
     {
-        public int ImageId { get; set; }
-
         public OriginalImageQuery(int imageId)
         {
             ImageId = imageId;
         }
+
+        public int ImageId { get; set; }
 
         public override Method RequestMethod => Method.GET;
         public override string RequestResource => $"/api/v1/images/{ImageId}";

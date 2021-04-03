@@ -3,10 +3,10 @@
 namespace MySafe.Core.Entities.Responses.Abstractions
 {
     [JsonObject]
-    public class ResponseBase: IResponse
+    public class ResponseBase : IResponse
     {
-        [JsonProperty("error")]
-        public string Error { get; set; }
+        [JsonProperty("error")] public string Error { get; set; }
+
         public bool HasError => !string.IsNullOrEmpty(Error);
         public byte[] FileBytes { get; set; }
     }

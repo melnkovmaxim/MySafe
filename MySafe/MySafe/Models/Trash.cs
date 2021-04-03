@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MySafe.Presentation.Models
 {
-    public class Trash: Attachment
+    public class Trash : Attachment
     {
         public string Location { get; set; }
         public int? FolderId { get; set; }

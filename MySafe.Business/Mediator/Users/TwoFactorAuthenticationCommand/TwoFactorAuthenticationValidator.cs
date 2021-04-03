@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand
+namespace MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand
 {
     public class TwoFactorAuthenticationValidator : AbstractValidator<TwoFactorAuthenticationCommand>
     {

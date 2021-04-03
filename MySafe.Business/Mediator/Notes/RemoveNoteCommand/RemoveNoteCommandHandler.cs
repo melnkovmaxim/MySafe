@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
-namespace MySafe.Business.Mediator.Notes.RemoveNoteCommand
+namespace MySafe.Services.Mediator.Notes.RemoveNoteCommand
 {
-    public class RemoveNoteCommandHandler: RequestHandlerBase<RemoveNoteCommand, Note>
+    public class RemoveNoteCommandHandler : RequestHandlerBase<RemoveNoteCommand, Note>
     {
         public RemoveNoteCommandHandler(IRestClient restClient) : base(restClient)
         {

@@ -1,21 +1,14 @@
-﻿using MediatR;
-using MySafe.Core.Entities.Responses;
-using Newtonsoft.Json;
-using RestSharp;
-using RestSharp.Authenticators;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MySafe.Business.Mediator.Abstractions;
+﻿using MySafe.Core.Entities.Responses;
 using MySafe.Core.Models.Responses.Abstractions;
+using MySafe.Services.Mediator.Abstractions;
+using RestSharp;
 
-namespace MySafe.Business.Mediator.Trash.TrashContentQuery
+namespace MySafe.Services.Mediator.Trash.TrashContentQuery
 {
     /// <summary>
-    /// Очистить корзину
+    ///     Очистить корзину
     /// </summary>
-    public class TrashContentQueryHandler: RequestHandlerBase<TrashContentQuery, ResponseList<TrashResponse>>
+    public class TrashContentQueryHandler : RequestHandlerBase<TrashContentQuery, ResponseList<TrashResponse>>
     {
         public TrashContentQueryHandler(IRestClient restClient) : base(restClient)
         {

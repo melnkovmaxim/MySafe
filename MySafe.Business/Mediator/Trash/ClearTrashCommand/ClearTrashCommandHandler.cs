@@ -1,16 +1,10 @@
-﻿using MediatR;
+﻿using MySafe.Core.Entities.Responses.Abstractions;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
-using RestSharp.Authenticators;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MySafe.Business.Extensions;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Responses.Abstractions;
 
-namespace MySafe.Business.Mediator.Trash.ClearTrashCommand
+namespace MySafe.Services.Mediator.Trash.ClearTrashCommand
 {
-    public class ClearTrashCommandHandler: RequestHandlerBase<ClearTrashCommand, ResponseBase>
+    public class ClearTrashCommandHandler : RequestHandlerBase<ClearTrashCommand, ResponseBase>
     {
         public ClearTrashCommandHandler(IRestClient restClient) : base(restClient)
         {

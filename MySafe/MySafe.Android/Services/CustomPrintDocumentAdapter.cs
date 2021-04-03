@@ -1,37 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Android.App;
 using Android.OS;
 using Android.Print;
 using Java.IO;
-using Prism.DryIoc;
+using Debug = System.Diagnostics.Debug;
 using FileNotFoundException = System.IO.FileNotFoundException;
 
 namespace MySafe.Droid.Services
 {
     internal class CustomPrintDocumentAdapter : PrintDocumentAdapter
     {
-        private string filePath;
+        private readonly string filePath;
+
         public CustomPrintDocumentAdapter(string filePath)
         {
             this.filePath = filePath;
         }
-        public override void OnLayout(PrintAttributes oldAttributes, PrintAttributes newAttributes, CancellationSignal cancellationSignal, LayoutResultCallback callback, Bundle extras)
+
+        public override void OnLayout(PrintAttributes oldAttributes, PrintAttributes newAttributes,
+            CancellationSignal cancellationSignal, LayoutResultCallback callback, Bundle extras)
         {
             if (cancellationSignal.IsCanceled)
             {
                 callback.OnLayoutCancelled();
                 return;
             }
+
             callback.OnLayoutFinished(new PrintDocumentInfo.Builder(filePath)
                 .SetContentType(PrintContentType.Document)
                 .Build(), true);
         }
 
-        public override void OnWrite(PageRange[] pages, ParcelFileDescriptor destination, CancellationSignal cancellationSignal, WriteResultCallback callback)
+        public override void OnWrite(PageRange[] pages, ParcelFileDescriptor destination,
+            CancellationSignal cancellationSignal, WriteResultCallback callback)
         {
             try
             {
@@ -41,21 +41,19 @@ namespace MySafe.Droid.Services
                     {
                         var buf = new byte[1024];
                         int bytesRead;
-                        while ((bytesRead = input.Read(buf)) > 0)
-                        {
-                            output.Write(buf, 0, bytesRead);
-                        }
+                        while ((bytesRead = input.Read(buf)) > 0) output.Write(buf, 0, bytesRead);
                     }
                 }
-                callback.OnWriteFinished(new[] { PageRange.AllPages });
+
+                callback.OnWriteFinished(new[] {PageRange.AllPages});
             }
             catch (FileNotFoundException fileNotFoundException)
             {
-                System.Diagnostics.Debug.WriteLine(fileNotFoundException);
+                Debug.WriteLine(fileNotFoundException);
             }
             catch (Exception exception)
             {
-                System.Diagnostics.Debug.WriteLine(exception);
+                Debug.WriteLine(exception);
             }
         }
     }

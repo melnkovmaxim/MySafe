@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage
     x:Class="MySafe.Presentation.Views.FolderPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -6,8 +7,7 @@
     xmlns:behaviors="http://prismlibrary.com"
     x:Name="Folder"
     Title="Назад"
-    BindingContext="{Binding Source={StaticResource VmLocator}, Path=FolderViewModel}"
-    >
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=FolderViewModel}">
     <ContentPage.Resources>
         <Style TargetType="Button">
             <!-- <Setter Property="HeightRequest" Value="70" /> -->
@@ -41,11 +41,11 @@
                 <ScrollView VerticalOptions="FillAndExpand">-->
                         <StackLayout>
                             <Frame
-                            Margin="20,20,20,10"
-                            BackgroundColor="#E4E8FB"
-                            CornerRadius="24"
-                            HeightRequest="26"
-                            HorizontalOptions="Fill">
+                                Margin="20,20,20,10"
+                                BackgroundColor="#E4E8FB"
+                                CornerRadius="24"
+                                HeightRequest="26"
+                                HorizontalOptions="Fill">
                                 <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -56,32 +56,33 @@
                                             <RowDefinition Height="26" />
                                         </Grid.RowDefinitions>
                                         <Image Grid.Column="0" Source="{Binding IconPath}" />
-                                        <Frame Grid.Column="1" Margin="0,-6,0,0" CornerRadius="0" BackgroundColor="Transparent">
+                                        <Frame Grid.Column="1" Margin="0,-6,0,0" CornerRadius="0"
+                                               BackgroundColor="Transparent">
                                             <Label
-                                        
-                                        Margin="-20,-20,-20,-20"
-                                        FontSize="24"
-                                        HorizontalOptions="Start"
-                                        HorizontalTextAlignment="Start"
-                                        Text="{Binding FolderName}"
-                                        VerticalOptions="Start"
-                                        VerticalTextAlignment="Start" />
+
+                                                Margin="-20,-20,-20,-20"
+                                                FontSize="24"
+                                                HorizontalOptions="Start"
+                                                HorizontalTextAlignment="Start"
+                                                Text="{Binding FolderName}"
+                                                VerticalOptions="Start"
+                                                VerticalTextAlignment="Start" />
                                         </Frame>
                                     </Grid>
                                 </StackLayout>
                             </Frame>
                             <SearchBar
-                            Margin="10,10,10,10"
-                            HorizontalOptions="Fill"
-                            Opacity="0.8"
-                            Placeholder="Название документа"
-                            Text="{Binding Filter, Mode=TwoWay}" />
+                                Margin="10,10,10,10"
+                                HorizontalOptions="Fill"
+                                Opacity="0.8"
+                                Placeholder="Название документа"
+                                Text="{Binding Filter, Mode=TwoWay}" />
                             <BoxView
-                    Margin="20,-18,20,0"
-                    HeightRequest="2"
-                    HorizontalOptions="Fill"
-                    Opacity="0.87"
-                    Color="#3465C4" />
+                                Margin="20,-18,20,0"
+                                HeightRequest="2"
+                                HorizontalOptions="Fill"
+                                Opacity="0.87"
+                                Color="#3465C4" />
                             <Grid Margin="20,10,20,10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50*" />
@@ -92,16 +93,16 @@
                                 </Grid.RowDefinitions>
                                 <Frame Grid.Column="0" Margin="0,0,-2,0">
                                     <Button
-                                    Margin="-20,-20,-20,-20"
-                                    BackgroundColor="#E4E8FB"
-                                    Command="{Binding AddDocumentCommand}"
-                                    ImageSource="add.png" />
+                                        Margin="-20,-20,-20,-20"
+                                        BackgroundColor="#E4E8FB"
+                                        Command="{Binding AddDocumentCommand}"
+                                        ImageSource="add.png" />
                                 </Frame>
                                 <Frame Grid.Column="1" Margin="5,0,0,0">
                                     <Button
-                                    Margin="-20,-20,-20,-20"
-                                    BackgroundColor="#E4E8FB"
-                                    ImageSource="pen.png" />
+                                        Margin="-20,-20,-20,-20"
+                                        BackgroundColor="#E4E8FB"
+                                        ImageSource="pen.png" />
                                 </Frame>
                             </Grid>
                         </StackLayout>
@@ -110,28 +111,28 @@
 
 
                         <CollectionView
-                x:Name="MyList"
-                Margin="20,0,20,0"
-                ItemsSource="{Binding Documents}"
-                VerticalOptions="FillAndExpand">
+                            x:Name="MyList"
+                            Margin="20,0,20,0"
+                            ItemsSource="{Binding Documents}"
+                            VerticalOptions="FillAndExpand">
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout
-                        HorizontalItemSpacing="10"
-                        Orientation="Vertical"
-                        Span="2"
-                        VerticalItemSpacing="10" />
+                                    HorizontalItemSpacing="10"
+                                    Orientation="Vertical"
+                                    Span="2"
+                                    VerticalItemSpacing="10" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
                                     <Frame>
                                         <Button
-                                Margin="-20,-20,-20,-20"
-                                Padding="10,-40,10,0"
-                                BackgroundColor="#E4E8FB"
-                                Command="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}"
-                                CommandParameter="{Binding .}"
-                                HeightRequest="110"
-                                Text="{Binding Name}" />
+                                            Margin="-20,-20,-20,-20"
+                                            Padding="10,-40,10,0"
+                                            BackgroundColor="#E4E8FB"
+                                            Command="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}"
+                                            CommandParameter="{Binding .}"
+                                            HeightRequest="110"
+                                            Text="{Binding Name}" />
                                     </Frame>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>

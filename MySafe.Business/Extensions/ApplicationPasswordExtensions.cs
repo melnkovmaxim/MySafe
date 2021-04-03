@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using MySafe.Core.Entities;
 
-namespace MySafe.Business.Extensions
+namespace MySafe.Services.Extensions
 {
     public static class ApplicationPasswordExtensions
     {
@@ -15,10 +11,7 @@ namespace MySafe.Business.Extensions
 
             passwordCollection.Clear();
 
-            for (var i = 0; i < length; i++)
-            {
-                passwordCollection.Add(string.Empty);
-            }
+            for (var i = 0; i < length; i++) passwordCollection.Add(string.Empty);
         }
 
         public static bool TryAdd(this ApplicationPassword password, string value)
@@ -47,10 +40,7 @@ namespace MySafe.Business.Extensions
 
         public static void Clear(this ApplicationPassword password)
         {
-            for (var i = 0; i < password.PasswordMaxLength; i++)
-            {
-                password.PasswordCollection[i] = string.Empty;
-            }
+            for (var i = 0; i < password.PasswordMaxLength; i++) password.PasswordCollection[i] = string.Empty;
         }
     }
 }

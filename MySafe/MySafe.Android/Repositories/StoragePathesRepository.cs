@@ -1,11 +1,12 @@
 ﻿using System.IO;
-using MySafe.Data.Abstractions;
+using Android.OS;
+using MySafe.Domain.Repositories;
 
 namespace MySafe.Droid.Repositories
 {
-    public class StoragePathesRepository: IStoragePathesRepository
+    public class StoragePathesRepository : IStoragePathesRepository
     {
-        public string DownloadPath => 
-            Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads);
+        public string DownloadPath =>
+            Path.Combine(Environment.ExternalStorageDirectory.AbsolutePath, Environment.DirectoryDownloads);
     }
 }

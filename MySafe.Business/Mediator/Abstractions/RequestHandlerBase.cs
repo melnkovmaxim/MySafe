@@ -1,26 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Fody;
 using MediatR;
-using MySafe.Business.Extensions;
-using MySafe.Core.Entities.Responses;
 using MySafe.Core.Entities.Responses.Abstractions;
+using MySafe.Services.Extensions;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
-using RestSharp.Serialization;
 
-namespace MySafe.Business.Mediator.Abstractions
+namespace MySafe.Services.Mediator.Abstractions
 {
     [ConfigureAwait(false)]
-    public abstract class RequestHandlerBase<TRequest, TResponse>: IRequestHandler<TRequest, TResponse>
+    public abstract class RequestHandlerBase<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
         where TRequest : RequestBase<TResponse>
-        where TResponse: IResponse
+        where TResponse : IResponse
     {
         private readonly IRestClient _restClient;
 
@@ -31,15 +24,12 @@ namespace MySafe.Business.Mediator.Abstractions
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
         {
-
             var json = JsonConvert.SerializeObject(request);
             var httpRequest = new RestRequest(request.RequestResource, request.RequestMethod)
                 .AddJsonBody(json);
 
             if (request is BearerRequestBase<TResponse> bearerRequest && !string.IsNullOrEmpty(bearerRequest.JwtToken))
-            {
                 _restClient.Authenticator = new JwtAuthenticator(bearerRequest.JwtToken);
-            }
 
             if (request is RequestUploadBase<TResponse> uploadRequest)
             {

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Fody;
-using MySafe.Business.Services.Abstractions;
+using MySafe.Domain.Services;
 using Xamarin.Essentials;
 
-namespace MySafe.Presentation.Services
+namespace MySafe.Services.Xamarin
 {
     [ConfigureAwait(false)]
-    public class PermissionService: IPermissionService
+    public class PermissionService : IPermissionService
     {
         public async Task<bool> TryGetStorageWritePermissionAsync()
         {

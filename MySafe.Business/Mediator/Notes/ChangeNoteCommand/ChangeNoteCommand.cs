@@ -1,25 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using Newtonsoft.Json;
 using RestSharp;
 
-namespace MySafe.Business.Mediator.Notes.ChangeNoteCommand
+namespace MySafe.Services.Mediator.Notes.ChangeNoteCommand
 {
     /// <summary>
-    /// Изменение заметки
+    ///     Изменение заметки
     /// </summary>
-    public class ChangeNoteCommand: BearerRequestBase<Note>
+    public class ChangeNoteCommand : BearerRequestBase<Note>
     {
-        [JsonIgnore]
-        public int NoteId { get; set; }
+        [JsonIgnore] public int NoteId { get; set; }
 
-        [JsonProperty("content")]
-        public string Content { get; set; }
+        [JsonProperty("content")] public string Content { get; set; }
 
         public override Method RequestMethod => Method.PUT;
         public override string RequestResource => $"/api/v1/notes/{NoteId}";

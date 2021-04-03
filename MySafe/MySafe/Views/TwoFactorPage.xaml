@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage
     x:Class="MySafe.Presentation.Views.TwoFactorPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -37,20 +38,21 @@
 
         </StackLayout>
         <StackLayout Grid.Row="2" VerticalOptions="Center">
-            <Frame  Margin="80,60,80,0" HasShadow="False" BackgroundColor="Transparent">
-            <Entry Margin="-20,-20,-20,-20" HorizontalTextAlignment="Center" FontSize="50" CharacterSpacing="5" Text="{Binding Code}" />
-            <!--<BoxView  56
+            <Frame Margin="80,60,80,0" HasShadow="False" BackgroundColor="Transparent">
+                <Entry Margin="-20,-20,-20,-20" HorizontalTextAlignment="Center" FontSize="50" CharacterSpacing="5"
+                       Text="{Binding Code}" />
+                <!--<BoxView  56
                     Margin="20,-28,20,0" 
                     HeightRequest="2"
                     HorizontalOptions="Fill"
                     Color="White" /> -->
-                
+
             </Frame>
             <BoxView
-                    HeightRequest="3" Margin="0,-16,0,0"
-                    HorizontalOptions="Fill"
-                    Color="#fafafa"></BoxView>
-            <Grid  Margin="0,-16,0,0" RowSpacing="10" HorizontalOptions="Center">
+                HeightRequest="3" Margin="0,-16,0,0"
+                HorizontalOptions="Fill"
+                Color="#fafafa" />
+            <Grid Margin="0,-16,0,0" RowSpacing="10" HorizontalOptions="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40" />
                     <ColumnDefinition Width="40" />
@@ -59,30 +61,30 @@
                     <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
                 <BoxView
-                    Grid.Column="0" 
+                    Grid.Column="0"
                     HeightRequest="3"
                     HorizontalOptions="Fill"
-                    Color="Black"></BoxView>
+                    Color="Black" />
                 <BoxView
                     Grid.Column="1"
                     HeightRequest="3"
                     HorizontalOptions="Fill"
-                    Color="Black"></BoxView>
+                    Color="Black" />
                 <BoxView
                     Grid.Column="2"
                     HeightRequest="3"
                     HorizontalOptions="Fill"
-                    Color="Black"></BoxView>
+                    Color="Black" />
                 <BoxView
                     Grid.Column="3"
                     HeightRequest="3"
                     HorizontalOptions="Fill"
-                    Color="Black"></BoxView>
+                    Color="Black" />
                 <BoxView
                     Grid.Column="4"
                     HeightRequest="3"
                     HorizontalOptions="Fill"
-                    Color="Black"></BoxView>
+                    Color="Black" />
             </Grid>
         </StackLayout>
         <StackLayout Grid.Row="3" VerticalOptions="Center">

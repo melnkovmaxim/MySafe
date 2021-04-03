@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR.Pipeline;
-using MySafe.Data.Abstractions;
+using MySafe.Core;
+using MySafe.Domain.Repositories;
 
-namespace MySafe.Business.Mediator.Users.SignInCommand
+namespace MySafe.Services.Mediator.Users.SignInCommand
 {
-    public class SignInCommandPostProcessor: IRequestPostProcessor<SignInCommand, MySafe.Core.Entities.Responses.User>
+    public class SignInCommandPostProcessor : IRequestPostProcessor<SignInCommand, Core.Models.Responses.User>
     {
         private readonly ISecureStorageRepository _secureStorageRepository;
 
@@ -18,13 +15,14 @@ namespace MySafe.Business.Mediator.Users.SignInCommand
             _secureStorageRepository = secureStorageRepository;
         }
 
-        public async Task Process(SignInCommand request, Core.Entities.Responses.User response, CancellationToken cancellationToken)
+        public async Task Process(SignInCommand request, Core.Models.Responses.User response,
+            CancellationToken cancellationToken)
         {
             if (!response.HasError)
             {
                 await _secureStorageRepository.SetJwtTokenForTwoFactorAsync(response.JwtToken);
                 await _secureStorageRepository.SetUserLogin(request.User.Login);
-                MySafe.Core.MySafeApp.Resources.UserLogin = request.User.Login;
+                MySafeApp.Resources.UserLogin = request.User.Login;
             }
         }
     }

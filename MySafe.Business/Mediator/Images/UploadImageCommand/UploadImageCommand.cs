@@ -1,30 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
-namespace MySafe.Business.Mediator.Images.UploadImageCommand
+namespace MySafe.Services.Mediator.Images.UploadImageCommand
 {
     /// <summary>
-    /// Загрузка изображения
+    ///     Загрузка изображения
     /// </summary>
-    public class UploadImageCommand: RequestUploadBase<Image>
+    public class UploadImageCommand : RequestUploadBase<Image>
     {
-        public int DocumentId { get; }
-
-        public UploadImageCommand(int documentId, string fileName, string contentType, byte[] imageBytes) 
+        public UploadImageCommand(int documentId, string fileName, string contentType, byte[] imageBytes)
         {
             DocumentId = documentId;
             FileName = fileName;
             ContentType = contentType;
             FileBytes = imageBytes;
         }
+
+        public int DocumentId { get; }
 
         public override Method RequestMethod => Method.POST;
         public override string RequestResource => $"/api/v1/images?document_id={DocumentId}";

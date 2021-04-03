@@ -1,12 +1,13 @@
 using System;
 using Android.App;
 using Android.Runtime;
+using Xamarin.Essentials;
 
 namespace MySafe.Droid
 {
     [Application(
         Theme = "@style/MainTheme"
-        )]
+    )]
     public class MainApplication : Application
     {
         public MainApplication(IntPtr javaReference, JniHandleOwnership transfer)
@@ -17,7 +18,7 @@ namespace MySafe.Droid
         public override void OnCreate()
         {
             base.OnCreate();
-            Xamarin.Essentials.Platform.Init(this);
+            Platform.Init(this);
         }
     }
 }

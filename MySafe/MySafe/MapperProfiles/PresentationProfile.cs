@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using MySafe.Business.Mediator.Users.SignInCommand;
-using MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand;
 using MySafe.Core.Entities.Requests;
 using MySafe.Core.Entities.Responses;
 using MySafe.Presentation.Models;
+using MySafe.Services.Mediator.Users.SignInCommand;
+using MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand;
 using Document = MySafe.Core.Entities.Responses.Document;
 using Folder = MySafe.Core.Entities.Responses.Folder;
 using User = MySafe.Core.Entities.Requests.User;
@@ -42,13 +42,13 @@ namespace MySafe.Presentation.MapperProfiles
                 .ForMember(d => d.Documents, mo => mo.MapFrom(s => s.Documents))
                 ;
 
-            CreateMap<MySafe.Core.Entities.Responses.TrashResponse, MySafe.Presentation.Models.Trash>()
+            CreateMap<TrashResponse, Trash>()
                 .ForMember(d => d.FolderId, mo => mo.MapFrom(s => s.FolderId))
                 .ForMember(d => d.ConstainsAttachments, mo => mo.MapFrom(s => s.ConstainsAttachments))
                 .ForMember(d => d.Content, mo => mo.MapFrom(s => s.Content))
                 .ForMember(d => d.Location, mo => mo.MapFrom(s => s.Location))
                 .ForMember(d => d.TrashedAt, mo => mo.MapFrom(s => s.TrashedAt));
-                ;
+            ;
         }
     }
 }

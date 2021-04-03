@@ -1,10 +1,10 @@
-﻿using Fody;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
-using MySafe.Data.Abstractions;
+using Fody;
+using MySafe.Domain.Repositories;
 using Xamarin.Essentials;
 
-namespace MySafe.Presentation.Repositories
+namespace MySafe.Data.Xamarin
 {
     [ConfigureAwait(false)]
     public class SecureStorageRepository : ISecureStorageRepository
@@ -38,6 +38,7 @@ namespace MySafe.Presentation.Repositories
         {
             return SecureStorage.GetAsync(TWO_FACTOR_JWT_TOKEN_KEY);
         }
+
         public Task SetJwtTokenForTwoFactorAsync(string token)
         {
             return SecureStorage.SetAsync(TWO_FACTOR_JWT_TOKEN_KEY, token);
@@ -47,13 +48,14 @@ namespace MySafe.Presentation.Repositories
         {
             var token = await SecureStorage.GetAsync(MAIN_JWT_TOKEN_KEY);
 
-            return string.IsNullOrEmpty(token) ? null : new JwtSecurityToken(token); 
+            return string.IsNullOrEmpty(token) ? null : new JwtSecurityToken(token);
         }
+
         public async Task<JwtSecurityToken> GetJwtSecurityTokenTwoFactorAsync()
         {
             var token = await SecureStorage.GetAsync(TWO_FACTOR_JWT_TOKEN_KEY);
 
-            return string.IsNullOrEmpty(token) ? null : new JwtSecurityToken(token); 
+            return string.IsNullOrEmpty(token) ? null : new JwtSecurityToken(token);
         }
 
         public Task SetJwtTokenAsync(string jwtToken)
@@ -75,6 +77,7 @@ namespace MySafe.Presentation.Repositories
         {
             return SecureStorage.SetAsync(USER_LOGIN, login);
         }
+
         public Task<string> GetUserLogin()
         {
             return SecureStorage.GetAsync(USER_LOGIN);

@@ -1,13 +1,10 @@
-﻿using MediatR;
-using System.IdentityModel.Tokens.Jwt;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Responses;
+﻿using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
-namespace MySafe.Business.Mediator.Safe.SafeInfoQuery
+namespace MySafe.Services.Mediator.Safe.SafeInfoQuery
 {
     /// <summary>
-    /// Получить информацию о сейфе
+    ///     Получить информацию о сейфе
     /// </summary>
     public class SafeInfoQuery : BearerRequestBase<Core.Entities.Responses.Safe>
     {

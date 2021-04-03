@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AutoMapper;
-using MySafe.Business.Extensions;
-using MySafe.Business.Mediator.Users.SignInCommand;
 using MySafe.Core.Entities.Responses;
 using MySafe.Core.Entities.Responses.Abstractions;
+using MySafe.Core.Models.Responses;
+using MySafe.Services.Extensions;
 using Newtonsoft.Json;
 using RestSharp;
-using ContentType = RestSharp.Serialization.ContentType;
-using User = MySafe.Core.Entities.Responses.User;
+using RestSharp.Serialization;
 
-namespace MySafe.Business.MapperProfiles
-{ 
+namespace MySafe.Services.MapperProfiles
+{
     public class ApiProfile : Profile
     {
         public ApiProfile()
@@ -60,18 +53,11 @@ namespace MySafe.Business.MapperProfiles
                     //}
 
                     if (s?.ContentType == ContentType.Json)
-                    {
                         d = JsonConvert.DeserializeObject(s.Content, d.GetType()) as IResponse;
-                    }
                     else
-                    {
                         d.FileBytes = s?.RawBytes;
-                    }
-                    
-                    if (s is User userResponse)
-                    {
-                        userResponse.JwtToken = s.GetJwtToken();
-                    }
+
+                    if (s is User userResponse) userResponse.JwtToken = s.GetJwtToken();
                 });
         }
     }

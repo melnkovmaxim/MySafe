@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
-using FluentValidation.Results;
+﻿using FluentValidation;
 
-namespace MySafe.Business.Mediator.Users.SignInCommand
+namespace MySafe.Services.Mediator.Users.SignInCommand
 {
     public class SignInValidator : AbstractValidator<SignInCommand>
     {

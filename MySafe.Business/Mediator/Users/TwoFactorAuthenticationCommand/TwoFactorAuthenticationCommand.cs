@@ -1,24 +1,22 @@
-﻿using MediatR;
-using System.IdentityModel.Tokens.Jwt;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Core.Models.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using Newtonsoft.Json;
 using RestSharp;
 
-namespace MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand
+namespace MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand
 {
     /// <summary>
-    /// Вход. Второй фактор
+    ///     Вход. Второй фактор
     /// </summary>
     public class TwoFactorAuthenticationCommand : BearerRequestBase<User>
     {
-        [JsonProperty("code")]
-        public string Code { get; set; }
-
         public TwoFactorAuthenticationCommand(string code)
         {
             Code = code;
         }
+
+        [JsonProperty("code")] public string Code { get; set; }
 
         public override Method RequestMethod => Method.PUT;
         public override string RequestResource => "users/two_factor_authentication";

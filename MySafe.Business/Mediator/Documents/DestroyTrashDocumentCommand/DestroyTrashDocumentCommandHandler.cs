@@ -1,16 +1,10 @@
-﻿using MediatR;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
-using RestSharp.Authenticators;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MySafe.Business.Extensions;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Responses;
 
-namespace MySafe.Business.Mediator.Documents.DestroyTrashDocumentCommand
+namespace MySafe.Services.Mediator.Documents.DestroyTrashDocumentCommand
 {
-    public class DestroyInTrashCommandHandler: RequestHandlerBase<DestroyTrashDocumentCommand, Document>
+    public class DestroyInTrashCommandHandler : RequestHandlerBase<DestroyTrashDocumentCommand, Document>
     {
         public DestroyInTrashCommandHandler(IRestClient restClient) : base(restClient)
         {

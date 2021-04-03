@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage
     x:Class="MySafe.Presentation.Views.DeviceAuthPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -93,7 +94,8 @@
                     WidthRequest="210">
 
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="{Binding PasswordManager.PasswordCollection.Count}" />
+                        <GridItemsLayout Orientation="Vertical"
+                                         Span="{Binding PasswordManager.PasswordCollection.Count}" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>

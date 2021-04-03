@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json;
-using System.IdentityModel.Tokens.Jwt;
-using MySafe.Core.Entities.Responses.Abstractions;
+﻿using MySafe.Core.Entities.Responses.Abstractions;
+using Newtonsoft.Json;
 
-namespace MySafe.Core.Entities.Responses
+namespace MySafe.Core.Models.Responses
 {
     [JsonObject]
     public class User : ResponseBase

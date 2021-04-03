@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fody;
-using MediatR;
-using MySafe.Core.Entities.Responses;
-using Newtonsoft.Json;
-using RestSharp;
+﻿using Newtonsoft.Json;
 
-namespace MySafe.Business.Mediator.Abstractions
+namespace MySafe.Services.Mediator.Abstractions
 {
-    public abstract class BearerRequestBase<T>: RequestBase<T>
+    public abstract class BearerRequestBase<T> : RequestBase<T>
     {
-        [JsonIgnore]
-        public string JwtToken { get; set; }
+        [JsonIgnore] public string JwtToken { get; set; }
     }
 }

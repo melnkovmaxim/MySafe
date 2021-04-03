@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MySafe.Business.Mediator.Users.ConfirmationInstructionsQuery
+﻿namespace MySafe.Services.Mediator.Users.ConfirmationInstructionsQuery
 {
     public class GuideForConfirmRegisterQueryHandler
     {
-        
     }
 }

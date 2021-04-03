@@ -1,13 +1,12 @@
-﻿using MediatR;
-using System.IdentityModel.Tokens.Jwt;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Core.Models.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
-namespace MySafe.Business.Mediator.Users.SignOutCommand
+namespace MySafe.Services.Mediator.Users.SignOutCommand
 {
     /// <summary>
-    /// Выход
+    ///     Выход
     /// </summary>
     public class SignOutCommand : BearerRequestBase<User>
     {

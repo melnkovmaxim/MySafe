@@ -2,14 +2,14 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Fody;
-using MySafe.Business.Services.Abstractions;
 using MySafe.Core;
-using MySafe.Data.Abstractions;
+using MySafe.Domain.Repositories;
+using MySafe.Domain.Services;
 using Plugin.Fingerprint;
 using Plugin.Fingerprint.Abstractions;
 using Xamarin.Essentials;
 
-namespace MySafe.Business.Services
+namespace MySafe.Services.Xamarin
 {
     public class DeviceAuthService : IDeviceAuthService, ITransientService
     {
@@ -20,6 +20,7 @@ namespace MySafe.Business.Services
         {
             _secureStorageRepository = secureStorageRepository;
         }
+
         public async Task<bool> IsRegistered()
         {
             var devicePassword = await _secureStorageRepository.GetDevicePasswordAsync();
@@ -39,10 +40,7 @@ namespace MySafe.Business.Services
                 return true;
             }
 
-            if (password.Length == correctPassword.Length)
-            {
-                Vibration.Vibrate(vibrationDuration);
-            }
+            if (password.Length == correctPassword.Length) Vibration.Vibrate(vibrationDuration);
 
             return false;
         }
@@ -62,7 +60,7 @@ namespace MySafe.Business.Services
 
             return false;
         }
-        
+
         [ConfigureAwait(false)]
         public async Task RegisterAsync(string password, Action actionOnRegister)
         {
@@ -72,10 +70,10 @@ namespace MySafe.Business.Services
 
                 actionOnRegister?.Invoke();
             }
-            
+
             await Task.Run(() => Thread.Sleep(500));
         }
-        
+
         [ConfigureAwait(false)]
         public async Task Logout()
         {

@@ -141,13 +141,17 @@
     <AndroidResource Include="Resources\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MySafe.Business\MySafe.Business.csproj">
+    <ProjectReference Include="..\..\MySafe.Business\MySafe.Services.csproj">
       <Project>{F03CC458-E3B3-47AE-96D7-24981E38AF39}</Project>
-      <Name>MySafe.Business</Name>
+      <Name>MySafe.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MySafe.Data\MySafe.Data.csproj">
       <Project>{DD64C806-0A98-4ABD-82E0-F8B933224084}</Project>
       <Name>MySafe.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MySafe.Domain\MySafe.Domain.csproj">
+      <Project>{879462B2-7C9B-47C5-9F55-BBF9B52CFABF}</Project>
+      <Name>MySafe.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\MySafe\MySafe.Presentation.csproj">
       <Project>{901721FD-DAA6-4823-BAA4-0E139E748E56}</Project>

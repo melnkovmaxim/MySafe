@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,16 +9,12 @@ namespace MySafe.Presentation.Views
     {
         public FolderPage()
         {
-            
             //NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
 
             Task.Run(async () =>
             {
-                while (true)
-                {
-                    await _spinnetImage.RelRotateTo(360, 3000);
-                }
+                while (true) await _spinnetImage.RelRotateTo(360, 3000);
             });
         }
     }

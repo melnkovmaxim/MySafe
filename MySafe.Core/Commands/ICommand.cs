@@ -7,13 +7,19 @@ using MySafe.Core.Commands;
 
 namespace MySafe.Core.Commands
 {
-    public interface IDelegateCommand : ICommand {
+    public interface IDelegateCommand : ICommand
+    {
         void RaiseCanExecuteChanged();
     }
-    public interface IAsyncCommand : IDelegateCommand {
+
+    public interface IAsyncCommand : IDelegateCommand
+    {
         bool IsExecuting { get; }
-        [EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use the IsCancellationRequested property instead.")]
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use the IsCancellationRequested property instead.")]
         bool ShouldCancel { get; }
+
         CancellationTokenSource CancellationTokenSource { get; }
         bool IsCancellationRequested { get; }
         ICommand CancelCommand { get; }
@@ -24,12 +30,15 @@ namespace MySafe.Core.Commands
         Task ExecuteAsync(object parameter);
     }
 }
+
 namespace DevExpress.Mvvm
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static class IAsyncCommandExtensions {
-        static void VerifyService(IAsyncCommand service) {
-            if(service == null) throw new ArgumentNullException("service");
+    public static class IAsyncCommandExtensions
+    {
+        private static void VerifyService(IAsyncCommand service)
+        {
+            if (service == null) throw new ArgumentNullException("service");
         }
     }
 }

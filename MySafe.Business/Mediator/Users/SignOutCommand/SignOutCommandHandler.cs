@@ -1,16 +1,9 @@
-﻿using Fody;
-using MediatR;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Core.Models.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
-using RestSharp.Authenticators;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MySafe.Business.Extensions;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Responses;
-using MySafe.Data.Abstractions;
 
-namespace MySafe.Business.Mediator.Users.SignOutCommand
+namespace MySafe.Services.Mediator.Users.SignOutCommand
 {
     public class SignOutCommandHandler : RequestHandlerBase<SignOutCommand, User>
     {

@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage
     x:Class="MySafe.Presentation.Views.NotePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -18,22 +19,22 @@
                 VerticalOptions="FillAndExpand">
 
                 <ScrollView>
-        <StackLayout>
-            <Frame
-                Margin="20,15,20,-10"
-                BackgroundColor="#FBFFE9"
-                BorderColor="#c2c5b5"
-                CornerRadius="24"
-                HeightRequest="24"
-                HorizontalOptions="Fill">
-                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                    <Image Margin="-120,0,0,0" Source="docs1.png" />
-                    <Label
-                        Margin="45,-33,0,0"
-                        FontSize="24"
-                        Text="Блокнот" />
-                </StackLayout>
-            </Frame>
+                    <StackLayout>
+                        <Frame
+                            Margin="20,15,20,-10"
+                            BackgroundColor="#FBFFE9"
+                            BorderColor="#c2c5b5"
+                            CornerRadius="24"
+                            HeightRequest="24"
+                            HorizontalOptions="Fill">
+                            <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                                <Image Margin="-120,0,0,0" Source="docs1.png" />
+                                <Label
+                                    Margin="45,-33,0,0"
+                                    FontSize="24"
+                                    Text="Блокнот" />
+                            </StackLayout>
+                        </Frame>
                         <!--<Grid Margin="20,20,20,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50*" />
@@ -62,44 +63,44 @@
                         </Grid> -->
                         <Frame BackgroundColor="#FBFFE9" Margin="0,25,0,0">
                             <!-- -22,-20,-22, -20 -->
-                            
-                                <Button
+
+                            <Button
                                 Margin="0,-20,0,-20" Padding="0,-5,0,-5"
                                 BackgroundColor="#FBFFE9"
                                 BorderColor="#c2c5b5"
                                 BorderWidth="1"
                                 HorizontalOptions="FillAndExpand"
                                 Text="Добавить новую заметку" />
-                            
+
                         </Frame>
                         <CollectionView
-                Margin="0,-8,0,0"
-                ItemsSource="{Binding Notes}"
-                VerticalOptions="FillAndExpand">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout
-                        HorizontalItemSpacing="5"
-                        Orientation="Vertical" 
-                        Span="1"
-                        VerticalItemSpacing="0" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BackgroundColor="#FBFFE9" > <!-- -22,-20,-22, -20 -->
-                            <Button
-                                Margin="0,-20,0,-20" Padding="0,-5,0,-5"
-                                BackgroundColor="#FBFFE9"
-                                BorderColor="#c2c5b5"
-                                BorderWidth="1"  
-                                Command="{Binding BindingContext.MoveToNoteEditCommand, Source={x:Reference Note}}"
-                                CommandParameter="{Binding .}"
-                                Text="{Binding ClippedContent}" />
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                            Margin="0,-8,0,0"
+                            ItemsSource="{Binding Notes}"
+                            VerticalOptions="FillAndExpand">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout
+                                    HorizontalItemSpacing="5"
+                                    Orientation="Vertical"
+                                    Span="1"
+                                    VerticalItemSpacing="0" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame BackgroundColor="#FBFFE9"> <!-- -22,-20,-22, -20 -->
+                                        <Button
+                                            Margin="0,-20,0,-20" Padding="0,-5,0,-5"
+                                            BackgroundColor="#FBFFE9"
+                                            BorderColor="#c2c5b5"
+                                            BorderWidth="1"
+                                            Command="{Binding BindingContext.MoveToNoteEditCommand, Source={x:Reference Note}}"
+                                            CommandParameter="{Binding .}"
+                                            Text="{Binding ClippedContent}" />
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
 
-        </StackLayout>
+                    </StackLayout>
                 </ScrollView>
 
             </RefreshView>

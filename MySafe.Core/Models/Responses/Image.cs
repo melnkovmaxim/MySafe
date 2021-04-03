@@ -2,7 +2,7 @@
 
 namespace MySafe.Core.Entities.Responses
 {
-    public class Image: ResponseBase
+    public class Image : ResponseBase
     {
     }
 }

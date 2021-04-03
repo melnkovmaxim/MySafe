@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using MySafe.Business.Mediator.Abstractions;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Core.Models.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
-namespace MySafe.Business.Mediator.Users.RegisterCommand
+namespace MySafe.Services.Mediator.Users.RegisterCommand
 {
-    public class RegisterCommandHandler : RequestHandlerBase<RegisterCommand, MySafe.Core.Entities.Responses.User>
+    public class RegisterCommandHandler : RequestHandlerBase<RegisterCommand, User>
     {
         public RegisterCommandHandler(IRestClient restClient) : base(restClient)
         {

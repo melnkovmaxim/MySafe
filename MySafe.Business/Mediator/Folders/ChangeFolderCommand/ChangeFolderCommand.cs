@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MySafe.Business.Mediator.Folders.ChangeFolderCommand
+﻿namespace MySafe.Services.Mediator.Folders.ChangeFolderCommand
 {
     /// <summary>
-    /// Изменить ячейку
+    ///     Изменить ячейку
     /// </summary>
     public class ChangeFolderCommand
     {
-        
     }
 }

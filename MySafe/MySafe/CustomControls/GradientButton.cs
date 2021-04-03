@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace MySafe.Presentation
 {
-    public class GradientButton: Button
+    public class GradientButton : Button
     {
         #region enum
+
         // specifies the orientation of the gradient color
         public enum GradientOrientationStates
         {
             Vertical,
             Horizontal
         }
+
         #endregion
 
         #region bindable properties
+
         public static readonly BindableProperty StartColorProperty =
             BindableProperty.Create(
                 nameof(StartColor),
@@ -39,54 +37,56 @@ namespace MySafe.Presentation
                 typeof(GradientOrientationStates),
                 typeof(GradientButton),
                 default(GradientOrientationStates));
+
         #endregion
 
         #region properties
 
         /// <summary>
-        /// The start color of the gradient background
+        ///     The start color of the gradient background
         /// </summary>
         public Color StartColor
         {
-            get => (Color)GetValue(StartColorProperty);
+            get => (Color) GetValue(StartColorProperty);
             set => SetValue(StartColorProperty, value);
         }
 
         /// <summary>
-        ///  The end color of the gradient background
+        ///     The end color of the gradient background
         /// </summary>
         public Color EndColor
         {
-            get => (Color)GetValue(EndColorProperty);
+            get => (Color) GetValue(EndColorProperty);
             set => SetValue(EndColorProperty, value);
         }
 
         /// <summary>
-        /// The start color of the gradient background
+        ///     The start color of the gradient background
         /// </summary>
         public Color PressedStartColor
         {
-            get => (Color)GetValue(StartColorProperty);
+            get => (Color) GetValue(StartColorProperty);
             set => SetValue(StartColorProperty, value);
         }
 
         /// <summary>
-        ///  The end color of the gradient background
+        ///     The end color of the gradient background
         /// </summary>
         public Color PressedEndColor
         {
-            get => (Color)GetValue(EndColorProperty);
+            get => (Color) GetValue(EndColorProperty);
             set => SetValue(EndColorProperty, value);
         }
 
         /// <summary>
-        ///  The gradient color orientation
+        ///     The gradient color orientation
         /// </summary>
         public GradientOrientationStates GradientOrientation
         {
-            get => (GradientOrientationStates)GetValue(GradientOrientationProperty);
+            get => (GradientOrientationStates) GetValue(GradientOrientationProperty);
             set => SetValue(GradientOrientationProperty, value);
         }
+
         #endregion
     }
 }

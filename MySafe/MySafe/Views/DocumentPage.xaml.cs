@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace MySafe.Presentation.Views
@@ -14,13 +10,12 @@ namespace MySafe.Presentation.Views
     public partial class DocumentPage : ContentPage
     {
         private const double ROTATATION_DEGRESS = 90d;
-        private Image _currentCarouselImage => Carousel.VisibleViews.Last() as Image;
-        private List<Image> _rotatedImages;
+        private readonly List<Image> _rotatedImages;
 
         public DocumentPage()
         {
             InitializeComponent();
-            
+
             _rotatedImages = new List<Image>();
 
             RefreshView.Refreshing += (s, e) => Refreshing();
@@ -29,19 +24,15 @@ namespace MySafe.Presentation.Views
 
             Task.Run(async () =>
             {
-                while (true)
-                {
-                    await _spinnetImage.RelRotateTo(360, 3000); 
-                }
+                while (true) await _spinnetImage.RelRotateTo(360, 3000);
             });
         }
 
+        private Image _currentCarouselImage => Carousel.VisibleViews.Last() as Image;
+
         private void Refreshing()
         {
-            foreach (var item in _rotatedImages)
-            {
-                item.RotateTo(0d);
-            }
+            foreach (var item in _rotatedImages) item.RotateTo(0d);
 
             _rotatedImages.Clear();
         }
@@ -52,10 +43,7 @@ namespace MySafe.Presentation.Views
 
             _currentCarouselImage.RotateTo(_currentCarouselImage.Rotation + degrees);
 
-            if (!_rotatedImages.Contains(_currentCarouselImage))
-            {
-                _rotatedImages.Add(_currentCarouselImage);
-            }
+            if (!_rotatedImages.Contains(_currentCarouselImage)) _rotatedImages.Add(_currentCarouselImage);
         }
 
         private enum RotateEnum

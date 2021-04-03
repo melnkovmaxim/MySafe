@@ -1,33 +1,29 @@
-﻿using MySafe.Business.Services.Abstractions;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 using MySafe.Core;
 using MySafe.Core.Commands;
-using System.Collections.ObjectModel;
-using System.Linq;
+using MySafe.Domain.Services;
 
-namespace MySafe.Business.Services
+namespace MySafe.Services.Services
 {
     public class PasswordManager : BindableBase, IPasswordManagerService, ITransientService
     {
-        public ObservableCollection<string> PasswordCollection { get; }
-        public string Password => string.Join("", PasswordCollection.Reverse());
-        public int PasswordMaxLength => MySafeApp.Resources.DefaultApplicationPasswordLength;
-        public int PasswordLength => PasswordCollection.Count(x => !string.IsNullOrEmpty(x));
-
-
         public PasswordManager()
         {
             PasswordCollection = new ObservableCollection<string>();
             SetPasswordLength(PasswordMaxLength);
         }
 
+        public ObservableCollection<string> PasswordCollection { get; }
+        public string Password => string.Join("", PasswordCollection.Reverse());
+        public int PasswordMaxLength => MySafeApp.Resources.DefaultApplicationPasswordLength;
+        public int PasswordLength => PasswordCollection.Count(x => !string.IsNullOrEmpty(x));
+
         public void SetPasswordLength(int length)
         {
             PasswordCollection.Clear();
 
-            for (var i = 0; i < length; i++)
-            {
-                PasswordCollection.Add(string.Empty);
-            }
+            for (var i = 0; i < length; i++) PasswordCollection.Add(string.Empty);
         }
 
         public bool TryAdd(string value)
@@ -54,10 +50,7 @@ namespace MySafe.Business.Services
 
         public void Clear()
         {
-            for (var i = 0; i < PasswordMaxLength; i++)
-            {
-                PasswordCollection[i] = string.Empty;
-            }
+            for (var i = 0; i < PasswordMaxLength; i++) PasswordCollection[i] = string.Empty;
         }
     }
 }

@@ -1,41 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Linq;
+using System.Reflection;
 using AutoMapper;
 using DryIoc;
 using FluentValidation;
 using MediatR;
-using MySafe.Business.Services;
-using MySafe.Business.Services.Abstractions;
-using MySafe.Data.Abstractions;
-using MySafe.Presentation.Repositories;
+using MediatR.Pipeline;
+using MySafe.Data.Xamarin;
+using MySafe.Domain.Repositories;
+using MySafe.Domain.Services;
 using MySafe.Presentation.ViewModels;
 using MySafe.Presentation.Views;
+using MySafe.Services.MapperProfiles;
+using MySafe.Services.Mediator;
+using MySafe.Services.Mediator.Abstractions;
+using MySafe.Services.Services;
+using MySafe.Services.Xamarin;
 using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
 using RestSharp;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Reflection;
-using ImTools;
-using MediatR.Pipeline;
-using MySafe.Business.MapperProfiles;
-using MySafe.Business.Mediator;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Business.Mediator.Documents.CreateDocumentCommand;
-using MySafe.Business.Mediator.Documents.DocumentInfoQuery;
-using MySafe.Business.Mediator.Folders.FolderInfoQuery;
-using MySafe.Business.Mediator.Pipelines;
-using MySafe.Business.Mediator.Users.SignInCommand;
-using MySafe.Business.Mediator.Users.TwoFactorAuthenticationCommand;
-using MySafe.Core.Entities.Responses;
-using MySafe.Core.Entities.Responses.Abstractions;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
 
-namespace MySafe
+namespace MySafe.Presentation
 {
     public static class Configure
     {
@@ -45,6 +33,8 @@ namespace MySafe
             containerRegistry.Register<ISecureStorageRepository, SecureStorageRepository>();
             containerRegistry.Register<IDeviceAuthService, DeviceAuthService>();
             containerRegistry.Register<IRestClient, RestClientWrapper>();
+            containerRegistry.Register<IFileService, FileService>();
+            containerRegistry.Register<IPermissionService, PermissionService>();
 
             return containerRegistry;
         }
@@ -97,10 +87,7 @@ namespace MySafe
                     .GetTypes()
                     .Where(t => t.GetBaseType() == typeof(Profile));
 
-                foreach (var profile in profiles)
-                {
-                    cfg.AddMaps(profile);
-                }
+                foreach (var profile in profiles) cfg.AddMaps(profile);
 
                 cfg.AddMaps(typeof(ApiProfile));
             });
@@ -116,7 +103,7 @@ namespace MySafe
 
             container.RegisterDelegate<ServiceFactory>(r => r.Resolve);
             container.RegisterMany(
-                new[] { typeof(IMediator).GetAssembly(), typeof(Configure).GetAssembly() }, Registrator.Interfaces);
+                new[] {typeof(IMediator).GetAssembly(), typeof(Configure).GetAssembly()}, Registrator.Interfaces);
 
             var mediatrInterfaces = new[]
             {
@@ -130,19 +117,16 @@ namespace MySafe
 
             var referencedAssemblies = Assembly.GetAssembly(typeof(Configure)).GetReferencedAssemblies();
             var types = referencedAssemblies
-                .Where(x => x.Name.Contains(nameof(MySafe.Business)))
+                .Where(x => x.Name.Contains(nameof(Services)))
                 .Select(Assembly.Load)
                 .SelectMany(x => x.GetTypes())
                 .ToList();
 
             foreach (var @interface in mediatrInterfaces)
-            {
                 container.RegisterMany(types
                         .Where(t => !t.IsAbstract && t.GetInterfaces()
                             .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == @interface)),
                     serviceTypeCondition: Registrator.Interfaces);
-
-            }
 
             container.Register(typeof(BearerPreRequestHandler<>));
 
@@ -159,7 +143,10 @@ namespace MySafe
 
     public class Ioc
     {
-        public static T Resolve<T>() => PrismApplicationBase.Current.Container.Resolve<T>();
+        public static T Resolve<T>()
+        {
+            return PrismApplicationBase.Current.Container.Resolve<T>();
+        }
     }
 
     public class VmLocator

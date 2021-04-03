@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage
     x:Class="MySafe.Presentation.Views.DocumentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
@@ -46,7 +47,9 @@
                                         <DataTemplate>
                                             <Image Source="{Binding ImageSource}" VerticalOptions="Start">
                                                 <Image.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference Document}}" CommandParameter="{Binding .}" />
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference Document}}"
+                                                        CommandParameter="{Binding .}" />
                                                 </Image.GestureRecognizers>
                                             </Image>
                                         </DataTemplate>
@@ -111,14 +114,14 @@
                                 </Grid>
                             </StackLayout>
                         </Grid>
-                        <Grid BackgroundColor="#F1BE74" >
+                        <Grid BackgroundColor="#F1BE74">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Button Margin="0,-10,0,0" VerticalOptions="End"  BackgroundColor="#F1BE74"
-                                        Grid.Row="0"
-                                        
-                                        Text="" />
+                            <Button Margin="0,-10,0,0" VerticalOptions="End" BackgroundColor="#F1BE74"
+                                    Grid.Row="0"
+
+                                    Text="" />
                         </Grid>
                     </StackLayout>
                     <!--<CollectionView ItemsSource="{Binding Attachments}" VerticalOptions="FillAndExpand">
@@ -179,7 +182,6 @@
                                 Value="True">
                                 <Setter Property="IsVisible" Value="True" />
                             </DataTrigger>
-
 
 
                             <DataTrigger

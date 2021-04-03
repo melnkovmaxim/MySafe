@@ -1,6 +1,6 @@
 ﻿namespace MySafe.Core
 {
-    public partial class MySafeApp
+    public class MySafeApp
     {
         public class Resources
         {

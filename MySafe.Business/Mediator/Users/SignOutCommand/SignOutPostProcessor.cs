@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR.Pipeline;
 using MySafe.Core.Entities.Responses;
-using MySafe.Data.Abstractions;
+using MySafe.Core.Models.Responses;
+using MySafe.Domain.Repositories;
 
-namespace MySafe.Business.Mediator.Users.SignOutCommand
+namespace MySafe.Services.Mediator.Users.SignOutCommand
 {
-    public class SignOutPostProcessor: IRequestPostProcessor<SignOutCommand, User>
+    public class SignOutPostProcessor : IRequestPostProcessor<SignOutCommand, User>
     {
         private readonly ISecureStorageRepository _secureStorageRepository;
 

@@ -1,8 +1,8 @@
-﻿using Bogus;
+﻿using System.Threading.Tasks;
+using Bogus;
 using MySafe.Core;
+using MySafe.Domain.Services;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using MySafe.Business.Services.Abstractions;
 
 namespace MySafe.Tests.ServiceTests
 {
@@ -28,7 +28,7 @@ namespace MySafe.Tests.ServiceTests
 
                 await _deviceAuthService.RegisterAsync(password, () => isCompleteAction = true);
 
-                Assert.AreEqual(expectedResult , isCompleteAction);
+                Assert.AreEqual(expectedResult, isCompleteAction);
             }
         }
     }

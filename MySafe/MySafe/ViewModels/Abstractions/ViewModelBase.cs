@@ -1,10 +1,5 @@
-﻿using Prism.Navigation;
-using System.IdentityModel.Tokens.Jwt;
-using System.Threading;
-using System.Threading.Tasks;
-using MySafe.Business.Extensions;
-using MySafe.Core.Entities.Responses.Abstractions;
-using BindableBase = Prism.Mvvm.BindableBase;
+﻿using Prism.Mvvm;
+using Prism.Navigation;
 
 namespace MySafe.Presentation.ViewModels.Abstractions
 {
@@ -12,11 +7,11 @@ namespace MySafe.Presentation.ViewModels.Abstractions
     {
         protected readonly INavigationService _navigationService;
 
-        public string Error { get; set; }
-
         protected ViewModelBase(INavigationService navigationService)
         {
             _navigationService = navigationService;
         }
+
+        public string Error { get; set; }
     }
 }

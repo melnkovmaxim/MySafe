@@ -1,16 +1,10 @@
-﻿using MediatR;
+﻿using MySafe.Core.Entities.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
-using RestSharp.Authenticators;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using MySafe.Business.Extensions;
-using MySafe.Business.Mediator.Abstractions;
-using MySafe.Core.Entities.Responses;
 
-namespace MySafe.Business.Mediator.Images.RestoreTrashImageCommand
+namespace MySafe.Services.Mediator.Images.RestoreTrashImageCommand
 {
-    public class RestoreTrashImageCommandHandler: RequestHandlerBase<RestoreTrashImageCommand, Image>
+    public class RestoreTrashImageCommandHandler : RequestHandlerBase<RestoreTrashImageCommand, Image>
     {
         public RestoreTrashImageCommandHandler(IRestClient restClient) : base(restClient)
         {
