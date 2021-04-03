@@ -1,7 +1,5 @@
 ﻿using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
-using MySafe.Services.Mediator.Users.SignInCommand;
-using Newtonsoft.Json;
 using RestSharp;
 
 namespace MySafe.Services.Mediator.Users.RegisterCommand
@@ -13,9 +11,9 @@ namespace MySafe.Services.Mediator.Users.RegisterCommand
     {
         public readonly string Email;
         public readonly string Login;
-        public readonly string PhoneNumber;
         public readonly string Password;
         public readonly string PasswordConfirmation;
+        public readonly string PhoneNumber;
         public readonly bool UserAgreement;
 
         public RegisterCommand(string email, string login, string phoneNumber, string password,

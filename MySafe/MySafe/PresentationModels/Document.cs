@@ -4,7 +4,7 @@ using MySafe.Presentation.Models.Abstractions;
 
 namespace MySafe.Presentation.Models
 {
-    public class Document: PresentationModelBase
+    public class Document : PresentationModelBase
     {
         public int Id { get; set; }
         public string Name { get; set; }

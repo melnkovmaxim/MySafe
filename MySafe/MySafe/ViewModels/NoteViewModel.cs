@@ -4,7 +4,6 @@ using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
 using MySafe.Core.Entities.Abstractions;
-using MySafe.Core.Models;
 using MySafe.Core.Models.Responses;
 using MySafe.Presentation.Models;
 using MySafe.Presentation.Models.Abstractions;
@@ -21,7 +20,8 @@ namespace MySafe.Presentation.ViewModels
 
         private AsyncCommand<Note> _moveToNoteEditCommand;
 
-        public NoteViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper) : base(navigationService, mapper)
+        public NoteViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper) : base(
+            navigationService, mapper)
         {
             _mediator = mediator;
             Notes = new ObservableCollection<Note>();

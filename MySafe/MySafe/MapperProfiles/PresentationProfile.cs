@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using MySafe.Core.Entities;
-using MySafe.Core.Models.Requests;
 using MySafe.Core.Models.Responses;
 using MySafe.Presentation.Models;
-using MySafe.Services.Mediator.Users.SignInCommand;
-using MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand;
 
 namespace MySafe.Presentation.MapperProfiles
 {

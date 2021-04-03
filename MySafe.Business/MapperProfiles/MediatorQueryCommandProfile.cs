@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MySafe.Core.Models.JsonRequests;
 using MySafe.Core.Models.Requests;
 using MySafe.Services.Mediator.Documents.ChangeDocumentCommand;
@@ -37,10 +32,8 @@ using MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand;
 
 namespace MySafe.Services.MapperProfiles
 {
-    public class MediatorQueryCommandProfile: Profile
+    public class MediatorQueryCommandProfile : Profile
     {
-
-
         public MediatorQueryCommandProfile()
         {
             // Users

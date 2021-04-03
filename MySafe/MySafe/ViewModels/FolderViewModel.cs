@@ -2,9 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
-using MySafe.Core.Models;
 using MySafe.Core.Models.Responses;
 using MySafe.Presentation.EntityExtensions;
 using MySafe.Presentation.Models;
@@ -16,7 +16,6 @@ using MySafe.Services.Mediator.Safe.SafeInfoQuery;
 using Prism.Navigation;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
-using IMapper = AutoMapper.IMapper;
 
 namespace MySafe.Presentation.ViewModels
 {

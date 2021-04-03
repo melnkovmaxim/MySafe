@@ -3,7 +3,7 @@ using MySafe.Presentation.Models.Abstractions;
 
 namespace MySafe.Presentation.Models
 {
-    public class Folder: PresentationModelBase
+    public class Folder : PresentationModelBase
     {
         public int Id { get; set; }
         public string Name { get; set; }

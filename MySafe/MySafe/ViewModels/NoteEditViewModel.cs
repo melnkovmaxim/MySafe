@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using MySafe.Core.Models;
 using MySafe.Core.Models.Responses;
 using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
@@ -14,7 +13,8 @@ namespace MySafe.Presentation.ViewModels
     {
         private readonly IMediator _mediator;
 
-        public NoteEditViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper) : base(navigationService, mapper)
+        public NoteEditViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper) : base(
+            navigationService, mapper)
         {
             _mediator = mediator;
         }

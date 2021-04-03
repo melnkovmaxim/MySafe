@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
-using MySafe.Core.Entities.Abstractions;
 using MySafe.Core.Models.Responses;
 using MySafe.Domain.Services;
 using MySafe.Presentation.EntityExtensions;
@@ -124,12 +123,16 @@ namespace MySafe.Presentation.ViewModels
 
                 if (result.ContentType.Split('/')[0] == "image")
                 {
-                    var mediatorResult = await _mediator.Send(new UploadImageCommand(Document.Id, result.FileName, result.ContentType, bytes));
+                    var mediatorResult =
+                        await _mediator.Send(new UploadImageCommand(Document.Id, result.FileName, result.ContentType,
+                            bytes));
                     response = mediatorResult.ToImagePresentationModel();
                 }
                 else
                 {
-                    var mediatorResult = await _mediator.Send(new UploadSheetCommand(Document.Id, result.FileName, result.ContentType, bytes));
+                    var mediatorResult =
+                        await _mediator.Send(new UploadSheetCommand(Document.Id, result.FileName, result.ContentType,
+                            bytes));
                     response = mediatorResult.ToSheetPresentationModel();
                 }
 
@@ -209,7 +212,8 @@ namespace MySafe.Presentation.ViewModels
                 await stream.DisposeAsync();
             });
 
-        protected override Task<DocumentEntity> _refreshTask => _mediator.Send(new DocumentInfoQuery(_itemId.Value), GetCancellationToken());
+        protected override Task<DocumentEntity> _refreshTask =>
+            _mediator.Send(new DocumentInfoQuery(_itemId.Value), GetCancellationToken());
 
         protected override void RefillObservableCollection(Document mediatorEntity)
         {

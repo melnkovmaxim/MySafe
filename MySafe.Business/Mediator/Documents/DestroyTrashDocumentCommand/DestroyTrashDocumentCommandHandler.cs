@@ -6,7 +6,8 @@ using RestSharp;
 
 namespace MySafe.Services.Mediator.Documents.DestroyTrashDocumentCommand
 {
-    public class DestroyInTrashCommandHandler : RequestHandlerBase<DestroyTrashDocumentCommand, DocumentJsonBody, DocumentEntity>
+    public class
+        DestroyInTrashCommandHandler : RequestHandlerBase<DestroyTrashDocumentCommand, DocumentJsonBody, DocumentEntity>
     {
         public DestroyInTrashCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
         {

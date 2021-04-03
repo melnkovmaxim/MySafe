@@ -2,7 +2,7 @@
 
 namespace MySafe.Presentation.Models
 {
-    public class Image: PresentationModelBase
+    public class Image : PresentationModelBase
     {
     }
 }

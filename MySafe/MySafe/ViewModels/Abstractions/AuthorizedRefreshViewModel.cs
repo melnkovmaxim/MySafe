@@ -8,10 +8,11 @@ using Prism.Navigation;
 namespace MySafe.Presentation.ViewModels.Abstractions
 {
     public abstract class AuthorizedRefreshViewModel<TEntity, TModel> : AuthorizedViewModelBase, INavigatedAware
-        where TEntity: IEntity
+        where TEntity : IEntity
         where TModel : IPresentationModel
     {
-        protected AuthorizedRefreshViewModel(INavigationService navigationService, IMapper mapper) : base(navigationService)
+        protected AuthorizedRefreshViewModel(INavigationService navigationService, IMapper mapper) : base(
+            navigationService)
         {
             RefreshCommand = new AsyncCommand(async () =>
             {

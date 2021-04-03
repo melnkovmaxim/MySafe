@@ -2,23 +2,21 @@
 using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
-using MySafe.Core.Models;
 using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
 using MySafe.Services.Mediator.Users.RegisterCommand;
-using MySafe.Services.Mediator.Users.SignInCommand;
 using Prism.Navigation;
 
 namespace MySafe.Presentation.ViewModels
 {
     public class RegisterViewModel : ViewModelBase
     {
-        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
         public RegisterViewModel(
-            INavigationService navigationService, 
+            INavigationService navigationService,
             IMediator mediator,
             IMapper mapper) : base(navigationService)
         {

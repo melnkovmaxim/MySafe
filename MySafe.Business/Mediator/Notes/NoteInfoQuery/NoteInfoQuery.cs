@@ -1,7 +1,5 @@
-﻿using MySafe.Core.Models;
-using MySafe.Core.Models.Responses;
+﻿using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
-using Newtonsoft.Json;
 using RestSharp;
 
 namespace MySafe.Services.Mediator.Notes.NoteInfoQuery

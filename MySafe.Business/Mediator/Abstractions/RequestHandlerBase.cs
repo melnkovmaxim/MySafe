@@ -15,9 +15,9 @@ namespace MySafe.Services.Mediator.Abstractions
 {
     [ConfigureAwait(false)]
     public abstract class RequestHandlerBase<TRequest, TJsonBody, TResponse> : IRequestHandler<TRequest, TResponse>
-        where TRequest      : RequestBase<TResponse>
-        where TJsonBody     : IJsonBody
-        where TResponse     : IEntity
+        where TRequest : RequestBase<TResponse>
+        where TJsonBody : IJsonBody
+        where TResponse : IEntity
     {
         private readonly IMapper _mapper;
         private readonly IRestClient _restClient;
@@ -35,7 +35,7 @@ namespace MySafe.Services.Mediator.Abstractions
             if (typeof(TJsonBody) != typeof(EmptyJsonBody))
             {
                 var jsonRequest = _mapper.Map<TJsonBody>(request);
-                var json = (jsonRequest as ISerializedObject) != null
+                var json = jsonRequest as ISerializedObject != null
                     ? (jsonRequest as JsonObjectBase)?.SerializeWithRoot()
                     : JsonConvert.SerializeObject(jsonRequest);
 

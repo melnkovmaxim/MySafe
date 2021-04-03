@@ -84,10 +84,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="PresentationModels\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\MySafe.Data.Xamarin\MySafe.Data.Xamarin.csproj" />
     <ProjectReference Include="..\..\MySafe.Services.Xamarin\MySafe.Services.Xamarin.csproj" />
   </ItemGroup>

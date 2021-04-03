@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace MySafe.Presentation.Models
 {
-    public class Attachment: PresentationModelBase
+    public class Attachment : PresentationModelBase
     {
         private ImageSource _imageSource;
         public int Id { get; set; }

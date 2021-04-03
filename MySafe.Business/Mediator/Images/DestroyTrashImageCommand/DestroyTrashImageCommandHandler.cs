@@ -6,7 +6,8 @@ using RestSharp;
 
 namespace MySafe.Services.Mediator.Images.DestroyTrashImageCommand
 {
-    public class DestroyTrashImageCommandHandler : RequestHandlerBase<DestroyTrashImageCommand, ImagesJsonBody, ImageEntity>
+    public class
+        DestroyTrashImageCommandHandler : RequestHandlerBase<DestroyTrashImageCommand, ImagesJsonBody, ImageEntity>
     {
         public DestroyTrashImageCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
         {

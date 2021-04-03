@@ -6,7 +6,8 @@ using RestSharp;
 
 namespace MySafe.Services.Mediator.Images.RestoreTrashImageCommand
 {
-    public class RestoreTrashImageCommandHandler : RequestHandlerBase<RestoreTrashImageCommand, ImagesJsonBody, ImageEntity>
+    public class
+        RestoreTrashImageCommandHandler : RequestHandlerBase<RestoreTrashImageCommand, ImagesJsonBody, ImageEntity>
     {
         public RestoreTrashImageCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
         {

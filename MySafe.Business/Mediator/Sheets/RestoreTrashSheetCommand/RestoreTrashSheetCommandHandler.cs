@@ -6,7 +6,8 @@ using RestSharp;
 
 namespace MySafe.Services.Mediator.Sheets.RestoreTrashSheetCommand
 {
-    public class RestoreTrashSheetCommandHandler : RequestHandlerBase<RestoreTrashSheetCommand, EmptyJsonBody, SheetEntity>
+    public class
+        RestoreTrashSheetCommandHandler : RequestHandlerBase<RestoreTrashSheetCommand, EmptyJsonBody, SheetEntity>
     {
         public RestoreTrashSheetCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
         {

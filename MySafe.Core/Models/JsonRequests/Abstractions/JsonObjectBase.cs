@@ -5,6 +5,8 @@ namespace MySafe.Core.Models
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public abstract class JsonObjectBase
     {
+        protected virtual string _rootName => GetType().Name.ToLower();
+
         //  Получаем сериализованный объект вместе с корневым названием
         public virtual string SerializeWithRoot()
         {
@@ -12,7 +14,5 @@ namespace MySafe.Core.Models
 
             return $"{{\"{_rootName}\":{serializedObject}}}";
         }
-
-        protected virtual string _rootName => GetType().Name.ToLower();
     }
 }

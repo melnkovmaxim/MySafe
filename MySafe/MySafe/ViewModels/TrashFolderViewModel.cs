@@ -21,7 +21,8 @@ using Xamarin.Forms;
 
 namespace MySafe.Presentation.ViewModels
 {
-    public class TrashFolderViewModel : AuthorizedRefreshViewModel<EntityList<TrashEntity>, PresentationModelList<Trash>>
+    public class
+        TrashFolderViewModel : AuthorizedRefreshViewModel<EntityList<TrashEntity>, PresentationModelList<Trash>>
     {
         private readonly IMapper _mapper;
 

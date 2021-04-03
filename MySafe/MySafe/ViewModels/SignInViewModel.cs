@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
-using MySafe.Core.Models.Requests;
 using MySafe.Domain.Repositories;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
