@@ -1,12 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="MySafe.Presentation.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:behaviors="http://prismlibrary.com"
+    xmlns:controls="clr-namespace:MySafe.Presentation.Controls;assembly=MySafe.Presentation"
     xmlns:presentation="clr-namespace:MySafe.Presentation;assembly=MySafe.Presentation"
-    xmlns:uniformGrid="clr-namespace:UniformGrid;assembly=UniformGrid"
+    xmlns:views="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:xamPane="clr-namespace:XamPane;assembly=XamPane"
     x:Name="Main"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=MainViewModel}"
     NavigationPage.HasNavigationBar="False">
@@ -141,7 +143,28 @@
                             Orientation="Horizontal">
                             <!--  WidthRequest="380"  -->
                             <!--    -->
-                            <CollectionView
+                            <controls:UniformGrid
+                                BindableLayout.ItemsSource="{Binding Folders}"
+                                ColumnSpacing="0"
+                                RowSpacing="0"
+                                VerticalOptions="FillAndExpand">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Frame HeightRequest="115" VerticalOptions="FillAndExpand">
+                                            <Button
+                                                Margin="-20,-20,-20,-20"
+                                                Padding="5,0,5,0"
+                                                BackgroundColor="#E4E8FB"
+                                                Command="{Binding BindingContext.MoveToFolderCommand, Source={x:Reference Main}}"
+                                                CommandParameter="{Binding .}"
+                                                HorizontalOptions="FillAndExpand"
+                                                Text="{Binding Name}"
+                                                VerticalOptions="FillAndExpand" />
+                                        </Frame>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </controls:UniformGrid>
+                            <!--<CollectionView
                                 x:Name="MyList"
                                 ItemSizingStrategy="MeasureAllItems"
                                 ItemsSource="{Binding Folders}"
@@ -168,7 +191,7 @@
                                         </Frame>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
-                            </CollectionView>
+                            </CollectionView>-->
                             <!--    -->
 
                             <Frame Margin="20,0,20,10">
