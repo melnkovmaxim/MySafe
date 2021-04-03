@@ -1,4 +1,4 @@
-﻿using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
@@ -7,7 +7,7 @@ namespace MySafe.Services.Mediator.Documents.DocumentInfoQuery
     /// <summary>
     ///     Получить информацию о документе
     /// </summary>
-    public class DocumentInfoQuery : BearerRequestBase<Document>
+    public class DocumentInfoQuery : BearerRequestBase<DocumentEntity>
     {
         public DocumentInfoQuery(int documentId)
         {

@@ -1,10 +1,10 @@
-﻿using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
 namespace MySafe.Services.Mediator.Images.ImageMoveToTrashCommand
 {
-    public class ImageMoveToTrashCommand : BearerRequestBase<Image>
+    public class ImageMoveToTrashCommand : BearerRequestBase<ImageEntity>
     {
         public ImageMoveToTrashCommand(int imageId)
         {

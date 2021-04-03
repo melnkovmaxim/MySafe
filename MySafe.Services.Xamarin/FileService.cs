@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Fody;
 using MediatR;
-using MySafe.Core.Entities.Responses.Abstractions;
+using MySafe.Core.Entities.Abstractions;
 using MySafe.Core.Enums;
 using MySafe.Domain.Repositories;
 using MySafe.Domain.Services;
@@ -41,7 +41,7 @@ namespace MySafe.Services.Xamarin
             return true;
         }
 
-        public async Task<IResponse> DownloadFileAsync(int attachmentId, AttachmentTypeEnum attachmentType)
+        public async Task<IEntity> DownloadFileAsync(int attachmentId, AttachmentTypeEnum attachmentType)
         {
             if (attachmentType == AttachmentTypeEnum.Image)
                 return await _mediator.Send(new OriginalImageQuery(attachmentId));

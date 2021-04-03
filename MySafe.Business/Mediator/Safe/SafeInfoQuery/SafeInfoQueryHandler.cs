@@ -1,11 +1,14 @@
-﻿using MySafe.Services.Mediator.Abstractions;
+﻿using AutoMapper;
+using MySafe.Core.Models.JsonRequests;
+using MySafe.Core.Models.Responses;
+using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
 namespace MySafe.Services.Mediator.Safe.SafeInfoQuery
 {
-    public class SafeInfoQueryHandler : RequestHandlerBase<SafeInfoQuery, Core.Entities.Responses.Safe>
+    public class SafeInfoQueryHandler : RequestHandlerBase<SafeInfoQuery, SafeJsonBody, SafeEntity>
     {
-        public SafeInfoQueryHandler(IRestClient restClient) : base(restClient)
+        public SafeInfoQueryHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
         {
         }
     }

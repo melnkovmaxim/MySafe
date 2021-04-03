@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
-using MySafe.Core.Entities.Responses;
-using MySafe.Core.Entities.Responses.Abstractions;
-using MySafe.Core.Models.Responses.Abstractions;
+using MySafe.Core.Entities.Abstractions;
+using MySafe.Core.Models.Responses;
 using MySafe.Presentation.Models;
+using MySafe.Presentation.Models.Abstractions;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Services.Mediator.Documents.DestroyTrashDocumentCommand;
 using MySafe.Services.Mediator.Images.DestroyTrashImageCommand;
@@ -21,7 +21,7 @@ using Xamarin.Forms;
 
 namespace MySafe.Presentation.ViewModels
 {
-    public class TrashFolderViewModel : AuthorizedRefreshViewModel<ResponseList<TrashResponse>>
+    public class TrashFolderViewModel : AuthorizedRefreshViewModel<EntityList<TrashEntity>, PresentationModelList<Trash>>
     {
         private readonly IMapper _mapper;
 
@@ -30,7 +30,7 @@ namespace MySafe.Presentation.ViewModels
         private AsyncCommand<Trash> _showItemActionMenuCommand;
 
         public TrashFolderViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper)
-            : base(navigationService)
+            : base(navigationService, mapper)
         {
             _mediator = mediator;
             _mapper = mapper;
@@ -65,7 +65,7 @@ namespace MySafe.Presentation.ViewModels
 
                 if (string.IsNullOrEmpty(result)) return;
 
-                ResponseBase response = null;
+                IEntity response = null;
 
                 if (result.Contains(restore)) response = await RestoreTrashItem(trashItem);
 
@@ -81,9 +81,9 @@ namespace MySafe.Presentation.ViewModels
                 TrashItems.Remove(trashItem);
             });
 
-        protected override Task<ResponseList<TrashResponse>> _refreshTask => _mediator.Send(new TrashContentQuery());
+        protected override Task<EntityList<TrashEntity>> _refreshTask => _mediator.Send(new TrashContentQuery());
 
-        private async Task<ResponseBase> DestroyTrashItem(Trash trashItem)
+        private async Task<IEntity> DestroyTrashItem(Trash trashItem)
         {
             if (trashItem.IsFolder)
                 return await _mediator.Send(new DestroyTrashDocumentCommand(trashItem.Id)).ConfigureAwait(false);
@@ -93,7 +93,7 @@ namespace MySafe.Presentation.ViewModels
             return await _mediator.Send(new DestroyTrashSheetCommand(trashItem.Id)).ConfigureAwait(false);
         }
 
-        private async Task<ResponseBase> RestoreTrashItem(Trash trashItem)
+        private async Task<IEntity> RestoreTrashItem(Trash trashItem)
         {
             if (trashItem.IsFolder)
                 return await _mediator.Send(new DestroyTrashDocumentCommand(trashItem.Id)).ConfigureAwait(false);
@@ -103,7 +103,7 @@ namespace MySafe.Presentation.ViewModels
             return await _mediator.Send(new RestoreTrashSheetCommand(trashItem.Id)).ConfigureAwait(false);
         }
 
-        protected override void RefillObservableCollection(ResponseList<TrashResponse> mediatorResponse)
+        protected override void RefillObservableCollection(PresentationModelList<Trash> mediatorResponse)
         {
             var trashes = _mapper.Map<List<Trash>>(mediatorResponse);
             TrashItems.Clear();

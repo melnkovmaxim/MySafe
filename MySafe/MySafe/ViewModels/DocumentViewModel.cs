@@ -4,9 +4,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
-using MySafe.Core.Entities.Responses.Abstractions;
+using MySafe.Core.Entities.Abstractions;
+using MySafe.Core.Models.Responses;
 using MySafe.Domain.Services;
+using MySafe.Presentation.EntityExtensions;
 using MySafe.Presentation.Models;
+using MySafe.Presentation.Models.Abstractions;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Services.Mediator.Documents.DocumentInfoQuery;
 using MySafe.Services.Mediator.Images.ChangeImageCommand;
@@ -19,11 +22,10 @@ using Plugin.Printing;
 using Prism.Navigation;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Document = MySafe.Core.Entities.Responses.Document;
 
 namespace MySafe.Presentation.ViewModels
 {
-    public class DocumentViewModel : AuthorizedRefreshViewModel<Document>
+    public class DocumentViewModel : AuthorizedRefreshViewModel<DocumentEntity, Document>
     {
         private readonly IFileService _fileService;
         private readonly IMapper _mapper;
@@ -41,7 +43,7 @@ namespace MySafe.Presentation.ViewModels
             IMapper mapper,
             IPermissionService permissionService,
             IFileService fileService)
-            : base(navigationService)
+            : base(navigationService, mapper)
         {
             _mediator = mediator;
             _mapper = mapper;
@@ -62,7 +64,7 @@ namespace MySafe.Presentation.ViewModels
                                              OpenFileCommand.IsExecuting || PrintCommand.IsExecuting ||
                                              RotatePlusCommand.IsExecuting;
 
-        public Models.Document Document { get; set; }
+        public Document Document { get; set; }
         public ObservableCollection<Attachment> Attachments { get; set; }
         public Attachment CurrentAttachment { get; set; }
 
@@ -118,18 +120,22 @@ namespace MySafe.Presentation.ViewModels
                 await stream.CopyToAsync(memoryStream);
                 var bytes = memoryStream.GetBuffer();
 
-                IResponse response;
+                IPresentationModel response;
 
                 if (result.ContentType.Split('/')[0] == "image")
-                    response = await _mediator.Send(new UploadImageCommand(Document.Id, result.FileName,
-                        result.ContentType, bytes));
+                {
+                    var mediatorResult = await _mediator.Send(new UploadImageCommand(Document.Id, result.FileName, result.ContentType, bytes));
+                    response = mediatorResult.ToImagePresentationModel();
+                }
                 else
-                    response = await _mediator.Send(new UploadSheetCommand(Document.Id, result.FileName,
-                        result.ContentType, bytes));
+                {
+                    var mediatorResult = await _mediator.Send(new UploadSheetCommand(Document.Id, result.FileName, result.ContentType, bytes));
+                    response = mediatorResult.ToSheetPresentationModel();
+                }
 
                 if (!response.HasError)
                 {
-                    var mediatorResult = await _refreshTask;
+                    var mediatorResult = (await _refreshTask).ToDocumentToPresentationModel();
                     RefillObservableCollection(mediatorResult);
                     return;
                 }
@@ -141,12 +147,18 @@ namespace MySafe.Presentation.ViewModels
         public AsyncCommand<Attachment> MoveToTrashCommand =>
             _moveToTrashCommand ??= new AsyncCommand<Attachment>(async attachment =>
             {
-                IResponse response;
+                IPresentationModel response;
 
                 if (attachment.IsImage)
-                    response = await _mediator.Send(new ImageMoveToTrashCommand(attachment.Id));
+                {
+                    var mediatorResult = await _mediator.Send(new ImageMoveToTrashCommand(attachment.Id));
+                    response = mediatorResult.ToImagePresentationModel();
+                }
                 else
-                    response = await _mediator.Send(new SheetMoveToTrashCommand(attachment.Id));
+                {
+                    var mediatorResult = await _mediator.Send(new SheetMoveToTrashCommand(attachment.Id));
+                    response = mediatorResult.ToSheetPresentationModel();
+                }
 
                 if (response.HasError)
                 {
@@ -197,12 +209,11 @@ namespace MySafe.Presentation.ViewModels
                 await stream.DisposeAsync();
             });
 
-        protected override Task<Document> _refreshTask =>
-            _mediator.Send(new DocumentInfoQuery(_itemId.Value), GetCancellationToken());
+        protected override Task<DocumentEntity> _refreshTask => _mediator.Send(new DocumentInfoQuery(_itemId.Value), GetCancellationToken());
 
-        protected override void RefillObservableCollection(Document mediatorResponse)
+        protected override void RefillObservableCollection(Document mediatorEntity)
         {
-            Document = _mapper.Map<Models.Document>(mediatorResponse);
+            Document = _mapper.Map<Document>(mediatorEntity);
             Attachments.Clear();
             Document.Attachments.ForEach(Attachments.Add);
         }

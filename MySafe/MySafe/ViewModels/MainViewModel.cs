@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
-using MySafe.Core.Entities.Responses;
+using MySafe.Core.Models.Responses;
+using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
 using MySafe.Services.Mediator.Safe.SafeInfoQuery;
@@ -14,10 +15,9 @@ using Prism.Navigation;
 
 namespace MySafe.Presentation.ViewModels
 {
-    public class MainViewModel : AuthorizedRefreshViewModel<Safe>
+    public class MainViewModel : AuthorizedRefreshViewModel<SafeEntity, Safe>
     {
         private readonly IMapper _mapper;
-
         private readonly IMediator _mediator;
 
         private int _maxCapacity;
@@ -26,7 +26,7 @@ namespace MySafe.Presentation.ViewModels
         private int _usedCapacity;
 
         public MainViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper)
-            : base(navigationService)
+            : base(navigationService, mapper)
         {
             _mediator = mediator;
             _mapper = mapper;
@@ -38,7 +38,7 @@ namespace MySafe.Presentation.ViewModels
 
         public ObservableCollection<Folder> Folders { get; set; }
 
-        protected override Task<Safe> _refreshTask => _mediator.Send(new SafeInfoQuery());
+        protected override Task<SafeEntity> _refreshTask => _mediator.Send(new SafeInfoQuery());
 
         public AsyncCommand<Folder> MoveToFolderCommand =>
             _moveToFolderCommand ??= new AsyncCommand<Folder>(async folder =>
@@ -53,19 +53,19 @@ namespace MySafe.Presentation.ViewModels
             await _navigationService.NavigateAsync(nameof(DeviceAuthPage));
         });
 
-        protected override void RefillObservableCollection(Safe mediatorResponse)
+        protected override void RefillObservableCollection(Safe mediatorEntity)
         {
-            //_mapper.Map(Folders, mediatorResponse.Folders);
+            //_mapper.Map(Folders, mediatorEntity.Folders);
 
-            _maxCapacity = Convert.ToInt32(Math.Floor(mediatorResponse.Capacity));
-            _usedCapacity = Convert.ToInt32(Math.Floor(mediatorResponse.UsedCapacity));
+            _maxCapacity = Convert.ToInt32(Math.Floor(mediatorEntity.Capacity));
+            _usedCapacity = Convert.ToInt32(Math.Floor(mediatorEntity.UsedCapacity));
 
             Progress = Math.Floor((double) _maxCapacity / _usedCapacity) / 100;
             SafeSizeInfo = $"{_usedCapacity}/{_maxCapacity} MB";
 
             Folders.Clear();
             //queryResponse.Folders.ForEach(Folders.Add);
-            mediatorResponse.Folders.ForEach(x =>
+            mediatorEntity.Folders.ForEach(x =>
             {
                 x.Name = x.Name.Split(':').FirstOrDefault();
                 Folders.Add(x);

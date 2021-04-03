@@ -4,8 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AppCenter.Crashes;
 using MySafe.Core;
-using MySafe.Core.Entities.Responses;
-using MySafe.Core.Entities.Responses.Abstractions;
+using MySafe.Core.Entities.Abstractions;
 using MySafe.Core.Models.Responses;
 using Newtonsoft.Json;
 using RestSharp;
@@ -17,7 +16,7 @@ namespace MySafe.Services.Extensions
     {
         public static async Task<T> SendAndGetResponseAsync<T>(this IRestClient client,
             IRestRequest request, CancellationToken cancellationToken)
-            where T : IResponse
+            where T : IEntity
         {
             var commandResponse = (T) Activator.CreateInstance(typeof(T));
 
@@ -31,7 +30,7 @@ namespace MySafe.Services.Extensions
                 {
                     var properties = new Dictionary<string, string>
                     {
-                        {"User login", MySafeApp.Resources.UserLogin},
+                        {"UserEntity login", MySafeApp.Resources.UserLogin},
                         {"Url", response.ResponseUri.AbsoluteUri},
                         {"Request method", request.Method.ToString()},
                         {"Status code", response.StatusDescription},
@@ -58,7 +57,7 @@ namespace MySafe.Services.Extensions
                 else
                     commandResponse.FileBytes = response.RawBytes;
 
-                if (commandResponse is User userResponse) userResponse.JwtToken = response.GetJwtToken();
+                if (commandResponse is UserEntity userResponse) userResponse.JwtToken = response.GetJwtToken();
             }
             catch (Exception ex)
             {

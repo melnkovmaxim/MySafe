@@ -2,11 +2,12 @@
 using System.Threading.Tasks;
 using MediatR.Pipeline;
 using MySafe.Core;
+using MySafe.Core.Models.Responses;
 using MySafe.Domain.Repositories;
 
 namespace MySafe.Services.Mediator.Users.SignInCommand
 {
-    public class SignInCommandPostProcessor : IRequestPostProcessor<SignInCommand, Core.Models.Responses.User>
+    public class SignInCommandPostProcessor : IRequestPostProcessor<SignInCommand, UserEntity>
     {
         private readonly ISecureStorageRepository _secureStorageRepository;
 
@@ -15,14 +16,14 @@ namespace MySafe.Services.Mediator.Users.SignInCommand
             _secureStorageRepository = secureStorageRepository;
         }
 
-        public async Task Process(SignInCommand request, Core.Models.Responses.User response,
+        public async Task Process(SignInCommand request, UserEntity response,
             CancellationToken cancellationToken)
         {
             if (!response.HasError)
             {
                 await _secureStorageRepository.SetJwtTokenForTwoFactorAsync(response.JwtToken);
-                await _secureStorageRepository.SetUserLogin(request.User.Login);
-                MySafeApp.Resources.UserLogin = request.User.Login;
+                await _secureStorageRepository.SetUserLogin(request.Login);
+                MySafeApp.Resources.UserLogin = request.Login;
             }
         }
     }

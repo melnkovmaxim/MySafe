@@ -1,16 +1,18 @@
 ﻿using Newtonsoft.Json;
 
-namespace MySafe.Core.Entities
+namespace MySafe.Core.Models
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public abstract class JsonObjectBase
     {
         //  Получаем сериализованный объект вместе с корневым названием
         public virtual string SerializeWithRoot()
         {
-            var rootName = GetType().Name.ToLower();
             var serializedObject = JsonConvert.SerializeObject(this);
 
-            return $"{{\"{rootName}\":{serializedObject}}}";
+            return $"{{\"{_rootName}\":{serializedObject}}}";
         }
+
+        protected virtual string _rootName => GetType().Name.ToLower();
     }
 }

@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using MySafe.Core.Entities.Requests;
-using MySafe.Core.Entities.Responses;
+using MySafe.Core.Entities;
+using MySafe.Core.Models.Requests;
+using MySafe.Core.Models.Responses;
 using MySafe.Presentation.Models;
 using MySafe.Services.Mediator.Users.SignInCommand;
 using MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand;
-using Document = MySafe.Core.Entities.Responses.Document;
-using Folder = MySafe.Core.Entities.Responses.Folder;
-using User = MySafe.Core.Entities.Requests.User;
 
 namespace MySafe.Presentation.MapperProfiles
 {
@@ -14,41 +12,56 @@ namespace MySafe.Presentation.MapperProfiles
     {
         public PresentationProfile()
         {
-            CreateMap<SignInCommand, User>()
-                .ForMember(d => d.Login, opt => opt.MapFrom(x => x.User.Login))
-                .ForMember(d => d.Password, opt => opt.MapFrom(x => x.User.Password));
-
-            CreateMap<TwoFactorAuthenticationCommand, TwoFactor>()
-                .ForMember(d => d.Code, opt => opt.MapFrom(x => x.Code));
-
-            CreateMap<AttachmentResponse, Attachment>()
-                .ForMember(d => d.Id, mo => mo.MapFrom(s => s.Id))
-                .ForMember(d => d.Name, mo => mo.MapFrom(s => s.Name))
-                .ForMember(d => d.Preview, mo => mo.MapFrom(s => s.Preview))
-                .ForMember(d => d.FileExtension, mo => mo.MapFrom(s => s.FileExtension))
+            CreateMap<SafeEntity, Safe>()
+                .ForMember(d => d.Capacity, mo => mo.MapFrom(s => s.Capacity))
+                .ForMember(d => d.UsedCapacity, mo => mo.MapFrom(s => s.UsedCapacity))
+                .ForMember(d => d.Folders, mo => mo.MapFrom(s => s.Folders))
+                .ReverseMap()
                 ;
 
-            CreateMap<Document, Models.Document>()
+            CreateMap<DocumentEntity, Document>()
                 .ForMember(d => d.Id, mo => mo.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, mo => mo.MapFrom(s => s.Name))
                 .ForMember(d => d.Attachments, mo => mo.MapFrom(s => s.Attachments))
                 .ForMember(d => d.CreatedAt, mo => mo.MapFrom(s => s.CreatedAt))
                 .ForMember(d => d.FolderId, mo => mo.MapFrom(s => s.FolderId))
+                .ReverseMap()
                 ;
 
-            CreateMap<Folder, Models.Folder>()
+            CreateMap<FolderEntity, Folder>()
                 .ForMember(d => d.Id, mo => mo.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, mo => mo.MapFrom(s => s.Name))
                 .ForMember(d => d.Documents, mo => mo.MapFrom(s => s.Documents))
+                .ReverseMap()
                 ;
 
-            CreateMap<TrashResponse, Trash>()
+            CreateMap<SheetEntity, Sheet>()
+                .ForMember(d => d.FileBytes, mo => mo.MapFrom(s => s.FileBytes))
+                .ForMember(d => d.Error, mo => mo.MapFrom(s => s.Error))
+                .ReverseMap();
+
+            CreateMap<ImageEntity, Image>()
+                .ForMember(d => d.FileBytes, mo => mo.MapFrom(s => s.FileBytes))
+                .ForMember(d => d.Error, mo => mo.MapFrom(s => s.Error))
+                .ReverseMap();
+
+            CreateMap<TrashEntity, Trash>()
                 .ForMember(d => d.FolderId, mo => mo.MapFrom(s => s.FolderId))
                 .ForMember(d => d.ConstainsAttachments, mo => mo.MapFrom(s => s.ConstainsAttachments))
                 .ForMember(d => d.Content, mo => mo.MapFrom(s => s.Content))
                 .ForMember(d => d.Location, mo => mo.MapFrom(s => s.Location))
-                .ForMember(d => d.TrashedAt, mo => mo.MapFrom(s => s.TrashedAt));
+                .ForMember(d => d.TrashedAt, mo => mo.MapFrom(s => s.TrashedAt))
+                .ReverseMap()
+                ;
             ;
+
+            CreateMap<AttachmentEntity, Attachment>()
+                .ForMember(d => d.Id, mo => mo.MapFrom(s => s.Id))
+                .ForMember(d => d.Name, mo => mo.MapFrom(s => s.Name))
+                .ForMember(d => d.Preview, mo => mo.MapFrom(s => s.Preview))
+                .ForMember(d => d.FileExtension, mo => mo.MapFrom(s => s.FileExtension))
+                .ReverseMap()
+                ;
         }
     }
 }

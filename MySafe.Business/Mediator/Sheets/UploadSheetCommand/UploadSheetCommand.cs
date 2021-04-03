@@ -1,4 +1,4 @@
-﻿using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
@@ -7,7 +7,7 @@ namespace MySafe.Services.Mediator.Sheets.UploadSheetCommand
     /// <summary>
     ///     Загрузка файла
     /// </summary>
-    public class UploadSheetCommand : RequestUploadBase<Sheet>
+    public class UploadSheetCommand : RequestUploadBase<SheetEntity>
     {
         public UploadSheetCommand(int documentId, string fileName, string contentType, byte[] fileBytes)
         {

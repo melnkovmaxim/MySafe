@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
-using MySafe.Core.Entities.Responses.Abstractions;
+using MySafe.Core.Entities.Abstractions;
 using MySafe.Services.Mediator.Abstractions;
 
 namespace MySafe.Services.Mediator
 {
     public class MediatorPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
-        where TResponse : IResponse
+        where TResponse : IEntity
     {
         private readonly IEnumerable<BearerPreRequestHandler<TResponse>> _bearerPreProcessors;
         private readonly IEnumerable<IRequestPostProcessor<TRequest, TResponse>> _postProcessors;
@@ -46,7 +46,7 @@ namespace MySafe.Services.Mediator
             if (failures.Count != 0)
             {
                 var responseType = typeof(TResponse);
-                var instance = Activator.CreateInstance(responseType) as IResponse;
+                var instance = Activator.CreateInstance(responseType) as IEntity;
 
                 if (instance == null)
                 {

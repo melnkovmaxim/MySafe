@@ -5,14 +5,17 @@ using DryIoc;
 using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
+using MySafe.Core.Models.Requests;
 using MySafe.Data.Xamarin;
 using MySafe.Domain.Repositories;
 using MySafe.Domain.Services;
+using MySafe.Presentation.MapperProfiles;
 using MySafe.Presentation.ViewModels;
 using MySafe.Presentation.Views;
 using MySafe.Services.MapperProfiles;
 using MySafe.Services.Mediator;
 using MySafe.Services.Mediator.Abstractions;
+using MySafe.Services.Mediator.Users.SignInCommand;
 using MySafe.Services.Services;
 using MySafe.Services.Xamarin;
 using Prism;
@@ -89,7 +92,8 @@ namespace MySafe.Presentation
 
                 foreach (var profile in profiles) cfg.AddMaps(profile);
 
-                cfg.AddMaps(typeof(ApiProfile));
+                cfg.AddMaps(typeof(MediatorQueryCommandProfile));
+                cfg.AddMaps(typeof(PresentationProfile));
             });
 
             containerRegistry.RegisterInstance(typeof(IMapper), new Mapper(mapperConfig));

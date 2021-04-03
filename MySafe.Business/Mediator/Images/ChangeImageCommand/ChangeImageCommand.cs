@@ -1,4 +1,4 @@
-﻿using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using Newtonsoft.Json;
 using RestSharp;
@@ -8,7 +8,7 @@ namespace MySafe.Services.Mediator.Images.ChangeImageCommand
     /// <summary>
     ///     Изменить изображение
     /// </summary>
-    public class ChangeImageCommand : BearerRequestBase<Image>
+    public class ChangeImageCommand : BearerRequestBase<ImageEntity>
     {
         public ChangeImageCommand(int imageId, string rotate)
         {
@@ -16,9 +16,8 @@ namespace MySafe.Services.Mediator.Images.ChangeImageCommand
             Rotate = rotate;
         }
 
-        [JsonIgnore] public int ImageId { get; }
-
-        [JsonProperty("rotate")] public string Rotate { get; }
+        public int ImageId { get; }
+        public string Rotate { get; }
 
         public override Method RequestMethod => Method.PUT;
         public override string RequestResource => $"/api/v1/images/{ImageId}";

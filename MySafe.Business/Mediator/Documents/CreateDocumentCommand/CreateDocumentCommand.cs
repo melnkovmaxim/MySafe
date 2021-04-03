@@ -1,4 +1,5 @@
-﻿using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Models;
+using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
@@ -7,7 +8,7 @@ namespace MySafe.Services.Mediator.Documents.CreateDocumentCommand
     /// <summary>
     ///     Создать новый документ
     /// </summary>
-    public class CreateDocumentCommand : BearerRequestBase<Document>
+    public class CreateDocumentCommand : BearerRequestBase<DocumentEntity>
     {
         public CreateDocumentCommand(int folderId)
         {

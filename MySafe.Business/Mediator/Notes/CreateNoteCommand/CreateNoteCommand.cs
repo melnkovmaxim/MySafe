@@ -1,4 +1,4 @@
-﻿using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using Newtonsoft.Json;
 using RestSharp;
@@ -8,14 +8,14 @@ namespace MySafe.Services.Mediator.Notes.CreateNoteCommand
     /// <summary>
     ///     Создание заметки
     /// </summary>
-    public class CreateNoteCommand : BearerRequestBase<Note>
+    public class CreateNoteCommand : BearerRequestBase<NoteEntity>
     {
         public CreateNoteCommand(string content)
         {
             Content = content;
         }
 
-        [JsonProperty("content")] public string Content { get; set; }
+        public string Content { get; set; }
 
         public override Method RequestMethod => Method.POST;
         public override string RequestResource => "/api/v1/notes";

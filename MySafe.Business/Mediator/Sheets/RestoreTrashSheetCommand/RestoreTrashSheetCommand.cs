@@ -1,4 +1,4 @@
-﻿using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
@@ -7,7 +7,7 @@ namespace MySafe.Services.Mediator.Sheets.RestoreTrashSheetCommand
     /// <summary>
     ///     Восстановить файл из корзины
     /// </summary>
-    public class RestoreTrashSheetCommand : BearerRequestBase<Sheet>
+    public class RestoreTrashSheetCommand : BearerRequestBase<SheetEntity>
     {
         public RestoreTrashSheetCommand(int sheetId)
         {

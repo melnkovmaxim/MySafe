@@ -1,4 +1,4 @@
-﻿using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
@@ -7,7 +7,7 @@ namespace MySafe.Services.Mediator.Folders.FolderInfoQuery
     /// <summary>
     ///     Получить содержимое ячейки
     /// </summary>
-    public class FolderInfoQuery : BearerRequestBase<Folder>
+    public class FolderInfoQuery : BearerRequestBase<FolderEntity>
     {
         public FolderInfoQuery(int documentId)
         {

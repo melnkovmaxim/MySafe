@@ -1,6 +1,8 @@
-﻿namespace MySafe.Presentation.Models
+﻿using MySafe.Presentation.Models.Abstractions;
+
+namespace MySafe.Presentation.Models
 {
-    public class Image
+    public class Image: PresentationModelBase
     {
     }
 }

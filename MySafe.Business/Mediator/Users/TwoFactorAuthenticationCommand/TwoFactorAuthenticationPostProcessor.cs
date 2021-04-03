@@ -1,13 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR.Pipeline;
-using MySafe.Core.Entities.Responses;
 using MySafe.Core.Models.Responses;
 using MySafe.Domain.Repositories;
 
 namespace MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand
 {
-    public class TwoFactorAuthenticationPostProcessor : IRequestPostProcessor<TwoFactorAuthenticationCommand, User>
+    public class
+        TwoFactorAuthenticationPostProcessor : IRequestPostProcessor<TwoFactorAuthenticationCommand, UserEntity>
     {
         private readonly ISecureStorageRepository _secureStorageRepository;
 
@@ -16,7 +16,7 @@ namespace MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand
             _secureStorageRepository = secureStorageRepository;
         }
 
-        public async Task Process(TwoFactorAuthenticationCommand request, User response,
+        public async Task Process(TwoFactorAuthenticationCommand request, UserEntity response,
             CancellationToken cancellationToken)
         {
             if (!response.HasError)

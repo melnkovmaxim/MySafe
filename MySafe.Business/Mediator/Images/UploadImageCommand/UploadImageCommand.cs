@@ -1,4 +1,5 @@
-﻿using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Models;
+using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
@@ -7,7 +8,7 @@ namespace MySafe.Services.Mediator.Images.UploadImageCommand
     /// <summary>
     ///     Загрузка изображения
     /// </summary>
-    public class UploadImageCommand : RequestUploadBase<Image>
+    public class UploadImageCommand : RequestUploadBase<ImageEntity>
     {
         public UploadImageCommand(int documentId, string fileName, string contentType, byte[] imageBytes)
         {

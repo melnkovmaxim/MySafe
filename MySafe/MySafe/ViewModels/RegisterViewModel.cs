@@ -1,6 +1,9 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
+using MySafe.Core.Models;
+using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
 using MySafe.Services.Mediator.Users.RegisterCommand;
@@ -12,14 +15,19 @@ namespace MySafe.Presentation.ViewModels
     public class RegisterViewModel : ViewModelBase
     {
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public RegisterViewModel(INavigationService navigationService, IMediator mediator) : base(navigationService)
+        public RegisterViewModel(
+            INavigationService navigationService, 
+            IMediator mediator,
+            IMapper mapper) : base(navigationService)
         {
             _mediator = mediator;
+            _mapper = mapper;
 
             User = new User
             {
-                Email = "Ваша почта", IsAgree = true, Login = "Ваш логин", Password = "123456",
+                Email = "Ваша почта", UserAgreement = true, Login = "Ваш логин", Password = "123456",
                 PasswordConfirmation = "123456", PhoneNumber = "81234567890"
             };
             RegisterCommand = new AsyncCommand(RegisterCommandTask);
@@ -30,7 +38,8 @@ namespace MySafe.Presentation.ViewModels
 
         private async Task RegisterCommandTask()
         {
-            var result = await _mediator.Send(new RegisterCommand(User));
+            var registerCommand = _mapper.Map<RegisterCommand>(User);
+            var result = await _mediator.Send(registerCommand);
 
             if (result.HasError)
             {

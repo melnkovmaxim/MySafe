@@ -3,7 +3,7 @@
     /// <summary>
     ///     Получить уменьшенное изображение
     /// </summary>
-    public class SmallImageQuery
+    public class SmallSizeImageQuery
     {
     }
 }

@@ -2,11 +2,12 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using MySafe.Core.Enums;
+using MySafe.Presentation.Models.Abstractions;
 using Xamarin.Forms;
 
 namespace MySafe.Presentation.Models
 {
-    public class Attachment
+    public class Attachment: PresentationModelBase
     {
         private ImageSource _imageSource;
         public int Id { get; set; }

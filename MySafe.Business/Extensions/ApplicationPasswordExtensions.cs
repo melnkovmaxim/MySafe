@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using MySafe.Core.Entities;
+using MySafe.Core.Models;
 
 namespace MySafe.Services.Extensions
 {

@@ -1,10 +1,10 @@
-﻿using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
 namespace MySafe.Services.Mediator.Images.DestroyTrashImageCommand
 {
-    public class DestroyTrashImageCommand : BearerRequestBase<Image>
+    public class DestroyTrashImageCommand : BearerRequestBase<ImageEntity>
     {
         public DestroyTrashImageCommand(int imageId)
         {

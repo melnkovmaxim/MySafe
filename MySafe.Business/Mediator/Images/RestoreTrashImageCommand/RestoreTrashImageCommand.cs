@@ -1,4 +1,4 @@
-﻿using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
@@ -7,7 +7,7 @@ namespace MySafe.Services.Mediator.Images.RestoreTrashImageCommand
     /// <summary>
     ///     Восстановить изображение из корзины
     /// </summary>
-    public class RestoreTrashImageCommand : BearerRequestBase<Image>
+    public class RestoreTrashImageCommand : BearerRequestBase<ImageEntity>
     {
         public RestoreTrashImageCommand(int imageId)
         {

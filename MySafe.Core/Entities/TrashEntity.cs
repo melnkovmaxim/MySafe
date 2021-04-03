@@ -1,9 +1,11 @@
 ﻿using System;
+using MySafe.Core.Entities;
+using MySafe.Core.Entities.Abstractions;
 using Newtonsoft.Json;
 
-namespace MySafe.Core.Entities.Responses
+namespace MySafe.Core.Models.Responses
 {
-    public class TrashResponse : AttachmentResponse
+    public class TrashEntity : AttachmentEntity, IEntity
     {
         [JsonProperty] public string Location { get; set; }
 

@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using MySafe.Core.Commands;
-using MySafe.Core.Entities.Responses;
+using MySafe.Core.Models;
+using MySafe.Core.Models.Responses;
+using MySafe.Presentation.EntityExtensions;
+using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
 using MySafe.Services.Mediator.Documents.CreateDocumentCommand;
@@ -13,10 +16,11 @@ using MySafe.Services.Mediator.Safe.SafeInfoQuery;
 using Prism.Navigation;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
+using IMapper = AutoMapper.IMapper;
 
 namespace MySafe.Presentation.ViewModels
 {
-    public class FolderViewModel : AuthorizedRefreshViewModel<Folder>
+    public class FolderViewModel : AuthorizedRefreshViewModel<FolderEntity, Folder>
     {
         private readonly IMediator _mediator;
 
@@ -34,8 +38,8 @@ namespace MySafe.Presentation.ViewModels
         private string _filter;
         private AsyncCommand<Document> _moveToDocumentCommand;
 
-        public FolderViewModel(INavigationService navigationService, IMediator mediator)
-            : base(navigationService)
+        public FolderViewModel(INavigationService navigationService, IMapper mapper, IMediator mediator)
+            : base(navigationService, mapper)
         {
             _mediator = mediator;
             Documents = new ObservableCollection<Document>();
@@ -72,30 +76,30 @@ namespace MySafe.Presentation.ViewModels
             var answer = await Application.Current.MainPage.DisplayAlert("Создать новый документ?", null, "Да", "Нет");
             if (!answer) return;
 
-            var response = await _mediator.Send(new CreateDocumentCommand(folderId));
+            var response = (await _mediator.Send(new CreateDocumentCommand(folderId))).ToDocumentToPresentationModel();
 
             if (response.HasError)
                 await Application.Current.MainPage.DisplayAlert("Ошибка",
                     "Не получилось создать документ, что-то пошло не так... ", "Ok");
 
-            var mediatorResult = await _refreshTask;
+            var mediatorResult = (await _refreshTask).ToFolderPresentationModel();
             RefillObservableCollection(mediatorResult);
         });
 
-        protected override Task<Folder> _refreshTask => _mediator.Send(new FolderInfoQuery(_itemId.Value));
+        protected override Task<FolderEntity> _refreshTask => _mediator.Send(new FolderInfoQuery(_itemId.Value));
 
-        protected override async void RefillObservableCollection(Folder mediatorResponse)
+        protected override async void RefillObservableCollection(Folder mediatorEntity)
         {
             var isSuccess = _parentsIconsDictionary.TryGetValue(_itemName, out var iconPath);
             IconPath = isSuccess ? iconPath : "other.png";
 
-            DocumentsList = mediatorResponse.Documents;
+            DocumentsList = mediatorEntity.Documents;
             Documents.Clear();
-            mediatorResponse.Documents.ForEach(Documents.Add);
+            mediatorEntity.Documents.ForEach(Documents.Add);
 
 
             var safeFolders = await _mediator.Send(new SafeInfoQuery());
-            var currentFolder = safeFolders?.Folders.FirstOrDefault(x => x.Id == mediatorResponse.Id);
+            var currentFolder = safeFolders?.Folders.FirstOrDefault(x => x.Id == mediatorEntity.Id);
             FolderName = currentFolder?.Name.Split(":").FirstOrDefault();
             folderId = currentFolder?.Id ?? int.MinValue;
         }

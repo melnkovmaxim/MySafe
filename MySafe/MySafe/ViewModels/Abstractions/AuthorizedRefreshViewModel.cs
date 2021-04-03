@@ -1,29 +1,33 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using MySafe.Core.Commands;
-using MySafe.Core.Entities.Responses.Abstractions;
+using MySafe.Core.Entities.Abstractions;
+using MySafe.Presentation.Models.Abstractions;
 using Prism.Navigation;
 
 namespace MySafe.Presentation.ViewModels.Abstractions
 {
-    public abstract class AuthorizedRefreshViewModel<TResult> : AuthorizedViewModelBase, INavigatedAware
-        where TResult : IResponse
+    public abstract class AuthorizedRefreshViewModel<TEntity, TModel> : AuthorizedViewModelBase, INavigatedAware
+        where TEntity: IEntity
+        where TModel : IPresentationModel
     {
-        protected AuthorizedRefreshViewModel(INavigationService navigationService) : base(navigationService)
+        protected AuthorizedRefreshViewModel(INavigationService navigationService, IMapper mapper) : base(navigationService)
         {
             RefreshCommand = new AsyncCommand(async () =>
             {
-                var result = await _refreshTask;
-                var hasError = HandleRefreshResult(result);
-                if (!hasError) RefillObservableCollection(result);
+                var entity = await _refreshTask;
+                var presentationModel = mapper.Map<TModel>(entity);
+                var hasError = HandleRefreshResult(presentationModel);
+                if (!hasError) RefillObservableCollection(presentationModel);
             });
         }
 
         public AsyncCommand RefreshCommand { get; }
 
-        protected abstract Task<TResult> _refreshTask { get; }
-        protected abstract void RefillObservableCollection(TResult mediatorResponse);
+        protected abstract Task<TEntity> _refreshTask { get; }
+        protected abstract void RefillObservableCollection(TModel mediatorResponse);
 
-        protected virtual bool HandleRefreshResult(TResult mediatorResponse)
+        protected virtual bool HandleRefreshResult(TModel mediatorResponse)
         {
             Error = mediatorResponse.Error;
 

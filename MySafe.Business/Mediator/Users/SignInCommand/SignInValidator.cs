@@ -6,11 +6,11 @@ namespace MySafe.Services.Mediator.Users.SignInCommand
     {
         public SignInValidator()
         {
-            RuleFor(s => s.User.Login)
+            RuleFor(s => s.Login)
                 .NotEmpty()
                 .WithMessage("Введите логин");
 
-            RuleFor(s => s.User.Password)
+            RuleFor(s => s.Password)
                 .NotEmpty()
                 .WithMessage("Введите пароль");
         }

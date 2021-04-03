@@ -27,7 +27,7 @@
                 <Editor
                     BackgroundColor="#FBFFE9"
                     HorizontalOptions="FillAndExpand"
-                    Text="{Binding Note.Content}"
+                    Text="{Binding NoteEntity.Content}"
                     VerticalOptions="Fill" />
             </Frame>
         </Grid>

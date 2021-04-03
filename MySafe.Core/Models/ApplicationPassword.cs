@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace MySafe.Core.Entities
+namespace MySafe.Core.Models
 {
     public class ApplicationPassword
     {

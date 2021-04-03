@@ -1,4 +1,4 @@
-﻿using MySafe.Core.Entities.Responses;
+﻿using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
@@ -7,7 +7,7 @@ namespace MySafe.Services.Mediator.Sheets.DestroyTrashSheetCommand
     /// <summary>
     ///     Уничтожить файл в корзине
     /// </summary>
-    public class DestroyTrashSheetCommand : BearerRequestBase<Sheet>
+    public class DestroyTrashSheetCommand : BearerRequestBase<SheetEntity>
     {
         public DestroyTrashSheetCommand(int sheetId)
         {

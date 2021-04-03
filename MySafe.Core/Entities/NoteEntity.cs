@@ -1,11 +1,11 @@
 ﻿using System;
-using MySafe.Core.Entities.Responses.Abstractions;
+using MySafe.Core.Entities.Abstractions;
 using Newtonsoft.Json;
 
-namespace MySafe.Core.Entities.Responses
+namespace MySafe.Core.Models.Responses
 {
     [JsonObject]
-    public class Note : ResponseBase
+    public class NoteEntity : EntityBase, IEntity
     {
         [JsonProperty("id")] public int Id { get; set; }
 
