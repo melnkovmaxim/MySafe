@@ -42,6 +42,11 @@ namespace MySafe.Presentation.MapperProfiles
                 .ForMember(d => d.Error, mo => mo.MapFrom(s => s.Error))
                 .ReverseMap();
 
+            CreateMap<NoteEntity, Note>()
+                .ForMember(d => d.Id, mo => mo.MapFrom(s => s.Id))
+                .ForMember(d => d.ClippedContent, mo => mo.MapFrom(s => s.ClippedContent))
+                .ReverseMap();
+
             CreateMap<TrashEntity, Trash>()
                 .ForMember(d => d.FolderId, mo => mo.MapFrom(s => s.FolderId))
                 .ForMember(d => d.ConstainsAttachments, mo => mo.MapFrom(s => s.ConstainsAttachments))

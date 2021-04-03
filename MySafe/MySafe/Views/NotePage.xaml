@@ -1,12 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="MySafe.Presentation.Views.NotePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:MySafe.Presentation.Behaviors;assembly=MySafe.Presentation"
+    xmlns:customControls="clr-namespace:MySafe.Presentation.CustomControls;assembly=MySafe.Presentation"
+    xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:gestureRecognizers="clr-namespace:MySafe.Presentation.GestureRecognizers;assembly=MySafe.Presentation"
     x:Name="Note"
-    BindingContext="{Binding Source={StaticResource VmLocator}, Path=NoteViewModel}"
     Title="Назад"
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=NoteViewModel}"
     NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <Grid>
@@ -60,12 +64,13 @@
                                 BorderColor="#c2c5b5" BorderWidth="1"
                                     ImageSource="pen.png" />
                             </Frame>
-                        </Grid> -->
-                        <Frame BackgroundColor="#FBFFE9" Margin="0,25,0,0">
-                            <!-- -22,-20,-22, -20 -->
+                        </Grid>-->
+                        <Frame Margin="0,25,0,0" BackgroundColor="#FBFFE9">
+                            <!--  -22,-20,-22, -20  -->
 
                             <Button
-                                Margin="0,-20,0,-20" Padding="0,-5,0,-5"
+                                Margin="0,-20,0,-20"
+                                Padding="0,-5,0,-5"
                                 BackgroundColor="#FBFFE9"
                                 BorderColor="#c2c5b5"
                                 BorderWidth="1"
@@ -86,9 +91,13 @@
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <Frame BackgroundColor="#FBFFE9"> <!-- -22,-20,-22, -20 -->
+                                    <Frame BackgroundColor="#FBFFE9">
+                                        <!--  -22,-20,-22, -20  -->
                                         <Button
-                                            Margin="0,-20,0,-20" Padding="0,-5,0,-5"
+                                            Margin="0,-20,0,-20"
+                                            Padding="0,-5,0,-5"
+                                            effects:TouchEffect.LongPressCommand="{Binding BindingContext.ShowToolMenuCommand, Source={x:Reference Note}}"
+                                            effects:TouchEffect.LongPressDuration="1000"
                                             BackgroundColor="#FBFFE9"
                                             BorderColor="#c2c5b5"
                                             BorderWidth="1"

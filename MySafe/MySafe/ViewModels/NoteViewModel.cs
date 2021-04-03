@@ -11,6 +11,7 @@ using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
 using MySafe.Services.Mediator.Notes.NoteListQuery;
 using Prism.Navigation;
+using Xamarin.Forms;
 
 namespace MySafe.Presentation.ViewModels
 {
@@ -19,12 +20,28 @@ namespace MySafe.Presentation.ViewModels
         private readonly IMediator _mediator;
 
         private AsyncCommand<Note> _moveToNoteEditCommand;
+        public AsyncCommand<Note> ShowToolMenuCommand { get; }
 
         public NoteViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper) : base(
             navigationService, mapper)
         {
             _mediator = mediator;
+            ShowToolMenuCommand = new AsyncCommand<Note>(ShowToolMenuCommandTask);
             Notes = new ObservableCollection<Note>();
+        }
+
+        private async Task ShowToolMenuCommandTask(Note note)
+        {
+            const string editOption = "Изменить название";
+            const string removeOption = "Удалить";
+            var str = "hello";
+            var result = await Application.Current.MainPage
+                .DisplayActionSheet("Выбрать", "Отмена", str, editOption, removeOption);
+
+            if (result.Contains(editOption))
+            {
+            }
+            if (result.Contains(removeOption)) {}
         }
 
         public ObservableCollection<Note> Notes { get; set; }
