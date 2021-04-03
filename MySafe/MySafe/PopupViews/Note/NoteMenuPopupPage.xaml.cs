@@ -23,14 +23,14 @@ namespace MySafe.Presentation.PopupViews.Note
             await PopupNavigation.Instance.PopAsync();
         }
 
-        protected override Task OnAppearingAnimationEndAsync()
-        {
-            return Content.FadeTo(0.5);
-        }
+        //protected override Task OnAppearingAnimationEndAsync()
+        //{
+        //    return Content.FadeTo(0.5);
+        //}
 
-        protected override Task OnDisappearingAnimationBeginAsync()
-        {
-            return Content.FadeTo(1);
-        }
+        //protected override Task OnDisappearingAnimationBeginAsync()
+        //{
+        //    return Content.FadeTo(1);
+        //}
     }
 }
