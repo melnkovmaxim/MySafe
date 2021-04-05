@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MySafe.Presentation.PopupViews.NoteTitleEditPopupPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
+<rg:PopupPage
+    x:Class="MySafe.Presentation.PopupViews.Note.NoteTitleEditPopupPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Demo.Animations;assembly=MySafe.Presentation"
+    xmlns:rg="http://rotorgames.com">
+    <rg:PopupPage.Animation>
+        <animations:UserAnimation />
+    </rg:PopupPage.Animation>
+    <StackLayout>
+        <Editor x:Name="edTitle" />
+        <Button Clicked="Button_OnClicked" Text="Сохранить" />
+    </StackLayout>
+</rg:PopupPage>

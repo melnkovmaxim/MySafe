@@ -45,6 +45,7 @@ namespace MySafe.Presentation.MapperProfiles
             CreateMap<NoteEntity, Note>()
                 .ForMember(d => d.Id, mo => mo.MapFrom(s => s.Id))
                 .ForMember(d => d.ClippedContent, mo => mo.MapFrom(s => s.ClippedContent))
+                .ForMember(d => d.Content, mo => mo.MapFrom(s => s.Content))
                 .ReverseMap();
 
             CreateMap<TrashEntity, Trash>()

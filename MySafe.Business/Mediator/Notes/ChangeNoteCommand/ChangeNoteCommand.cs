@@ -13,6 +13,12 @@ namespace MySafe.Services.Mediator.Notes.ChangeNoteCommand
 
         public string Content { get; set; }
 
+        public ChangeNoteCommand(int noteId, string content)
+        {
+            NoteId = noteId;
+            Content = content;
+        }
+
         public override Method RequestMethod => Method.PUT;
         public override string RequestResource => $"/api/v1/notes/{NoteId}";
     }

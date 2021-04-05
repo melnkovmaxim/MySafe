@@ -75,7 +75,8 @@
                                 BorderColor="#c2c5b5"
                                 BorderWidth="1"
                                 HorizontalOptions="FillAndExpand"
-                                Text="Добавить новую заметку" />
+                                Text="Добавить новую заметку"
+                                Command="{Binding AddNoteCommand}"/>
 
                         </Frame>
                         <CollectionView

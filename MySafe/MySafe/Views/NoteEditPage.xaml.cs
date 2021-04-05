@@ -9,6 +9,7 @@ namespace MySafe.Presentation.Views
         public NoteEditPage()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
         }
     }
 }

@@ -6,5 +6,6 @@ namespace MySafe.Presentation.Models
     {
         public int Id { get; set; }
         public string ClippedContent { get; set; }
+        public string Content { get; set; }
     }
 }

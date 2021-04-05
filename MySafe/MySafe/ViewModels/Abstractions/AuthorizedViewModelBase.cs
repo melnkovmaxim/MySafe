@@ -21,12 +21,12 @@ namespace MySafe.Presentation.ViewModels.Abstractions
             _cancellationTokenSource = new CancellationTokenSource();
         }
 
-        public void OnNavigatedFrom(INavigationParameters parameters)
+        public virtual void OnNavigatedFrom(INavigationParameters parameters)
         {
             _cancellationTokenSource.Cancel();
         }
 
-        public async void OnNavigatedTo(INavigationParameters parameters)
+        public virtual async void OnNavigatedTo(INavigationParameters parameters)
         {
             SaveParameters(parameters);
             var isNavigated = await TryNavigateToSignInPage();

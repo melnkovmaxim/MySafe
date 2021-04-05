@@ -1,12 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="MySafe.Presentation.Views.NoteEditPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BindingContext="{Binding Source={StaticResource VmLocator}, Path=NoteEditViewModel}"
     Title="Назад"
-    NavigationPage.HasNavigationBar="False">
+    BindingContext="{Binding Source={StaticResource VmLocator}, Path=NoteEditViewModel}"
+    NavigationPage.HasNavigationBar="True">
     <ContentPage.Content>
 
         <Grid>
@@ -16,7 +16,6 @@
             <Frame
                 Grid.Row="0"
                 Margin="15,10,15,15"
-
                 BackgroundColor="#FBFFE9"
                 BorderColor="Gray"
                 CornerRadius="10"
@@ -27,7 +26,7 @@
                 <Editor
                     BackgroundColor="#FBFFE9"
                     HorizontalOptions="FillAndExpand"
-                    Text="{Binding NoteEntity.Content}"
+                    Text="{Binding Note.Content}"
                     VerticalOptions="Fill" />
             </Frame>
         </Grid>
