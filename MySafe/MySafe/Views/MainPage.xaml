@@ -136,14 +136,14 @@
                         <StackLayout Grid.Row="1" Grid.Column="0" />
                         <StackLayout
                             Grid.Row="2"
-                            Margin="20,0,0,0"
+                            Margin="20,0,0,10"
                             HeightRequest="225"
                             HorizontalOptions="CenterAndExpand"
                             Orientation="Horizontal">
                             <controls:UniformGrid
                                 BindableLayout.ItemsSource="{Binding Folders}"
-                                ColumnSpacing="0"
-                                RowSpacing="0"
+                                ColumnSpacing="15"
+                                RowSpacing="15"
                                 VerticalOptions="FillAndExpand">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
@@ -162,7 +162,7 @@
                                 </BindableLayout.ItemTemplate>
                             </controls:UniformGrid>
 
-                            <Frame Margin="20,0,20,10">
+                            <Frame Margin="20,0,20,0">
                                 <Button
                                     Margin="-20,-20,-20,-20"
                                     Padding="0,0,0,0"

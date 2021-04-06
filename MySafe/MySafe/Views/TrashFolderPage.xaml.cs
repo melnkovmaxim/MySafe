@@ -9,6 +9,7 @@ namespace MySafe.Presentation.Views
     {
         public TrashFolderPage()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
 
             Task.Run(async () =>

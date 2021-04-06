@@ -8,6 +8,7 @@
     Title="Назад"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=TrashViewModel}"
     NavigationPage.HasNavigationBar="False">
+    <!--  -->
     <ContentPage.Resources>
         <Style TargetType="Frame">
             <Setter Property="CornerRadius" Value="25" />
@@ -35,7 +36,7 @@
                             HeightRequest="22"
                             HorizontalOptions="Fill">
                             <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                                <Image Margin="-120,0,0,0" Source="docs.png" />
+                                <Image Margin="-120,0,0,0" Source="docs1.png" />
                                 <Label
                                     Margin="45,-33,0,0"
                                     FontSize="24"

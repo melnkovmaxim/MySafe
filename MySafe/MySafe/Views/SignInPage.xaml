@@ -65,7 +65,8 @@
                 CornerRadius="25"
                 HeightRequest="15">
                 <StackLayout Margin="0,-16,0,-5">
-                    <Entry
+                    <presentation:CustomEntry
+                        Visual="Material"
                         HorizontalTextAlignment="Center"
                         Placeholder="Логин"
                         Text="{Binding Login}" />
@@ -81,8 +82,9 @@
                 HasShadow="True"
                 HeightRequest="15">
                 <StackLayout Margin="0,-16,0,-5">
-                    <Entry
+                    <presentation:CustomEntry
                         HorizontalTextAlignment="Center"
+                        
                         IsPassword="True"
                         Placeholder="Пароль"
                         Text="{Binding Password}" />
