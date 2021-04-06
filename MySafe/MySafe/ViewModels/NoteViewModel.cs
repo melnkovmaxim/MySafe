@@ -11,7 +11,6 @@ using MySafe.Presentation.PopupViews;
 using MySafe.Presentation.PopupViews.Note;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
-using MySafe.Services.Mediator.Notes.CreateNoteCommand;
 using MySafe.Services.Mediator.Notes.NoteListQuery;
 using MySafe.Services.Mediator.Notes.RemoveNoteCommand;
 using Prism.Navigation;
