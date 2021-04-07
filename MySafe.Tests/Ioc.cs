@@ -14,7 +14,7 @@ namespace MySafe.Tests
         private static readonly string[] SERVICE_NAME_ENDINGS = {"Service", "Repository"};
         private static readonly IServiceProvider _serviceProvider;
 
-        static Ioc()
+        static Ioc() 
         {
             var services = new ServiceCollection();
 
