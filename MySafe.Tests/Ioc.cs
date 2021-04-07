@@ -15,7 +15,7 @@ namespace MySafe.Tests
         private static readonly IServiceProvider _serviceProvider;
 
         static Ioc()
-        {
+        {  
             var services = new ServiceCollection();
 
             typeof(Presentation.Ioc).Assembly.GetTypes()
