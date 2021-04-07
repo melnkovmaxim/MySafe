@@ -8,6 +8,6 @@ namespace MySafe.Services.Mediator.Users.RefreshTokenQuery
 {
     public class RefreshTokenQuery
     {
-         
+          
     }
 }
