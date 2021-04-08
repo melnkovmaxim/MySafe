@@ -20,5 +20,9 @@ namespace MySafe.Domain.Repositories
         Task SetJwtTokenAsync(string jwtToken);
         Task RemoveJwtToken();
         Task RemoveTwoFactorJwtToken();
+        Task SetRefreshTokenAsync(string refreshToken);
+        Task<string> GetRefreshJwtAsync();
+        Task RemoveRefreshTokenAsync();
+        Task<JwtSecurityToken> GetRefreshTokenAsync();
     }
 }

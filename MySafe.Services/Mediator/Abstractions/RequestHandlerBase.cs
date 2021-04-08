@@ -35,7 +35,7 @@ namespace MySafe.Services.Mediator.Abstractions
             if (typeof(TJsonBody) != typeof(EmptyJsonBody))
             {
                 var jsonRequest = _mapper.Map<TJsonBody>(request);
-                var json = jsonRequest as ISerializedObject != null
+                var json = jsonRequest is ISerializedObject
                     ? (jsonRequest as JsonObjectBase)?.SerializeWithRoot()
                     : JsonConvert.SerializeObject(jsonRequest);
 

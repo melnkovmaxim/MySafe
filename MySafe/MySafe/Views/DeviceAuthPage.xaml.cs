@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Prism.Common;
 using Prism.Navigation;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,7 +16,7 @@ namespace MySafe.Presentation.Views
 
         public void OnNavigatedFrom(INavigationParameters parameters)
         {
-            Navigation.NavigationStack.ToList().ForEach(Navigation.RemovePage);
+            Navigation.NavigationStack.Reverse().Skip(1).ToList().ForEach(Navigation.RemovePage);
         }
 
         public void OnNavigatedTo(INavigationParameters parameters)

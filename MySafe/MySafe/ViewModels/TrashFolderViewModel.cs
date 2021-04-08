@@ -6,6 +6,7 @@ using MediatR;
 using MySafe.Core.Commands;
 using MySafe.Core.Entities.Abstractions;
 using MySafe.Core.Models.Responses;
+using MySafe.Domain.Services;
 using MySafe.Presentation.Models;
 using MySafe.Presentation.Models.Abstractions;
 using MySafe.Presentation.ViewModels.Abstractions;
@@ -30,8 +31,8 @@ namespace MySafe.Presentation.ViewModels
         private AsyncCommand _clearTrashCommand;
         private AsyncCommand<Trash> _showItemActionMenuCommand;
 
-        public TrashFolderViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper)
-            : base(navigationService, mapper)
+        public TrashFolderViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IJwtService jwtService)
+            : base(navigationService, mapper, jwtService)
         {
             _mediator = mediator;
             _mapper = mapper;

@@ -12,10 +12,10 @@ namespace MySafe.Presentation.Views
             NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
 
-            Task.Run(async () =>
-            {
-                while (true) await _spinnetImage.RelRotateTo(360, 3000);
-            });
+            //Task.Run(async () =>
+            //{
+            //    while (true) await _spinnetImage.RelRotateTo(360, 3000);
+            //});
         }
     }
 }

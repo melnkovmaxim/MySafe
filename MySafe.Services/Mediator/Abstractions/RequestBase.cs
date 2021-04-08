@@ -6,8 +6,10 @@ namespace MySafe.Services.Mediator.Abstractions
 {
     public abstract class RequestBase<T> : IRequest<T>
     {
-        [JsonIgnore] public abstract Method RequestMethod { get; }
+        public abstract Method RequestMethod { get; }
 
-        [JsonIgnore] public abstract string RequestResource { get; }
+        public abstract string RequestResource { get; }
+
+        public virtual string Host => MySafe.Core.MySafeApp.Resources.ServerHost;
     }
 }

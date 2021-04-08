@@ -5,6 +5,7 @@ using MediatR;
 using MySafe.Core.Commands;
 using MySafe.Core.Entities.Abstractions;
 using MySafe.Core.Models.Responses;
+using MySafe.Domain.Services;
 using MySafe.Presentation.Models;
 using MySafe.Presentation.Models.Abstractions;
 using MySafe.Presentation.PopupViews;
@@ -27,8 +28,8 @@ namespace MySafe.Presentation.ViewModels
         public AsyncCommand<Note> ShowToolMenuCommand { get; }
         public AsyncCommand AddNoteCommand { get; }
 
-        public NoteViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper) : base(
-            navigationService, mapper)
+        public NoteViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IJwtService jwtService) : base(
+            navigationService, mapper, jwtService)
         {
             _mediator = mediator;
             ShowToolMenuCommand = new AsyncCommand<Note>(ShowToolMenuCommandTask);
@@ -60,7 +61,7 @@ namespace MySafe.Presentation.ViewModels
             new AsyncCommand<Note>(
                 async note =>
                 {
-                    var @params = GetItemNaviigationParams(note.Id, note.ClippedContent);
+                    var @params = new NavigationParameters() { { nameof(NavigationParameter), new NavigationParameter(note.Id, note.ClippedContent) }};
                     await _navigationService.NavigateAsync(nameof(NoteEditPage), @params);
                 });
 

@@ -13,6 +13,7 @@ namespace MySafe.Data.Xamarin
         private const string MAIN_JWT_TOKEN_KEY = "MainToken";
         private const string DEVICE_PASSWORD_KEY = "DevicePassword";
         private const string USER_LOGIN = "UserLogin";
+        private const string REFRESH_JWT_TOKEN_KEY = "RefreshToken";
 
         public Task<string> GetDevicePasswordAsync()
         {
@@ -71,6 +72,27 @@ namespace MySafe.Data.Xamarin
         public Task RemoveTwoFactorJwtToken()
         {
             return SecureStorage.SetAsync(TWO_FACTOR_JWT_TOKEN_KEY, string.Empty);
+        }
+
+        public Task SetRefreshTokenAsync(string refreshToken)
+        {
+            return SecureStorage.SetAsync(REFRESH_JWT_TOKEN_KEY, refreshToken);
+        }
+
+        public Task<string> GetRefreshJwtAsync()
+        {
+            return SecureStorage.GetAsync(REFRESH_JWT_TOKEN_KEY);
+        }
+        public async Task<JwtSecurityToken> GetRefreshTokenAsync()
+        {
+            var token = await SecureStorage.GetAsync(REFRESH_JWT_TOKEN_KEY);
+
+            return string.IsNullOrEmpty(token) ? null : new JwtSecurityToken(token);
+        }
+
+        public Task RemoveRefreshTokenAsync()
+        {
+            return SecureStorage.SetAsync(REFRESH_JWT_TOKEN_KEY, string.Empty);
         }
 
         public Task SetUserLogin(string login)

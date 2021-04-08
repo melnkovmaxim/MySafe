@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MySafe.Core.Models.JsonRequests;
-using MySafe.Core.Models.Requests;
 using MySafe.Services.Mediator.Documents.ChangeDocumentCommand;
 using MySafe.Services.Mediator.Documents.CreateDocumentCommand;
 using MySafe.Services.Mediator.Documents.DestroyTrashDocumentCommand;

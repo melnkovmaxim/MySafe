@@ -20,8 +20,8 @@ namespace MySafe.Presentation.ViewModels
         private readonly TimeSpan _vibrationDuration;
 
         public DeviceAuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager,
-            IDeviceAuthService deviceAuthService)
-            : base(navigationService)
+            IDeviceAuthService deviceAuthService, IJwtService jwtService)
+            : base(navigationService, jwtService)
         {
             PasswordManager = passwordManager;
             _deviceAuthService = deviceAuthService;
@@ -48,14 +48,15 @@ namespace MySafe.Presentation.ViewModels
         {
             var storageRepository = Ioc.Resolve<ISecureStorageRepository>();
             var token = await storageRepository.GetJwtSecurityTokenAsync();
-            await _navigationService.NavigateAsync(token.IsValidToken()
-                ? nameof(MainPage)
-                : nameof(SignInPage));
+            await _navigationService.NavigateAsync(token.IsExpired()
+                ? nameof(SignInPage)
+                : nameof(MainPage));
         }
 
         protected override async void DoAfterNavigatedTo()
         {
             IsRegistered = await _deviceAuthService.IsRegistered();
+            await _deviceAuthService.TryLoginWithPrintScanAsync(_actionOnLogin, _vibrationDuration);
         }
 
         private async void FingerPrintScan()

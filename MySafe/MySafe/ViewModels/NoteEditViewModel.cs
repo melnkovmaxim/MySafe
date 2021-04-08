@@ -2,6 +2,7 @@
 using AutoMapper;
 using MediatR;
 using MySafe.Core.Models.Responses;
+using MySafe.Domain.Services;
 using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Services.Mediator.Notes.ChangeNoteCommand;
@@ -16,16 +17,17 @@ namespace MySafe.Presentation.ViewModels
     public class NoteEditViewModel : AuthorizedRefreshViewModel<NoteEntity, Note>, INavigatedAware
     {
         private readonly IMediator _mediator;
+        private bool _isNewNote => _navigationParameter == null;
 
-        public NoteEditViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper) : base(
-            navigationService, mapper)
+        public NoteEditViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IJwtService jwtService) 
+            : base(navigationService, mapper, jwtService)
         {
             _mediator = mediator;
         }
 
         public Note Note { get; set; }
 
-        protected override Task<NoteEntity> _refreshTask => _itemId != null ? _mediator.Send(new NoteInfoQuery(_itemId.Value)) : Task.FromResult(new NoteEntity());
+        protected override Task<NoteEntity> _refreshTask => _isNewNote ? _mediator.Send(new NoteInfoQuery(_navigationParameter.ChildId)) : Task.FromResult(new NoteEntity());
 
         protected override void RefillObservableCollection(Note note)
         {
@@ -40,13 +42,13 @@ namespace MySafe.Presentation.ViewModels
 
         private async void CreateOrUpdateNote()
         {
-            if (_itemId != null)
+            if (_isNewNote)
             {
-                await _mediator.Send(new ChangeNoteCommand(Note.Id, Note.Content));
+                await _mediator.Send(new CreateNoteCommand(Note.Content));
             }
             else
             {
-                await _mediator.Send(new CreateNoteCommand(Note.Content));
+                await _mediator.Send(new ChangeNoteCommand(Note.Id, Note.Content));
             }
         }
     }

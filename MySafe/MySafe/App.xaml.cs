@@ -32,31 +32,11 @@ namespace MySafe.Presentation
         {
             InitializeComponent();
 
-            try
-            {
-                AppCenter.Start("android=a4c8c5c8-6ac7-43cb-8de1-ffd30fcd0318;",
-                    typeof(Analytics), typeof(Crashes));
-            }
-            catch (Exception ex)
-            {
-                try
-                {
-                    var from = new MailAddress("admin@justgarbage.ru", "admin");
-                    var to = new MailAddress("melnikovmaxim.nhk@gmail.com");
-                    var message = new MailMessage(from, to);
-                    message.Subject = "AppCenter.Start exception";
-                    message.Body = ex.Message + Environment.NewLine + Environment.NewLine + ex.StackTrace;
-                    var smtp = new SmtpClient("mail.justgarbage.ru", 25);
-                    smtp.Credentials = new NetworkCredential("admin@justgarbage.ru", "Ssd17xDldD");
-                    await smtp.SendMailAsync(message);
-                }
-                catch
-                {
-                }
-            }
+            AppCenter.Start("android=a4c8c5c8-6ac7-43cb-8de1-ffd30fcd0318;",
+                typeof(Analytics), typeof(Crashes));
 
             var token = await Ioc.Resolve<ISecureStorageRepository>().GetJwtSecurityTokenAsync();
-            var startPage = token.IsValidToken() ? nameof(DeviceAuthPage) : nameof(SignInPage);
+            var startPage = token.IsExpired() ? nameof(SignInPage) : nameof(DeviceAuthPage);
             await NavigationService.NavigateAsync($"NavigationPage/{startPage}");
         }
 

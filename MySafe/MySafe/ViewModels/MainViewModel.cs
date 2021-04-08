@@ -6,6 +6,7 @@ using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
 using MySafe.Core.Models.Responses;
+using MySafe.Domain.Services;
 using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
@@ -25,8 +26,8 @@ namespace MySafe.Presentation.ViewModels
         private AsyncCommand _signOutCommand;
         private int _usedCapacity;
 
-        public MainViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper)
-            : base(navigationService, mapper)
+        public MainViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IJwtService jwtService)
+            : base(navigationService, mapper, jwtService)
         {
             _mediator = mediator;
             _mapper = mapper;
@@ -43,7 +44,7 @@ namespace MySafe.Presentation.ViewModels
         public AsyncCommand<Folder> MoveToFolderCommand =>
             _moveToFolderCommand ??= new AsyncCommand<Folder>(async folder =>
             {
-                var @params = GetItemNaviigationParams(folder.Id, folder.Name);
+                var @params = new NavigationParameters() { { nameof(NavigationParameter), new NavigationParameter(folder.Id, folder.Name) }};
                 await _navigationService.NavigateAsync(nameof(FolderPage), @params);
             });
 
@@ -55,8 +56,6 @@ namespace MySafe.Presentation.ViewModels
 
         protected override void RefillObservableCollection(Safe mediatorEntity)
         {
-            //_mapper.Map(Folders, mediatorEntity.Folders);
-
             _maxCapacity = Convert.ToInt32(Math.Floor(mediatorEntity.Capacity));
             _usedCapacity = Convert.ToInt32(Math.Floor(mediatorEntity.UsedCapacity));
 
@@ -64,7 +63,6 @@ namespace MySafe.Presentation.ViewModels
             SafeSizeInfo = $"{_usedCapacity}/{_maxCapacity} MB";
 
             Folders.Clear();
-            //queryResponse.Folders.ForEach(Folders.Add);
             mediatorEntity.Folders.ForEach(x =>
             {
                 x.Name = x.Name.Split(':').FirstOrDefault();

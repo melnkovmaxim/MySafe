@@ -1,23 +1,28 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using MediatR;
 using MySafe.Core;
 using MySafe.Domain.Repositories;
+using MySafe.Domain.Services;
+using MySafe.Presentation.Models;
 using MySafe.Presentation.Views;
 using MySafe.Services.Extensions;
+using MySafe.Services.Mediator.Users.RefreshTokenQuery;
 using Prism.Navigation;
 
 namespace MySafe.Presentation.ViewModels.Abstractions
 {
     public abstract class AuthorizedViewModelBase : ViewModelBase, INavigatedAware
     {
+        private readonly IJwtService _jwtService;
         private CancellationTokenSource _cancellationTokenSource;
-        protected int? _itemId;
-        protected string _itemName;
-        protected INavigationParameters _parameters;
+        protected NavigationParameter _navigationParameter;
 
-        protected AuthorizedViewModelBase(INavigationService navigationService)
+        protected AuthorizedViewModelBase(INavigationService navigationService, IJwtService jwtService)
             : base(navigationService)
         {
+            _jwtService = jwtService;
             _cancellationTokenSource = new CancellationTokenSource();
         }
 
@@ -28,19 +33,20 @@ namespace MySafe.Presentation.ViewModels.Abstractions
 
         public virtual async void OnNavigatedTo(INavigationParameters parameters)
         {
-            SaveParameters(parameters);
-            var isNavigated = await TryNavigateToSignInPage();
-            if (!isNavigated) DoAfterNavigatedTo();
+            _ = parameters.TryGetValue(nameof(NavigationParameter), out _navigationParameter);
+
+            var isExpired = await _jwtService.IsExpiredJwtTokensAsync();
+
+            if (isExpired)
+            {
+                await _navigationService.NavigateAsync(nameof(SignInPage));
+                return;
+            }
+
+            DoAfterNavigatedTo();
         }
 
-        protected NavigationParameters GetItemNaviigationParams(int itemId, string itemName)
-        {
-            return new NavigationParameters
-            {
-                {MySafeApp.Resources.ItemId, itemId},
-                {MySafeApp.Resources.ItemName, itemName}
-            };
-        }
+        protected virtual void DoAfterNavigatedTo() {}
 
         protected CancellationToken GetCancellationToken()
         {
@@ -48,32 +54,6 @@ namespace MySafe.Presentation.ViewModels.Abstractions
                 _cancellationTokenSource = new CancellationTokenSource();
 
             return _cancellationTokenSource.Token;
-        }
-
-        protected virtual void DoAfterNavigatedTo()
-        {
-        }
-
-        protected void SaveParameters(INavigationParameters parameters)
-        {
-            _parameters = parameters;
-
-            _itemId = (int?) parameters[nameof(MySafeApp.Resources.ItemId)];
-            _itemName = (string) parameters[nameof(MySafeApp.Resources.ItemName)];
-        }
-
-        protected async Task<bool> TryNavigateToSignInPage()
-        {
-            var jwtToken = await Ioc.Resolve<ISecureStorageRepository>()
-                .GetJwtSecurityTokenAsync();
-
-            if (!jwtToken.IsValidToken())
-            {
-                await _navigationService.NavigateAsync(nameof(SignInPage));
-                return true;
-            }
-
-            return false;
         }
     }
 }

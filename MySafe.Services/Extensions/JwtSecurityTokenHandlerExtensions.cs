@@ -5,9 +5,9 @@ namespace MySafe.Services.Extensions
 {
     public static class JwtSecurityTokenHandlerExtensions
     {
-        public static bool IsValidToken(this JwtSecurityToken jwtToken)
+        public static bool IsExpired(this JwtSecurityToken jwtToken)
         {
-            if (jwtToken?.ValidTo.ToUniversalTime() > DateTime.UtcNow.AddMinutes(5)) return true;
+            if (jwtToken.ValidTo.ToUniversalTime() < DateTime.UtcNow.AddMinutes(5)) return true;
 
             return false;
         }

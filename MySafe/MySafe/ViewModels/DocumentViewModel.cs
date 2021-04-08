@@ -41,8 +41,9 @@ namespace MySafe.Presentation.ViewModels
             IMediator mediator,
             IMapper mapper,
             IPermissionService permissionService,
-            IFileService fileService)
-            : base(navigationService, mapper)
+            IFileService fileService,
+            IJwtService jwtService)
+            : base(navigationService, mapper, jwtService)
         {
             _mediator = mediator;
             _mapper = mapper;
@@ -213,7 +214,7 @@ namespace MySafe.Presentation.ViewModels
             });
 
         protected override Task<DocumentEntity> _refreshTask =>
-            _mediator.Send(new DocumentInfoQuery(_itemId.Value), GetCancellationToken());
+            _mediator.Send(new DocumentInfoQuery(_navigationParameter.ChildId), GetCancellationToken());
 
         protected override void RefillObservableCollection(Document mediatorEntity)
         {

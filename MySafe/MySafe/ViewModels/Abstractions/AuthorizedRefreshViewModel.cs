@@ -2,6 +2,7 @@
 using AutoMapper;
 using MySafe.Core.Commands;
 using MySafe.Core.Entities.Abstractions;
+using MySafe.Domain.Services;
 using MySafe.Presentation.Models.Abstractions;
 using Prism.Navigation;
 
@@ -11,8 +12,8 @@ namespace MySafe.Presentation.ViewModels.Abstractions
         where TEntity : IEntity
         where TModel : IPresentationModel
     {
-        protected AuthorizedRefreshViewModel(INavigationService navigationService, IMapper mapper) : base(
-            navigationService)
+        protected AuthorizedRefreshViewModel(INavigationService navigationService, IMapper mapper, IJwtService jwtService) 
+            : base(navigationService, jwtService)
         {
             RefreshCommand = new AsyncCommand(async () =>
             {

@@ -36,6 +36,7 @@ namespace MySafe.Presentation
             containerRegistry.Register<IRestClient, RestClientWrapper>();
             containerRegistry.Register<IFileService, FileService>();
             containerRegistry.Register<IPermissionService, PermissionService>();
+            containerRegistry.Register<IJwtService, JwtService>();
 
             return containerRegistry;
         }
@@ -101,8 +102,8 @@ namespace MySafe.Presentation
 
         public static IContainerRegistry AddMediatr(this IContainerRegistry containerRegistry)
         {
+            
             var container = containerRegistry.GetContainer();
-
             container.RegisterDelegate<ServiceFactory>(r => r.Resolve);
             container.RegisterMany(
                 new[] {typeof(IMediator).GetAssembly(), typeof(Configure).GetAssembly()}, Registrator.Interfaces);

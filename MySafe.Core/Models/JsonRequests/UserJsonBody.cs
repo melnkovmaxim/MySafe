@@ -1,7 +1,6 @@
-﻿using MySafe.Core.Models.JsonRequests;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace MySafe.Core.Models.Requests
+namespace MySafe.Core.Models.JsonRequests
 {
     public class UserJsonBody : JsonObjectBase, IJsonBody
     {
@@ -19,5 +18,7 @@ namespace MySafe.Core.Models.Requests
         [JsonProperty("phone_number")] public string PhoneNumber { get; set; }
 
         [JsonProperty("user_agreement")] public bool? UserAgreement { get; set; }
+
+        [JsonProperty("refresh_token")] public string RefreshToken { get; set; }
     }
 }

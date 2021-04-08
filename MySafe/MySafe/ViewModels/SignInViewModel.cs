@@ -41,7 +41,7 @@ namespace MySafe.Presentation.ViewModels
                 {
                     var twoFactorToken =
                         await Ioc.Resolve<ISecureStorageRepository>().GetJwtSecurityTokenTwoFactorAsync();
-                    if (twoFactorToken.IsValidToken()) await _navigationService.NavigateAsync(nameof(TwoFactorPage));
+                    if (!twoFactorToken.IsExpired()) await _navigationService.NavigateAsync(nameof(TwoFactorPage));
                 }
 
                 Error = response.Error;

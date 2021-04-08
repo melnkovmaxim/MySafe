@@ -6,6 +6,7 @@ using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
 using MySafe.Core.Models.Responses;
+using MySafe.Domain.Services;
 using MySafe.Presentation.EntityExtensions;
 using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
@@ -37,8 +38,8 @@ namespace MySafe.Presentation.ViewModels
         private string _filter;
         private AsyncCommand<Document> _moveToDocumentCommand;
 
-        public FolderViewModel(INavigationService navigationService, IMapper mapper, IMediator mediator)
-            : base(navigationService, mapper)
+        public FolderViewModel(INavigationService navigationService, IMapper mapper, IMediator mediator, IJwtService jwtService)
+            : base(navigationService, mapper, jwtService)
         {
             _mediator = mediator;
             Documents = new ObservableCollection<Document>();
@@ -63,10 +64,11 @@ namespace MySafe.Presentation.ViewModels
 
         public string IconPath { get; set; }
 
+        // _navigationParameter.ChildId
         public AsyncCommand<Document> MoveToDocumentCommand => _moveToDocumentCommand
             ??= new AsyncCommand<Document>(async document =>
             {
-                var @params = GetItemNaviigationParams(document.Id, document.Name);
+                var @params = new NavigationParameters() { { nameof(NavigationParameter), new NavigationParameter(document.Id, document.Name) }};
                 await _navigationService.NavigateAsync(nameof(DocumentPage), @params);
             });
 
@@ -85,11 +87,11 @@ namespace MySafe.Presentation.ViewModels
             RefillObservableCollection(mediatorResult);
         });
 
-        protected override Task<FolderEntity> _refreshTask => _mediator.Send(new FolderInfoQuery(_itemId.Value));
+        protected override Task<FolderEntity> _refreshTask => _mediator.Send(new FolderInfoQuery(_navigationParameter.ChildId));
 
         protected override async void RefillObservableCollection(Folder mediatorEntity)
         {
-            var isSuccess = _parentsIconsDictionary.TryGetValue(_itemName, out var iconPath);
+            var isSuccess = _parentsIconsDictionary.TryGetValue(_navigationParameter.ChildName, out var iconPath);
             IconPath = isSuccess ? iconPath : "other.png";
 
             DocumentsList = mediatorEntity.Documents;
