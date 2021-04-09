@@ -7,7 +7,7 @@ namespace MySafe.Services.Extensions
     {
         public static bool IsExpired(this JwtSecurityToken jwtToken)
         {
-            if (jwtToken.ValidTo.ToUniversalTime() < DateTime.UtcNow.AddMinutes(5)) return true;
+            if (DateTime.UtcNow.AddMinutes(5) > jwtToken?.ValidTo.ToUniversalTime()) return true;
 
             return false;
         }
