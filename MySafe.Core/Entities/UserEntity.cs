@@ -7,5 +7,8 @@ namespace MySafe.Core.Models.Responses
     public class UserEntity : EntityBase, IEntity
     {
         public string JwtToken { get; set; }
+
+        [JsonProperty("refresh_token")]
+        public string RefreshToken { get; set; }
     }
 }

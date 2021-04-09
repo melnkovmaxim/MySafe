@@ -26,15 +26,15 @@ namespace MySafe.Services.Services
         public async Task<bool> IsExpiredJwtTokensAsync()
         {
             if (await IsExpiredAccessToken()) return true;
-            //if (await IsExpiredRefreshToken()) return true;
+            if (await IsExpiredRefreshToken()) return true;
 
-            //var jwtRefreshToken = await _secureStorageRepository.GetRefreshJwtAsync();
-            //var result = await _mediator.Send(new RefreshTokenQuery(jwtRefreshToken));
+            var jwtRefreshToken = await _secureStorageRepository.GetRefreshJwtAsync();
+            var result = await _mediator.Send(new RefreshTokenQuery(jwtRefreshToken));
 
-            //if (result.HasError)
-            //{
-            //    throw new Exception(result.Error);
-            //}
+            if (result.HasError)
+            {
+                throw new Exception(result.Error);
+            }
 
             return false;
         }
@@ -46,11 +46,12 @@ namespace MySafe.Services.Services
             return accessToken == null || accessToken.IsExpired();
         }
 
+        //TODO: насколько понял это не JWT токен у них, поэтому стоит переименовать метод, т.к. он вечный
         private async Task<bool> IsExpiredRefreshToken()
         {
-            var refreshToken = await _secureStorageRepository.GetRefreshTokenAsync();
+            var refreshToken = await _secureStorageRepository.GetRefreshJwtAsync();
 
-            return refreshToken == null || refreshToken.IsExpired();
+            return string.IsNullOrEmpty(refreshToken);
         }
 
     }

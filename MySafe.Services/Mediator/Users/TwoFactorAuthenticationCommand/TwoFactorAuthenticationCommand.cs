@@ -1,4 +1,5 @@
-﻿using MySafe.Core.Models.Responses;
+﻿using MySafe.Core;
+using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
@@ -18,5 +19,6 @@ namespace MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand
 
         public override Method RequestMethod => Method.PUT;
         public override string RequestResource => "users/two_factor_authentication";
+        public override string Host => MySafeApp.Resources.TestServerHost;
     }
 }

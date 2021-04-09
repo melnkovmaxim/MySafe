@@ -89,10 +89,15 @@ namespace MySafe.Presentation
                     .GetTypes()
                     .Where(t => t.GetBaseType() == typeof(Profile));
 
-                foreach (var profile in profiles) cfg.AddMaps(profile);
+                foreach (var profile in profiles)
+                {
+                    cfg.AddMaps(profile);
+                }
 
+                //TODO: убрать регистрацию константно и сделать динамически через ассембли, как для медиатра
                 cfg.AddMaps(typeof(MediatorQueryCommandProfile));
                 cfg.AddMaps(typeof(PresentationProfile));
+                cfg.AddMaps(typeof(CommandQueryProfile));
             });
 
             containerRegistry.RegisterInstance(typeof(IMapper), new Mapper(mapperConfig));
@@ -105,6 +110,8 @@ namespace MySafe.Presentation
             
             var container = containerRegistry.GetContainer();
             container.RegisterDelegate<ServiceFactory>(r => r.Resolve);
+
+            //TODO: пофиксить для ios-версии
             container.RegisterMany(
                 new[] {typeof(IMediator).GetAssembly(), typeof(Configure).GetAssembly()}, Registrator.Interfaces);
 

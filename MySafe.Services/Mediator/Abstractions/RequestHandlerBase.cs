@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Fody;
@@ -31,6 +32,8 @@ namespace MySafe.Services.Mediator.Abstractions
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
         {
             var httpRequest = new RestRequest(request.RequestResource, request.RequestMethod);
+
+            _restClient.BaseUrl = new Uri(request.Host);
 
             if (typeof(TJsonBody) != typeof(EmptyJsonBody))
             {

@@ -6,7 +6,7 @@ using RestSharp;
 
 namespace MySafe.Services.Mediator.Users.SignInCommand
 {
-    public class SignInCommandHandler : RequestHandlerBase<SignInCommand, SerializedUserJsonBody, UserEntity>
+    public class SignInCommandHandler : RequestHandlerBase<SignInCommand, UserJsonBody, UserEntity>
     {
         public SignInCommandHandler(IRestClient restClient, IMapper mapper) : base(restClient, mapper)
         {

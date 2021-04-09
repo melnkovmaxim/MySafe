@@ -1,4 +1,5 @@
-﻿using MySafe.Core.Models.Responses;
+﻿using MySafe.Core;
+using MySafe.Core.Models.Responses;
 using MySafe.Services.Mediator.Abstractions;
 using RestSharp;
 
@@ -9,12 +10,12 @@ namespace MySafe.Services.Mediator.Users.RegisterCommand
     /// </summary>
     public class RegisterCommand : RequestBase<UserEntity>
     {
-        public readonly string Email;
-        public readonly string Login;
-        public readonly string Password;
-        public readonly string PasswordConfirmation;
-        public readonly string PhoneNumber;
-        public readonly bool UserAgreement;
+        public string Email { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public string PasswordConfirmation { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool UserAgreement { get; set; }
 
         public RegisterCommand(string email, string login, string phoneNumber, string password,
             string passwordConfirmation, bool userAgreement)
@@ -28,6 +29,7 @@ namespace MySafe.Services.Mediator.Users.RegisterCommand
         }
 
         public override Method RequestMethod => Method.POST;
-        public override string RequestResource => "/users";
+        public override string RequestResource => "/auth/create-account";
+        public override string Host => MySafeApp.Resources.TestServerHost;
     }
 }

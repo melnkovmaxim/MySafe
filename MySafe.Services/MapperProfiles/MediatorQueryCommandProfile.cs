@@ -49,6 +49,10 @@ namespace MySafe.Services.MapperProfiles
                 .ForMember(d => d.Login, mo => mo.MapFrom(s => s.Login))
                 .ForMember(d => d.Password, mo => mo.MapFrom(s => s.Password));
 
+            CreateMap<SignInCommand, UserJsonBody>()
+                .ForMember(d => d.Login, mo => mo.MapFrom(s => s.Login))
+                .ForMember(d => d.Password, mo => mo.MapFrom(s => s.Password));
+
             CreateMap<SignOutCommand, UserJsonBody>();
             CreateMap<TwoFactorAuthenticationCommand, UserJsonBody>()
                 .ForMember(d => d.EmailCode, mo => mo.MapFrom(s => s.Code));
