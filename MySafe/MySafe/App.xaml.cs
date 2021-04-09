@@ -32,7 +32,9 @@ namespace MySafe.Presentation
         {
             InitializeComponent();
 
-            AppCenter.Start("android=a4c8c5c8-6ac7-43cb-8de1-ffd30fcd0318;",
+            var androidKey = "android=a4c8c5c8-6ac7-43cb-8de1-ffd30fcd0318;";
+            var iosKey = "ios=4d4026f5-9513-4efe-9da7-5870f55d3630;";
+            AppCenter.Start(androidKey + iosKey,
                 typeof(Analytics), typeof(Crashes));
 
             var token = await Ioc.Resolve<ISecureStorageRepository>().GetJwtSecurityTokenAsync();
@@ -47,7 +49,8 @@ namespace MySafe.Presentation
                 .AddMapper()
                 .AddRepositories()
                 .AddServices()
-                .AddMediatr();
+                .AddMediatr()
+                ;
         }
     }
 }
