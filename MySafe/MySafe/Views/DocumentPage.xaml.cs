@@ -28,7 +28,7 @@ namespace MySafe.Presentation.Views
             });
         }
 
-        private Image _currentCarouselImage => Carousel.VisibleViews.Last() as Image;
+        //private Image _currentCarouselImage => Carousel.VisibleViews.Last() as Image;
 
         private void Refreshing()
         {
@@ -41,9 +41,9 @@ namespace MySafe.Presentation.Views
         {
             var degrees = rotateEnum == RotateEnum.Right ? ROTATATION_DEGRESS : ROTATATION_DEGRESS * -1;
 
-            _currentCarouselImage.RotateTo(_currentCarouselImage.Rotation + degrees);
+            //_currentCarouselImage.RotateTo(_currentCarouselImage.Rotation + degrees);
 
-            if (!_rotatedImages.Contains(_currentCarouselImage)) _rotatedImages.Add(_currentCarouselImage);
+            //if (!_rotatedImages.Contains(_currentCarouselImage)) _rotatedImages.Add(_currentCarouselImage);
         }
 
         private enum RotateEnum

@@ -13,6 +13,7 @@
     <AssemblyName>MySafe.iOS</AssemblyName>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -114,6 +115,7 @@
     <Compile Include="CustomButtonRenderer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Repositories\StoragePathesRepository.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <LinkDescription Include="LinkerSettings.xml" />
@@ -216,6 +218,10 @@
     <PackageReference Include="Prism.DryIoc.Forms" Version="8.0.0.1909" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MySafe.Domain\MySafe.Domain.csproj">
+      <Project>{879462B2-7C9B-47C5-9F55-BBF9B52CFABF}</Project>
+      <Name>MySafe.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MySafe\MySafe.Presentation.csproj">
       <Project>{901721FD-DAA6-4823-BAA4-0E139E748E56}</Project>
       <Name>MySafe.Presentation</Name>

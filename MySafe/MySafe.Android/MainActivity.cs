@@ -53,7 +53,6 @@ namespace MySafe.Droid
             var container = PrismApplicationBase.Current.Container.GetContainer();
 
             container.Register<IStoragePathesRepository, StoragePathesRepository>();
-            container.Register<IPrintService, PrintService>();
         }
 
         private void AndroidEnvironmentOnUnhandledException(object sender, RaiseThrowableEventArgs e)

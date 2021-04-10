@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="MySafe.Presentation.Views.DocumentPage"
@@ -47,9 +47,7 @@
                                         <DataTemplate>
                                             <Image Source="{Binding ImageSource}" VerticalOptions="Start">
                                                 <Image.GestureRecognizers>
-                                                    <TapGestureRecognizer
-                                                        Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference Document}}"
-                                                        CommandParameter="{Binding .}" />
+                                                    <TapGestureRecognizer Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference Document}}" CommandParameter="{Binding .}" />
                                                 </Image.GestureRecognizers>
                                             </Image>
                                         </DataTemplate>
@@ -57,7 +55,7 @@
                                 </CarouselView>
                                 <!--<StackLayout Grid.Column="1">
                                     <Button
-                                        
+
                                         Command="{Binding RotatePlusCommand}"
                                         HeightRequest="40"
                                         IsVisible="{Binding CurrentAttachment.IsImage}"
@@ -91,11 +89,13 @@
                                         CommandParameter="{Binding CurrentAttachment}"
                                         ImageSource="print.png" />
                                     <Button
+                                        x:Name="ButtonRotateRight"
                                         Grid.Column="1"
-                                        BackgroundColor="Transparent" x:Name="ButtonRotateRight"
+                                        BackgroundColor="Transparent"
                                         Command="{Binding RotatePlusCommand}"
                                         CommandParameter="{Binding CurrentAttachment}"
-                                        ImageSource="clockwise.png" IsVisible="{Binding CurrentAttachment.IsImage}"
+                                        ImageSource="clockwise.png"
+                                        IsVisible="{Binding CurrentAttachment.IsImage}"
                                         Text="" />
                                     <Button
                                         Grid.Column="2"
@@ -118,10 +118,12 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Button Margin="0,-10,0,0" VerticalOptions="End" BackgroundColor="#F1BE74"
-                                    Grid.Row="0"
-
-                                    Text="" />
+                            <Button
+                                Grid.Row="0"
+                                Margin="0,-10,0,0"
+                                BackgroundColor="#F1BE74"
+                                Text=""
+                                VerticalOptions="End" />
                         </Grid>
                     </StackLayout>
                     <!--<CollectionView ItemsSource="{Binding Attachments}" VerticalOptions="FillAndExpand">

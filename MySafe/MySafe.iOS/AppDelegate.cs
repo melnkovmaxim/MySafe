@@ -1,6 +1,10 @@
-﻿using Foundation;
+﻿using DryIoc;
+using Foundation;
+using MySafe.Domain.Repositories;
+using MySafe.iOS.Repositories;
 using MySafe.Presentation;
 using Prism;
+using Prism.DryIoc;
 using Prism.Ioc;
 using UIKit;
 using Xamarin.Forms;
@@ -24,7 +28,11 @@ namespace MySafe.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Forms.Init();
+            
             LoadApplication(new App(new iOSInitializer()));
+            
+            var container = PrismApplicationBase.Current.Container.GetContainer();
+            container.Register<IStoragePathesRepository, StoragePathesRepository>();
 
             return base.FinishedLaunching(app, options);
         }
