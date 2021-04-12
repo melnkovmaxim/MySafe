@@ -30,6 +30,5 @@ namespace MySafe.Services.Mediator.Users.RegisterCommand
 
         public override Method RequestMethod => Method.POST;
         public override string RequestResource => "/auth/create-account";
-        public override string Host => MySafeApp.Resources.TestServerHost;
     }
 }

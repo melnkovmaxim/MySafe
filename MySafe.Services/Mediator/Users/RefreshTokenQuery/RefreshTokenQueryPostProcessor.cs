@@ -21,8 +21,8 @@ namespace MySafe.Services.Mediator.Users.RefreshTokenQuery
 
         public Task Process(RefreshTokenQuery request, UserEntity response, CancellationToken cancellationToken)
         {
-            //TODO: Посмотреть сет резалт с сервера и передавать токен
-            _secureStorageRepository.SetRefreshTokenAsync(null);
+            _secureStorageRepository.SetJwtTokenAsync(response.JwtToken);
+            _secureStorageRepository.SetRefreshTokenAsync(response.RefreshToken);
 
             return Task.CompletedTask;
         }

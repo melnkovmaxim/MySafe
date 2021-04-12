@@ -24,6 +24,7 @@ using MySafe.Services.Mediator.Notes.RemoveNoteCommand;
 using MySafe.Services.Mediator.Safe.SafeInfoQuery;
 using MySafe.Services.Mediator.Trash.ClearTrashCommand;
 using MySafe.Services.Mediator.Users.ConfirmationInstructionsQuery;
+using MySafe.Services.Mediator.Users.RefreshTokenQuery;
 using MySafe.Services.Mediator.Users.RegisterCommand;
 using MySafe.Services.Mediator.Users.SignInCommand;
 using MySafe.Services.Mediator.Users.SignOutCommand;
@@ -56,6 +57,9 @@ namespace MySafe.Services.MapperProfiles
             CreateMap<SignOutCommand, UserJsonBody>();
             CreateMap<TwoFactorAuthenticationCommand, UserJsonBody>()
                 .ForMember(d => d.EmailCode, mo => mo.MapFrom(s => s.Code));
+
+            CreateMap<RefreshTokenQuery, UserJsonBody>()
+                .ForMember(d => d.RefreshToken, mo => mo.MapFrom(s => s.RefreshToken));
 
             //Safe
             CreateMap<ClearTrashCommand, SafeJsonBody>();

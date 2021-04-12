@@ -22,6 +22,7 @@ namespace MySafe.Services.Mediator.Users.SignInCommand
             if (!response.HasError)
             {
                 await _secureStorageRepository.SetJwtTokenForTwoFactorAsync(response.JwtToken);
+                await _secureStorageRepository.SetRefreshTokenAsync(response.RefreshToken);
                 await _secureStorageRepository.SetUserLogin(request.Login);
                 MySafeApp.Resources.UserLogin = request.Login;
             }

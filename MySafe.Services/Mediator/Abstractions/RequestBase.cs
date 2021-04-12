@@ -9,7 +9,5 @@ namespace MySafe.Services.Mediator.Abstractions
         public abstract Method RequestMethod { get; }
 
         public abstract string RequestResource { get; }
-
-        public virtual string Host => MySafe.Core.MySafeApp.Resources.ServerHost;
     }
 }

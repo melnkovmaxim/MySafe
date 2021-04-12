@@ -21,6 +21,5 @@ namespace MySafe.Services.Mediator.Users.RefreshTokenQuery
 
         public override Method RequestMethod => Method.POST;
         public override string RequestResource => "auth/jwt-refresh";
-        public override string Host => MySafeApp.Resources.TestServerHost;
     }
 }

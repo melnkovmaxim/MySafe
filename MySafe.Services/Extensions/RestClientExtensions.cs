@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using MySafe.Core;
 using MySafe.Core.Entities.Abstractions;

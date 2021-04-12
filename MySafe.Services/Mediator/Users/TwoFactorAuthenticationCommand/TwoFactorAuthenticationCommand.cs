@@ -17,8 +17,7 @@ namespace MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand
 
         public string Code { get; set; }
 
-        public override Method RequestMethod => Method.PUT;
-        public override string RequestResource => "users/two_factor_authentication";
-        public override string Host => MySafeApp.Resources.TestServerHost;
+        public override Method RequestMethod => Method.POST;
+        public override string RequestResource => "auth/sms-auth";
     }
 }
