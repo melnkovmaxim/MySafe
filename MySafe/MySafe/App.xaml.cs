@@ -5,6 +5,7 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using MySafe.Domain.Repositories;
+using MySafe.Domain.Services;
 using MySafe.Presentation.Views;
 using MySafe.Services.Extensions;
 using Prism;
@@ -35,8 +36,8 @@ namespace MySafe.Presentation
             AppCenter.Start("android=a4c8c5c8-6ac7-43cb-8de1-ffd30fcd0318;",
                 typeof(Analytics), typeof(Crashes));
 
-            var token = await Ioc.Resolve<ISecureStorageRepository>().GetJwtSecurityTokenAsync();
-            var startPage = token.IsExpired() ? nameof(SignInPage) : nameof(DeviceAuthPage);
+            var isExpiredToken = await Ioc.Resolve<IJwtService>().IsExpiredJwtTokensAsync();
+            var startPage = isExpiredToken ? nameof(SignInPage) : nameof(DeviceAuthPage);
             await NavigationService.NavigateAsync($"NavigationPage/{startPage}");
         }
 
