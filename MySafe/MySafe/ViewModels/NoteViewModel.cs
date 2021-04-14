@@ -28,8 +28,8 @@ namespace MySafe.Presentation.ViewModels
         public AsyncCommand<Note> ShowToolMenuCommand { get; }
         public AsyncCommand AddNoteCommand { get; }
 
-        public NoteViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IJwtService jwtService) : base(
-            navigationService, mapper, jwtService)
+        public NoteViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IAuthService authService) : base(
+            navigationService, mapper, authService)
         {
             _mediator = mediator;
             ShowToolMenuCommand = new AsyncCommand<Note>(ShowToolMenuCommandTask);

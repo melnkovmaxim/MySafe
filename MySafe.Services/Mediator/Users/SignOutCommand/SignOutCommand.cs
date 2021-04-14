@@ -10,7 +10,14 @@ namespace MySafe.Services.Mediator.Users.SignOutCommand
     /// </summary>
     public class SignOutCommand : BearerRequestBase<UserEntity>
     {
-        public override Method RequestMethod => Method.DELETE;
-        public override string RequestResource => "users/sign_out";
+        public string RefreshToken { get; set; }
+
+        public SignOutCommand(string refreshToken)
+        {
+            RefreshToken = refreshToken;
+        }
+
+        public override Method RequestMethod => Method.POST;
+        public override string RequestResource => "auth/sign-out";
     }
 }

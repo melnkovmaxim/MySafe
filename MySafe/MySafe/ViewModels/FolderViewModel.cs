@@ -38,8 +38,8 @@ namespace MySafe.Presentation.ViewModels
         private string _filter;
         private AsyncCommand<Document> _moveToDocumentCommand;
 
-        public FolderViewModel(INavigationService navigationService, IMapper mapper, IMediator mediator, IJwtService jwtService)
-            : base(navigationService, mapper, jwtService)
+        public FolderViewModel(INavigationService navigationService, IMapper mapper, IMediator mediator, IAuthService authService)
+            : base(navigationService, mapper, authService)
         {
             _mediator = mediator;
             Documents = new ObservableCollection<Document>();

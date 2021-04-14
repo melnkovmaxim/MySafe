@@ -12,8 +12,8 @@ namespace MySafe.Presentation.ViewModels.Abstractions
         where TEntity : IEntity
         where TModel : IPresentationModel
     {
-        protected AuthorizedRefreshViewModel(INavigationService navigationService, IMapper mapper, IJwtService jwtService) 
-            : base(navigationService, jwtService)
+        protected AuthorizedRefreshViewModel(INavigationService navigationService, IMapper mapper, IAuthService authService) 
+            : base(navigationService, authService)
         {
             RefreshCommand = new AsyncCommand(async () =>
             {

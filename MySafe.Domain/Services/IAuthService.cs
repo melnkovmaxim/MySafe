@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace MySafe.Domain.Services
 {
-    public interface IJwtService
+    public interface IAuthService
     {
-        Task<bool> IsExpiredJwtTokensAsync();
+        Task<bool> IsAuthorized();
+        Task<bool> SignOutIfNotAuthorized();
+        Task SignOut();
     }
 }

@@ -19,8 +19,8 @@ namespace MySafe.Presentation.ViewModels
         private readonly IMediator _mediator;
         private bool _isNewNote => _navigationParameter == null;
 
-        public NoteEditViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IJwtService jwtService) 
-            : base(navigationService, mapper, jwtService)
+        public NoteEditViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IAuthService authService) 
+            : base(navigationService, mapper, authService)
         {
             _mediator = mediator;
         }

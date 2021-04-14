@@ -17,14 +17,16 @@ namespace MySafe.Presentation.ViewModels
         private readonly Action _actionOnRegister;
 
         private readonly IDeviceAuthService _deviceAuthService;
+        private readonly IAuthService _authService;
         private readonly TimeSpan _vibrationDuration;
 
         public DeviceAuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager,
-            IDeviceAuthService deviceAuthService, IJwtService jwtService)
-            : base(navigationService, jwtService)
+            IDeviceAuthService deviceAuthService, IAuthService authService)
+            : base(navigationService, authService)
         {
             PasswordManager = passwordManager;
             _deviceAuthService = deviceAuthService;
+            _authService = authService;
             _vibrationDuration = TimeSpan.FromSeconds(0.2);
 
             _actionOnLogin = Login;
@@ -85,9 +87,7 @@ namespace MySafe.Presentation.ViewModels
 
         private async void RestorePassword()
         {
-            var secureStorage = Ioc.Resolve<ISecureStorageRepository>();
-            await secureStorage.RemoveDevicePasswordAsync();
-            await secureStorage.RemoveJwtToken();
+            await _authService.SignOut();
             await _navigationService.NavigateAsync(nameof(SignInPage));
         }
     }

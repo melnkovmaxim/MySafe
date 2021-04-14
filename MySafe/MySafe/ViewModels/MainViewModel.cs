@@ -26,8 +26,8 @@ namespace MySafe.Presentation.ViewModels
         private AsyncCommand _signOutCommand;
         private int _usedCapacity;
 
-        public MainViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IJwtService jwtService)
-            : base(navigationService, mapper, jwtService)
+        public MainViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IAuthService authService)
+            : base(navigationService, mapper, authService)
         {
             _mediator = mediator;
             _mapper = mapper;

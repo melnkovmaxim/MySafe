@@ -15,9 +15,10 @@ namespace MySafe.Services.Mediator.Users.SignOutCommand
             _secureStorageRepository = secureStorageRepository;
         }
 
-        public Task Process(SignOutCommand request, UserEntity response, CancellationToken cancellationToken)
+        public async Task Process(SignOutCommand request, UserEntity response, CancellationToken cancellationToken)
         {
-            return response.HasError ? Task.CompletedTask : _secureStorageRepository.RemoveJwtToken();
+            await _secureStorageRepository.RemoveJwtToken();
+            await _secureStorageRepository.RemoveRefreshTokenAsync();
         }
     }
 }

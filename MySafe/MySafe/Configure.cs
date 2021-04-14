@@ -36,7 +36,7 @@ namespace MySafe.Presentation
             containerRegistry.Register<IRestClient, RestClientWrapper>();
             containerRegistry.Register<IFileService, FileService>();
             containerRegistry.Register<IPermissionService, PermissionService>();
-            containerRegistry.Register<IJwtService, JwtService>();
+            containerRegistry.Register<IAuthService, AuthService>();
 
             return containerRegistry;
         }

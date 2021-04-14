@@ -42,8 +42,8 @@ namespace MySafe.Presentation.ViewModels
             IMapper mapper,
             IPermissionService permissionService,
             IFileService fileService,
-            IJwtService jwtService)
-            : base(navigationService, mapper, jwtService)
+            IAuthService authService)
+            : base(navigationService, mapper, authService)
         {
             _mediator = mediator;
             _mapper = mapper;

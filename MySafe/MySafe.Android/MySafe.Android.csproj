@@ -71,7 +71,7 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidKeyStore>true</AndroidKeyStore>
-    <AndroidSigningKeyStore>C:\Users\Aspide\Downloads\melnikovmaxim.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>C:\Users\Maks\Downloads\melnikovmaxim.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>Ssd17xDldD</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>melnikovmaxim</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>Ssd17xDldD</AndroidSigningKeyPass>

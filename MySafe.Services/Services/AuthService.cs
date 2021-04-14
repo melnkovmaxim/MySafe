@@ -4,26 +4,58 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Fody;
 using MediatR;
 using MySafe.Domain.Repositories;
 using MySafe.Domain.Services;
 using MySafe.Services.Extensions;
 using MySafe.Services.Mediator.Users.RefreshTokenQuery;
+using MySafe.Services.Mediator.Users.SignOutCommand;
 
 namespace MySafe.Services.Services
 {
-    public class JwtService: IJwtService
+    [ConfigureAwait(false)]
+    public class AuthService: IAuthService
     {
         private readonly IMediator _mediator;
         private readonly ISecureStorageRepository _secureStorageRepository;
+        private readonly IDeviceAuthService _deviceAuthService;
 
-        public JwtService(IMediator mediator, ISecureStorageRepository secureStorageRepository)
+        public AuthService(IMediator mediator, ISecureStorageRepository secureStorageRepository, IDeviceAuthService deviceAuthService)
         {
             _mediator = mediator;
             _secureStorageRepository = secureStorageRepository;
+            _deviceAuthService = deviceAuthService;
         }
 
-        public async Task<bool> IsExpiredJwtTokensAsync()
+        public async Task<bool> SignOutIfNotAuthorized()
+        {
+            var isAuthorized = await IsAuthorized();
+
+            if (isAuthorized == false)
+            {
+                await SignOut();
+            }
+
+            return isAuthorized == false;
+        }
+
+        public async Task SignOut()
+        {
+            await _deviceAuthService.Logout();
+            var refreshToken = await _secureStorageRepository.GetRefreshJwtAsync();
+            var result = await _mediator.Send(new SignOutCommand(refreshToken));
+
+            if (result.HasError)
+            {
+                //TODO: Залогировать.
+
+                await _secureStorageRepository.RemoveJwtToken();
+                await _secureStorageRepository.RemoveRefreshTokenAsync();
+            }
+        }
+
+        public async Task<bool> IsAuthorized()
         {
             if (await IsExpiredAccessToken() == false) return false;
             if (await IsValidRefreshToken() == false) return true;
@@ -33,7 +65,7 @@ namespace MySafe.Services.Services
 
             if (result.HasError)
             {
-                throw new Exception(result.Error);
+                //TODO: Залогировать.
             }
 
             return false;
@@ -46,13 +78,11 @@ namespace MySafe.Services.Services
             return accessToken == null || accessToken.IsExpired();
         }
 
-        //TODO: насколько понял это не JWT токен у них, поэтому стоит переименовать метод, т.к. он вечный
         private async Task<bool> IsValidRefreshToken()
         {
             var refreshToken = await _secureStorageRepository.GetRefreshJwtAsync();
 
             return !string.IsNullOrEmpty(refreshToken);
         }
-
     }
 }

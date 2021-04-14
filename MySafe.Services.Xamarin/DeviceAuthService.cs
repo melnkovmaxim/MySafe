@@ -11,6 +11,7 @@ using Xamarin.Essentials;
 
 namespace MySafe.Services.Xamarin
 {
+    [ConfigureAwait(false)]
     public class DeviceAuthService : IDeviceAuthService, ITransientService
     {
         private const string FINGER_PRINT_SCAN_TITLE = "Вход в MySafe";
@@ -61,7 +62,6 @@ namespace MySafe.Services.Xamarin
             return false;
         }
 
-        [ConfigureAwait(false)]
         public async Task RegisterAsync(string password, Action actionOnRegister)
         {
             if (password.Length == MySafeApp.Resources.DefaultApplicationPasswordLength)
@@ -74,7 +74,6 @@ namespace MySafe.Services.Xamarin
             await Task.Run(() => Thread.Sleep(500));
         }
 
-        [ConfigureAwait(false)]
         public async Task Logout()
         {
             await _secureStorageRepository.RemoveDevicePasswordAsync();

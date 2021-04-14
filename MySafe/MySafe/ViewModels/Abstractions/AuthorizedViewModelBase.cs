@@ -15,14 +15,14 @@ namespace MySafe.Presentation.ViewModels.Abstractions
 {
     public abstract class AuthorizedViewModelBase : ViewModelBase, INavigatedAware
     {
-        private readonly IJwtService _jwtService;
+        private readonly IAuthService _authService;
         private CancellationTokenSource _cancellationTokenSource;
         protected NavigationParameter _navigationParameter;
 
-        protected AuthorizedViewModelBase(INavigationService navigationService, IJwtService jwtService)
+        protected AuthorizedViewModelBase(INavigationService navigationService, IAuthService authService)
             : base(navigationService)
         {
-            _jwtService = jwtService;
+            _authService = authService;
             _cancellationTokenSource = new CancellationTokenSource();
         }
 
@@ -35,9 +35,9 @@ namespace MySafe.Presentation.ViewModels.Abstractions
         {
             _ = parameters.TryGetValue(nameof(NavigationParameter), out _navigationParameter);
 
-            var isExpired = await _jwtService.IsExpiredJwtTokensAsync();
+            var isAuthorized = await _authService.IsAuthorized();
 
-            if (isExpired)
+            if (isAuthorized == false)
             {
                 await _navigationService.NavigateAsync(nameof(SignInPage));
                 return;

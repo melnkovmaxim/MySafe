@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MySafe.Presentation.Models;
 using MySafe.Services.Mediator.Users.RegisterCommand;
+using MySafe.Services.Mediator.Users.SignOutCommand;
 
 namespace MySafe.Presentation.MapperProfiles
 {
