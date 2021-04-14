@@ -40,7 +40,7 @@ namespace MySafe.Presentation.ViewModels
                 if (response.Error == "code_already_sent")
                 {
                     var twoFactorToken =
-                        await Ioc.Resolve<ISecureStorageRepository>().GetJwtSecurityTokenTwoFactorAsync();
+                        await Ioc.Resolve<ISecureStorageRepository>().GetTwoFactorSecurityTokenAsync();
                     if (!twoFactorToken.IsExpired()) await _navigationService.NavigateAsync(nameof(TwoFactorPage));
                 }
 

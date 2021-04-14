@@ -22,11 +22,11 @@ namespace MySafe.Services.Mediator
         {
             if (request is TwoFactorAuthenticationCommand twoFactorRequest)
             {
-                twoFactorRequest.JwtToken = await _secureStorageRepository.GetJwtTokenForTwoFactorAsync();
+                twoFactorRequest.JwtToken = await _secureStorageRepository.GetTwoFactorJwtAsync();
                 return;
             }
 
-            request.JwtToken = await _secureStorageRepository.GetJwtTokenAsync();
+            request.JwtToken = await _secureStorageRepository.GetAccessJwtAsync();
         }
     }
 }

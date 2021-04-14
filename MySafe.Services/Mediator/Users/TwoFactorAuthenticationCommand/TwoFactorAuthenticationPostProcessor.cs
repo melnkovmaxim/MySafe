@@ -21,8 +21,8 @@ namespace MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand
         {
             if (!response.HasError)
             {
-                await _secureStorageRepository.RemoveTwoFactorJwtToken();
-                await _secureStorageRepository.SetJwtTokenAsync(response.JwtToken);
+                await _secureStorageRepository.RemoveTwoFactorJwtAsync();
+                await _secureStorageRepository.SetAccessJwtAsync(response.JwtToken);
             }
         }
     }

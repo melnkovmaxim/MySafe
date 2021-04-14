@@ -43,14 +43,14 @@ namespace MySafe.Services.Services
         public async Task SignOut()
         {
             await _deviceAuthService.Logout();
-            var refreshToken = await _secureStorageRepository.GetRefreshJwtAsync();
+            var refreshToken = await _secureStorageRepository.GetRefreshTokenAsync();
             var result = await _mediator.Send(new SignOutCommand(refreshToken));
 
             if (result.HasError)
             {
                 //TODO: Залогировать.
 
-                await _secureStorageRepository.RemoveJwtToken();
+                await _secureStorageRepository.RemoveAccessJwtAsync();
                 await _secureStorageRepository.RemoveRefreshTokenAsync();
             }
         }
@@ -60,7 +60,7 @@ namespace MySafe.Services.Services
             if (await IsExpiredAccessToken() == false) return false;
             if (await IsValidRefreshToken() == false) return true;
 
-            var jwtRefreshToken = await _secureStorageRepository.GetRefreshJwtAsync();
+            var jwtRefreshToken = await _secureStorageRepository.GetRefreshTokenAsync();
             var result = await _mediator.Send(new RefreshTokenQuery(jwtRefreshToken));
 
             if (result.HasError)
@@ -73,14 +73,14 @@ namespace MySafe.Services.Services
 
         private async Task<bool> IsExpiredAccessToken()
         {
-            var accessToken = await _secureStorageRepository.GetJwtSecurityTokenAsync();
+            var accessToken = await _secureStorageRepository.GetAccessSecurityTokenAsync();
 
             return accessToken == null || accessToken.IsExpired();
         }
 
         private async Task<bool> IsValidRefreshToken()
         {
-            var refreshToken = await _secureStorageRepository.GetRefreshJwtAsync();
+            var refreshToken = await _secureStorageRepository.GetRefreshTokenAsync();
 
             return !string.IsNullOrEmpty(refreshToken);
         }

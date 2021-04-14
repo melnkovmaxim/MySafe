@@ -49,7 +49,7 @@ namespace MySafe.Presentation.ViewModels
         private async void Login()
         {
             var storageRepository = Ioc.Resolve<ISecureStorageRepository>();
-            var token = await storageRepository.GetJwtSecurityTokenAsync();
+            var token = await storageRepository.GetAccessSecurityTokenAsync();
             await _navigationService.NavigateAsync(token.IsExpired()
                 ? nameof(SignInPage)
                 : nameof(MainPage));
