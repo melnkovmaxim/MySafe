@@ -1,14 +1,18 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using AutoMapper;
 using Fody;
 using MediatR;
+using MySafe.Core.Dto;
 using MySafe.Core.Entities.Abstractions;
 using MySafe.Core.Enums;
 using MySafe.Domain.Repositories;
 using MySafe.Domain.Services;
 using MySafe.Services.Mediator.Images.OriginalImageQuery;
 using MySafe.Services.Mediator.Sheets.OriginalSheetQuery;
+using MySafe.Services.Services;
+using Xamarin.Essentials;
 
 namespace MySafe.Services.Xamarin
 {
@@ -18,80 +22,72 @@ namespace MySafe.Services.Xamarin
         private const string DEFAULT_IMAGE_EXTENSION = ".jpeg";
         private readonly IMediator _mediator;
         private readonly IStoragePathesRepository _storagePathesRepository;
+        private readonly IFileRestService _fileRestService;
+        private readonly IMapper _mapper;
 
-        public FileService(IMediator mediator, IStoragePathesRepository storagePathesRepository)
+        public FileService(
+            IMediator mediator, 
+            IStoragePathesRepository storagePathesRepository, 
+            IFileRestService fileRestService,
+            IMapper mapper)
         {
             _mediator = mediator;
             _storagePathesRepository = storagePathesRepository;
+            _fileRestService = fileRestService;
+            _mapper = mapper;
         }
 
-        public async Task<bool> TrySaveFileToDeviceMemoryAsync(string fileName, string fileExtension, byte[] bytes)
+        public async Task<FileResultDto> GetPickedFileResult()
         {
-            var path = GetFullPathFileOnDevice(fileName, fileExtension);
-
-            try
-            {
-                await File.WriteAllBytesAsync(path, bytes);
-            }
-            catch
-            {
-                return false;
-            }
-
-            return true;
+            var fileResult = await FilePicker.PickAsync(PickOptions.Default);
+            return _mapper.Map<FileResultDto>(fileResult);
         }
 
-        public async Task<IEntity> DownloadFileAsync(int attachmentId, AttachmentTypeEnum attachmentType)
+        public async Task<byte[]> GetFileBytesFromStream(Stream stream)
         {
-            if (attachmentType == AttachmentTypeEnum.Image)
-                return await _mediator.Send(new OriginalImageQuery(attachmentId));
+            await using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
 
-            return await _mediator.Send(new OriginalSheetQuery(attachmentId));
+            return memoryStream.GetBuffer();
         }
 
-        public Task<bool> TryDownloadAndSaveIfNotExist(int attachmentId, AttachmentTypeEnum attachmentType,
-            string fileName,
-            string fileExtension)
+        public async Task<bool> TryDownloadAndSaveFile(int attachmentId, AttachmentTypeEnum attachmentType, string fileName, string fileExtension)
         {
-            var path = GetFullPathFileOnDevice(fileName, fileExtension);
-
-            if (!File.Exists(path))
-                return TryDownloadAndSaveFile(attachmentId, attachmentType, fileName, fileExtension);
-
-            return Task.FromResult(true);
-        }
-
-        public async Task<bool> TryDownloadAndSaveFile(int attachmentId, AttachmentTypeEnum attachmentType,
-            string fileName, string fileExtension)
-        {
-            var downloadResult = await DownloadFileAsync(attachmentId, attachmentType);
+            var downloadResult = await _fileRestService.DownloadAsync(attachmentId, attachmentType);
 
             if (downloadResult?.HasError != false) return false;
 
-            var saveResult = await TrySaveFileToDeviceMemoryAsync(fileName, fileExtension, downloadResult.FileBytes);
+            var path = GetFullPathFileOnDevice(fileName, fileExtension);
+            await File.WriteAllBytesAsync(path, downloadResult.FileBytes);
 
-            return saveResult;
-        }
-
-        public bool TryGetFilePathOnDevice(out string filePath)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetFileNameWithExtension(string fileName, string fileExtension)
-        {
-            var result = fileName + (fileExtension ?? DEFAULT_IMAGE_EXTENSION);
-
-            return result;
+            return true;
         }
 
         public string GetFullPathFileOnDevice(string fileName, string fileExtension)
         {
             var downloadPath = _storagePathesRepository.DownloadPath;
-            var fullFileName = GetFileNameWithExtension(fileName, fileExtension);
+            var fullFileName = fileName + (fileExtension ?? DEFAULT_IMAGE_EXTENSION);
             var result = Path.Combine(downloadPath, fullFileName);
 
             return result;
+        }
+
+        public async Task<bool> TryOpenFileAsync(int attachmentId, AttachmentTypeEnum attachmentType, string fileName, string fileExtension)
+        {
+            var path = GetFullPathFileOnDevice(fileName, fileExtension);
+
+            if (!File.Exists(path))
+            {
+                var isDownloaded = await TryDownloadAndSaveFile(attachmentId, attachmentType, fileName, fileExtension);
+                if (!isDownloaded) return false;
+            }
+            
+            var readOnlyFile = new ReadOnlyFile(path);
+            var openFileRequest = new OpenFileRequest(fileName, readOnlyFile);
+
+            await Launcher.OpenAsync(openFileRequest);
+
+            return true;
         }
     }
 }

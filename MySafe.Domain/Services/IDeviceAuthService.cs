@@ -5,8 +5,8 @@ namespace MySafe.Domain.Services
 {
     public interface IDeviceAuthService
     {
-        Task<bool> TryLoginAsync(string password, Action actionOnLogin, TimeSpan vibrationDuration);
-        Task<bool> TryLoginWithPrintScanAsync(Action actionOnLogin, TimeSpan vibrationDuration);
+        Task<bool> TryLoginAsync(string password, Action actionOnLogin);
+        Task<bool> TryLoginWithPrintScanAsync(Action actionOnLogin);
         Task RegisterAsync(string password, Action actionOnRegister);
         Task<bool> IsRegistered();
         Task Logout();

@@ -16,10 +16,12 @@ namespace MySafe.Services.Xamarin
     {
         private const string FINGER_PRINT_SCAN_TITLE = "Вход в MySafe";
         private readonly ISecureStorageRepository _secureStorageRepository;
+        private readonly TimeSpan _durationVibrationOnFail;
 
         public DeviceAuthService(ISecureStorageRepository secureStorageRepository)
         {
             _secureStorageRepository = secureStorageRepository;
+            _durationVibrationOnFail = TimeSpan.FromSeconds(0.2);
         }
 
         public async Task<bool> IsRegistered()
@@ -29,7 +31,7 @@ namespace MySafe.Services.Xamarin
             return !string.IsNullOrEmpty(devicePassword);
         }
 
-        public async Task<bool> TryLoginAsync(string password, Action actionOnLogin, TimeSpan vibrationDuration)
+        public async Task<bool> TryLoginAsync(string password, Action actionOnLogin)
         {
             await Task.Run(() => Thread.Sleep(500));
 
@@ -41,12 +43,12 @@ namespace MySafe.Services.Xamarin
                 return true;
             }
 
-            if (password.Length == correctPassword.Length) Vibration.Vibrate(vibrationDuration);
+            if (password.Length == correctPassword.Length) Vibration.Vibrate(_durationVibrationOnFail);
 
             return false;
         }
 
-        public async Task<bool> TryLoginWithPrintScanAsync(Action actionOnLogin, TimeSpan vibrationDuration)
+        public async Task<bool> TryLoginWithPrintScanAsync(Action actionOnLogin)
         {
             var request = new AuthenticationRequestConfiguration(FINGER_PRINT_SCAN_TITLE, string.Empty);
             var result = await CrossFingerprint.Current.AuthenticateAsync(request);
@@ -57,7 +59,7 @@ namespace MySafe.Services.Xamarin
                 return true;
             }
 
-            Vibration.Vibrate(vibrationDuration);
+            Vibration.Vibrate(_durationVibrationOnFail);
 
             return false;
         }

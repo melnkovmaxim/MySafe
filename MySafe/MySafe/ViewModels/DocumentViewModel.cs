@@ -17,6 +17,7 @@ using MySafe.Services.Mediator.Images.UploadImageCommand;
 using MySafe.Services.Mediator.Sheets.SheetMoveToTrashCommand;
 using MySafe.Services.Mediator.Sheets.SheetPdfFormatQuery;
 using MySafe.Services.Mediator.Sheets.UploadSheetCommand;
+using MySafe.Services.Services;
 using Plugin.Printing;
 using Prism.Navigation;
 using Xamarin.Essentials;
@@ -27,14 +28,15 @@ namespace MySafe.Presentation.ViewModels
     public class DocumentViewModel : AuthorizedRefreshViewModel<DocumentEntity, Document>
     {
         private readonly IFileService _fileService;
+        private readonly IFileRestService _fileRestService;
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
         private readonly IPermissionService _permissionService;
         private AsyncCommand<Attachment> _downloadFileCommand;
-        private AsyncCommand<Attachment> _moveToTrashCommand;
-        private AsyncCommand<Attachment> _openFileCommand;
+        private AsyncCommand<Attachment> MoveToTrashCommand { get; }
+        private AsyncCommand<Attachment> OpenFileCommand { get; }
         private AsyncCommand<Attachment> _printCommand;
-        private AsyncCommand _uploadFileCommand;
+        private AsyncCommand UploadFileCommand { get; }
 
         public DocumentViewModel(
             INavigationService navigationService,
@@ -42,14 +44,20 @@ namespace MySafe.Presentation.ViewModels
             IMapper mapper,
             IPermissionService permissionService,
             IFileService fileService,
-            IAuthService authService)
+            IAuthService authService,
+            IFileRestService fileRestService)
             : base(navigationService, mapper, authService)
         {
             _mediator = mediator;
             _mapper = mapper;
             _permissionService = permissionService;
             _fileService = fileService;
+            _fileRestService = fileRestService;
             Attachments = new ObservableCollection<Attachment>();
+
+            MoveToTrashCommand = new AsyncCommand<Attachment>(MoveToTrashCommandTask);
+            OpenFileCommand = new AsyncCommand<Attachment>(OpenFileCommandTask);
+            UploadFileCommand = new AsyncCommand(UploadFileCommandTask);
 
             RotatePlusCommand =
                 new AsyncCommand(() => _mediator.Send(new ChangeImageCommand(CurrentAttachment.Id, "+")));
@@ -86,93 +94,42 @@ namespace MySafe.Presentation.ViewModels
                         "Не получилось скачать файл, что-то пошло не так... ", "Ok");
             });
 
-        public AsyncCommand<Attachment> OpenFileCommand =>
-            _openFileCommand ??= new AsyncCommand<Attachment>(async attachment =>
+        public async Task OpenFileCommandTask(Attachment attachment)
+        {
+            var isPermissionGranted = await _permissionService.TryGetStorageWritePermissionAsync();
+            if (!isPermissionGranted) return;
+
+            var isOpened = await _fileService.TryOpenFileAsync(attachment.Id, attachment.Type, attachment.Name, attachment.FileExtension);
+            if (!isOpened) await Application.Current.MainPage.DisplayAlert("Ошибка", "Ошибка при открытии файла", "Ok");
+        }
+
+        public async Task UploadFileCommandTask()
+        {
+            var pickedFile = await _fileService.GetPickedFileResult();
+            var uploadResult = await _fileRestService.UploadAsync(Document.Id, pickedFile);
+
+            if (!uploadResult.HasError)
             {
-                var isPermissionGranted = await _permissionService.TryGetStorageWritePermissionAsync();
+                var mediatorResult = (await _refreshTask).ToDocumentToPresentationModel();
+                RefillObservableCollection(mediatorResult);
+                return;
+            }
 
-                if (!isPermissionGranted) return;
+            await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось загрузить файл, что-то пошло не так... ", "Ok");
+        }
 
-                var isSuccessful = await _fileService.TryDownloadAndSaveIfNotExist(attachment.Id, attachment.Type,
-                    attachment.Name, attachment.FileExtension);
+        public async Task MoveToTrashCommandTask(Attachment attachment)
+        {
+            var result = await _fileRestService.MoveToTrashAsync(attachment.Id, attachment.Type);
 
-                if (!isSuccessful)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Ошибка",
-                        "Не получилось скачать файл, что-то пошло не так... ", "Ok");
-                    return;
-                }
-
-                var path = _fileService.GetFullPathFileOnDevice(attachment.Name, attachment.FileExtension);
-                var readOnlyFile = new ReadOnlyFile(path);
-                var openFileRequest = new OpenFileRequest(attachment.Name, readOnlyFile);
-
-                await Launcher.OpenAsync(openFileRequest);
-            });
-
-        public AsyncCommand UploadFileCommand =>
-            _uploadFileCommand ??= new AsyncCommand(async () =>
+            if (result.HasError)
             {
-                var result = await FilePicker.PickAsync(PickOptions.Default);
+                await Application.Current.MainPage.DisplayAlert("Ошибка","Не получилось загрузить файл, что-то пошло не так... ", "Ok");
+                return;
+            }
 
-                await using var stream = await result.OpenReadAsync();
-                await using var memoryStream = new MemoryStream();
-                await stream.CopyToAsync(memoryStream);
-                var bytes = memoryStream.GetBuffer();
-
-                IPresentationModel response;
-
-                if (result.ContentType.Split('/')[0] == "image")
-                {
-                    var mediatorResult =
-                        await _mediator.Send(new UploadImageCommand(Document.Id, result.FileName, result.ContentType,
-                            bytes));
-                    response = mediatorResult.ToImagePresentationModel();
-                }
-                else
-                {
-                    var mediatorResult =
-                        await _mediator.Send(new UploadSheetCommand(Document.Id, result.FileName, result.ContentType,
-                            bytes));
-                    response = mediatorResult.ToSheetPresentationModel();
-                }
-
-                if (!response.HasError)
-                {
-                    var mediatorResult = (await _refreshTask).ToDocumentToPresentationModel();
-                    RefillObservableCollection(mediatorResult);
-                    return;
-                }
-
-                await Application.Current.MainPage.DisplayAlert("Ошибка",
-                    "Не получилось загрузить файл, что-то пошло не так... ", "Ok");
-            });
-
-        public AsyncCommand<Attachment> MoveToTrashCommand =>
-            _moveToTrashCommand ??= new AsyncCommand<Attachment>(async attachment =>
-            {
-                IPresentationModel response;
-
-                if (attachment.IsImage)
-                {
-                    var mediatorResult = await _mediator.Send(new ImageMoveToTrashCommand(attachment.Id));
-                    response = mediatorResult.ToImagePresentationModel();
-                }
-                else
-                {
-                    var mediatorResult = await _mediator.Send(new SheetMoveToTrashCommand(attachment.Id));
-                    response = mediatorResult.ToSheetPresentationModel();
-                }
-
-                if (response.HasError)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Ошибка",
-                        "Не получилось загрузить файл, что-то пошло не так... ", "Ok");
-                    return;
-                }
-
-                Attachments.Remove(attachment);
-            });
+            Attachments.Remove(attachment);
+        }
 
         public AsyncCommand<Attachment> PrintCommand => _printCommand ??= new AsyncCommand<Attachment>(
             async attachment =>

@@ -37,6 +37,7 @@ namespace MySafe.Presentation
             containerRegistry.Register<IFileService, FileService>();
             containerRegistry.Register<IPermissionService, PermissionService>();
             containerRegistry.Register<IAuthService, AuthService>();
+            containerRegistry.Register<IFileRestService, FileRestService>();
 
             return containerRegistry;
         }
@@ -98,6 +99,7 @@ namespace MySafe.Presentation
                 cfg.AddMaps(typeof(MediatorQueryCommandProfile));
                 cfg.AddMaps(typeof(PresentationProfile));
                 cfg.AddMaps(typeof(CommandQueryProfile));
+                cfg.AddMaps(typeof(DtoProfile));
             });
 
             containerRegistry.RegisterInstance(typeof(IMapper), new Mapper(mapperConfig));
