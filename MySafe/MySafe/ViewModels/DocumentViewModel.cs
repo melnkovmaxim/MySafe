@@ -36,7 +36,7 @@ namespace MySafe.Presentation.ViewModels
         public AsyncCommand<Attachment> MoveToTrashCommand { get; }
         public AsyncCommand<Attachment> OpenFileCommand { get; }
         public AsyncCommand<Attachment> PrintCommand { get; }
-        private AsyncCommand UploadFileCommand { get; }
+        public AsyncCommand UploadFileCommand { get; }
         public AsyncCommand RotatePlusCommand { get; }
         public AsyncCommand RotateMinusCommand { get; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +21,10 @@ namespace MySafe.Services.Services
     public class FileRestService: IFileRestService
     {
         private readonly IMediator _mediator;
-        private readonly IFileService _fileService;
 
-        public FileRestService(IMediator mediator, IFileService fileService)
+        public FileRestService(IMediator mediator)
         {
             _mediator = mediator;
-            _fileService = fileService;
         }
         
         public async Task<IEntity> DownloadAsync(int attachmentId, AttachmentTypeEnum attachmentType)
@@ -51,7 +50,7 @@ namespace MySafe.Services.Services
         public async Task<IEntity> UploadAsync(int documentId, FileResultDto fileResult)
         {
             await using var stream = await fileResult.FileStream;
-            var fileBytes = await _fileService.GetFileBytesFromStream(stream);
+            var fileBytes = await GetFileBytesFromStream(stream);
 
             if (fileResult.ContentType.Split('/')[0] == "image")
             {
@@ -59,6 +58,14 @@ namespace MySafe.Services.Services
             }
                 
             return await _mediator.Send(new UploadSheetCommand(documentId, fileResult.FileName, fileResult.ContentType, fileBytes));
+        }
+
+        private async Task<byte[]> GetFileBytesFromStream(Stream stream)
+        {
+            await using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+
+            return memoryStream.GetBuffer();
         }
     }
 }

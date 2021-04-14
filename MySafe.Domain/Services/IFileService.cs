@@ -13,7 +13,6 @@ namespace MySafe.Domain.Services
         string GetFullPathFileOnDevice(string fileName, string fileExtension);
         Task<bool> TryOpenFileAsync(int fileId, AttachmentTypeEnum fileType, string fileName, string fileExtension);
         Task<FileResultDto> GetPickedFileResult();
-        Task<byte[]> GetFileBytesFromStream(Stream stream);
         Task<bool> TryPrintFileAsync(int fileId, AttachmentTypeEnum fileType, string fileName, string fileExtension);
     }
 }

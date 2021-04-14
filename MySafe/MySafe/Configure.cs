@@ -34,9 +34,9 @@ namespace MySafe.Presentation
             containerRegistry.Register<ISecureStorageRepository, SecureStorageRepository>();
             containerRegistry.Register<IDeviceAuthService, DeviceAuthService>();
             containerRegistry.Register<IRestClient, RestClientWrapper>();
-            containerRegistry.Register<IFileService, FileService>();
             containerRegistry.Register<IPermissionService, PermissionService>();
             containerRegistry.Register<IAuthService, AuthService>();
+            containerRegistry.Register<IFileService, FileService>();
             containerRegistry.Register<IFileRestService, FileRestService>();
 
             return containerRegistry;

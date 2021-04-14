@@ -49,8 +49,8 @@ namespace MySafe.Services.Services
 
         public async Task<bool> IsAuthorized()
         {
-            if (await IsExpiredAccessToken() == false) return false;
-            if (await IsValidRefreshToken() == false) return true;
+            if (await IsExpiredAccessToken() == false) return true;
+            if (await IsValidRefreshToken() == false) return false;
 
             var jwtRefreshToken = await _secureStorageRepository.GetRefreshTokenAsync();
             var result = await _mediator.Send(new RefreshTokenQuery(jwtRefreshToken));
@@ -58,9 +58,10 @@ namespace MySafe.Services.Services
             if (result.HasError)
             {
                 //TODO: Залогировать.
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         private async Task<bool> IsExpiredAccessToken()

@@ -82,14 +82,6 @@ namespace MySafe.Services.Xamarin
             return _mapper.Map<FileResultDto>(fileResult);
         }
 
-        public async Task<byte[]> GetFileBytesFromStream(Stream stream)
-        {
-            await using var memoryStream = new MemoryStream();
-            await stream.CopyToAsync(memoryStream);
-
-            return memoryStream.GetBuffer();
-        }
-
         public async Task<bool> TryDownloadAndSaveFile(int fileId, AttachmentTypeEnum fileType, string fileName, string fileExtension)
         {
             var downloadResult = await _fileRestService.DownloadAsync(fileId, fileType);

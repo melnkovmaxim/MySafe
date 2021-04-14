@@ -37,8 +37,8 @@ namespace MySafe.Presentation
             AppCenter.Start("android=a4c8c5c8-6ac7-43cb-8de1-ffd30fcd0318;",
                 typeof(Analytics), typeof(Crashes));
 
-            var isLoggedOut = await Ioc.Resolve<IAuthService>().IsAuthorized();
-            var startPage = isLoggedOut ? nameof(SignInPage) : nameof(DeviceAuthPage);
+            var isAuthorized = await Ioc.Resolve<IAuthService>().IsAuthorized();
+            var startPage = isAuthorized ? nameof(DeviceAuthPage) : nameof(SignInPage);
             await NavigationService.NavigateAsync($"NavigationPage/{startPage}");
         }
 
