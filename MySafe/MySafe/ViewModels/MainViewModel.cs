@@ -52,8 +52,7 @@ namespace MySafe.Presentation.ViewModels
 
         public AsyncCommand SignOutCommand => _signOutCommand ??= new AsyncCommand(async () =>
         {
-            await _authService.SignOut();
-            await _navigationService.NavigateAsync(nameof(DeviceAuthPage));
+            await _navigationService.NavigateAsync(nameof(SignInPage));
         });
 
         protected override void RefillObservableCollection(Safe mediatorEntity)

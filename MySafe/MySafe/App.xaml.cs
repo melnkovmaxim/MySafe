@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Net.Mail;
+using System.Threading;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -36,7 +37,7 @@ namespace MySafe.Presentation
             AppCenter.Start("android=a4c8c5c8-6ac7-43cb-8de1-ffd30fcd0318;",
                 typeof(Analytics), typeof(Crashes));
 
-            var isLoggedOut = await Ioc.Resolve<IAuthService>().SignOutIfNotAuthorized();
+            var isLoggedOut = await Ioc.Resolve<IAuthService>().IsAuthorized();
             var startPage = isLoggedOut ? nameof(SignInPage) : nameof(DeviceAuthPage);
             await NavigationService.NavigateAsync($"NavigationPage/{startPage}");
         }

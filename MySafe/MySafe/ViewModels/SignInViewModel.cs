@@ -2,6 +2,7 @@
 using MediatR;
 using MySafe.Core.Commands;
 using MySafe.Domain.Repositories;
+using MySafe.Domain.Services;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
 using MySafe.Services.Extensions;
@@ -10,19 +11,19 @@ using Prism.Navigation;
 
 namespace MySafe.Presentation.ViewModels
 {
-    public class SignInViewModel : ViewModelBase
+    public class SignInViewModel : ViewModelBase, INavigatedAware
     {
         private readonly IMediator _mediator;
+        private readonly IAuthService _authService;
 
-
-        public SignInViewModel(INavigationService navigationService, IMediator mediator)
+        public SignInViewModel(INavigationService navigationService, IMediator mediator, IAuthService authService)
             : base(navigationService)
         {
             _mediator = mediator;
+            _authService = authService;
 
             SignInCommand = new AsyncCommand(SignInCommandTask);
-            MoveToRegisterPage =
-                new AsyncCommand(async () => await _navigationService.NavigateAsync(nameof(RegisterPage)));
+            MoveToRegisterPage = new AsyncCommand(async () => await _navigationService.NavigateAsync(nameof(RegisterPage)));
         }
 
         public AsyncCommand SignInCommand { get; }
@@ -49,6 +50,15 @@ namespace MySafe.Presentation.ViewModels
             }
 
             await _navigationService.NavigateAsync(nameof(TwoFactorPage));
+        }
+
+        public void OnNavigatedFrom(INavigationParameters parameters)
+        {
+        }
+
+        public async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            await _authService.SignOut();
         }
     }
 }

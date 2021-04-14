@@ -1,19 +1,15 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Fody;
 using MediatR;
 using MySafe.Core.Dto;
-using MySafe.Core.Entities.Abstractions;
 using MySafe.Core.Enums;
 using MySafe.Domain.Repositories;
 using MySafe.Domain.Services;
-using MySafe.Services.Mediator.Images.OriginalImageQuery;
-using MySafe.Services.Mediator.Sheets.OriginalSheetQuery;
 using MySafe.Services.Mediator.Sheets.SheetPdfFormatQuery;
 using MySafe.Services.Services;
 using Plugin.Printing;
+using System.IO;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 
 namespace MySafe.Services.Xamarin

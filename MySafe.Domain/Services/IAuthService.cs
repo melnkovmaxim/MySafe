@@ -9,7 +9,6 @@ namespace MySafe.Domain.Services
     public interface IAuthService
     {
         Task<bool> IsAuthorized();
-        Task<bool> SignOutIfNotAuthorized();
         Task SignOut();
     }
 }

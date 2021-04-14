@@ -1,11 +1,9 @@
-﻿using System;
-using MySafe.Domain.Repositories;
-using MySafe.Domain.Services;
+﻿using MySafe.Domain.Services;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
-using MySafe.Services.Extensions;
 using Prism.Commands;
 using Prism.Navigation;
+using System;
 
 namespace MySafe.Presentation.ViewModels
 {
@@ -43,11 +41,11 @@ namespace MySafe.Presentation.ViewModels
 
         private async void Login()
         {
-            var storageRepository = Ioc.Resolve<ISecureStorageRepository>();
-            var token = await storageRepository.GetAccessSecurityTokenAsync();
-            await _navigationService.NavigateAsync(token.IsExpired()
-                ? nameof(SignInPage)
-                : nameof(MainPage));
+            var isAuthorized = await _authService.IsAuthorized();
+
+            await _navigationService.NavigateAsync(isAuthorized
+                ? nameof(MainPage)
+                : nameof(SignInPage));
         }
 
         protected override async void DoAfterNavigatedTo()
@@ -80,7 +78,6 @@ namespace MySafe.Presentation.ViewModels
 
         private async void RestorePassword()
         {
-            await _authService.SignOut();
             await _navigationService.NavigateAsync(nameof(SignInPage));
         }
     }

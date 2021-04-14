@@ -28,30 +28,22 @@ namespace MySafe.Services.Services
             _deviceAuthService = deviceAuthService;
         }
 
-        public async Task<bool> SignOutIfNotAuthorized()
-        {
-            var isAuthorized = await IsAuthorized();
-
-            if (isAuthorized == false)
-            {
-                await SignOut();
-            }
-
-            return isAuthorized == false;
-        }
-
         public async Task SignOut()
         {
             await _deviceAuthService.Logout();
             var refreshToken = await _secureStorageRepository.GetRefreshTokenAsync();
-            var result = await _mediator.Send(new SignOutCommand(refreshToken));
 
-            if (result.HasError)
+            if (string.IsNullOrEmpty(refreshToken))
             {
-                //TODO: Залогировать.
+                var result = await _mediator.Send(new SignOutCommand(refreshToken));
 
-                await _secureStorageRepository.RemoveAccessJwtAsync();
-                await _secureStorageRepository.RemoveRefreshTokenAsync();
+                if (result.HasError)
+                {
+                    //TODO: Залогировать.
+
+                    await _secureStorageRepository.RemoveAccessJwtAsync();
+                    await _secureStorageRepository.RemoveRefreshTokenAsync();
+                }
             }
         }
 
