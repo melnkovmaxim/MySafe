@@ -32,11 +32,13 @@ namespace MySafe.Presentation.ViewModels
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
         private readonly IPermissionService _permissionService;
-        private AsyncCommand<Attachment> _downloadFileCommand;
-        private AsyncCommand<Attachment> MoveToTrashCommand { get; }
-        private AsyncCommand<Attachment> OpenFileCommand { get; }
-        private AsyncCommand<Attachment> _printCommand;
+        public AsyncCommand<Attachment> DownloadFileCommand { get; }
+        public AsyncCommand<Attachment> MoveToTrashCommand { get; }
+        public AsyncCommand<Attachment> OpenFileCommand { get; }
+        public AsyncCommand<Attachment> PrintCommand { get; }
         private AsyncCommand UploadFileCommand { get; }
+        public AsyncCommand RotatePlusCommand { get; }
+        public AsyncCommand RotateMinusCommand { get; }
 
         public DocumentViewModel(
             INavigationService navigationService,
@@ -58,6 +60,8 @@ namespace MySafe.Presentation.ViewModels
             MoveToTrashCommand = new AsyncCommand<Attachment>(MoveToTrashCommandTask);
             OpenFileCommand = new AsyncCommand<Attachment>(OpenFileCommandTask);
             UploadFileCommand = new AsyncCommand(UploadFileCommandTask);
+            DownloadFileCommand = new AsyncCommand<Attachment>(DownloadFileCommandTask);
+            PrintCommand = new AsyncCommand<Attachment>(PrintCommandTask);
 
             RotatePlusCommand =
                 new AsyncCommand(() => _mediator.Send(new ChangeImageCommand(CurrentAttachment.Id, "+")));
@@ -76,23 +80,20 @@ namespace MySafe.Presentation.ViewModels
         public ObservableCollection<Attachment> Attachments { get; set; }
         public Attachment CurrentAttachment { get; set; }
 
-        public AsyncCommand RotatePlusCommand { get; }
-        public AsyncCommand RotateMinusCommand { get; }
 
-        public AsyncCommand<Attachment> DownloadFileCommand =>
-            _downloadFileCommand ??= new AsyncCommand<Attachment>(async attachment =>
+        public async Task DownloadFileCommandTask(Attachment attachment)
+        {
+            var isPermissionGranted = await _permissionService.TryGetStorageWritePermissionAsync();
+
+            if (!isPermissionGranted) return;
+
+            var isSuccessful = await _fileService.TryDownloadAndSaveFile(attachment.Id, attachment.Type, attachment.Name, attachment.FileExtension);
+
+            if (!isSuccessful)
             {
-                var isPermissionGranted = await _permissionService.TryGetStorageWritePermissionAsync();
-
-                if (!isPermissionGranted) return;
-
-                var isSuccessful = await _fileService.TryDownloadAndSaveFile(attachment.Id, attachment.Type,
-                    attachment.Name, attachment.FileExtension);
-
-                if (!isSuccessful)
-                    await Application.Current.MainPage.DisplayAlert("Ошибка",
-                        "Не получилось скачать файл, что-то пошло не так... ", "Ok");
-            });
+                await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось скачать файл, что-то пошло не так... ", "Ok");
+            }
+        }
 
         public async Task OpenFileCommandTask(Attachment attachment)
         {
@@ -131,47 +132,17 @@ namespace MySafe.Presentation.ViewModels
             Attachments.Remove(attachment);
         }
 
-        public AsyncCommand<Attachment> PrintCommand => _printCommand ??= new AsyncCommand<Attachment>(
-            async attachment =>
-            {
-                var isPermissionGranted = await _permissionService.TryGetStorageWritePermissionAsync();
+        public async Task PrintCommandTask(Attachment attachment)
+        {
+            var isPermissionGranted = await _permissionService.TryGetStorageWritePermissionAsync();
 
-                if (!isPermissionGranted) return;
+            if (!isPermissionGranted) return;
 
-                var path = _fileService.GetFullPathFileOnDevice(attachment.Name, attachment.FileExtension);
+            var isPrinted = await _fileService.TryPrintFileAsync(attachment.Id, attachment.Type, attachment.Name, attachment.FileExtension);
+            if (!isPrinted) await Application.Current.MainPage.DisplayAlert("Ошибка","Ошибка при печати файла", "Ok");
+        }
 
-                if (!File.Exists(path)) await _downloadFileCommand.ExecuteAsync(attachment);
-
-                if (attachment.IsImage)
-                {
-                    var bytes = await File.ReadAllBytesAsync(path);
-
-                    await CrossPrinting.Current.PrintImageFromByteArrayAsync(bytes,
-                        new PrintJobConfiguration($"Printing {attachment.Name + attachment.FileExtension}"));
-
-                    return;
-                }
-
-                Stream stream;
-
-                if (attachment.FileExtension == ".pdf")
-                {
-                    stream = File.OpenRead(path);
-                }
-                else
-                {
-                    var result = await _mediator.Send(new SheetPdfFormatQuery(attachment.Id));
-                    stream = new MemoryStream(result.FileBytes);
-                }
-
-                _ = await CrossPrinting.Current.PrintPdfFromStreamAsync(stream,
-                    new PrintJobConfiguration($"Printing {attachment.Name + attachment.FileExtension}"));
-
-                await stream.DisposeAsync();
-            });
-
-        protected override Task<DocumentEntity> _refreshTask =>
-            _mediator.Send(new DocumentInfoQuery(_navigationParameter.ChildId), GetCancellationToken());
+        protected override Task<DocumentEntity> _refreshTask => _mediator.Send(new DocumentInfoQuery(_navigationParameter.ChildId), GetCancellationToken());
 
         protected override void RefillObservableCollection(Document mediatorEntity)
         {

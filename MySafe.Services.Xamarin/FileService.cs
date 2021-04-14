@@ -11,7 +11,9 @@ using MySafe.Domain.Repositories;
 using MySafe.Domain.Services;
 using MySafe.Services.Mediator.Images.OriginalImageQuery;
 using MySafe.Services.Mediator.Sheets.OriginalSheetQuery;
+using MySafe.Services.Mediator.Sheets.SheetPdfFormatQuery;
 using MySafe.Services.Services;
+using Plugin.Printing;
 using Xamarin.Essentials;
 
 namespace MySafe.Services.Xamarin
@@ -37,6 +39,47 @@ namespace MySafe.Services.Xamarin
             _mapper = mapper;
         }
 
+        public async Task<bool> TryPrintFileAsync(int fileId, AttachmentTypeEnum fileType, string fileName, string fileExtension)
+        {
+            var printingMessage = $"Printing {fileId + fileName}";
+            var path = GetFullPathFileOnDevice(fileName, fileExtension);
+
+            if (!File.Exists(path))
+            {
+                var isDownloaded = await TryDownloadAndSaveFile(fileId, fileType, fileName, fileExtension);
+                if (!isDownloaded) return false;
+            }
+
+            if (fileType == AttachmentTypeEnum.Image)
+            {
+                var bytes = await File.ReadAllBytesAsync(path);
+
+                await CrossPrinting.Current.PrintImageFromByteArrayAsync(bytes, new PrintJobConfiguration(printingMessage));
+
+                return true;
+            }
+
+            Stream stream;
+
+            if (fileExtension == ".pdf")
+            {
+                stream = File.OpenRead(path);
+            }
+            else
+            {
+                var result = await _mediator.Send(new SheetPdfFormatQuery(fileId));
+
+                if (result.HasError) return false;
+
+                stream = new MemoryStream(result.FileBytes);
+            }
+
+            _ = await CrossPrinting.Current.PrintPdfFromStreamAsync(stream, new PrintJobConfiguration(printingMessage));
+            await stream.DisposeAsync();
+
+            return true;
+        }
+
         public async Task<FileResultDto> GetPickedFileResult()
         {
             var fileResult = await FilePicker.PickAsync(PickOptions.Default);
@@ -51,9 +94,9 @@ namespace MySafe.Services.Xamarin
             return memoryStream.GetBuffer();
         }
 
-        public async Task<bool> TryDownloadAndSaveFile(int attachmentId, AttachmentTypeEnum attachmentType, string fileName, string fileExtension)
+        public async Task<bool> TryDownloadAndSaveFile(int fileId, AttachmentTypeEnum fileType, string fileName, string fileExtension)
         {
-            var downloadResult = await _fileRestService.DownloadAsync(attachmentId, attachmentType);
+            var downloadResult = await _fileRestService.DownloadAsync(fileId, fileType);
 
             if (downloadResult?.HasError != false) return false;
 
@@ -72,13 +115,13 @@ namespace MySafe.Services.Xamarin
             return result;
         }
 
-        public async Task<bool> TryOpenFileAsync(int attachmentId, AttachmentTypeEnum attachmentType, string fileName, string fileExtension)
+        public async Task<bool> TryOpenFileAsync(int fileId, AttachmentTypeEnum fileType, string fileName, string fileExtension)
         {
             var path = GetFullPathFileOnDevice(fileName, fileExtension);
 
             if (!File.Exists(path))
             {
-                var isDownloaded = await TryDownloadAndSaveFile(attachmentId, attachmentType, fileName, fileExtension);
+                var isDownloaded = await TryDownloadAndSaveFile(fileId, fileType, fileName, fileExtension);
                 if (!isDownloaded) return false;
             }
             
