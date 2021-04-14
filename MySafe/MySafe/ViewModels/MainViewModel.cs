@@ -19,6 +19,7 @@ namespace MySafe.Presentation.ViewModels
     public class MainViewModel : AuthorizedRefreshViewModel<SafeEntity, Safe>
     {
         private readonly IMapper _mapper;
+        private readonly IAuthService _authService;
         private readonly IMediator _mediator;
 
         private int _maxCapacity;
@@ -31,6 +32,7 @@ namespace MySafe.Presentation.ViewModels
         {
             _mediator = mediator;
             _mapper = mapper;
+            _authService = authService;
             Folders = new ObservableCollection<Folder>();
         }
 
@@ -50,7 +52,7 @@ namespace MySafe.Presentation.ViewModels
 
         public AsyncCommand SignOutCommand => _signOutCommand ??= new AsyncCommand(async () =>
         {
-            _ = _mediator.Send(new SignOutCommand());
+            await _authService.SignOut();
             await _navigationService.NavigateAsync(nameof(DeviceAuthPage));
         });
 
