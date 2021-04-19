@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Fody;
 using MediatR;
+using MySafe.Core;
 using MySafe.Core.Entities.Abstractions;
 using MySafe.Core.Models;
 using MySafe.Core.Models.JsonRequests;
@@ -32,7 +33,7 @@ namespace MySafe.Services.Mediator.Abstractions
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
         {
             var httpRequest = new RestRequest(request.RequestResource, request.RequestMethod, DataFormat.Json);
-
+            _restClient.BaseUrl = new Uri(MySafeApp.Resources.TestServerHost);
             if (typeof(TJsonBody) != typeof(EmptyJsonBody))
             {
                 var jsonRequest = _mapper.Map<TJsonBody>(request);

@@ -52,7 +52,7 @@ namespace MySafe.Presentation.ViewModels
         protected override async void DoAfterNavigatedTo()
         {
             IsRegistered = await _deviceAuthService.IsRegistered();
-            await _deviceAuthService.TryLoginWithPrintScanAsync(_actionOnLogin);
+            if (IsRegistered) await _deviceAuthService.TryLoginWithPrintScanAsync(_actionOnLogin);
         }
 
         private async void FingerPrintScan()
