@@ -59,6 +59,7 @@ namespace MySafe.Services.Extensions
                     commandResponse.FileBytes = response.RawBytes;
 
                 if (commandResponse is UserEntity userResponse) userResponse.JwtToken = response.GetJwtToken();
+                if (!response.IsSuccessful) commandResponse.Error = "ERROR";
             }
             catch (Exception ex)
             {

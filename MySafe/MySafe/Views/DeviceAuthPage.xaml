@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="MySafe.Presentation.Views.DeviceAuthPage"
@@ -90,12 +90,11 @@
 
                 <CollectionView
                     HorizontalOptions="Center"
-                    ItemsSource="{Binding PasswordManager.PasswordCollection}"
+                    ItemsSource="{Binding Password.PasswordCollection}"
                     WidthRequest="210">
 
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical"
-                                         Span="{Binding PasswordManager.PasswordCollection.Count}" />
+                        <GridItemsLayout Orientation="Vertical" Span="{Binding Password.PasswordCollection.Count}" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>

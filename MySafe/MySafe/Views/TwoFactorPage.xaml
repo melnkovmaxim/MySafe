@@ -1,11 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="MySafe.Presentation.Views.TwoFactorPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MySafe.Presentation.Converters;assembly=MySafe.Presentation"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=TwoFactorViewModel}"
     NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:InverseBooleanConverter x:Key="booleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="250" />
@@ -30,29 +36,40 @@
         <StackLayout Grid.Row="1" VerticalOptions="Center">
             <Label
                 Margin="40,-20,40,0"
-                HorizontalOptions="Center"
                 FontSize="18"
+                HorizontalOptions="Center"
                 HorizontalTextAlignment="Center">
                 Введите код из SMS, отправленный на ваш номер телефона
             </Label>
 
         </StackLayout>
         <StackLayout Grid.Row="2" VerticalOptions="Center">
-            <Frame Margin="80,60,80,0" HasShadow="False" BackgroundColor="Transparent">
-                <Entry Margin="-20,-20,-20,-20" HorizontalTextAlignment="Center" FontSize="50" CharacterSpacing="5"
-                       Text="{Binding Code}" />
+            <Frame
+                Margin="80,60,80,0"
+                BackgroundColor="Transparent"
+                HasShadow="False">
+                <Entry
+                    Margin="-20,-20,-20,-20"
+                    CharacterSpacing="5"
+                    FontSize="50"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding Code}" />
                 <!--<BoxView  56
-                    Margin="20,-28,20,0" 
+                    Margin="20,-28,20,0"
                     HeightRequest="2"
                     HorizontalOptions="Fill"
-                    Color="White" /> -->
+                    Color="White" />-->
 
             </Frame>
             <BoxView
-                HeightRequest="3" Margin="0,-16,0,0"
+                Margin="0,-16,0,0"
+                HeightRequest="3"
                 HorizontalOptions="Fill"
                 Color="#fafafa" />
-            <Grid Margin="0,-16,0,0" RowSpacing="10" HorizontalOptions="Center">
+            <Grid
+                Margin="0,-16,0,0"
+                HorizontalOptions="Center"
+                RowSpacing="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40" />
                     <ColumnDefinition Width="40" />
@@ -96,10 +113,17 @@
                 FontSize="18"
                 Text="Отправить"
                 TextColor="White" />
-            <Label
-                HorizontalOptions="CenterAndExpand"
-                HorizontalTextAlignment="Center"
-                Text="{Binding RemainingLifeTimeMessage}" />
+            <Grid>
+                <Label
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding Path=LifeTime.IsDead, Converter={StaticResource booleanConverter}, UpdateSourceEventName=LifeTime.RemainingLifeTimeMessage}"
+                    Text="{Binding LifeTime.RemainingLifeTimeMessage}" />
+                <Button
+                    Command="{Binding ResendSmsCommand}"
+                    IsVisible="{Binding Path=LifeTime.IsDead, UpdateSourceEventName=LifeTime.RemainingLifeTimeMessage}"
+                    Text="Отправить повторно смс" />
+            </Grid>
         </StackLayout>
     </Grid>
 </ContentPage>

@@ -17,7 +17,7 @@ namespace MySafe.Data.Xamarin
         
         public Task SetDevicePasswordAsync(string password)
         {
-            return SecureStorage.SetAsync(DEVICE_PASSWORD_KEY, password);
+            return SecureStorage.SetAsync(DEVICE_PASSWORD_KEY, password ?? string.Empty);
         }
 
         public Task<string> GetDevicePasswordAsync()
@@ -32,7 +32,7 @@ namespace MySafe.Data.Xamarin
 
         public Task SetAccessJwtAsync(string jwtToken)
         {
-            return SecureStorage.SetAsync(ACCESS_JWT_KEY, jwtToken);
+            return SecureStorage.SetAsync(ACCESS_JWT_KEY, jwtToken ?? string.Empty);
         }
 
         public Task<string> GetAccessJwtAsync()
@@ -54,7 +54,7 @@ namespace MySafe.Data.Xamarin
 
         public Task SetTwoFactorJwtAsync(string token)
         {
-            return SecureStorage.SetAsync(TWO_FACTOR_JWT_KEY, token);
+            return SecureStorage.SetAsync(TWO_FACTOR_JWT_KEY, token ?? string.Empty);
         }
 
         public Task<string> GetTwoFactorJwtAsync()
@@ -76,7 +76,7 @@ namespace MySafe.Data.Xamarin
 
         public Task SetRefreshTokenAsync(string refreshToken)
         {
-            return SecureStorage.SetAsync(REFRESH_JWT_KEY, refreshToken);
+            return SecureStorage.SetAsync(REFRESH_JWT_KEY, refreshToken ?? string.Empty);
         }
 
         public Task<string> GetRefreshTokenAsync()
@@ -91,7 +91,7 @@ namespace MySafe.Data.Xamarin
 
         public Task SetUserLogin(string login)
         {
-            return SecureStorage.SetAsync(USER_LOGIN, login);
+            return SecureStorage.SetAsync(USER_LOGIN, login ?? string.Empty);
         }
 
         public Task<string> GetUserLogin()

@@ -20,19 +20,24 @@ namespace MySafe.Presentation.ViewModels
     {
         private readonly IMapper _mapper;
         private readonly IAuthService _authService;
+        private readonly ICalculationSafeCapacityService _calculationSafeCapacityService;
         private readonly IMediator _mediator;
 
-        private int _maxCapacity;
         private AsyncCommand<Folder> _moveToFolderCommand;
         private AsyncCommand _signOutCommand;
-        private int _usedCapacity;
 
-        public MainViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IAuthService authService)
+        public MainViewModel(
+            INavigationService navigationService, 
+            IMediator mediator, 
+            IMapper mapper, 
+            IAuthService authService,
+            ICalculationSafeCapacityService calculationSafeCapacityService)
             : base(navigationService, mapper, authService)
         {
             _mediator = mediator;
             _mapper = mapper;
             _authService = authService;
+            _calculationSafeCapacityService = calculationSafeCapacityService;
             Folders = new ObservableCollection<Folder>();
         }
 
@@ -57,11 +62,11 @@ namespace MySafe.Presentation.ViewModels
 
         protected override void RefillObservableCollection(Safe mediatorEntity)
         {
-            _maxCapacity = Convert.ToInt32(Math.Floor(mediatorEntity.Capacity));
-            _usedCapacity = Convert.ToInt32(Math.Floor(mediatorEntity.UsedCapacity));
+            var maxCapacity = mediatorEntity.Capacity;
+            var usedCapacity = mediatorEntity.UsedCapacity;
 
-            Progress = Math.Floor((double) _maxCapacity / _usedCapacity) / 100;
-            SafeSizeInfo = $"{_usedCapacity}/{_maxCapacity} MB";
+            Progress = _calculationSafeCapacityService.GetUsedCapacityInPercents(maxCapacity, usedCapacity);
+            SafeSizeInfo = $"{usedCapacity}/{maxCapacity} MB";
 
             Folders.Clear();
             mediatorEntity.Folders.ForEach(x =>

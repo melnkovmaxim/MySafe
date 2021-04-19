@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="MySafe.Presentation.Views.SignInPage"
@@ -66,10 +66,10 @@
                 HeightRequest="15">
                 <StackLayout Margin="0,-16,0,-5">
                     <presentation:CustomEntry
-                        Visual="Material"
                         HorizontalTextAlignment="Center"
                         Placeholder="Логин"
-                        Text="{Binding Login}" />
+                        Text="{Binding Login}"
+                        Visual="Material" />
                 </StackLayout>
             </Frame>
 
@@ -84,7 +84,6 @@
                 <StackLayout Margin="0,-16,0,-5">
                     <presentation:CustomEntry
                         HorizontalTextAlignment="Center"
-                        
                         IsPassword="True"
                         Placeholder="Пароль"
                         Text="{Binding Password}" />
@@ -110,7 +109,6 @@
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center"
                 Text="{Binding Error}" />
-
 
             <Label
                 FontFamily="Roboto-Medium"

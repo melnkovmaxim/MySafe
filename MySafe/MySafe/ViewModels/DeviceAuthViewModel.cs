@@ -4,6 +4,7 @@ using MySafe.Presentation.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
+using MySafe.Services.Services;
 
 namespace MySafe.Presentation.ViewModels
 {
@@ -19,21 +20,21 @@ namespace MySafe.Presentation.ViewModels
         public DelegateCommand RestorePasswordCommand { get; }
         public DelegateCommand<string> NumberInputCommand { get; }
 
-        public IPasswordManagerService PasswordManager { get; }
+        public Password Password { get; }
         public bool IsRegistered { get; set; }
 
-        public DeviceAuthViewModel(INavigationService navigationService, IPasswordManagerService passwordManager,
+        public DeviceAuthViewModel(INavigationService navigationService,
             IDeviceAuthService deviceAuthService, IAuthService authService)
             : base(navigationService, authService)
         {
-            PasswordManager = passwordManager;
             _deviceAuthService = deviceAuthService;
             _authService = authService;
 
             _actionOnLogin = Login;
             _actionOnRegister = async () => await _navigationService.NavigateAsync(nameof(DeviceAuthPage));
-
-            RemoveLastNumberCommand = new DelegateCommand(() => PasswordManager.RemoveLast());
+            
+            Password = new Password();
+            RemoveLastNumberCommand = new DelegateCommand(() => Password.RemoveLast());
             FingerPrintScanCommand = new DelegateCommand(FingerPrintScan);
             RestorePasswordCommand = new DelegateCommand(RestorePassword);
             NumberInputCommand = new DelegateCommand<string>(NumberInput);
@@ -61,18 +62,18 @@ namespace MySafe.Presentation.ViewModels
 
         private async void NumberInput(string number)
         {
-            if (!PasswordManager.TryAdd(number) || PasswordManager.PasswordLength != PasswordManager.PasswordMaxLength)
+            if (!Password.TryAdd(number) || Password.PasswordLength != Password.PasswordMaxLength)
                 return;
 
             if (IsRegistered)
             {
-                var isSuccessfulLogin = await _deviceAuthService.TryLoginAsync(PasswordManager.Password, _actionOnLogin);
+                var isSuccessfulLogin = await _deviceAuthService.TryLoginAsync(Password.PasswordStr, _actionOnLogin);
 
-                if (!isSuccessfulLogin) PasswordManager.Clear();
+                if (!isSuccessfulLogin) Password.Clear();
             }
             else
             {
-                await _deviceAuthService.RegisterAsync(PasswordManager.Password, _actionOnRegister);
+                await _deviceAuthService.RegisterAsync(Password.PasswordStr, _actionOnRegister);
             }
         }
 

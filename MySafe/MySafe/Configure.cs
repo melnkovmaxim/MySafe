@@ -30,7 +30,6 @@ namespace MySafe.Presentation
     {
         public static IContainerRegistry AddServices(this IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<IPasswordManagerService, PasswordManager>();
             containerRegistry.Register<ISecureStorageRepository, SecureStorageRepository>();
             containerRegistry.Register<IDeviceAuthService, DeviceAuthService>();
             containerRegistry.Register<IRestClient, RestClientWrapper>();
@@ -38,6 +37,7 @@ namespace MySafe.Presentation
             containerRegistry.Register<IAuthService, AuthService>();
             containerRegistry.Register<IFileService, FileService>();
             containerRegistry.Register<IFileRestService, FileRestService>();
+            containerRegistry.Register<ICalculationSafeCapacityService, CalculationSafeCapacityService>();
 
             return containerRegistry;
         }

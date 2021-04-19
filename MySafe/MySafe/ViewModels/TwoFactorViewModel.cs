@@ -2,8 +2,10 @@
 using System.Threading.Tasks;
 using MediatR;
 using MySafe.Core.Commands;
+using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
+using MySafe.Services.Mediator.Users.SmsRequestCommand;
 using MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand;
 using Prism.Navigation;
 using Xamarin.Forms;
@@ -12,38 +14,31 @@ namespace MySafe.Presentation.ViewModels
 {
     public class TwoFactorViewModel : ViewModelBase
     {
-        private const int VIEW_LIFETIME = 180;
-        private readonly DateTime _exitTime;
+        private const int VIEW_LIFETIME_IN_SECONDS = 8;
         private readonly IMediator _mediator;
-        private readonly TimeSpan TIMER_INTERVAL_IN_SECONDS = TimeSpan.FromSeconds(1);
+
+        public LifeTime LifeTime { get; }
+        public string Code { get; set; }
 
         public TwoFactorViewModel(INavigationService navigationService, IMediator mediator)
             : base(navigationService)
         {
             _mediator = mediator;
-            _exitTime = DateTime.Now.AddSeconds(VIEW_LIFETIME);
+            LifeTime = new LifeTime(TimeSpan.FromSeconds(VIEW_LIFETIME_IN_SECONDS));
 
             SignInCommand = new AsyncCommand(SignInCommandTask);
+            ResendSmsCommand = new AsyncCommand(RsendSmsCommandTask);
 
-            Device.StartTimer(TIMER_INTERVAL_IN_SECONDS, TimerCallback);
+            Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
         }
 
         public AsyncCommand SignInCommand { get; }
-        public string RemainingLifeTimeMessage { get; set; }
-        public string Code { get; set; }
+        public AsyncCommand ResendSmsCommand { get; }
 
         private bool TimerCallback()
         {
-            if (DateTime.Now > _exitTime)
-            {
-                Device.BeginInvokeOnMainThread(async () => await _navigationService.NavigateAsync(nameof(SignInPage)));
-                return false;
-            }
-
-            var remainitTime = _exitTime - DateTime.Now;
-            RemainingLifeTimeMessage = $"Осталось {remainitTime.Minutes}:{remainitTime.Seconds}";
-
-            return true;
+            LifeTime.UpdateMessage();
+            return !LifeTime.IsDead;
         }
 
         private async Task SignInCommandTask()
@@ -57,6 +52,20 @@ namespace MySafe.Presentation.ViewModels
             }
 
             await _navigationService.NavigateAsync(nameof(DeviceAuthPage));
+        }
+
+        private async Task RsendSmsCommandTask()
+        {
+            var response = await _mediator.Send(new SmsRequestCommand());
+
+            if (response.HasError)
+            {
+                Error = response.Error;
+                return;
+            }
+
+            LifeTime.Restart();
+            Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
         }
     }
 }

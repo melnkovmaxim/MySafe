@@ -29,6 +29,7 @@
                     Text="{Binding Note.Content}"
                     VerticalOptions="Fill" />
             </Frame>
+            <Button Command="{Binding SaveNoteCommand}" Text="Сохранить" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -28,6 +28,7 @@ using MySafe.Services.Mediator.Users.RefreshTokenQuery;
 using MySafe.Services.Mediator.Users.RegisterCommand;
 using MySafe.Services.Mediator.Users.SignInCommand;
 using MySafe.Services.Mediator.Users.SignOutCommand;
+using MySafe.Services.Mediator.Users.SmsRequestCommand;
 using MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand;
 
 namespace MySafe.Services.MapperProfiles
@@ -60,6 +61,8 @@ namespace MySafe.Services.MapperProfiles
 
             CreateMap<RefreshTokenQuery, UserJsonBody>()
                 .ForMember(d => d.RefreshToken, mo => mo.MapFrom(s => s.RefreshToken));
+
+            CreateMap<SmsRequestCommand, UserJsonBody>();
 
             //Safe
             CreateMap<ClearTrashCommand, SafeJsonBody>();

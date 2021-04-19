@@ -32,38 +32,50 @@ namespace MySafe.Services.Mediator
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
             RequestHandlerDelegate<TResponse> next)
         {
-            if (request is BearerRequestBase<TResponse> bearerRequest)
-                foreach (var processor in _bearerPreProcessors)
-                    await processor.Process(bearerRequest, cancellationToken).ConfigureAwait(false);
-
-            var context = new ValidationContext<TRequest>(request);
-            var failures = _validators
-                .Select(v => v.Validate(context))
-                .SelectMany(result => result.Errors)
-                .Where(f => f != null)
-                .ToList();
-
-            if (failures.Count != 0)
+            try
             {
-                var responseType = typeof(TResponse);
-                var instance = Activator.CreateInstance(responseType) as IEntity;
+                if (request is BearerRequestBase<TResponse> bearerRequest)
+                    foreach (var processor in _bearerPreProcessors)
+                        await processor.Process(bearerRequest, cancellationToken).ConfigureAwait(false);
 
-                if (instance == null)
+                var context = new ValidationContext<TRequest>(request);
+                var failures = _validators
+                    .Select(v => v.Validate(context))
+                    .SelectMany(result => result.Errors)
+                    .Where(f => f != null)
+                    .ToList();
+
+                if (failures.Count != 0)
                 {
-                    var messages = failures.Select(x => x.ErrorMessage);
-                    throw new ValidationException(string.Join(", ", messages));
+                    var responseType = typeof(TResponse);
+                    var instance = Activator.CreateInstance(responseType) as IEntity;
+
+                    if (instance == null)
+                    {
+                        var messages = failures.Select(x => x.ErrorMessage);
+                        throw new ValidationException(string.Join(", ", messages));
+                    }
+
+                    instance.Error = failures.First().ErrorMessage;
+                    return (TResponse) instance;
                 }
 
-                instance.Error = failures.First().ErrorMessage;
-                return (TResponse) instance;
+                var response = await next().ConfigureAwait(false);
+
+                foreach (var processor in _postProcessors)
+                    await processor.Process(request, response, cancellationToken).ConfigureAwait(false);
+
+                return response;
             }
+            catch (Exception ex)
+            {
+                //TODO логировать + добавить еще исключений
 
-            var response = await next().ConfigureAwait(false);
+                var errorResponse = Activator.CreateInstance<TResponse>();
+                errorResponse.Error = ex.Message;
 
-            foreach (var processor in _postProcessors)
-                await processor.Process(request, response, cancellationToken).ConfigureAwait(false);
-
-            return response;
+                return errorResponse;
+            }
         }
     }
 }

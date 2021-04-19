@@ -6,16 +6,16 @@ using MySafe.Domain.Services;
 
 namespace MySafe.Services.Services
 {
-    public class PasswordManager : BindableBase, IPasswordManagerService, ITransientService
+    public class Password : BindableBase
     {
-        public PasswordManager()
+        public Password()
         {
             PasswordCollection = new ObservableCollection<string>();
             SetPasswordLength(PasswordMaxLength);
         }
 
         public ObservableCollection<string> PasswordCollection { get; }
-        public string Password => string.Join("", PasswordCollection.Reverse());
+        public string PasswordStr => string.Join("", PasswordCollection.Reverse());
         public int PasswordMaxLength => MySafeApp.Resources.DefaultApplicationPasswordLength;
         public int PasswordLength => PasswordCollection.Count(x => !string.IsNullOrEmpty(x));
 

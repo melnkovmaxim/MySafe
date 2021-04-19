@@ -31,8 +31,8 @@ namespace MySafe.Services.Mediator.Abstractions
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
         {
-            var httpRequest = new RestRequest(request.RequestResource, request.RequestMethod);
-            
+            var httpRequest = new RestRequest(request.RequestResource, request.RequestMethod, DataFormat.Json);
+
             if (typeof(TJsonBody) != typeof(EmptyJsonBody))
             {
                 var jsonRequest = _mapper.Map<TJsonBody>(request);

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using MySafe.Core.Commands;
 using MySafe.Core.Models.Responses;
 using MySafe.Domain.Services;
 using MySafe.Presentation.Models;
@@ -23,9 +24,11 @@ namespace MySafe.Presentation.ViewModels
             : base(navigationService, mapper, authService)
         {
             _mediator = mediator;
+            SaveNoteCommand = new AsyncCommand(SaveNoteCommandTask);
         }
 
         public Note Note { get; set; }
+        public AsyncCommand SaveNoteCommand { get; }
 
         protected override Task<NoteEntity> _refreshTask => _isNewNote ? _mediator.Send(new NoteInfoQuery(_navigationParameter.ChildId)) : Task.FromResult(new NoteEntity());
 
@@ -34,21 +37,15 @@ namespace MySafe.Presentation.ViewModels
             Note = note;
         }
 
-        public override void OnNavigatedFrom(INavigationParameters parameters)
-        {
-            CreateOrUpdateNote();
-            base.OnNavigatedFrom(parameters);
-        }
-
-        private async void CreateOrUpdateNote()
+        private Task SaveNoteCommandTask()
         {
             if (_isNewNote)
             {
-                await _mediator.Send(new CreateNoteCommand(Note.Content));
+                return _mediator.Send(new CreateNoteCommand(Note.Content));
             }
             else
             {
-                await _mediator.Send(new ChangeNoteCommand(Note.Id, Note.Content));
+                return _mediator.Send(new ChangeNoteCommand(Note.Id, Note.Content));
             }
         }
     }
