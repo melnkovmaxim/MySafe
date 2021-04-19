@@ -37,6 +37,8 @@ namespace MySafe.Presentation
             AppCenter.Start("android=a4c8c5c8-6ac7-43cb-8de1-ffd30fcd0318;",
                 typeof(Analytics), typeof(Crashes));
 
+            // фикс ошибки по таймауту
+            //System.Net.ServicePointManager.DnsRefreshTimeout = 0;
             var isAuthorized = await Ioc.Resolve<IAuthService>().IsAuthorized();
             var startPage = isAuthorized ? nameof(DeviceAuthPage) : nameof(SignInPage);
             await NavigationService.NavigateAsync($"NavigationPage/{startPage}");

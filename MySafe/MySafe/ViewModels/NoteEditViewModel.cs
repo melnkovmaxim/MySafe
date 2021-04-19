@@ -30,7 +30,7 @@ namespace MySafe.Presentation.ViewModels
         public Note Note { get; set; }
         public AsyncCommand SaveNoteCommand { get; }
 
-        protected override Task<NoteEntity> _refreshTask => _isNewNote ? _mediator.Send(new NoteInfoQuery(_navigationParameter.ChildId)) : Task.FromResult(new NoteEntity());
+        protected override Task<NoteEntity> _refreshTask => _isNewNote ? Task.FromResult(new NoteEntity()) : _mediator.Send(new NoteInfoQuery(_navigationParameter.ChildId));
 
         protected override void RefillObservableCollection(Note note)
         {

@@ -14,7 +14,7 @@ namespace MySafe.Presentation.ViewModels
 {
     public class TwoFactorViewModel : ViewModelBase
     {
-        private const int VIEW_LIFETIME_IN_SECONDS = 8;
+        private const int VIEW_LIFETIME_IN_SECONDS = 180;
         private readonly IMediator _mediator;
 
         public LifeTime LifeTime { get; }

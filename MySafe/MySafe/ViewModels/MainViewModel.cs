@@ -65,7 +65,7 @@ namespace MySafe.Presentation.ViewModels
             var maxCapacity = mediatorEntity.Capacity;
             var usedCapacity = mediatorEntity.UsedCapacity;
 
-            Progress = _calculationSafeCapacityService.GetUsedCapacityInPercents(maxCapacity, usedCapacity);
+            Progress = _calculationSafeCapacityService.GetUsedCapacityInPercents(maxCapacity, usedCapacity) / 100;
             SafeSizeInfo = $"{usedCapacity}/{maxCapacity} MB";
 
             Folders.Clear();

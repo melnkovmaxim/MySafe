@@ -74,9 +74,9 @@
                                 BackgroundColor="#FBFFE9"
                                 BorderColor="#c2c5b5"
                                 BorderWidth="1"
+                                Command="{Binding AddNoteCommand}"
                                 HorizontalOptions="FillAndExpand"
-                                Text="Добавить новую заметку"
-                                Command="{Binding AddNoteCommand}"/>
+                                Text="Добавить новую заметку" />
 
                         </Frame>
                         <CollectionView
@@ -98,6 +98,7 @@
                                             Margin="0,-20,0,-20"
                                             Padding="0,-5,0,-5"
                                             effects:TouchEffect.LongPressCommand="{Binding BindingContext.ShowToolMenuCommand, Source={x:Reference Note}}"
+                                            effects:TouchEffect.LongPressCommandParameter="{Binding .}"
                                             effects:TouchEffect.LongPressDuration="1000"
                                             BackgroundColor="#FBFFE9"
                                             BorderColor="#c2c5b5"
