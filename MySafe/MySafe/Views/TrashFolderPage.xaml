@@ -3,9 +3,9 @@
 <ContentPage
     x:Class="MySafe.Presentation.Views.TrashFolderPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:controls="clr-namespace:MySafe.Presentation.Controls"
     x:Name="Trash"
-    Title="Назад"
+    Title="Корзина" 
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=TrashViewModel}"
     NavigationPage.HasNavigationBar="False">
     <!--  -->
@@ -16,7 +16,6 @@
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
-
         <Grid>
             <RefreshView
                 x:Name="_refreshView"
@@ -30,7 +29,7 @@
                     <!--<RefreshView Command="{Binding LoadedCommand}" IsRefreshing="{Binding LoadedCommand.IsExecuting}" RefreshColor="Red">
             <ScrollView>-->
                     <StackLayout>
-                        <Frame
+                        <!--<Frame
                             Margin="20,20,20,10"
                             BackgroundColor="#E4E8FB"
                             HeightRequest="22"
@@ -42,10 +41,13 @@
                                     FontSize="24"
                                     Text="{Binding FolderName}" />
                             </StackLayout>
-                        </Frame>
+                        </Frame> -->
+                        
+                        
+                        
                         <CollectionView
                             x:Name="MyList"
-                            Margin="20,0,20,0"
+                            Margin="20,20,20,0"
                             ItemsSource="{Binding TrashItems}"
                             VerticalOptions="FillAndExpand">
                             <CollectionView.ItemsLayout>
@@ -71,6 +73,10 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
+                        
+                        
+
+                        <!-- -->
                         <Button
                             BackgroundColor="#F1BE74"
                             Command="{Binding ClearTrashCommand}"

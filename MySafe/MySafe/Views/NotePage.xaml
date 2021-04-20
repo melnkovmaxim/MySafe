@@ -9,9 +9,10 @@
     xmlns:effects="http://xamarin.com/schemas/2020/toolkit"
     xmlns:gestureRecognizers="clr-namespace:MySafe.Presentation.GestureRecognizers;assembly=MySafe.Presentation"
     x:Name="Note"
-    Title="Назад"
+    Title="Блокнот"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=NoteViewModel}"
     NavigationPage.HasNavigationBar="False">
+    <!--  -->
     <ContentPage.Content>
         <Grid>
             <RefreshView
@@ -24,7 +25,7 @@
 
                 <ScrollView>
                     <StackLayout>
-                        <Frame
+                        <!--<Frame
                             Margin="20,15,20,-10"
                             BackgroundColor="#FBFFE9"
                             BorderColor="#c2c5b5"
@@ -38,7 +39,7 @@
                                     FontSize="24"
                                     Text="Блокнот" />
                             </StackLayout>
-                        </Frame>
+                        </Frame> -->
                         <!--<Grid Margin="20,20,20,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="50*" />
@@ -65,11 +66,11 @@
                                     ImageSource="pen.png" />
                             </Frame>
                         </Grid>-->
-                        <Frame Margin="0,25,0,0" BackgroundColor="#FBFFE9">
+                        <Frame Margin="20,25,20,0" BackgroundColor="#FBFFE9">
                             <!--  -22,-20,-22, -20  -->
 
                             <Button
-                                Margin="0,-20,0,-20"
+                                Margin="-20,-20,-20,-20"
                                 Padding="0,-5,0,-5"
                                 BackgroundColor="#FBFFE9"
                                 BorderColor="#c2c5b5"
@@ -80,7 +81,7 @@
 
                         </Frame>
                         <CollectionView
-                            Margin="0,-8,0,0"
+                            Margin="20,-8,20,0"
                             ItemsSource="{Binding Notes}"
                             VerticalOptions="FillAndExpand">
                             <CollectionView.ItemsLayout>
@@ -95,7 +96,7 @@
                                     <Frame BackgroundColor="#FBFFE9">
                                         <!--  -22,-20,-22, -20  -->
                                         <Button
-                                            Margin="0,-20,0,-20"
+                                            Margin="-20,-20,-20,-20"
                                             Padding="0,-5,0,-5"
                                             effects:TouchEffect.LongPressCommand="{Binding BindingContext.ShowToolMenuCommand, Source={x:Reference Note}}"
                                             effects:TouchEffect.LongPressCommandParameter="{Binding .}"

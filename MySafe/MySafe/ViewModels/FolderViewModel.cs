@@ -101,7 +101,7 @@ namespace MySafe.Presentation.ViewModels
 
             var safeFolders = await _mediator.Send(new SafeInfoQuery());
             var currentFolder = safeFolders?.Folders.FirstOrDefault(x => x.Id == mediatorEntity.Id);
-            FolderName = currentFolder?.Name.Split(":").FirstOrDefault();
+            FolderName = currentFolder?.Name.Split(":").FirstOrDefault().Split(",").FirstOrDefault();
             folderId = currentFolder?.Id ?? int.MinValue;
         }
     }
