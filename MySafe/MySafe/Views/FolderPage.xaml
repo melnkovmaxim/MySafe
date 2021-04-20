@@ -103,9 +103,9 @@
                                 </Frame>
                                 <Frame Grid.Column="1" Margin="5,0,0,0">
                                     <Button
-                                        Command="{Binding ToggleEditableModeCommand}"
                                         Margin="-20,-20,-20,-20"
                                         BackgroundColor="#E4E8FB"
+                                        Command="{Binding ToggleEditableModeCommand}"
                                         ImageSource="pen.png" />
                                 </Frame>
                             </Grid>
@@ -133,18 +133,13 @@
                                             Margin="-20,-20,-20,-20"
                                             Padding="10,-40,10,0"
                                             BackgroundColor="#E4E8FB"
+                                            Command="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}"
                                             CommandParameter="{Binding .}"
                                             HeightRequest="110"
                                             Text="{Binding Name}">
                                             <Button.Style>
                                                 <Style TargetType="Button">
                                                     <Style.Triggers>
-                                                        <DataTrigger
-                                                            Binding="{Binding BindingContext.EditableMode.CurrentState, Source={x:Reference Folder}}"
-                                                            TargetType="Button"
-                                                            Value="{x:Static state:ToggleStateEnum.Off}">
-                                                            <Setter Property="Command" Value="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}" />
-                                                        </DataTrigger>
                                                         <DataTrigger
                                                             Binding="{Binding BindingContext.EditableMode.CurrentState, Source={x:Reference Folder}}"
                                                             TargetType="Button"
