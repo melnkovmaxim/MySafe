@@ -62,10 +62,12 @@ namespace MySafe.Presentation.ViewModels
             {
                 const string restore = "Восстановить";
                 const string destroy = "Уничтожить";
-                var result = await Application.Current.MainPage
-                    .DisplayActionSheet("Опции", "Отмена", null, restore, destroy);
+                const string cancelButtonName = "Отмена";
 
-                if (string.IsNullOrEmpty(result)) return;
+                var result = await Application.Current.MainPage
+                    .DisplayActionSheet("Опции", cancelButtonName, null, restore, destroy);
+
+                if (result == cancelButtonName) return;
 
                 IEntity response = null;
 
