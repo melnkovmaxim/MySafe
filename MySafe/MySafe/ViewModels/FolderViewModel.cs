@@ -11,6 +11,7 @@ using MySafe.Presentation.EntityExtensions;
 using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
+using MySafe.Services.Mediator.Documents.ChangeDocumentCommand;
 using MySafe.Services.Mediator.Documents.CreateDocumentCommand;
 using MySafe.Services.Mediator.Folders.FolderInfoQuery;
 using MySafe.Services.Mediator.Safe.SafeInfoQuery;
@@ -43,11 +44,22 @@ namespace MySafe.Presentation.ViewModels
         {
             _mediator = mediator;
             Documents = new ObservableCollection<Document>();
+            EditableMode = new ToggleState();
+            EditDocumentNameCommand = new AsyncCommand<Document>(EditDocumentCommandTask);
+            ToggleEditableModeCommand = new AsyncCommand(ToggleEditableModeCommandTask);
+        }
+
+        private Task ToggleEditableModeCommandTask()
+        {
+            EditableMode.Toggle();
+            return Task.CompletedTask;
         }
 
         public string FolderName { get; set; }
         private int folderId { get; set; }
 
+        public ToggleState EditableMode { get; set; }
+        public AsyncCommand ToggleEditableModeCommand { get; }
         public string Filter
         {
             get => _filter;
@@ -58,13 +70,23 @@ namespace MySafe.Presentation.ViewModels
                 DocumentsList.Where(x => x.Name.Contains(value)).ForEach(Documents.Add);
             }
         }
-
+        public AsyncCommand<Document> EditDocumentNameCommand { get; } 
         public ObservableCollection<Document> Documents { get; set; }
         private List<Document> DocumentsList { get; set; }
 
         public string IconPath { get; set; }
 
-        // _navigationParameter.ChildId
+        private async Task EditDocumentCommandTask(Document document)
+        {
+            var changedDocumentName = await Application.Current.MainPage.DisplayPromptAsync("Изменить название", document.Name, accept: "Сохранить", cancel: "Отмена", placeholder: "Новое название");
+
+            if (!string.IsNullOrEmpty(changedDocumentName))
+            {
+                _ = await _mediator.Send(new ChangeDocumentCommand(changedDocumentName, document.Location, document.Id, document.FolderId));
+                await RefreshCommand.ExecuteAsync(null);
+            }
+        } 
+
         public AsyncCommand<Document> MoveToDocumentCommand => _moveToDocumentCommand
             ??= new AsyncCommand<Document>(async document =>
             {

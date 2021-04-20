@@ -4,7 +4,7 @@ namespace MySafe.Core.Models.JsonRequests
 {
     public class DocumentJsonBody : JsonObjectBase, IJsonBody
     {
-        [JsonProperty("folder_id")] public int? FolderId { get; set; }
+        [JsonProperty("folder_id")] public int FolderId { get; set; }
 
         [JsonProperty("name")] public string Name { get; set; }
 

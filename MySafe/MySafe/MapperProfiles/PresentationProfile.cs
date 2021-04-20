@@ -19,6 +19,7 @@ namespace MySafe.Presentation.MapperProfiles
             CreateMap<DocumentEntity, Document>()
                 .ForMember(d => d.Id, mo => mo.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, mo => mo.MapFrom(s => s.Name))
+                .ForMember(d => d.Location, mo => mo.MapFrom(s => s.Location))
                 .ForMember(d => d.Attachments, mo => mo.MapFrom(s => s.Attachments))
                 .ForMember(d => d.CreatedAt, mo => mo.MapFrom(s => s.CreatedAt))
                 .ForMember(d => d.FolderId, mo => mo.MapFrom(s => s.FolderId))

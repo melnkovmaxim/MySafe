@@ -33,7 +33,12 @@ namespace MySafe.Presentation.ViewModels.Abstractions
 
         public virtual async void OnNavigatedTo(INavigationParameters parameters)
         {
-            _ = parameters.TryGetValue(nameof(NavigationParameter), out _navigationParameter);
+            NavigationParameter @param;
+
+            if (parameters.TryGetValue(nameof(NavigationParameter), out @param))
+            {
+                _navigationParameter = @param;
+            }
 
             var isAuthorized = await _authService.IsAuthorized();
 

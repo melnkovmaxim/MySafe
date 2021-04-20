@@ -96,7 +96,12 @@ namespace MySafe.Services.MapperProfiles
             CreateMap<FolderListQuery, FolderJsonBody>();
 
             //Documents
-            CreateMap<ChangeDocumentCommand, DocumentJsonBody>();
+            CreateMap<ChangeDocumentCommand, DocumentJsonBody>()
+                .ForMember(d => d.Name, mo => mo.MapFrom(s => s.Name))
+                .ForMember(d => d.Location, mo => mo.MapFrom(s => s.Location))
+                .ForMember(d => d.FolderId, mo => mo.MapFrom(s => s.FolderId))
+                ;
+
             CreateMap<CreateDocumentCommand, DocumentJsonBody>();
             CreateMap<DestroyTrashDocumentCommand, DocumentJsonBody>();
             CreateMap<DocumentInfoQuery, DocumentJsonBody>();

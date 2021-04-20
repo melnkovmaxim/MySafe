@@ -1,10 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="MySafe.Presentation.Views.FolderPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:behaviors="http://prismlibrary.com"
+    xmlns:state="clr-namespace:MySafe.Presentation.Enums;assembly=MySafe.Presentation"
     x:Name="Folder"
     Title="Назад"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=FolderViewModel}">
@@ -56,10 +57,12 @@
                                             <RowDefinition Height="26" />
                                         </Grid.RowDefinitions>
                                         <Image Grid.Column="0" Source="{Binding IconPath}" />
-                                        <Frame Grid.Column="1" Margin="0,-6,0,0" CornerRadius="0"
-                                               BackgroundColor="Transparent">
+                                        <Frame
+                                            Grid.Column="1"
+                                            Margin="0,-6,0,0"
+                                            BackgroundColor="Transparent"
+                                            CornerRadius="0">
                                             <Label
-
                                                 Margin="-20,-20,-20,-20"
                                                 FontSize="24"
                                                 HorizontalOptions="Start"
@@ -100,6 +103,7 @@
                                 </Frame>
                                 <Frame Grid.Column="1" Margin="5,0,0,0">
                                     <Button
+                                        Command="{Binding ToggleEditableModeCommand}"
                                         Margin="-20,-20,-20,-20"
                                         BackgroundColor="#E4E8FB"
                                         ImageSource="pen.png" />
@@ -129,10 +133,28 @@
                                             Margin="-20,-20,-20,-20"
                                             Padding="10,-40,10,0"
                                             BackgroundColor="#E4E8FB"
-                                            Command="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}"
                                             CommandParameter="{Binding .}"
                                             HeightRequest="110"
-                                            Text="{Binding Name}" />
+                                            Text="{Binding Name}">
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Style.Triggers>
+                                                        <DataTrigger
+                                                            Binding="{Binding BindingContext.EditableMode.CurrentState, Source={x:Reference Folder}}"
+                                                            TargetType="Button"
+                                                            Value="{x:Static state:ToggleStateEnum.Off}">
+                                                            <Setter Property="Command" Value="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger
+                                                            Binding="{Binding BindingContext.EditableMode.CurrentState, Source={x:Reference Folder}}"
+                                                            TargetType="Button"
+                                                            Value="{x:Static state:ToggleStateEnum.On}">
+                                                            <Setter Property="Command" Value="{Binding BindingContext.EditDocumentNameCommand, Source={x:Reference Folder}}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
                                     </Frame>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>

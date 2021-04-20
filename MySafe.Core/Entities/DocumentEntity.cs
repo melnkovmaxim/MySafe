@@ -15,7 +15,7 @@ namespace MySafe.Core.Models.Responses
 
         [JsonProperty] public string Location { get; set; }
 
-        [JsonProperty] public int FolderId { get; set; }
+        [JsonProperty("folder_id")] public int FolderId { get; set; }
 
         [JsonProperty] public DateTime? CreatedAt { get; set; }
 
