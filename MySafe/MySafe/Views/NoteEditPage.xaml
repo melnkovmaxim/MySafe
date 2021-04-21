@@ -6,34 +6,45 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Назад"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=NoteEditViewModel}"
-    NavigationPage.HasNavigationBar="True">
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <Style TargetType="Frame">
+            <Setter Property="CornerRadius" Value="15" />
+            <Setter Property="HasShadow" Value="True" />
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
 
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="20" />
             </Grid.RowDefinitions>
             <Frame
                 Grid.Row="0"
                 Margin="15,10,15,15"
-                BackgroundColor="#FBFFE9"
+                BackgroundColor="#F3F5FF"
                 BorderColor="Gray"
                 CornerRadius="10"
                 HasShadow="True"
-                HeightRequest="460"
+                
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill">
                 <Editor
-                    BackgroundColor="#FBFFE9"
+                    BackgroundColor="#F3F5FF"
                     HorizontalOptions="FillAndExpand"
                     Text="{Binding Note.Content}"
                     VerticalOptions="Fill" />
+                
             </Frame>
-            <Button
-                Grid.Row="1"
-                Command="{Binding SaveNoteCommand}"
-                Text="Сохранить" />
+            <AbsoluteLayout VerticalOptions="End" HorizontalOptions="End" Margin="25,25,35,45">
+                <Frame BackgroundColor="#EDF0FF" HasShadow="True">
+                    <Button CornerRadius="15" BackgroundColor="#EDF0FF"
+                         Margin="-20,-20,-20,-20"
+                        Command="{Binding SaveNoteCommand}" ImageSource="save_d.png"
+                        />
+                </Frame>
+            </AbsoluteLayout>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

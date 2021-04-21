@@ -143,12 +143,12 @@
                             <controls:UniformGrid
                                 BindableLayout.ItemsSource="{Binding Folders}"
                                 ColumnSpacing="15"
-                                RowSpacing="15"
+                                RowSpacing="15" HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
                                         <Frame HeightRequest="115" VerticalOptions="FillAndExpand">
-                                            <Button
+                                            <Button 
                                                 Margin="-20,-20,-20,-20"
                                                 Padding="5,0,5,0"
                                                 BackgroundColor="#E4E8FB"
@@ -193,7 +193,7 @@
                                     FontSize="18"
                                     GradientOrientation="Horizontal"
                                     HorizontalOptions="FillAndExpand"
-                                    ImageSource="bin.png"
+                                    ImageSource="bin1.png"
                                     StartColor="#b7ccef"
                                     TextColor="White" />
                             </Frame>

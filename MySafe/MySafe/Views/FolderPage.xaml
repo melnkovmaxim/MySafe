@@ -7,7 +7,7 @@
     xmlns:behaviors="http://prismlibrary.com"
     xmlns:state="clr-namespace:MySafe.Presentation.Enums;assembly=MySafe.Presentation"
     x:Name="Folder"
-    Title="Назад"
+    Title="{Binding FolderName}"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=FolderViewModel}">
     <ContentPage.Resources>
         <Style TargetType="Button">
@@ -41,7 +41,7 @@
                 RefreshColor="Red">
                 <ScrollView VerticalOptions="FillAndExpand">-->
                         <StackLayout>
-                            <Frame
+                            <!--<Frame
                                 Margin="20,20,20,10"
                                 BackgroundColor="#E4E8FB"
                                 CornerRadius="24"
@@ -73,7 +73,7 @@
                                         </Frame>
                                     </Grid>
                                 </StackLayout>
-                            </Frame>
+                            </Frame>-->
                             <SearchBar
                                 Margin="10,10,10,10"
                                 HorizontalOptions="Fill"

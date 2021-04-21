@@ -71,7 +71,8 @@ namespace MySafe.Presentation.ViewModels
             Folders.Clear();
             mediatorEntity.Folders.ForEach(x =>
             {
-                x.Name = x.Name.Split(':').FirstOrDefault();
+                x.Name = x.Name.Split(':').FirstOrDefault().Split(',').FirstOrDefault();
+                x.Name += ':';
                 Folders.Add(x);
             });
         }

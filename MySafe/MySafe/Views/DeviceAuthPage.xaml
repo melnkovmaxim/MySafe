@@ -120,8 +120,13 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                <Button
+                    
+                    Command="{Binding FingerPrintScanCommand}"
+                    ImageSource="fingerprint.png"
+                    IsVisible="{Binding IsRegistered}" />
             </StackLayout>
-
+            
 
             <Grid
                 Grid.Row="1"
@@ -200,8 +205,7 @@
                 <Button
                     Grid.Row="3"
                     Grid.Column="0"
-                    Command="{Binding FingerPrintScanCommand}"
-                    ImageSource="fingerprint.png"
+                    ImageSource="f5ingerprint.png"
                     IsVisible="{Binding IsRegistered}" />
                 <Button
                     Grid.Row="3"

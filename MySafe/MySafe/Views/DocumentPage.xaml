@@ -7,6 +7,13 @@
     x:Name="Document"
     Title="Документы"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=DocumentViewModel}">
+
+    <ContentPage.Resources>
+        <Style TargetType="Frame">
+            <Setter Property="CornerRadius" Value="15" />
+            <Setter Property="HasShadow" Value="True" />
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
             <RefreshView
@@ -73,9 +80,9 @@
                             <StackLayout
                                 Grid.Row="2"
                                 BackgroundColor="#F1BE74"
-                                HeightRequest="60"
+                                HeightRequest="75"
                                 HorizontalOptions="FillAndExpand"
-                                Orientation="Horizontal"
+                                Orientation="Horizontal" Margin="0,-75,0,0"
                                 VerticalOptions="End">
                                 <Grid HorizontalOptions="FillAndExpand">
                                     <Grid.ColumnDefinitions>
@@ -84,37 +91,45 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
+                                    <Frame Grid.Column="0" Margin="20,10,20,10" BackgroundColor="#EDF0FF" HasShadow="True">
+                                        <Button
+                                        Margin="-20,-20,-20,-20" CornerRadius="15"
+                                            BackgroundColor="#EDF0FF"
+                                            Command="{Binding PrintCommand}"
+                                            CommandParameter="{Binding CurrentAttachment}"
+                                            ImageSource="print.png" />
+                                    </Frame>
+                                    <Frame Grid.Column="1" Margin="20,10,20,10" BackgroundColor="#EDF0FF" HasShadow="True">
                                     <Button
-                                        Grid.Column="0"
-                                        BackgroundColor="Transparent"
-                                        Command="{Binding PrintCommand}"
-                                        CommandParameter="{Binding CurrentAttachment}"
-                                        ImageSource="print.png" />
-                                    <Button
-                                        Grid.Column="1"
-                                        BackgroundColor="Transparent" x:Name="ButtonRotateRight"
+                                        Margin="-20,-20,-20,-20"
+                                        BackgroundColor="#EDF0FF" x:Name="ButtonRotateRight"
                                         Command="{Binding RotatePlusCommand}"
                                         CommandParameter="{Binding CurrentAttachment}"
                                         ImageSource="clockwise.png" IsVisible="{Binding CurrentAttachment.IsImage}"
                                         Text="" />
-                                    <Button
-                                        Grid.Column="2"
-                                        BackgroundColor="Transparent"
+                                    </Frame>
+                                    <Frame Grid.Column="2" Margin="20,10,20,10" BackgroundColor="#EDF0FF" HasShadow="True">
+                                        <Button
+                                        Margin="-20,-20,-20,-20"
+                                        BackgroundColor="#EDF0FF"
                                         Command="{Binding DownloadFileCommand}"
                                         CommandParameter="{Binding CurrentAttachment}"
                                         ImageSource="download.png"
                                         Text="" />
-                                    <Button
-                                        Grid.Column="3"
-                                        BackgroundColor="Transparent"
+                                    </Frame>
+                                    <Frame Grid.Column="3" Margin="20,10,20,10" BackgroundColor="#EDF0FF" HasShadow="True">
+                                        <Button
+                                        Margin="-20,-20,-20,-20"
+                                        BackgroundColor="#EDF0FF"
                                         Command="{Binding MoveToTrashCommand}"
                                         CommandParameter="{Binding CurrentAttachment}"
                                         ImageSource="delete.png"
                                         Text="" />
+                                    </Frame>
                                 </Grid>
                             </StackLayout>
                         </Grid>
-                        <Grid BackgroundColor="#F1BE74">
+                        <!--<Grid BackgroundColor="#F1BE74">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
@@ -122,7 +137,7 @@
                                     Grid.Row="0"
 
                                     Text="" />
-                        </Grid>
+                        </Grid>-->
                     </StackLayout>
                     <!--<CollectionView ItemsSource="{Binding Attachments}" VerticalOptions="FillAndExpand">
             <CollectionView.ItemsLayout>
