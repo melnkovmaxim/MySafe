@@ -22,6 +22,7 @@ namespace MySafe.Presentation.ViewModels
 
         public Password Password { get; }
         public bool IsRegistered { get; set; }
+        public bool IsExpiredAccessToken { get; set; }
 
         public DeviceAuthViewModel(INavigationService navigationService,
             IDeviceAuthService deviceAuthService, IAuthService authService)
@@ -51,8 +52,14 @@ namespace MySafe.Presentation.ViewModels
 
         protected override async void DoAfterNavigatedTo()
         {
+            IsExpiredAccessToken = false;
             IsRegistered = await _deviceAuthService.IsRegistered();
             if (IsRegistered) await _deviceAuthService.TryLoginWithPrintScanAsync(_actionOnLogin);
+        }
+
+        protected override async void DoBeforeNavigatedTo()
+        {
+            IsExpiredAccessToken = await _authService.IsExpiredAccessToken();
         }
 
         private async void FingerPrintScan()

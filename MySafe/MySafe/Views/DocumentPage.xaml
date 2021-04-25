@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
     x:Class="MySafe.Presentation.Views.DocumentPage"
@@ -54,9 +54,7 @@
                                         <DataTemplate>
                                             <Image Source="{Binding ImageSource}" VerticalOptions="Start">
                                                 <Image.GestureRecognizers>
-                                                    <TapGestureRecognizer
-                                                        Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference Document}}"
-                                                        CommandParameter="{Binding .}" />
+                                                    <TapGestureRecognizer Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference Document}}" CommandParameter="{Binding .}" />
                                                 </Image.GestureRecognizers>
                                             </Image>
                                         </DataTemplate>
@@ -64,7 +62,7 @@
                                 </CarouselView>
                                 <!--<StackLayout Grid.Column="1">
                                     <Button
-                                        
+
                                         Command="{Binding RotatePlusCommand}"
                                         HeightRequest="40"
                                         IsVisible="{Binding CurrentAttachment.IsImage}"
@@ -79,10 +77,11 @@
                             </Grid>
                             <StackLayout
                                 Grid.Row="2"
+                                Margin="0,-75,0,0"
                                 BackgroundColor="#F1BE74"
                                 HeightRequest="75"
                                 HorizontalOptions="FillAndExpand"
-                                Orientation="Horizontal" Margin="0,-75,0,0"
+                                Orientation="Horizontal"
                                 VerticalOptions="End">
                                 <Grid HorizontalOptions="FillAndExpand">
                                     <Grid.ColumnDefinitions>
@@ -91,40 +90,59 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Frame Grid.Column="0" Margin="20,10,20,10" BackgroundColor="#EDF0FF" HasShadow="True">
+                                    <Frame
+                                        Grid.Column="0"
+                                        Margin="20,10,20,10"
+                                        BackgroundColor="#EDF0FF"
+                                        HasShadow="True">
                                         <Button
-                                        Margin="-20,-20,-20,-20" CornerRadius="15"
+                                            Margin="-20,-20,-20,-20"
                                             BackgroundColor="#EDF0FF"
                                             Command="{Binding PrintCommand}"
                                             CommandParameter="{Binding CurrentAttachment}"
+                                            CornerRadius="15"
                                             ImageSource="print.png" />
                                     </Frame>
-                                    <Frame Grid.Column="1" Margin="20,10,20,10" BackgroundColor="#EDF0FF" HasShadow="True">
-                                    <Button
-                                        Margin="-20,-20,-20,-20"
-                                        BackgroundColor="#EDF0FF" x:Name="ButtonRotateRight"
-                                        Command="{Binding RotatePlusCommand}"
-                                        CommandParameter="{Binding CurrentAttachment}"
-                                        ImageSource="clockwise.png" IsVisible="{Binding CurrentAttachment.IsImage}"
-                                        Text="" />
-                                    </Frame>
-                                    <Frame Grid.Column="2" Margin="20,10,20,10" BackgroundColor="#EDF0FF" HasShadow="True">
-                                        <Button
-                                        Margin="-20,-20,-20,-20"
+                                    <Frame
+                                        Grid.Column="1"
+                                        Margin="20,10,20,10"
                                         BackgroundColor="#EDF0FF"
-                                        Command="{Binding DownloadFileCommand}"
-                                        CommandParameter="{Binding CurrentAttachment}"
-                                        ImageSource="download.png"
-                                        Text="" />
-                                    </Frame>
-                                    <Frame Grid.Column="3" Margin="20,10,20,10" BackgroundColor="#EDF0FF" HasShadow="True">
+                                        HasShadow="True">
                                         <Button
-                                        Margin="-20,-20,-20,-20"
+                                            x:Name="ButtonRotateRight"
+                                            Margin="-20,-20,-20,-20"
+                                            BackgroundColor="#EDF0FF"
+                                            Command="{Binding RotatePlusCommand}"
+                                            CommandParameter="{Binding CurrentAttachment}"
+                                            ImageSource="clockwise.png"
+                                            IsVisible="{Binding CurrentAttachment.IsImage}"
+                                            Text="" />
+                                    </Frame>
+                                    <Frame
+                                        Grid.Column="2"
+                                        Margin="20,10,20,10"
                                         BackgroundColor="#EDF0FF"
-                                        Command="{Binding MoveToTrashCommand}"
-                                        CommandParameter="{Binding CurrentAttachment}"
-                                        ImageSource="delete.png"
-                                        Text="" />
+                                        HasShadow="True">
+                                        <Button
+                                            Margin="-20,-20,-20,-20"
+                                            BackgroundColor="#EDF0FF"
+                                            Command="{Binding DownloadFileCommand}"
+                                            CommandParameter="{Binding CurrentAttachment}"
+                                            ImageSource="download.png"
+                                            Text="" />
+                                    </Frame>
+                                    <Frame
+                                        Grid.Column="3"
+                                        Margin="20,10,20,10"
+                                        BackgroundColor="#EDF0FF"
+                                        HasShadow="True">
+                                        <Button
+                                            Margin="-20,-20,-20,-20"
+                                            BackgroundColor="#EDF0FF"
+                                            Command="{Binding MoveToTrashCommand}"
+                                            CommandParameter="{Binding CurrentAttachment}"
+                                            ImageSource="delete.png"
+                                            Text="" />
                                     </Frame>
                                 </Grid>
                             </StackLayout>
@@ -196,44 +214,6 @@
                                 TargetType="Frame"
                                 Value="True">
                                 <Setter Property="IsVisible" Value="True" />
-                            </DataTrigger>
-
-
-                            <DataTrigger
-                                Binding="{Binding RefreshCommand.IsExecuting}"
-                                TargetType="Frame"
-                                Value="False">
-                                <Setter Property="IsVisible" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding DownloadFileCommand.IsExecuting}"
-                                TargetType="Frame"
-                                Value="False">
-                                <Setter Property="IsVisible" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding UploadFileCommand.IsExecuting}"
-                                TargetType="Frame"
-                                Value="False">
-                                <Setter Property="IsVisible" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding PrintCommand.IsExecuting}"
-                                TargetType="Frame"
-                                Value="False">
-                                <Setter Property="IsVisible" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding OpenFileCommand.IsExecuting}"
-                                TargetType="Frame"
-                                Value="False">
-                                <Setter Property="IsVisible" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding MoveToTrashCommand.IsExecuting}"
-                                TargetType="Frame"
-                                Value="False">
-                                <Setter Property="IsVisible" Value="False" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

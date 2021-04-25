@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Prism.Common;
 using Prism.Navigation;
 using Xamarin.Forms;
@@ -12,6 +13,10 @@ namespace MySafe.Presentation.Views
         public DeviceAuthPage()
         {
             InitializeComponent();
+            Task.Run(async () =>
+            {
+                while (true) await _spinnetImage.RelRotateTo(360, 3000);
+            });
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)

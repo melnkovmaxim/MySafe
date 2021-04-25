@@ -64,7 +64,14 @@ namespace MySafe.Services.Services
             return true;
         }
 
-        private async Task<bool> IsExpiredAccessToken()
+        public async Task<bool> IsExistsAccessToken()
+        {
+            var accessToken = await _secureStorageRepository.GetAccessJwtAsync();
+
+            return !string.IsNullOrEmpty(accessToken);
+        }
+
+        public async Task<bool> IsExpiredAccessToken()
         {
             var accessToken = await _secureStorageRepository.GetAccessSecurityTokenAsync();
 

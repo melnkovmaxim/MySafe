@@ -21,11 +21,12 @@ namespace MySafe.Presentation.Views
             RefreshView.Refreshing += (s, e) => Refreshing();
             //ButtonRotateLeft.Clicked += (s, e) => Rotate(RotateEnum.Left);
             ButtonRotateRight.Clicked += (s, e) => Rotate(RotateEnum.Right);
-
+            
             Task.Run(async () =>
             {
                 while (true) await _spinnetImage.RelRotateTo(360, 3000);
             });
+            
         }
 
         private Image _currentCarouselImage => Carousel.VisibleViews.Last() as Image;

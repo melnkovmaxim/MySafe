@@ -39,8 +39,8 @@ namespace MySafe.Presentation
 
             // фикс ошибки по таймауту
             //System.Net.ServicePointManager.DnsRefreshTimeout = 0;
-            var isAuthorized = await Ioc.Resolve<IAuthService>().IsAuthorized();
-            var startPage = isAuthorized ? nameof(DeviceAuthPage) : nameof(SignInPage);
+            var isExistsAccessToken = await Ioc.Resolve<IAuthService>().IsExistsAccessToken();
+            var startPage = isExistsAccessToken ? nameof(DeviceAuthPage) : nameof(SignInPage);
             await NavigationService.NavigateAsync($"NavigationPage/{startPage}");
         }
 

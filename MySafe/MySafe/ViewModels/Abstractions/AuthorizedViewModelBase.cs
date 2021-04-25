@@ -33,6 +33,8 @@ namespace MySafe.Presentation.ViewModels.Abstractions
 
         public virtual async void OnNavigatedTo(INavigationParameters parameters)
         {
+            DoBeforeNavigatedTo();
+
             NavigationParameter @param;
 
             if (parameters.TryGetValue(nameof(NavigationParameter), out @param))
@@ -52,6 +54,7 @@ namespace MySafe.Presentation.ViewModels.Abstractions
         }
 
         protected virtual void DoAfterNavigatedTo() {}
+        protected virtual void DoBeforeNavigatedTo() {}
 
         protected CancellationToken GetCancellationToken()
         {

@@ -8,6 +8,8 @@ namespace MySafe.Domain.Services
 {
     public interface IAuthService
     {
+        Task<bool> IsExpiredAccessToken();
+        Task<bool> IsExistsAccessToken();
         Task<bool> IsAuthorized();
         Task SignOut();
     }
