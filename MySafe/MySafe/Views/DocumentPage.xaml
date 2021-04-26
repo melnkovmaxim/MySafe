@@ -147,6 +147,17 @@
                                 </Grid>
                             </StackLayout>
                         </Grid>
+                        <AbsoluteLayout VerticalOptions="End" HorizontalOptions="Fill">
+                            <Frame
+                                        VerticalOptions="End" WidthRequest="9000"
+                                        Margin="0,-10,0,0"
+                                        CornerRadius="0"
+                                        BackgroundColor="#F1BE74"
+                                        HeightRequest="75"
+                                        HorizontalOptions="Fill"
+                                        >
+                            </Frame>
+                        </AbsoluteLayout>
                         <!--<Grid BackgroundColor="#F1BE74">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />

@@ -66,22 +66,23 @@
                                     ImageSource="pen.png" />
                             </Frame>
                         </Grid>-->
-                        <Frame Margin="20,25,20,0" BackgroundColor="#FBFFE9">
+
+                        <Frame Margin="20,25,20,-22" CornerRadius="24" BackgroundColor="#FBFFE9">
                             <!--  -22,-20,-22, -20  -->
 
                             <Button
                                 Margin="-20,-20,-20,-20"
                                 Padding="0,-5,0,-5"
-                                BackgroundColor="#FBFFE9"
+                                BackgroundColor="#F3F5FF"
                                 BorderColor="#c2c5b5"
-                                BorderWidth="1"
-                                Command="{Binding AddNoteCommand}"
+                                BorderWidth="1" CornerRadius="24"
+                                
                                 HorizontalOptions="FillAndExpand"
-                                Text="Добавить новую заметку" />
+                                Text="" />
 
                         </Frame>
                         <CollectionView
-                            Margin="20,-8,20,0"
+                            Margin="20,-8,20,0" BackgroundColor="#F3F5FF"
                             ItemsSource="{Binding Notes}"
                             VerticalOptions="FillAndExpand">
                             <CollectionView.ItemsLayout>
@@ -93,29 +94,40 @@
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <Frame BackgroundColor="#FBFFE9">
-                                        <!--  -22,-20,-22, -20  -->
-                                        <Button
-                                            Margin="-20,-20,-20,-20"
-                                            Padding="0,-5,0,-5"
-                                            effects:TouchEffect.LongPressCommand="{Binding BindingContext.ShowToolMenuCommand, Source={x:Reference Note}}"
-                                            effects:TouchEffect.LongPressCommandParameter="{Binding .}"
-                                            effects:TouchEffect.LongPressDuration="1000"
-                                            BackgroundColor="#FBFFE9"
-                                            BorderColor="#c2c5b5"
-                                            BorderWidth="1"
-                                            Command="{Binding BindingContext.MoveToNoteEditCommand, Source={x:Reference Note}}"
-                                            CommandParameter="{Binding .}"
-                                            Text="{Binding ClippedContent}" />
-                                    </Frame>
+                                    <StackLayout>
+                                        <Frame BackgroundColor="#F3F5FF">
+                                            <!--  -22,-20,-22, -20  -->
+                                            <Button
+                                                Margin="-25,-20,-25,-20"
+                                                Padding="0,-5,0,-5"
+                                                effects:TouchEffect.LongPressCommand="{Binding BindingContext.ShowToolMenuCommand, Source={x:Reference Note}}"
+                                                effects:TouchEffect.LongPressCommandParameter="{Binding .}"
+                                                effects:TouchEffect.LongPressDuration="1000"
+                                                BackgroundColor="#F3F5FF"
+                                                BorderColor="#c2c5b5" BorderWidth="1"
+                                                Command="{Binding BindingContext.MoveToNoteEditCommand, Source={x:Reference Note}}"
+                                                CommandParameter="{Binding .}"
+                                                Text="{Binding ClippedContent}" />
+                                            <!-- BorderColor="#c2c5b5"
+                                                BorderWidth="1"-->
+                                        </Frame>
+                                    </StackLayout>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
-
                     </StackLayout>
                 </ScrollView>
 
             </RefreshView>
+
+            <AbsoluteLayout VerticalOptions="End" HorizontalOptions="End" Margin="25,25,35,45">
+                <Frame BackgroundColor="#EDF0FF" CornerRadius="15" HasShadow="True">
+                    <Button CornerRadius="15" BackgroundColor="#EDF0FF"
+                         Margin="-20,-20,-20,-20"
+                        Command="{Binding AddNoteCommand}" ImageSource="save_d.png"
+                        />
+                </Frame>
+            </AbsoluteLayout>
 
             <Frame IsVisible="{Binding RefreshCommand.IsExecuting}" Opacity="0.5">
                 <Image
