@@ -174,8 +174,7 @@
                 </ScrollView>
             </RefreshView>
 
-            <Frame Opacity="0.5">
-
+            <Frame IsVisible="False" Opacity="0.5">
                 <Frame.Style>
                     <Style TargetType="Frame">
                         <Style.Triggers>
