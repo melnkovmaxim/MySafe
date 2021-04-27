@@ -22,9 +22,11 @@
                 HorizontalOptions="FillAndExpand"
                 IsRefreshing="{Binding RefreshCommand.IsExecuting}"
                 RefreshColor="Red"
-                VerticalOptions="Fill">
+                VerticalOptions="Fill" >
 
-                <ScrollView VerticalScrollBarVisibility="Never">
+                
+                
+                <ScrollView VerticalScrollBarVisibility="Never" Orientation="Neither"  >
                     <StackLayout>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -44,7 +46,7 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="40" />
                                 </Grid.ColumnDefinitions>
-                                <CarouselView
+                                <CarouselView VerticalScrollBarVisibility="Never"
                                     x:Name="Carousel"
                                     Grid.ColumnSpan="2"
                                     Margin="0,-102,0,-100"
@@ -147,17 +149,28 @@
                                 </Grid>
                             </StackLayout>
                         </Grid>
-                        <AbsoluteLayout VerticalOptions="End" HorizontalOptions="Fill">
+                        <!--<AbsoluteLayout VerticalOptions="End" HorizontalOptions="Fill">
                             <Frame
                                         VerticalOptions="End" WidthRequest="9000"
                                         Margin="0,-10,0,0"
                                         CornerRadius="0"
                                         BackgroundColor="#F1BE74"
-                                        HeightRequest="75"
+                                        HeightRequest="25"
                                         HorizontalOptions="Fill"
                                         >
                             </Frame>
-                        </AbsoluteLayout>
+                        </AbsoluteLayout>-->
+                        <RelativeLayout VerticalOptions="End" HorizontalOptions="Fill">
+                            <Frame
+                                        VerticalOptions="End" WidthRequest="9000"
+                                        Margin="0,-10,0,0"
+                                        CornerRadius="0"
+                                        BackgroundColor="#F1BE74"
+                                        HeightRequest="15"
+                                        HorizontalOptions="Fill"
+                                        >
+                            </Frame>
+                        </RelativeLayout>
                         <!--<Grid BackgroundColor="#F1BE74">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
