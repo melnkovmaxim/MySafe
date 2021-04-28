@@ -45,7 +45,7 @@
         </StackLayout>
         <StackLayout Grid.Row="2" VerticalOptions="Center">
             <Frame
-                Margin="80,60,80,0"
+                Margin="0,60,0,0"
                 BackgroundColor="Transparent"
                 HasShadow="False">
                 <Entry
@@ -54,12 +54,6 @@
                     FontSize="50"
                     HorizontalTextAlignment="Center"
                     Text="{Binding Code}" />
-                <!--<BoxView  56
-                    Margin="20,-28,20,0"
-                    HeightRequest="2"
-                    HorizontalOptions="Fill"
-                    Color="White" />-->
-
             </Frame>
             <BoxView
                 Margin="0,-16,0,0"
@@ -120,6 +114,7 @@
                     IsVisible="{Binding Path=LifeTime.IsDead, Converter={StaticResource booleanConverter}, UpdateSourceEventName=LifeTime.RemainingLifeTimeMessage}"
                     Text="{Binding LifeTime.RemainingLifeTimeMessage}" />
                 <Button
+                    Margin="100,5,100,0"
                     Command="{Binding ResendSmsCommand}"
                     IsVisible="{Binding Path=LifeTime.IsDead, UpdateSourceEventName=LifeTime.RemainingLifeTimeMessage}"
                     Text="Отправить повторно смс" />
