@@ -121,12 +121,12 @@
             </RefreshView>
 
             <AbsoluteLayout VerticalOptions="End" HorizontalOptions="End" Margin="25,25,35,45">
-                <Frame BackgroundColor="#EDF0FF" CornerRadius="15" HasShadow="True">
-                    <Button CornerRadius="15" BackgroundColor="#EDF0FF"
+                <!--<Frame BackgroundColor="#EDF0FF" CornerRadius="15" HasShadow="True"> -->
+                    <Button CornerRadius="15" BackgroundColor="Transparent"
                          Margin="-20,-20,-20,-20"
-                        Command="{Binding AddNoteCommand}" ImageSource="save_d.png"
+                        Command="{Binding AddNoteCommand}" ImageSource="add1.png"
                         />
-                </Frame>
+                <!--</Frame>-->
             </AbsoluteLayout>
 
             <Frame IsVisible="{Binding RefreshCommand.IsExecuting}" Opacity="0.5">
