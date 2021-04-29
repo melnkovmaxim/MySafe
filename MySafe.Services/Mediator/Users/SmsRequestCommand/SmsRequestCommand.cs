@@ -9,7 +9,7 @@ using RestSharp;
 
 namespace MySafe.Services.Mediator.Users.SmsRequestCommand
 {
-    public class SmsRequestCommand : BearerRequestBase<UserEntity>
+    public class SmsRequestCommand : BearerRequestBase<UserEntity>, ITwoFactorRequest
     {
         public override Method RequestMethod => Method.POST;
         public override string RequestResource => "auth/sms-request";

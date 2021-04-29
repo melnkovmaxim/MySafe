@@ -8,7 +8,7 @@ namespace MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand
     /// <summary>
     ///     Вход. Второй фактор
     /// </summary>
-    public class TwoFactorAuthenticationCommand : BearerRequestBase<UserEntity>
+    public class TwoFactorAuthenticationCommand : BearerRequestBase<UserEntity>, ITwoFactorRequest
     {
         public TwoFactorAuthenticationCommand(string code)
         {

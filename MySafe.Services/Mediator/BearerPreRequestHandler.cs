@@ -20,7 +20,7 @@ namespace MySafe.Services.Mediator
 
         public async Task Process(BearerRequestBase<TResponse> request, CancellationToken cancellationToken)
         {
-            if (request is TwoFactorAuthenticationCommand twoFactorRequest)
+            if (request is ITwoFactorRequest twoFactorRequest)
             {
                 twoFactorRequest.JwtToken = await _secureStorageRepository.GetTwoFactorJwtAsync();
                 return;
