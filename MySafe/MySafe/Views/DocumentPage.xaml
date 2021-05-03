@@ -22,17 +22,15 @@
                 HorizontalOptions="FillAndExpand"
                 IsRefreshing="{Binding RefreshCommand.IsExecuting}"
                 RefreshColor="Red"
-                VerticalOptions="Fill" >
+                VerticalOptions="Fill">
 
-                
-                
-                <ScrollView VerticalScrollBarVisibility="Never" Orientation="Neither"  >
+                <ScrollView Orientation="Neither" VerticalScrollBarVisibility="Never">
                     <StackLayout>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50" />
                                 <RowDefinition Height="*" />
-                                <RowDefinition Height="60" />
+                                <RowDefinition Height="85" />
                             </Grid.RowDefinitions>
                             <Button
                                 Grid.Row="0"
@@ -41,160 +39,91 @@
                                 HeightRequest="50"
                                 HorizontalOptions="FillAndExpand"
                                 Text="Добавить файл" />
-                            <Grid Grid.Row="1">
+                            <CarouselView
+                                x:Name="Carousel"
+                                Grid.Row="1"
+                                CurrentItem="{Binding CurrentAttachment}"
+                                ItemsSource="{Binding Attachments}"
+                                Loop="False"
+                                VerticalScrollBarVisibility="Never">
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding ImageSource}" VerticalOptions="Start">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference Document}}" CommandParameter="{Binding .}" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+                            <Grid
+                                Grid.Row="2"
+                                BackgroundColor="#F1BE74"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="End">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <CarouselView VerticalScrollBarVisibility="Never"
-                                    x:Name="Carousel"
-                                    Grid.ColumnSpan="2"
-                                    Margin="0,-102,0,-100"
-                                    CurrentItem="{Binding CurrentAttachment}"
-                                    ItemsSource="{Binding Attachments}">
-                                    <CarouselView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Image Source="{Binding ImageSource}" VerticalOptions="Start">
-                                                <Image.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference Document}}" CommandParameter="{Binding .}" />
-                                                </Image.GestureRecognizers>
-                                            </Image>
-                                        </DataTemplate>
-                                    </CarouselView.ItemTemplate>
-                                </CarouselView>
-                                <!--<StackLayout Grid.Column="1">
+                                <Frame
+                                    Grid.Column="0"
+                                    Margin="20,10,20,10"
+                                    BackgroundColor="#EDF0FF"
+                                    HasShadow="True">
                                     <Button
-
+                                        Margin="-20,-20,-20,-20"
+                                        BackgroundColor="#EDF0FF"
+                                        Command="{Binding PrintCommand}"
+                                        CommandParameter="{Binding CurrentAttachment}"
+                                        CornerRadius="15"
+                                        ImageSource="print.png" />
+                                </Frame>
+                                <Frame
+                                    Grid.Column="1"
+                                    Margin="20,10,20,10"
+                                    BackgroundColor="#EDF0FF"
+                                    HasShadow="True">
+                                    <Button
+                                        x:Name="ButtonRotateRight"
+                                        Margin="-20,-20,-20,-20"
+                                        BackgroundColor="#EDF0FF"
                                         Command="{Binding RotatePlusCommand}"
-                                        HeightRequest="40"
+                                        CommandParameter="{Binding CurrentAttachment}"
+                                        ImageSource="clockwise.png"
                                         IsVisible="{Binding CurrentAttachment.IsImage}"
-                                        Text="->" />
+                                        Text="" />
+                                </Frame>
+                                <Frame
+                                    Grid.Column="2"
+                                    Margin="20,10,20,10"
+                                    BackgroundColor="#EDF0FF"
+                                    HasShadow="True">
                                     <Button
-                                        x:Name="ButtonRotateLeft"
-                                        Command="{Binding RotateMinusCommand}"
-                                        HeightRequest="40"
-                                        IsVisible="{Binding CurrentAttachment.IsImage}"
-                                        Text="&lt;-" />
-                                </StackLayout>-->
+                                        Margin="-20,-20,-20,-20"
+                                        BackgroundColor="#EDF0FF"
+                                        Command="{Binding DownloadFileCommand}"
+                                        CommandParameter="{Binding CurrentAttachment}"
+                                        ImageSource="download.png"
+                                        Text="" />
+                                </Frame>
+                                <Frame
+                                    Grid.Column="3"
+                                    Margin="20,10,20,10"
+                                    BackgroundColor="#EDF0FF"
+                                    HasShadow="True">
+                                    <Button
+                                        Margin="-20,-20,-20,-20"
+                                        BackgroundColor="#EDF0FF"
+                                        Command="{Binding MoveToTrashCommand}"
+                                        CommandParameter="{Binding CurrentAttachment}"
+                                        ImageSource="delete.png"
+                                        Text="" />
+                                </Frame>
                             </Grid>
-                            <StackLayout
-                                Grid.Row="2"
-                                Margin="0,-75,0,0"
-                                BackgroundColor="#F1BE74"
-                                HeightRequest="75"
-                                HorizontalOptions="FillAndExpand"
-                                Orientation="Horizontal"
-                                VerticalOptions="End">
-                                <Grid HorizontalOptions="FillAndExpand">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Frame
-                                        Grid.Column="0"
-                                        Margin="20,10,20,10"
-                                        BackgroundColor="#EDF0FF"
-                                        HasShadow="True">
-                                        <Button
-                                            Margin="-20,-20,-20,-20"
-                                            BackgroundColor="#EDF0FF"
-                                            Command="{Binding PrintCommand}"
-                                            CommandParameter="{Binding CurrentAttachment}"
-                                            CornerRadius="15"
-                                            ImageSource="print.png" />
-                                    </Frame>
-                                    <Frame
-                                        Grid.Column="1"
-                                        Margin="20,10,20,10"
-                                        BackgroundColor="#EDF0FF"
-                                        HasShadow="True">
-                                        <Button
-                                            x:Name="ButtonRotateRight"
-                                            Margin="-20,-20,-20,-20"
-                                            BackgroundColor="#EDF0FF"
-                                            Command="{Binding RotatePlusCommand}"
-                                            CommandParameter="{Binding CurrentAttachment}"
-                                            ImageSource="clockwise.png"
-                                            IsVisible="{Binding CurrentAttachment.IsImage}"
-                                            Text="" />
-                                    </Frame>
-                                    <Frame
-                                        Grid.Column="2"
-                                        Margin="20,10,20,10"
-                                        BackgroundColor="#EDF0FF"
-                                        HasShadow="True">
-                                        <Button
-                                            Margin="-20,-20,-20,-20"
-                                            BackgroundColor="#EDF0FF"
-                                            Command="{Binding DownloadFileCommand}"
-                                            CommandParameter="{Binding CurrentAttachment}"
-                                            ImageSource="download.png"
-                                            Text="" />
-                                    </Frame>
-                                    <Frame
-                                        Grid.Column="3"
-                                        Margin="20,10,20,10"
-                                        BackgroundColor="#EDF0FF"
-                                        HasShadow="True">
-                                        <Button
-                                            Margin="-20,-20,-20,-20"
-                                            BackgroundColor="#EDF0FF"
-                                            Command="{Binding MoveToTrashCommand}"
-                                            CommandParameter="{Binding CurrentAttachment}"
-                                            ImageSource="delete.png"
-                                            Text="" />
-                                    </Frame>
-                                </Grid>
-                            </StackLayout>
                         </Grid>
-                        <!--<AbsoluteLayout VerticalOptions="End" HorizontalOptions="Fill">
-                            <Frame
-                                        VerticalOptions="End" WidthRequest="9000"
-                                        Margin="0,-10,0,0"
-                                        CornerRadius="0"
-                                        BackgroundColor="#F1BE74"
-                                        HeightRequest="25"
-                                        HorizontalOptions="Fill"
-                                        >
-                            </Frame>
-                        </AbsoluteLayout>-->
-                        <RelativeLayout VerticalOptions="End" HorizontalOptions="Fill">
-                            <Frame
-                                        VerticalOptions="End" WidthRequest="9000"
-                                        Margin="0,-10,0,0"
-                                        CornerRadius="0"
-                                        BackgroundColor="#F1BE74"
-                                        HeightRequest="15"
-                                        HorizontalOptions="Fill"
-                                        >
-                            </Frame>
-                        </RelativeLayout>
-                        <!--<Grid BackgroundColor="#F1BE74">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Button Margin="0,-10,0,0" VerticalOptions="End" BackgroundColor="#F1BE74"
-                                    Grid.Row="0"
-
-                                    Text="" />
-                        </Grid>-->
                     </StackLayout>
-                    <!--<CollectionView ItemsSource="{Binding Attachments}" VerticalOptions="FillAndExpand">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="2" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Image Source="{Binding ImageSource}">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BindingContext.DownloadFileCommand, Source={x:Reference Document}}" CommandParameter="{Binding .}" />
-                        </Image.GestureRecognizers>
-                    </Image>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>-->
                 </ScrollView>
             </RefreshView>
 

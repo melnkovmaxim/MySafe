@@ -38,7 +38,7 @@ namespace MySafe.Presentation.ViewModels
             _mapper = mapper;
             _authService = authService;
             _calculationSafeCapacityService = calculationSafeCapacityService;
-            Folders = new ObservableCollection<Folder>();
+            Folders = new ObservableCollection<Folder>(Enumerable.Range(1, 6).Select(x => new Folder()));
         }
 
         public double Progress { get; set; }
