@@ -71,11 +71,6 @@ namespace MySafe.Presentation.ViewModels
 
         public static int ID { get; set; }
 
-        public bool IsVisibleRefreshFrame => RefreshCommand.IsExecuting || DownloadFileCommand.IsExecuting ||
-                                             UploadFileCommand.IsExecuting || MoveToTrashCommand.IsExecuting ||
-                                             OpenFileCommand.IsExecuting || PrintCommand.IsExecuting ||
-                                             RotatePlusCommand.IsExecuting;
-
         public Document Document { get; set; }
         public ObservableCollection<Attachment> Attachments { get; set; }
         public Attachment CurrentAttachment { get; set; }
