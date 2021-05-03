@@ -125,7 +125,22 @@
                     <Button
                         Command="{Binding FingerPrintScanCommand}"
                         ImageSource="fingerprint.png"
-                        IsVisible="{Binding IsRegistered}" />
+                        IsVisible="{Binding IsRegistered}">
+
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding FingerPrintScanCommand}"
+                                        TargetType="Button"
+                                        Value="{x:Static state:ToggleStateEnum.On}">
+                                        <Setter Property="BackgroundColor" Value="#FFC46B" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
                 </StackLayout>
 
 
@@ -206,6 +221,7 @@
                     <Button
                         Grid.Row="3"
                         Grid.Column="0"
+                        BackgroundColor="Transparent"
                         ImageSource="f5ingerprint.png"
                         IsVisible="{Binding IsRegistered}" />
                     <Button

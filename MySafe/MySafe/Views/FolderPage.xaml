@@ -111,9 +111,9 @@
                                         <Style TargetType="Button">
                                             <Style.Triggers>
                                                 <DataTrigger
-                                                            Binding="{Binding BindingContext.EditableMode.CurrentState, Source={x:Reference Folder}}"
-                                                            TargetType="Button"
-                                                            Value="{x:Static state:ToggleStateEnum.On}">
+                                                        Binding="{Binding BindingContext.EditableMode.CurrentState, Source={x:Reference Folder}}"
+                                                        TargetType="Button"
+                                                        Value="{x:Static state:ToggleStateEnum.On}">
                                                         <Setter Property="BackgroundColor" Value="#FFC46B" />
                                                 </DataTrigger>
                                             </Style.Triggers>
