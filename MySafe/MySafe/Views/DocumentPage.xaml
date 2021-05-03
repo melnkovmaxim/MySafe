@@ -93,7 +93,21 @@
                                         CommandParameter="{Binding CurrentAttachment}"
                                         ImageSource="clockwise.png"
                                         IsVisible="{Binding CurrentAttachment.IsImage}"
-                                        Text="" />
+                                        Text="">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding CurrentAttachment.IsImage}"
+                                                        TargetType="Button"
+                                                        Value="False">
+                                                        <Setter Property="Command" Value="" />
+                                                        <Setter Property="ImageSource" Value="" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
                                 </Frame>
                                 <Frame
                                     Grid.Column="2"
