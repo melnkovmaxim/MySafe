@@ -5,6 +5,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:behaviors="http://prismlibrary.com"
+    xmlns:state="clr-namespace:MySafe.Presentation.Enums;assembly=MySafe.Presentation"
     BackgroundColor="#E4E8FB"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=DeviceAuthViewModel}"
     NavigationPage.HasNavigationBar="False">
