@@ -4,6 +4,7 @@ using MySafe.Presentation.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
+using System.Threading.Tasks;
 using MySafe.Services.Services;
 
 namespace MySafe.Presentation.ViewModels
@@ -23,6 +24,7 @@ namespace MySafe.Presentation.ViewModels
         public Password Password { get; }
         public bool IsRegistered { get; set; }
         public bool IsExpiredAccessToken { get; set; }
+        public bool IsLogged { get; set; }
 
         public DeviceAuthViewModel(INavigationService navigationService,
             IDeviceAuthService deviceAuthService, IAuthService authService)
@@ -44,7 +46,8 @@ namespace MySafe.Presentation.ViewModels
         private async void Login()
         {
             var isAuthorized = await _authService.IsAuthorized();
-
+            IsLogged = true;
+            await Task.Delay(100);
             await _navigationService.NavigateAsync(isAuthorized
                 ? nameof(MainPage)
                 : nameof(SignInPage));

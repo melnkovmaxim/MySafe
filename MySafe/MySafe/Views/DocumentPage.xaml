@@ -91,9 +91,7 @@
                                         BackgroundColor="#EDF0FF"
                                         Command="{Binding RotatePlusCommand}"
                                         CommandParameter="{Binding CurrentAttachment}"
-                                        ImageSource="clockwise.png"
-                                        IsVisible="{Binding CurrentAttachment.IsImage}"
-                                        Text="">
+                                        ImageSource="clockwise.png">
                                         <Button.Style>
                                             <Style TargetType="Button">
                                                 <Style.Triggers>
@@ -101,8 +99,9 @@
                                                         Binding="{Binding CurrentAttachment.IsImage}"
                                                         TargetType="Button"
                                                         Value="False">
-                                                        <Setter Property="Command" Value="" />
-                                                        <Setter Property="ImageSource" Value="" />
+                                                        <Setter Property="Command" Value="{x:Null}" />
+                                                        <Setter Property="ImageSource" Value="{x:Null}" />
+                                                        <Setter Property="IsEnabled" Value="False" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
