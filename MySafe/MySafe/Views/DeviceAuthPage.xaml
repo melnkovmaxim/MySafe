@@ -131,7 +131,10 @@
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsLogged}" TargetType="Button">
+                                    <DataTrigger
+                                        Binding="{Binding IsLogged}"
+                                        TargetType="Button"
+                                        Value="True">
                                         <Setter Property="BackgroundColor" Value="Transparent" />
                                         <Setter Property="ImageSource" Value="green_finger.png" />
                                     </DataTrigger>

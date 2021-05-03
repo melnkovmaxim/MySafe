@@ -47,7 +47,7 @@ namespace MySafe.Presentation.ViewModels
         {
             var isAuthorized = await _authService.IsAuthorized();
             IsLogged = true;
-            await Task.Delay(100);
+            await Task.Delay(50);
             await _navigationService.NavigateAsync(isAuthorized
                 ? nameof(MainPage)
                 : nameof(SignInPage));
