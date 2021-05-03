@@ -124,6 +124,7 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                     <Button
+                        BackgroundColor="Transparent"
                         Command="{Binding FingerPrintScanCommand}"
                         ImageSource="fingerprint.png"
                         IsVisible="{Binding IsRegistered}">
