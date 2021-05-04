@@ -100,7 +100,7 @@
                                                         TargetType="Button"
                                                         Value="False">
                                                         <Setter Property="Command" Value="{x:Null}" />
-                                                        <Setter Property="ImageSource" Value="{x:Null}" />
+                                                        <Setter Property="ImageSource" Value="clockwise_dis.png" />
                                                         <Setter Property="IsEnabled" Value="False" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
