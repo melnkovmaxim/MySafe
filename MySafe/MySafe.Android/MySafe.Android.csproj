@@ -21,6 +21,7 @@
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidStoreUncompressedFileExtensions />
+	<LangVersion>9</LangVersion>
     <MandroidI18n />
     <JavaMaximumHeapSize />
     <JavaOptions />
