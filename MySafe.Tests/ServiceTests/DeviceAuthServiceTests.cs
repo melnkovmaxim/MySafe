@@ -20,6 +20,7 @@ namespace MySafe.Tests.ServiceTests
         public async Task RegisterTest()
         {
             var faker = new Faker();
+
             for (var i = 0; i < 10; i++)
             {
                 var password = faker.Random.String(0, 10, '0', '9');
