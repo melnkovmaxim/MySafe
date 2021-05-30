@@ -41,8 +41,9 @@ namespace MySafe.Presentation.ViewModels
             _mapper = mapper;
 
             TrashItems = new ObservableCollection<Trash>();
+            ClearTrashCommand = new AsyncCommand(ClearTrashCommandTask);
+            ShowItemActionMenuCommand = new AsyncCommand<Trash>(ShowItemActionMenuCommandTask);
         }
-
 
         public async Task ClearTrashCommandTask()
         {
