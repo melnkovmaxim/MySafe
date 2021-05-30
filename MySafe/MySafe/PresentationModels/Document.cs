@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MySafe.Presentation.Models.Abstractions;
+using Xamarin.Forms;
 
 namespace MySafe.Presentation.Models
 {
@@ -12,5 +13,6 @@ namespace MySafe.Presentation.Models
         public int FolderId { get; set; }
         public DateTime? CreatedAt { get; set; }
         public List<Attachment> Attachments { get; set; }
+        public ImageSource ImageSource { get; set; }
     }
 }

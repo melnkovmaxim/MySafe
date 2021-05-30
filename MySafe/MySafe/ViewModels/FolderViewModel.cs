@@ -13,6 +13,7 @@ using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
 using MySafe.Services.Mediator.Documents.ChangeDocumentCommand;
 using MySafe.Services.Mediator.Documents.CreateDocumentCommand;
+using MySafe.Services.Mediator.Documents.DocumentInfoQuery;
 using MySafe.Services.Mediator.Folders.FolderInfoQuery;
 using MySafe.Services.Mediator.Safe.SafeInfoQuery;
 using Prism.Navigation;
@@ -25,7 +26,7 @@ namespace MySafe.Presentation.ViewModels
     {
         private readonly IMediator _mediator;
 
-        private readonly Dictionary<string, string> _parentsIconsDictionary = new Dictionary<string, string>
+        private readonly Dictionary<string, string> _parentsIconsDictionary = new()
         {
             {"Документы", "docs.png"},
             {"Квартира, Машина, Дача", "auto.png"},
@@ -38,11 +39,13 @@ namespace MySafe.Presentation.ViewModels
 
         private string _filter;
         private AsyncCommand<Document> _moveToDocumentCommand;
+        private readonly IMapper _mapper;
 
         public FolderViewModel(INavigationService navigationService, IMapper mapper, IMediator mediator, IAuthService authService)
             : base(navigationService, mapper, authService)
         {
             _mediator = mediator;
+            _mapper = mapper;
             Documents = new ObservableCollection<Document>();
             EditableMode = new ToggleState();
             EditDocumentNameCommand = new AsyncCommand<Document>(EditDocumentCommandTask);
@@ -123,8 +126,25 @@ namespace MySafe.Presentation.ViewModels
 
             var safeFolders = await _mediator.Send(new SafeInfoQuery());
             var currentFolder = safeFolders?.Folders.FirstOrDefault(x => x.Id == mediatorEntity.Id);
-            FolderName = currentFolder?.Name.Split(":").FirstOrDefault().Split(",").FirstOrDefault();
+            FolderName = currentFolder?.Name.Split(":").First().Split(",").FirstOrDefault();
             folderId = currentFolder?.Id ?? int.MinValue;
+
+            _ = Task.Run(async () =>
+            {
+                for (var i = 0; i < Documents.Count; i++)
+                {
+                    var documentEntity = await _mediator.Send(new DocumentInfoQuery(Documents[i].Id), GetCancellationToken());
+                    var document = _mapper.Map<Document>(documentEntity);
+                    var attachment = document.Attachments.FirstOrDefault();
+
+                    if (attachment is not null)
+                    {
+                        document.ImageSource = attachment.ImageSource;
+                    }
+
+                    Documents[i] = document;
+                }
+            });
         }
     }
 }

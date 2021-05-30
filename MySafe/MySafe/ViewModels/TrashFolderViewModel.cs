@@ -71,9 +71,15 @@ namespace MySafe.Presentation.ViewModels
 
                 IEntity response = null;
 
-                if (result.Contains(restore)) response = await RestoreTrashItem(trashItem);
+                if (result.Contains(restore))
+                {
+                    response = await RestoreTrashItem(trashItem);
+                }
 
-                if (result.Contains(destroy)) response = await DestroyTrashItem(trashItem);
+                if (result.Contains(destroy))
+                {
+                    response = await DestroyTrashItem(trashItem);
+                }
 
                 if (response?.HasError != false)
                 {
@@ -90,21 +96,31 @@ namespace MySafe.Presentation.ViewModels
         private async Task<IEntity> DestroyTrashItem(Trash trashItem)
         {
             if (trashItem.IsFolder)
-                return await _mediator.Send(new DestroyTrashDocumentCommand(trashItem.Id)).ConfigureAwait(false);
+            {
+                return await _mediator.Send(new DestroyTrashDocumentCommand(trashItem.Id));
+            }
 
             if (trashItem.IsImage)
-                return await _mediator.Send(new DestroyTrashImageCommand(trashItem.Id)).ConfigureAwait(false);
-            return await _mediator.Send(new DestroyTrashSheetCommand(trashItem.Id)).ConfigureAwait(false);
+            {
+                return await _mediator.Send(new DestroyTrashImageCommand(trashItem.Id));
+            }
+
+            return await _mediator.Send(new DestroyTrashSheetCommand(trashItem.Id));
         }
 
         private async Task<IEntity> RestoreTrashItem(Trash trashItem)
         {
             if (trashItem.IsFolder)
-                return await _mediator.Send(new DestroyTrashDocumentCommand(trashItem.Id)).ConfigureAwait(false);
+            {
+                return await _mediator.Send(new DestroyTrashDocumentCommand(trashItem.Id));
+            }
 
             if (trashItem.IsImage)
-                return await _mediator.Send(new RestoreTrashImageCommand(trashItem.Id)).ConfigureAwait(false);
-            return await _mediator.Send(new RestoreTrashSheetCommand(trashItem.Id)).ConfigureAwait(false);
+            {
+                return await _mediator.Send(new RestoreTrashImageCommand(trashItem.Id));
+            }
+
+            return await _mediator.Send(new RestoreTrashSheetCommand(trashItem.Id));
         }
 
         protected override void RefillObservableCollection(PresentationModelList<Trash> mediatorResponse)

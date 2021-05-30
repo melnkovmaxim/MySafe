@@ -11,7 +11,7 @@ namespace MySafe.Tests
 {
     public class Ioc
     {
-        private static readonly string[] SERVICE_NAME_ENDINGS = {"Service", "Repository"};
+        private static readonly string[] SERVICE_NAME_ENDINGS = { "Service", "Repository" };
         private static readonly IServiceProvider _serviceProvider;
 
         static Ioc()

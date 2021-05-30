@@ -107,18 +107,18 @@
                                         BackgroundColor="#E4E8FB"
                                         Command="{Binding ToggleEditableModeCommand}"
                                         ImageSource="pen.png">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Style.Triggers>
-                                                <DataTrigger
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger
                                                         Binding="{Binding BindingContext.EditableMode.CurrentState, Source={x:Reference Folder}}"
                                                         TargetType="Button"
                                                         Value="{x:Static state:ToggleStateEnum.On}">
                                                         <Setter Property="BackgroundColor" Value="#FFC46B" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
                                     </Button>
                                 </Frame>
                             </Grid>
@@ -144,7 +144,7 @@
                                     <Frame>
                                         <Button
                                             Margin="-20,-20,-20,-20"
-                                            Padding="10,-40,10,0"
+                                            Padding="20,20,20,20"
                                             BackgroundColor="#E4E8FB"
                                             Command="{Binding BindingContext.MoveToDocumentCommand, Source={x:Reference Folder}}"
                                             CommandParameter="{Binding .}"

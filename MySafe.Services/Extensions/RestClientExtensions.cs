@@ -44,9 +44,14 @@ namespace MySafe.Services.Extensions
                     };
 
                     foreach (var param in request.Parameters)
+                    {
                         properties.Add($"Parameter {param.Name}", param.Value.ToString());
+                    }
 
-                    foreach (var file in request.Files) properties.Add($"File {file.FileName}", file.ContentType);
+                    foreach (var file in request.Files)
+                    {
+                        properties.Add($"File {file.FileName}", file.ContentType);
+                    }
 
                     Crashes.TrackError(new Exception("RestSharp http request error"), properties);
 
@@ -54,12 +59,23 @@ namespace MySafe.Services.Extensions
                 }
 
                 if (response.ContentType.Contains(ContentType.Json))
+                {
                     commandResponse = JsonConvert.DeserializeObject<T>(response.Content);
+                }
                 else
+                {
                     commandResponse.FileBytes = response.RawBytes;
+                }
 
-                if (commandResponse is UserEntity userResponse) userResponse.JwtToken = response.GetJwtToken();
-                if (!response.IsSuccessful) commandResponse.Error = "ERROR";
+                if (commandResponse is UserEntity userResponse)
+                {
+                    userResponse.JwtToken = response.GetJwtToken();
+                }
+
+                if (!response.IsSuccessful)
+                {
+                    commandResponse.Error = "ERROR";
+                }
             }
             catch (Exception ex)
             {
