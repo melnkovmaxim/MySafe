@@ -28,8 +28,11 @@ namespace MySafe.Presentation.ViewModels
         private readonly IMapper _mapper;
 
         private readonly IMediator _mediator;
-        private AsyncCommand _clearTrashCommand;
-        private AsyncCommand<Trash> _showItemActionMenuCommand;
+
+        public AsyncCommand ClearTrashCommand { get; }
+        public AsyncCommand<Trash> ShowItemActionMenuCommand { get; }
+        public ObservableCollection<Trash> TrashItems { get; set; }
+        public string FolderName => "Корзина";
 
         public TrashFolderViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IAuthService authService)
             : base(navigationService, mapper, authService)
@@ -40,56 +43,53 @@ namespace MySafe.Presentation.ViewModels
             TrashItems = new ObservableCollection<Trash>();
         }
 
-        public string FolderName => "Корзина";
-        public ObservableCollection<Trash> TrashItems { get; set; }
 
-        public AsyncCommand ClearTrashCommand => _clearTrashCommand ??= new AsyncCommand(async () =>
+        public async Task ClearTrashCommandTask()
         {
             var response = await _mediator.Send(new ClearTrashCommand());
 
             if (response.HasError)
             {
-                await Application.Current.MainPage.DisplayAlert("Ошибка",
-                    "Не получилось загрузить файл, что-то пошло не так... ", "Ok");
+                await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось загрузить файл, что-то пошло не так... ", "Ok");
+                
                 return;
             }
 
             TrashItems.Clear();
-        });
+        }
 
-        public AsyncCommand<Trash> ShowItemActionMenuCommand =>
-            _showItemActionMenuCommand ??= new AsyncCommand<Trash>(async trashItem =>
+        public async Task ShowItemActionMenuCommandTask(Trash trash)
+        {
+            const string restoreName = "Восстановить";
+            const string destroyName = "Уничтожить";
+            const string cancelButtonName = "Отмена";
+
+            var result = await Application.Current.MainPage
+                .DisplayActionSheet("Опции", cancelButtonName, null, restoreName, destroyName);
+
+            if (result == cancelButtonName) return;
+
+            IEntity response = null;
+
+            if (result.Contains(restoreName))
             {
-                const string restore = "Восстановить";
-                const string destroy = "Уничтожить";
-                const string cancelButtonName = "Отмена";
+                response = await RestoreTrashItem(trash);
+            }
 
-                var result = await Application.Current.MainPage
-                    .DisplayActionSheet("Опции", cancelButtonName, null, restore, destroy);
+            if (result.Contains(destroyName))
+            {
+                response = await DestroyTrashItem(trash);
+            }
 
-                if (result == cancelButtonName) return;
+            if (response?.HasError != false)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка","Не получилось загрузить файл, что-то пошло не так... ", "Ok");
+                
+                return;
+            }
 
-                IEntity response = null;
-
-                if (result.Contains(restore))
-                {
-                    response = await RestoreTrashItem(trashItem);
-                }
-
-                if (result.Contains(destroy))
-                {
-                    response = await DestroyTrashItem(trashItem);
-                }
-
-                if (response?.HasError != false)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Ошибка",
-                        "Не получилось загрузить файл, что-то пошло не так... ", "Ok");
-                    return;
-                }
-
-                TrashItems.Remove(trashItem);
-            });
+            TrashItems.Remove(trash);
+        }
 
         protected override Task<EntityList<TrashEntity>> _refreshTask => _mediator.Send(new TrashContentQuery());
 

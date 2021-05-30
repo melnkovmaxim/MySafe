@@ -24,7 +24,7 @@ namespace MySafe.Presentation.ViewModels
     {
         private readonly IMediator _mediator;
 
-        private AsyncCommand<Note> _moveToNoteEditCommand;
+        public AsyncCommand<Note> MoveToNoteEditCommand { get; }
         public AsyncCommand<Note> ShowToolMenuCommand { get; }
         public AsyncCommand AddNoteCommand { get; }
 
@@ -32,8 +32,10 @@ namespace MySafe.Presentation.ViewModels
             navigationService, mapper, authService)
         {
             _mediator = mediator;
+
             ShowToolMenuCommand = new AsyncCommand<Note>(ShowToolMenuCommandTask);
             AddNoteCommand = new AsyncCommand(AddNoteCommandTask);
+            MoveToNoteEditCommand = new AsyncCommand<Note>(MoveToNoteEditCommandTask);
             Notes = new ObservableCollection<Note>();
         }
 
@@ -57,13 +59,11 @@ namespace MySafe.Presentation.ViewModels
 
         public ObservableCollection<Note> Notes { get; set; }
 
-        public AsyncCommand<Note> MoveToNoteEditCommand => _moveToNoteEditCommand ??=
-            new AsyncCommand<Note>(
-                async note =>
-                {
-                    var @params = new NavigationParameters() { { nameof(NavigationParameter), new NavigationParameter(note.Id, note.ClippedContent) }};
-                    await _navigationService.NavigateAsync(nameof(NoteEditPage), @params);
-                });
+        public Task MoveToNoteEditCommandTask(Note note)
+        {
+            var @params = new NavigationParameters() { { nameof(NavigationParameter), new NavigationParameter(note.Id, note.ClippedContent) }};
+            return _navigationService.NavigateAsync(nameof(NoteEditPage), @params);
+        }
 
         protected override Task<EntityList<NoteEntity>> _refreshTask => _mediator.Send(new NoteListQuery());
 

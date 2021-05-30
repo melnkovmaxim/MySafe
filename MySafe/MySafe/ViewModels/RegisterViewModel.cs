@@ -15,6 +15,9 @@ namespace MySafe.Presentation.ViewModels
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
 
+        public AsyncCommand RegisterCommand { get; set; }
+        public User User { get; set; }
+
         public RegisterViewModel(
             INavigationService navigationService,
             IMediator mediator,
@@ -30,9 +33,6 @@ namespace MySafe.Presentation.ViewModels
             };
             RegisterCommand = new AsyncCommand(RegisterCommandTask);
         }
-
-        public AsyncCommand RegisterCommand { get; set; }
-        public User User { get; set; }
 
         private async Task RegisterCommandTask()
         {

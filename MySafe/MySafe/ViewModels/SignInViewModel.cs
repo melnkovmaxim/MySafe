@@ -16,6 +16,12 @@ namespace MySafe.Presentation.ViewModels
         private readonly IMediator _mediator;
         private readonly IAuthService _authService;
 
+        public AsyncCommand SignInCommand { get; }
+        public AsyncCommand MoveToRegisterPage { get; }
+
+        public string Login { get; set; }
+        public string Password { get; set; }
+
         public SignInViewModel(INavigationService navigationService, IMediator mediator, IAuthService authService)
             : base(navigationService)
         {
@@ -26,30 +32,27 @@ namespace MySafe.Presentation.ViewModels
             MoveToRegisterPage = new AsyncCommand(async () => await _navigationService.NavigateAsync(nameof(RegisterPage)));
         }
 
-        public AsyncCommand SignInCommand { get; }
-        public AsyncCommand MoveToRegisterPage { get; }
-
-        public string Login { get; set; }
-        public string Password { get; set; }
-
         private async Task SignInCommandTask()
         {
             var response = await _mediator.Send(new SignInCommand(Login, Password));
 
-            if (response.HasError)
+            if (!response.HasError)
             {
-                if (response.Error == "code_already_sent")
-                {
-                    var twoFactorToken =
-                        await Ioc.Resolve<ISecureStorageRepository>().GetTwoFactorSecurityTokenAsync();
-                    if (!twoFactorToken.IsExpired()) await _navigationService.NavigateAsync(nameof(TwoFactorPage));
-                }
-
-                Error = response.Error;
+                await _navigationService.NavigateAsync(nameof(TwoFactorPage));
                 return;
             }
+            
+            if (response.Error == "code_already_sent")
+            {
+                var twoFactorToken = await Ioc.Resolve<ISecureStorageRepository>().GetTwoFactorSecurityTokenAsync();
 
-            await _navigationService.NavigateAsync(nameof(TwoFactorPage));
+                if (!twoFactorToken.IsExpired())
+                {
+                    await _navigationService.NavigateAsync(nameof(TwoFactorPage));
+                }
+            }
+
+            Error = response.Error;
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)

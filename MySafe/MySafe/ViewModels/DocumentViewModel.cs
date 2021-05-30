@@ -22,6 +22,7 @@ namespace MySafe.Presentation.ViewModels
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
         private readonly IPermissionService _permissionService;
+
         public AsyncCommand<Attachment> DownloadFileCommand { get; }
         public AsyncCommand<Attachment> MoveToTrashCommand { get; }
         public AsyncCommand<Attachment> OpenFileCommand { get; }
@@ -29,6 +30,10 @@ namespace MySafe.Presentation.ViewModels
         public AsyncCommand UploadFileCommand { get; }
         public AsyncCommand RotatePlusCommand { get; }
         public AsyncCommand RotateMinusCommand { get; }
+
+        public Document Document { get; set; }
+        public ObservableCollection<Attachment> Attachments { get; set; }
+        public Attachment CurrentAttachment { get; set; }
 
         public DocumentViewModel(
             INavigationService navigationService,
@@ -59,12 +64,6 @@ namespace MySafe.Presentation.ViewModels
                 new AsyncCommand(() => _mediator.Send(new ChangeImageCommand(CurrentAttachment.Id, "-")));
         }
 
-        public static int ID { get; set; }
-
-        public Document Document { get; set; }
-        public ObservableCollection<Attachment> Attachments { get; set; }
-        public Attachment CurrentAttachment { get; set; }
-
 
         public async Task DownloadFileCommandTask(Attachment attachment)
         {
@@ -86,7 +85,11 @@ namespace MySafe.Presentation.ViewModels
             if (!isPermissionGranted) return;
 
             var isOpened = await _fileService.TryOpenFileAsync(attachment.Id, attachment.Type, attachment.Name, attachment.FileExtension);
-            if (!isOpened) await Application.Current.MainPage.DisplayAlert("Ошибка", "Ошибка при открытии файла", "Ok");
+
+            if (!isOpened)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка", "Ошибка при открытии файла", "Ok");
+            }
         }
 
         public async Task UploadFileCommandTask()
@@ -94,14 +97,14 @@ namespace MySafe.Presentation.ViewModels
             var pickedFile = await _fileService.GetPickedFileResult();
             var uploadResult = await _fileRestService.UploadAsync(Document.Id, pickedFile);
 
-            if (!uploadResult.HasError)
+            if (uploadResult.HasError)
             {
-                var mediatorResult = (await _refreshTask).ToDocumentToPresentationModel();
-                RefillObservableCollection(mediatorResult);
+                await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось загрузить файл, что-то пошло не так... ", "Ok");
                 return;
             }
 
-            await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось загрузить файл, что-то пошло не так... ", "Ok");
+            var mediatorResult = (await _refreshTask).ToDocumentToPresentationModel();
+            RefillObservableCollection(mediatorResult);
         }
 
         public async Task MoveToTrashCommandTask(Attachment attachment)
@@ -124,7 +127,11 @@ namespace MySafe.Presentation.ViewModels
             if (!isPermissionGranted) return;
 
             var isPrinted = await _fileService.TryPrintFileAsync(attachment.Id, attachment.Type, attachment.Name, attachment.FileExtension);
-            if (!isPrinted) await Application.Current.MainPage.DisplayAlert("Ошибка","Ошибка при печати файла", "Ok");
+
+            if (!isPrinted)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка","Ошибка при печати файла", "Ok");
+            }
         }
 
         protected override Task<DocumentEntity> _refreshTask => _mediator.Send(new DocumentInfoQuery(_navigationParameter.ChildId), GetCancellationToken());

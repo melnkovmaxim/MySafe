@@ -54,8 +54,6 @@ namespace MySafe.Services.Extensions
                     }
 
                     Crashes.TrackError(new Exception("RestSharp http request error"), properties);
-
-                    //throw response?.ErrorException;
                 }
 
                 if (response.ContentType.Contains(ContentType.Json))

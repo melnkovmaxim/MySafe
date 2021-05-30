@@ -15,9 +15,13 @@ namespace MySafe.Presentation.ViewModels
     public class TwoFactorViewModel : ViewModelBase
     {
         private const int VIEW_LIFETIME_IN_SECONDS = 180;
-        private readonly IMediator _mediator;
 
+        private readonly IMediator _mediator;
+        
+        public AsyncCommand SignInCommand { get; }
+        public AsyncCommand ResendSmsCommand { get; }
         public LifeTime LifeTime { get; }
+
         public string Code { get; set; }
 
         public TwoFactorViewModel(INavigationService navigationService, IMediator mediator)
@@ -31,9 +35,6 @@ namespace MySafe.Presentation.ViewModels
 
             Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
         }
-
-        public AsyncCommand SignInCommand { get; }
-        public AsyncCommand ResendSmsCommand { get; }
 
         private bool TimerCallback()
         {

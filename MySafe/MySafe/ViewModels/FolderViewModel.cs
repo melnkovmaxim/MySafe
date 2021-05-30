@@ -24,8 +24,8 @@ namespace MySafe.Presentation.ViewModels
 {
     public class FolderViewModel : AuthorizedRefreshViewModel<FolderEntity, Folder>
     {
+        private readonly IMapper _mapper;
         private readonly IMediator _mediator;
-
         private readonly Dictionary<string, string> _parentsIconsDictionary = new()
         {
             {"Документы", "docs.png"},
@@ -35,21 +35,46 @@ namespace MySafe.Presentation.ViewModels
             {"ЖКХ", "util.png"}
         };
 
-        private AsyncCommand _addDocumentCommand;
+        public AsyncCommand<Document> MoveToDocumentCommand { get; }
+        public AsyncCommand<Document> EditDocumentNameCommand { get; } 
+        public AsyncCommand AddDocumentCommand { get; }
+        public AsyncCommand ToggleEditableModeCommand { get; }
 
+        // при установке фильтра, кол-во документов изменяется
+        // поэтому храним их дополнительнео в FullDocuments
+        public ObservableCollection<Document> Documents { get; set; }
+        public ToggleState EditableMode { get; set; }
+
+        private List<Document> FullDocuments { get; set; }
+        
+        public string FolderName { get; set; }
+        public string IconPath { get; set; }
+        public string Filter
+        {
+            get => _filter;
+            set
+            {
+                _filter = value;
+                FilterDocuments(value);
+            }
+        }
+        
+        private int _folderId { get; set; }
         private string _filter;
-        private AsyncCommand<Document> _moveToDocumentCommand;
-        private readonly IMapper _mapper;
 
         public FolderViewModel(INavigationService navigationService, IMapper mapper, IMediator mediator, IAuthService authService)
             : base(navigationService, mapper, authService)
         {
             _mediator = mediator;
             _mapper = mapper;
+
             Documents = new ObservableCollection<Document>();
             EditableMode = new ToggleState();
+
             EditDocumentNameCommand = new AsyncCommand<Document>(EditDocumentCommandTask);
             ToggleEditableModeCommand = new AsyncCommand(ToggleEditableModeCommandTask);
+            MoveToDocumentCommand = new AsyncCommand<Document>(MoveToDocumentCommandTask);
+            AddDocumentCommand = new AsyncCommand(AddDocumentCommandTask);
         }
 
         private Task ToggleEditableModeCommandTask()
@@ -57,27 +82,6 @@ namespace MySafe.Presentation.ViewModels
             EditableMode.Toggle();
             return Task.CompletedTask;
         }
-
-        public string FolderName { get; set; }
-        private int folderId { get; set; }
-
-        public ToggleState EditableMode { get; set; }
-        public AsyncCommand ToggleEditableModeCommand { get; }
-        public string Filter
-        {
-            get => _filter;
-            set
-            {
-                _filter = value;
-                Documents.Clear();
-                DocumentsList.Where(x => x.Name.Contains(value)).ForEach(Documents.Add);
-            }
-        }
-        public AsyncCommand<Document> EditDocumentNameCommand { get; } 
-        public ObservableCollection<Document> Documents { get; set; }
-        private List<Document> DocumentsList { get; set; }
-
-        public string IconPath { get; set; }
 
         private async Task EditDocumentCommandTask(Document document)
         {
@@ -90,27 +94,28 @@ namespace MySafe.Presentation.ViewModels
             }
         } 
 
-        public AsyncCommand<Document> MoveToDocumentCommand => _moveToDocumentCommand
-            ??= new AsyncCommand<Document>(async document =>
-            {
-                var @params = new NavigationParameters() { { nameof(NavigationParameter), new NavigationParameter(document.Id, document.Name) }};
-                await _navigationService.NavigateAsync(nameof(DocumentPage), @params);
-            });
+        public async Task MoveToDocumentCommandTask(Document document)
+        {
+            var @params = new NavigationParameters() { { nameof(NavigationParameter), new NavigationParameter(document.Id, document.Name) }};
+            await _navigationService.NavigateAsync(nameof(DocumentPage), @params);
+        }
 
-        public AsyncCommand AddDocumentCommand => _addDocumentCommand ??= new AsyncCommand(async () =>
+        public async Task AddDocumentCommandTask()
         {
             var answer = await Application.Current.MainPage.DisplayAlert("Создать новый документ?", null, "Да", "Нет");
+            
             if (!answer) return;
 
-            var response = (await _mediator.Send(new CreateDocumentCommand(folderId))).ToDocumentToPresentationModel();
+            var response = (await _mediator.Send(new CreateDocumentCommand(_folderId))).ToDocumentToPresentationModel();
 
             if (response.HasError)
-                await Application.Current.MainPage.DisplayAlert("Ошибка",
-                    "Не получилось создать документ, что-то пошло не так... ", "Ok");
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка", "Не получилось создать документ, что-то пошло не так... ", "Ok");
+            }
 
             var mediatorResult = (await _refreshTask).ToFolderPresentationModel();
             RefillObservableCollection(mediatorResult);
-        });
+        }
 
         protected override Task<FolderEntity> _refreshTask => _mediator.Send(new FolderInfoQuery(_navigationParameter.ChildId));
 
@@ -119,32 +124,45 @@ namespace MySafe.Presentation.ViewModels
             var isSuccess = _parentsIconsDictionary.TryGetValue(_navigationParameter.ChildName, out var iconPath);
             IconPath = isSuccess ? iconPath : "other.png";
 
-            DocumentsList = mediatorEntity.Documents;
+            FullDocuments = mediatorEntity.Documents;
             Documents.Clear();
             mediatorEntity.Documents.ForEach(Documents.Add);
 
 
             var safeFolders = await _mediator.Send(new SafeInfoQuery());
             var currentFolder = safeFolders?.Folders.FirstOrDefault(x => x.Id == mediatorEntity.Id);
-            FolderName = currentFolder?.Name.Split(":").First().Split(",").FirstOrDefault();
-            folderId = currentFolder?.Id ?? int.MinValue;
 
-            _ = Task.Run(async () =>
+            FolderName = currentFolder?.Name
+                .Split(":")
+                .First()
+                .Split(",")
+                .FirstOrDefault();
+            _folderId = currentFolder?.Id ?? int.MinValue;
+
+            await LoadAttachmentToDocumentPreview();
+        }
+
+        private async Task LoadAttachmentToDocumentPreview()
+        {
+            for (var i = 0; i < Documents.Count; i++)
             {
-                for (var i = 0; i < Documents.Count; i++)
+                var documentEntity = await _mediator.Send(new DocumentInfoQuery(Documents[i].Id), GetCancellationToken());
+                var document = _mapper.Map<Document>(documentEntity);
+                var attachment = document.Attachments.FirstOrDefault();
+
+                if (attachment is not null)
                 {
-                    var documentEntity = await _mediator.Send(new DocumentInfoQuery(Documents[i].Id), GetCancellationToken());
-                    var document = _mapper.Map<Document>(documentEntity);
-                    var attachment = document.Attachments.FirstOrDefault();
-
-                    if (attachment is not null)
-                    {
-                        document.ImageSource = attachment.ImageSource;
-                    }
-
-                    Documents[i] = document;
+                    document.ImageSource = attachment.ImageSource;
                 }
-            });
+
+                Documents[i] = document;
+            }
+        }
+
+        private void FilterDocuments(string content)
+        {
+            Documents.Clear();
+            FullDocuments.Where(x => x.Name.Contains(content)).ForEach(Documents.Add);
         }
     }
 }

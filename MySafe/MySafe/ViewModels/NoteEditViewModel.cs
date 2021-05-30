@@ -18,17 +18,19 @@ namespace MySafe.Presentation.ViewModels
     public class NoteEditViewModel : AuthorizedRefreshViewModel<NoteEntity, Note>, INavigatedAware
     {
         private readonly IMediator _mediator;
+        
+        public AsyncCommand SaveNoteCommand { get; }
+        public Note Note { get; set; }
+
         private bool _isNewNote => _navigationParameter == null;
 
         public NoteEditViewModel(INavigationService navigationService, IMediator mediator, IMapper mapper, IAuthService authService) 
             : base(navigationService, mapper, authService)
         {
             _mediator = mediator;
+
             SaveNoteCommand = new AsyncCommand(SaveNoteCommandTask);
         }
-
-        public Note Note { get; set; }
-        public AsyncCommand SaveNoteCommand { get; }
 
         protected override Task<NoteEntity> _refreshTask => _isNewNote ? Task.FromResult(new NoteEntity()) : _mediator.Send(new NoteInfoQuery(_navigationParameter.ChildId));
 
@@ -43,10 +45,8 @@ namespace MySafe.Presentation.ViewModels
             {
                 return _mediator.Send(new CreateNoteCommand(Note.Content));
             }
-            else
-            {
-                return _mediator.Send(new ChangeNoteCommand(Note.Id, Note.Content));
-            }
+            
+            return _mediator.Send(new ChangeNoteCommand(Note.Id, Note.Content));
         }
     }
 }

@@ -23,8 +23,12 @@ namespace MySafe.Presentation.ViewModels
         private readonly ICalculationSafeCapacityService _calculationSafeCapacityService;
         private readonly IMediator _mediator;
 
-        private AsyncCommand<Folder> _moveToFolderCommand;
-        private AsyncCommand _signOutCommand;
+        public AsyncCommand<Folder> MoveToFolderCommand { get; }
+        public AsyncCommand SignOutCommand { get; }
+
+        public ObservableCollection<Folder> Folders { get; set; }
+        public double Progress { get; set; }
+        public string SafeSizeInfo { get; set; }
 
         public MainViewModel(
             INavigationService navigationService, 
@@ -38,27 +42,29 @@ namespace MySafe.Presentation.ViewModels
             _mapper = mapper;
             _authService = authService;
             _calculationSafeCapacityService = calculationSafeCapacityService;
+
+            MoveToFolderCommand = new AsyncCommand<Folder>(MoveToFolderCommandTask);
+            SignOutCommand = new AsyncCommand(SignOutCommandTask);
+
             Folders = new ObservableCollection<Folder>(Enumerable.Range(1, 6).Select(x => new Folder()));
         }
 
-        public double Progress { get; set; }
-        public string SafeSizeInfo { get; set; }
-
-        public ObservableCollection<Folder> Folders { get; set; }
-
         protected override Task<SafeEntity> _refreshTask => _mediator.Send(new SafeInfoQuery());
 
-        public AsyncCommand<Folder> MoveToFolderCommand =>
-            _moveToFolderCommand ??= new AsyncCommand<Folder>(async folder =>
-            {
-                var @params = new NavigationParameters() { { nameof(NavigationParameter), new NavigationParameter(folder.Id, folder.Name) }};
-                await _navigationService.NavigateAsync(nameof(FolderPage), @params);
-            });
-
-        public AsyncCommand SignOutCommand => _signOutCommand ??= new AsyncCommand(async () =>
+        public Task MoveToFolderCommandTask(Folder folder)
         {
-            await _navigationService.NavigateAsync(nameof(SignInPage));
-        });
+            var @params = new NavigationParameters()
+            {
+                { nameof(NavigationParameter), new NavigationParameter(folder.Id, folder.Name) }
+            };
+
+            return _navigationService.NavigateAsync(nameof(FolderPage), @params);
+        }
+
+        public Task SignOutCommandTask()
+        {
+            return _navigationService.NavigateAsync(nameof(SignInPage));
+        }
 
         protected override void RefillObservableCollection(Safe mediatorEntity)
         {
@@ -69,12 +75,23 @@ namespace MySafe.Presentation.ViewModels
             SafeSizeInfo = $"{usedCapacity}/{maxCapacity} MB";
 
             Folders.Clear();
-            mediatorEntity.Folders.ForEach(x =>
+
+            mediatorEntity.Folders.ForEach(folder =>
             {
-                x.Name = x.Name.Split(':').FirstOrDefault().Split(',').FirstOrDefault();
-                x.Name += ':';
-                Folders.Add(x);
+                folder.Name = GetClearFolderName(folder.Name);
+                Folders.Add(folder);
             });
+        }
+
+        private string GetClearFolderName(string folderName)
+        {
+            var clearName = folderName
+                .Split(':')
+                .First()
+                .Split(',')
+                .First();
+
+            return clearName + ":";
         }
     }
 }

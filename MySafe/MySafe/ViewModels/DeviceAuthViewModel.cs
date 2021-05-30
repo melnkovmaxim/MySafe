@@ -57,7 +57,11 @@ namespace MySafe.Presentation.ViewModels
         {
             IsExpiredAccessToken = false;
             IsRegistered = await _deviceAuthService.IsRegistered();
-            if (IsRegistered) await _deviceAuthService.TryLoginWithPrintScanAsync(_actionOnLogin);
+
+            if (IsRegistered)
+            {
+                await _deviceAuthService.TryLoginWithPrintScanAsync(_actionOnLogin);
+            }
         }
 
         protected override async void DoBeforeNavigatedTo()
