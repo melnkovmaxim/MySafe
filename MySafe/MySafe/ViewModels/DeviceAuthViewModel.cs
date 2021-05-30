@@ -1,10 +1,10 @@
-﻿using MySafe.Domain.Services;
-using MySafe.Presentation.ViewModels.Abstractions;
+﻿using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
 using System.Threading.Tasks;
+using MySafe.Core.Interfaces.Services;
 using MySafe.Services.Services;
 
 namespace MySafe.Presentation.ViewModels

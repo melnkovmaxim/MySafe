@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using Android.OS;
-using MySafe.Domain.Repositories;
+using MySafe.Core.Interfaces.Repositories;
 
 namespace MySafe.Droid.Repositories
 {

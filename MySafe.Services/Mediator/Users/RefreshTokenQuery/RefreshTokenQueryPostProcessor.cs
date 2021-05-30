@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using MediatR.Pipeline;
+using MySafe.Core.Interfaces.Repositories;
+using MySafe.Core.Models.Responses;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR.Pipeline;
-using MySafe.Core.Models.Responses;
-using MySafe.Domain.Repositories;
 
 namespace MySafe.Services.Mediator.Users.RefreshTokenQuery
 {

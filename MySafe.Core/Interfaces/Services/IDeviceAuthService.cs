@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace MySafe.Domain.Services
+namespace MySafe.Core.Interfaces.Services
 {
     public interface IDeviceAuthService
     {

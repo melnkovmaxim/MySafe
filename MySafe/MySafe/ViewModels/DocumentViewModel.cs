@@ -1,26 +1,16 @@
 ﻿using System.Collections.ObjectModel;
-using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
+using MySafe.Core.Interfaces.Services;
 using MySafe.Core.Models.Responses;
-using MySafe.Domain.Services;
 using MySafe.Presentation.EntityExtensions;
 using MySafe.Presentation.Models;
-using MySafe.Presentation.Models.Abstractions;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Services.Mediator.Documents.DocumentInfoQuery;
 using MySafe.Services.Mediator.Images.ChangeImageCommand;
-using MySafe.Services.Mediator.Images.ImageMoveToTrashCommand;
-using MySafe.Services.Mediator.Images.UploadImageCommand;
-using MySafe.Services.Mediator.Sheets.SheetMoveToTrashCommand;
-using MySafe.Services.Mediator.Sheets.SheetPdfFormatQuery;
-using MySafe.Services.Mediator.Sheets.UploadSheetCommand;
-using MySafe.Services.Services;
-using Plugin.Printing;
 using Prism.Navigation;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace MySafe.Presentation.ViewModels

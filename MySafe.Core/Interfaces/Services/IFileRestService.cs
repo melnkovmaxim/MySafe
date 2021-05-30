@@ -7,7 +7,7 @@ using MySafe.Core.Dto;
 using MySafe.Core.Entities.Abstractions;
 using MySafe.Core.Enums;
 
-namespace MySafe.Domain.Services
+namespace MySafe.Core.Interfaces.Services
 {
     public interface IFileRestService
     {

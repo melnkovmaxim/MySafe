@@ -3,13 +3,13 @@ using Fody;
 using MediatR;
 using MySafe.Core.Dto;
 using MySafe.Core.Enums;
-using MySafe.Domain.Repositories;
-using MySafe.Domain.Services;
 using MySafe.Services.Mediator.Sheets.SheetPdfFormatQuery;
 using MySafe.Services.Services;
 using Plugin.Printing;
 using System.IO;
 using System.Threading.Tasks;
+using MySafe.Core.Interfaces.Repositories;
+using MySafe.Core.Interfaces.Services;
 using Xamarin.Essentials;
 
 namespace MySafe.Services.Xamarin

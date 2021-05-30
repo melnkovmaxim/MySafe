@@ -8,7 +8,7 @@ using MediatR;
 using MySafe.Core.Dto;
 using MySafe.Core.Entities.Abstractions;
 using MySafe.Core.Enums;
-using MySafe.Domain.Services;
+using MySafe.Core.Interfaces.Services;
 using MySafe.Services.Mediator.Images.ImageMoveToTrashCommand;
 using MySafe.Services.Mediator.Images.OriginalImageQuery;
 using MySafe.Services.Mediator.Images.UploadImageCommand;

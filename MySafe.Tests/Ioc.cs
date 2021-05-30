@@ -3,8 +3,8 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using MySafe.Core;
+using MySafe.Core.Interfaces.Repositories;
 using MySafe.Data.Xamarin;
-using MySafe.Domain.Repositories;
 using Xamarin.Forms.Internals;
 
 namespace MySafe.Tests

@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
-namespace MySafe.Domain.Repositories
+namespace MySafe.Core.Interfaces.Repositories
 {
     public interface ISecureStorageRepository
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Bogus;
 using MySafe.Core;
-using MySafe.Domain.Services;
+using MySafe.Core.Interfaces.Services;
 using NUnit.Framework;
 
 namespace MySafe.Tests.ServiceTests

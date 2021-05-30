@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using MediatR.Pipeline;
 using MySafe.Core;
+using MySafe.Core.Interfaces.Repositories;
 using MySafe.Core.Models.Responses;
-using MySafe.Domain.Repositories;
 
 namespace MySafe.Services.Mediator.Users.SignInCommand
 {

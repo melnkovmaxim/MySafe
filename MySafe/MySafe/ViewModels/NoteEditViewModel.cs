@@ -2,8 +2,8 @@
 using AutoMapper;
 using MediatR;
 using MySafe.Core.Commands;
+using MySafe.Core.Interfaces.Services;
 using MySafe.Core.Models.Responses;
-using MySafe.Domain.Services;
 using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Services.Mediator.Notes.ChangeNoteCommand;

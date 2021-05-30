@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using MediatR.Pipeline;
 using MySafe.Core.Entities.Abstractions;
-using MySafe.Domain.Repositories;
+using MySafe.Core.Interfaces.Repositories;
 using MySafe.Services.Mediator.Abstractions;
 using MySafe.Services.Mediator.Users.TwoFactorAuthenticationCommand;
 

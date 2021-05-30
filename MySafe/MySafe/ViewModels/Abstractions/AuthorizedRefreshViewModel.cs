@@ -2,7 +2,7 @@
 using AutoMapper;
 using MySafe.Core.Commands;
 using MySafe.Core.Entities.Abstractions;
-using MySafe.Domain.Services;
+using MySafe.Core.Interfaces.Services;
 using MySafe.Presentation.Models.Abstractions;
 using Prism.Navigation;
 

@@ -4,7 +4,7 @@ using Android.Content;
 using Android.Graphics;
 using Android.Print;
 using Android.Support.V4.Print;
-using MySafe.Domain.Services;
+using MySafe.Core.Interfaces.Services;
 using Plugin.CurrentActivity;
 
 namespace MySafe.Droid.Services

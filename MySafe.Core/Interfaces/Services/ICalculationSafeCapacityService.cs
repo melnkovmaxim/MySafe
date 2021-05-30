@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySafe.Domain.Services
+namespace MySafe.Core.Interfaces.Services
 {
     public interface ICalculationSafeCapacityService
     {

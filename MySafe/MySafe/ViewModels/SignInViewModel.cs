@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
 using MySafe.Core.Commands;
-using MySafe.Domain.Repositories;
-using MySafe.Domain.Services;
+using MySafe.Core.Interfaces.Repositories;
+using MySafe.Core.Interfaces.Services;
 using MySafe.Presentation.ViewModels.Abstractions;
 using MySafe.Presentation.Views;
 using MySafe.Services.Extensions;

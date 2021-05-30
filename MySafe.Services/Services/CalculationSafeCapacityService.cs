@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MySafe.Domain.Services;
+using MySafe.Core.Interfaces.Services;
 
 namespace MySafe.Services.Services
 {

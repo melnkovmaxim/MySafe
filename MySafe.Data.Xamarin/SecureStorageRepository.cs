@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using Fody;
-using MySafe.Domain.Repositories;
+using MySafe.Core.Interfaces.Repositories;
 using Xamarin.Essentials;
 
 namespace MySafe.Data.Xamarin

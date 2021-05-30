@@ -1,4 +1,4 @@
-﻿namespace MySafe.Domain.Repositories
+﻿namespace MySafe.Core.Interfaces.Repositories
 {
     public interface IStoragePathesRepository
     {

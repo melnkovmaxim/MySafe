@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace MySafe.Domain.Services
+namespace MySafe.Core.Interfaces.Services
 {
     public interface IPrintService
     {

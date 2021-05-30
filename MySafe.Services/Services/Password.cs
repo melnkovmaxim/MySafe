@@ -2,7 +2,6 @@
 using System.Linq;
 using MySafe.Core;
 using MySafe.Core.Commands;
-using MySafe.Domain.Services;
 
 namespace MySafe.Services.Services
 {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Fody;
-using MySafe.Domain.Services;
+using MySafe.Core.Interfaces.Services;
 using Xamarin.Essentials;
 
 namespace MySafe.Services.Xamarin
