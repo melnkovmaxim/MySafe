@@ -74,19 +74,7 @@
                                     </Grid>
                                 </StackLayout>
                             </Frame>-->
-                            <SearchBar
-                                Margin="10,10,10,10"
-                                HorizontalOptions="Fill"
-                                Opacity="0.8"
-                                Placeholder="Название документа"
-                                Text="{Binding Filter, Mode=TwoWay}" />
-                            <BoxView
-                                Margin="20,-18,20,0"
-                                HeightRequest="2"
-                                HorizontalOptions="Fill"
-                                Opacity="0.87"
-                                Color="#3465C4" />
-                            <Grid Margin="20,10,20,10">
+                            <!--<Grid Margin="20,10,20,10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50*" />
                                     <ColumnDefinition Width="50*" />
@@ -94,20 +82,55 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="60" />
                                 </Grid.RowDefinitions>
-                                <Frame Grid.Column="0" Margin="0,0,-2,0">
+                                <Frame Grid.Column="0" Margin="0,15,-2,-15">
                                     <Button
                                         Margin="-20,-20,-20,-20"
                                         BackgroundColor="#E4E8FB"
                                         Command="{Binding AddDocumentCommand}"
                                         ImageSource="add.png" />
                                 </Frame>
-                                <Frame Grid.Column="1" Margin="5,0,0,0">
+                                <Frame Grid.Column="1" Margin="5,15,0,-15">
                                     <Button
                                         Margin="-20,-20,-20,-20"
                                         BackgroundColor="#E4E8FB"
                                         Command="{Binding ToggleEditableModeCommand}"
                                         ImageSource="pen.png">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger
+                                                        Binding="{Binding BindingContext.EditableMode.CurrentState, Source={x:Reference Folder}}"
+                                                        TargetType="Button"
+                                                        Value="{x:Static state:ToggleStateEnum.On}">
+                                                        <Setter Property="BackgroundColor" Value="#FFC46B" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    </Button>
+                                </Frame>
+                            </Grid>-->
+
+                            <!--  кнопка редактирования названий  -->
+                            <AbsoluteLayout
+                                Margin="15,15,15,15"
+                                HorizontalOptions="End"
+                                VerticalOptions="End"
+                                WidthRequest="50">
+                                <Frame
+                                    BackgroundColor="#838383"
+                                    CornerRadius="24"
+                                    HasShadow="True">
+                                    <Button
+                                        Margin="-20,-20,-20,-20"
+                                        BackgroundColor="#838383"
+                                        BorderColor="#fff"
+                                        BorderWidth="2"
+                                        Command="{Binding ToggleEditableModeCommand}"
+                                        CornerRadius="24"
+                                        ImageSource="white_pen.png">
                                         <Button.Style>
+                                            <!--  убрать когда не нужно будет подсвечивание на редактирование  -->
                                             <Style TargetType="Button">
                                                 <Style.Triggers>
                                                     <DataTrigger
@@ -119,9 +142,11 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Button.Style>
+                                        <!--  Убирать вот по сюда  -->
                                     </Button>
+
                                 </Frame>
-                            </Grid>
+                            </AbsoluteLayout>
                         </StackLayout>
                         <!--</ScrollView>
             </RefreshView>-->
@@ -129,7 +154,7 @@
 
                         <CollectionView
                             x:Name="MyList"
-                            Margin="20,0,20,0"
+                            Margin="20,15,20,0"
                             ItemsSource="{Binding Documents}"
                             VerticalOptions="FillAndExpand">
                             <CollectionView.ItemsLayout>
@@ -168,6 +193,8 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
+
+
                     </StackLayout>
                 </ScrollView>
 
@@ -180,6 +207,20 @@
                     Source="splash.png"
                     VerticalOptions="Center" />
             </Frame>
+
+            <AbsoluteLayout
+                Margin="25,25,35,45"
+                HorizontalOptions="End"
+                VerticalOptions="End">
+                <!--<Frame BackgroundColor="#EDF0FF" CornerRadius="15" HasShadow="True"> -->
+                <Button
+                    Margin="-20,-20,-20,-20"
+                    BackgroundColor="Transparent"
+                    Command="{Binding AddDocumentCommand}"
+                    CornerRadius="15"
+                    ImageSource="folderpl.png" />
+                <!--</Frame>-->
+            </AbsoluteLayout>
         </Grid>
 
     </ContentPage.Content>
