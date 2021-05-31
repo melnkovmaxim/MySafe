@@ -10,7 +10,7 @@
 
     <ContentPage.Resources>
         <Style TargetType="Frame">
-            <Setter Property="CornerRadius" Value="15" />
+            <Setter Property="CornerRadius" Value="24" />
             <Setter Property="HasShadow" Value="True" />
         </Style>
     </ContentPage.Resources>
@@ -32,13 +32,53 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="85" />
                             </Grid.RowDefinitions>
-                            <Button
+                            <!--  #F1BE74  -->
+                            <Grid
                                 Grid.Row="0"
-                                BackgroundColor="#F1BE74"
-                                Command="{Binding UploadFileCommand}"
+                                BackgroundColor="Transparent"
                                 HeightRequest="50"
-                                HorizontalOptions="FillAndExpand"
-                                Text="Добавить файл" />
+                                HorizontalOptions="Center"
+                                WidthRequest="160">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Frame
+                                    Grid.Column="0"
+                                    Margin="0,0,25,0"
+                                    BackgroundColor="#838383"
+                                    CornerRadius="24"
+                                    HasShadow="True">
+                                    <Button
+                                        Margin="-20,-20,-20,-20"
+                                        Padding="0,-5,0,0"
+                                        BackgroundColor="#838383"
+                                        BorderColor="#fff"
+                                        BorderWidth="2"
+                                        Command="{Binding UploadFileCommand}"
+                                        CornerRadius="24"
+                                        FontSize="30"
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="+"
+                                        TextColor="#fff" />
+                                </Frame>
+                                <Frame
+                                    Grid.Column="1"
+                                    Margin="25,0,0,0"
+                                    BackgroundColor="#838383"
+                                    CornerRadius="24"
+                                    HasShadow="True">
+                                    <Button
+                                        Margin="-20,-20,-20,-20"
+                                        BackgroundColor="#838383"
+                                        BorderColor="#fff"
+                                        BorderWidth="2"
+                                        Command="{Binding ToggleEditableModeCommand}"
+                                        CornerRadius="24"
+                                        ImageSource="white_pen.png" />
+
+                                </Frame>
+                            </Grid>
                             <CarouselView
                                 x:Name="Carousel"
                                 Grid.Row="1"
@@ -56,85 +96,103 @@
                                     </DataTemplate>
                                 </CarouselView.ItemTemplate>
                             </CarouselView>
-                            <Grid
+                            <Frame
                                 Grid.Row="2"
-                                BackgroundColor="#F1BE74"
+                                Margin="5,15,5,5"
                                 HorizontalOptions="FillAndExpand"
-                                VerticalOptions="End">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Frame
-                                    Grid.Column="0"
-                                    Margin="20,10,20,10"
-                                    BackgroundColor="#EDF0FF"
-                                    HasShadow="True">
-                                    <Button
-                                        Margin="-20,-20,-20,-20"
-                                        BackgroundColor="#EDF0FF"
-                                        Command="{Binding PrintCommand}"
-                                        CommandParameter="{Binding CurrentAttachment}"
-                                        CornerRadius="15"
-                                        ImageSource="print.png" />
-                                </Frame>
-                                <Frame
-                                    Grid.Column="1"
-                                    Margin="20,10,20,10"
-                                    BackgroundColor="#EDF0FF"
-                                    HasShadow="True">
-                                    <Button
-                                        x:Name="ButtonRotateRight"
-                                        Margin="-20,-20,-20,-20"
-                                        BackgroundColor="#EDF0FF"
-                                        Command="{Binding RotatePlusCommand}"
-                                        CommandParameter="{Binding CurrentAttachment}"
-                                        ImageSource="clockwise.png">
-                                        <Button.Style>
-                                            <Style TargetType="Button">
-                                                <Style.Triggers>
-                                                    <DataTrigger
-                                                        Binding="{Binding CurrentAttachment.IsImage}"
-                                                        TargetType="Button"
-                                                        Value="False">
-                                                        <Setter Property="Command" Value="{x:Null}" />
-                                                        <Setter Property="ImageSource" Value="clockwise_dis.png" />
-                                                        <Setter Property="IsEnabled" Value="False" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>
-                                    </Button>
-                                </Frame>
-                                <Frame
-                                    Grid.Column="2"
-                                    Margin="20,10,20,10"
-                                    BackgroundColor="#EDF0FF"
-                                    HasShadow="True">
-                                    <Button
-                                        Margin="-20,-20,-20,-20"
-                                        BackgroundColor="#EDF0FF"
-                                        Command="{Binding DownloadFileCommand}"
-                                        CommandParameter="{Binding CurrentAttachment}"
-                                        ImageSource="download.png"
-                                        Text="" />
-                                </Frame>
-                                <Frame
-                                    Grid.Column="3"
-                                    Margin="20,10,20,10"
-                                    BackgroundColor="#EDF0FF"
-                                    HasShadow="True">
-                                    <Button
-                                        Margin="-20,-20,-20,-20"
-                                        BackgroundColor="#EDF0FF"
-                                        Command="{Binding MoveToTrashCommand}"
-                                        CommandParameter="{Binding CurrentAttachment}"
-                                        ImageSource="delete.png"
-                                        Text="" />
-                                </Frame>
-                            </Grid>
+                                VerticalOptions="FillAndExpand">
+                                <Grid
+                                    Margin="-20,-20,-20,-20"
+                                    Padding="15,0,15,0"
+                                    BackgroundColor="#838383"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="End">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Frame
+                                        Grid.Column="0"
+                                        Margin="20,10,20,10"
+                                        BackgroundColor="#838383"
+                                        HasShadow="True">
+                                        <Button
+                                            Margin="-20,-20,-20,-20"
+                                            BackgroundColor="#838383"
+                                            BorderColor="#fff"
+                                            BorderWidth="2"
+                                            Command="{Binding PrintCommand}"
+                                            CommandParameter="{Binding CurrentAttachment}"
+                                            CornerRadius="24"
+                                            ImageSource="print.png" />
+                                    </Frame>
+                                    <Frame
+                                        Grid.Column="1"
+                                        Margin="20,10,20,10"
+                                        BackgroundColor="#838383"
+                                        HasShadow="True">
+                                        <Button
+                                            x:Name="ButtonRotateRight"
+                                            Margin="-20,-20,-20,-20"
+                                            BackgroundColor="#838383"
+                                            BorderColor="#fff"
+                                            BorderWidth="2"
+                                            Command="{Binding RotatePlusCommand}"
+                                            CommandParameter="{Binding CurrentAttachment}"
+                                            CornerRadius="24"
+                                            ImageSource="clockwise.png">
+                                            <Button.Style>
+                                                <Style TargetType="Button">
+                                                    <Style.Triggers>
+                                                        <DataTrigger
+                                                            Binding="{Binding CurrentAttachment.IsImage}"
+                                                            TargetType="Button"
+                                                            Value="False">
+                                                            <Setter Property="Command" Value="{x:Null}" />
+                                                            <Setter Property="ImageSource" Value="clockwise_dis.png" />
+                                                            <Setter Property="IsEnabled" Value="False" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                    </Frame>
+                                    <Frame
+                                        Grid.Column="2"
+                                        Margin="20,10,20,10"
+                                        BackgroundColor="#838383"
+                                        HasShadow="True">
+                                        <Button
+                                            Margin="-20,-20,-20,-20"
+                                            BackgroundColor="#838383"
+                                            BorderColor="#fff"
+                                            BorderWidth="2"
+                                            Command="{Binding DownloadFileCommand}"
+                                            CommandParameter="{Binding CurrentAttachment}"
+                                            CornerRadius="24"
+                                            ImageSource="download.png"
+                                            Text="" />
+                                    </Frame>
+                                    <Frame
+                                        Grid.Column="3"
+                                        Margin="20,10,20,10"
+                                        BackgroundColor="#fff"
+                                        HasShadow="True">
+                                        <Button
+                                            Margin="-20,-20,-20,-20"
+                                            BackgroundColor="#838383"
+                                            BorderColor="#fff"
+                                            BorderWidth="2"
+                                            Command="{Binding MoveToTrashCommand}"
+                                            CommandParameter="{Binding CurrentAttachment}"
+                                            CornerRadius="24"
+                                            ImageSource="bin1.png"
+                                            Text="" />
+                                    </Frame>
+                                </Grid>
+                            </Frame>
                         </Grid>
                     </StackLayout>
                 </ScrollView>
