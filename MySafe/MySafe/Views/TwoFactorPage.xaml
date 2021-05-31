@@ -53,6 +53,7 @@
                     CharacterSpacing="5"
                     FontSize="50"
                     HorizontalTextAlignment="Center"
+                    Keyboard="Numeric"
                     Text="{Binding Code}" />
             </Frame>
             <BoxView
@@ -115,9 +116,13 @@
                     Text="{Binding LifeTime.RemainingLifeTimeMessage}" />
                 <Button
                     Margin="100,5,100,0"
+                    BackgroundColor="Transparent"
                     Command="{Binding ResendSmsCommand}"
+                    FontFamily="Roboto-Medium"
+                    FontSize="16"
                     IsVisible="{Binding Path=LifeTime.IsDead, UpdateSourceEventName=LifeTime.RemainingLifeTimeMessage}"
-                    Text="Отправить повторно смс" />
+                    Text="Отправить повторно"
+                    TextColor="#3D6CC7" />
             </Grid>
         </StackLayout>
     </Grid>
