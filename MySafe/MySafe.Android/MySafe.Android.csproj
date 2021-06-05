@@ -76,10 +76,14 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidKeyStore>true</AndroidKeyStore>
-    <AndroidSigningKeyStore>C:\Users\sonya\Downloads\melnikovmaxim.keystore</AndroidSigningKeyStore>
-    <AndroidSigningStorePass>Ssd17xDldD</AndroidSigningStorePass>
-    <AndroidSigningKeyAlias>melnikovmaxim</AndroidSigningKeyAlias>
-    <AndroidSigningKeyPass>Ssd17xDldD</AndroidSigningKeyPass>
+    <AndroidSigningKeyStore>
+    </AndroidSigningKeyStore>
+    <AndroidSigningStorePass>
+    </AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>
+    </AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>
+    </AndroidSigningKeyPass>
     <MandroidI18n />
     <AndroidHttpClientHandlerType>
     </AndroidHttpClientHandlerType>
