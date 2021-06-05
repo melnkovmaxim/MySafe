@@ -1,0 +1,45 @@
+### Загрузка файла
+POST {{host}}/api/v1/documents/{{document_id}}/sheets
+Accept: application/json
+Content-Type: multipart/form-data; boundary=boundary
+Authorization: Bearer {{auth_token}}
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="file.pdf"
+Content-Type: 'application/pdf'
+
+< ../spec/fixtures/files/file.pdf
+--boundary--
+
+
+### Получение файла в формате pdf
+GET {{host}}/api/v1/sheets/{{sheet_id}}
+Authorization: Bearer {{auth_token}}
+
+
+### Получение файла в формате png
+GET {{host}}/api/v1/sheets/{{sheet_id}}/view
+Authorization: Bearer {{auth_token}}
+
+
+### Получение исходного файла
+GET {{host}}/api/v1/sheets/{{sheet_id}}/download
+Authorization: Bearer {{auth_token}}
+
+
+### Отправить файл в корзину
+PUT {{host}}/api/v1/sheets/{{sheet_id}}/trash
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Уничтожить файл в корзине
+DELETE {{host}}/api/v1/sheets/{{sheet_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Восстановить файл из корзины
+PUT {{host}}/api/v1/sheets/{{sheet_id}}/restore
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

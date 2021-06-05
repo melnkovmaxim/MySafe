@@ -1,0 +1,194 @@
+### Вход
+POST {{host}}/auth/sign-in
+Content-Type: application/json
+
+{
+  "login": "{{login}}",
+  "password": "{{password}}"
+}
+
+
+### Вход. Второй фактор
+POST {{host}}/auth/sms-auth
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "code": "{{sms_code}}"
+}
+
+
+### Запрос sms
+POST {{host}}/auth/sms-request
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Выход
+POST {{host}}/auth/sign-out
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Выход с аннулированием `refresh_token`
+POST {{host}}/auth/sign-out
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "refresh_token": "{{refresh_token}}"
+}
+
+
+### Выход с аннулированием всех `refresh_token`
+POST {{host}}/auth/sign-out
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "refresh_token": "all"
+}
+
+
+### Обновление токенов
+POST {{host}}/auth/jwt-refresh
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "refresh_token": "{{refresh_token}}"
+}
+
+
+### Информация об учётке
+GET {{host}}/api/v1/account
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+
+### Регистрация
+POST {{host}}/auth/create-account
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "login": "{{login}}",
+  "phone_number": "{{phone_number}}",
+  "password": "{{password}}",
+  "password_confirm": "{{password}}",
+  "user_agreement": true
+}
+
+
+### Подтверждение учётки
+POST {{host}}/auth/verify-account
+Content-Type: application/json
+
+{
+  "key": ""
+}
+
+
+### Запрос инструкций для подтверждения регистрации
+POST {{host}}/auth/verify-account-resend
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "email": "{{email}}"
+}
+
+
+### Изменение пароля
+POST {{host}}/auth/change-password
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "password": "{{password}}",
+  "new_password": "new-password",
+  "password_confirm": "new-password"
+}
+
+
+### Запрос на сброс пароля
+POST {{host}}/auth/reset-password-request
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "login": "{{login}}"
+}
+
+
+### Сбросить пароль
+POST {{host}}/auth/reset-password
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "key": "",
+  "password": "{{password}}",
+  "password_confirm": "{{password}}"
+}
+
+
+### Изменить email
+POST {{host}}/auth/change-email
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "password": "{{password}}",
+  "email": "new-email@example.org"
+}
+
+
+### Подтверждение нового email
+POST {{host}}/auth/verify-email-change
+Content-Type: application/json
+
+{
+  "key": ""
+}
+
+
+### Удаление номера телефона
+POST {{host}}/auth/sms-disable
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "password": "{{password}}"
+}
+
+
+### Установка нового номера телефона
+POST {{host}}/auth/sms-setup
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "password": "{{password}}",
+  "phone": "5647382910"
+}
+
+
+### Подтверждение нового номера телефона
+POST {{host}}/auth/sms-confirm
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "code": ""
+}
+
+
+### Закрытие учётки
+POST {{host}}/auth/close-account
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "password": "{{password}}"
+}

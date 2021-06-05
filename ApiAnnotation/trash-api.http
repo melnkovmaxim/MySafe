@@ -1,0 +1,10 @@
+### Получить содержимое корзины
+GET {{host}}/api/v1/trash
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Очистить корзину
+DELETE {{host}}/api/v1/trash
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

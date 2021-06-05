@@ -1,0 +1,14 @@
+### Получить информацию о сейфе
+GET {{host}}/api/v1/my_safe
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Очистить сейф
+DELETE {{host}}/api/v1/my_safe
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+"current_password": "{{password}}"
+}

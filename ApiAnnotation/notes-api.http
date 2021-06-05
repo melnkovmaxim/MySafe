@@ -1,0 +1,36 @@
+### Создание заметки
+POST {{host}}/api/v1/notes
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "content": "Content"
+}
+
+
+### Получение списка заметок
+GET {{host}}/api/v1/notes
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Получение заметки
+GET {{host}}/api/v1/notes/{{note_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Изменение заметки
+PUT {{host}}/api/v1/notes/{{note_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "content": "new content"
+}
+
+
+### Удаление заметки
+DELETE {{host}}/api/v1/notes/{{note_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

@@ -1,0 +1,57 @@
+### Загрузка изображения
+POST {{host}}/api/v1/images
+Authorization: Bearer {{auth_token}}
+Accept: application/json
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="image.png"
+Content-Type: image/png
+
+< ../spec/fixtures/files/image.png
+--boundary
+Content-Disposition: form-data; name="document_id"
+
+{{document_id}}
+--boundary--
+
+
+### Получить оригинальное изображение
+GET {{host}}/api/v1/images/{{image_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Получить уменьшенное изображение
+GET {{host}}/api/v1/images/{{image_id}}/view
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Изменить изображение
+# rotate: +/-
+PUT {{host}}/api/v1/images/{{image_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "rotate": "+"
+}
+
+
+### Отправить изображение в корзину
+PUT {{host}}/api/v1/images/{{image_id}}/trash
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Уничтожить изображение в корзине
+DELETE {{host}}/api/v1/images/{{image_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Восстановить изображение из корзины
+PUT {{host}}/api/v1/images/{{image_id}}/restore
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

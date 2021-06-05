@@ -1,0 +1,52 @@
+### Вход
+POST {{host}}/users/sign_in
+Content-Type: application/json
+
+{
+  "user": {
+    "login": "{{login}}",
+    "password": "{{password}}"
+  }
+}
+
+
+### Вход. Второй фактор
+PUT {{host}}/users/two_factor_authentication
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "code": ""
+}
+
+
+### Выход
+DELETE {{host}}/users/sign_out
+Content-Type: application/json
+
+
+### Регистрация
+POST {{host}}/users
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "{{email}}",
+    "login": "{{login}}",
+    "phone_number": "{{phone_number}}",
+    "password": "{{password}}",
+    "password_confirmation": "{{password}}",
+    "user_agreement": true
+  }
+}
+
+
+### Запрос инструкций для подтверждения регистрации
+POST {{host}}/users/confirmation
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "{{email}}"
+  }
+}

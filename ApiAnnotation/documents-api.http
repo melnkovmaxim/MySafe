@@ -1,0 +1,45 @@
+### Создать новый документ
+POST {{host}}/api/v1/folders/{{folder_id}}/documents
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Получить информацию о документе
+GET {{host}}/api/v1/documents/{{document_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Изменить документ
+PUT {{host}}/api/v1/documents/{{document_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "name": "folder name",
+  "location": "Где находится",
+  "folder_id": 91
+}
+
+
+### Отправить документ в корзину
+PUT {{host}}/api/v1/documents/{{document_id}}/trash
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Уничтожить документ в корзине
+DELETE {{host}}/api/v1/documents/{{document_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Восстановить документ из корзины
+# folder_id - опционально
+PUT {{host}}/api/v1/documents/{{document_id}}/restore
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "folder_id": 1
+}

@@ -1,0 +1,20 @@
+### Получить список ячеек
+GET {{host}}/api/v1/folders
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Получить содержимое ячейки
+GET {{host}}/api/v1/folders/{{folder_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### Изменить ячейку
+PUT {{host}}/api/v1/folders/{{folder_id}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "name": "folder name"
+}

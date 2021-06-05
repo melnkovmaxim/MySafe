@@ -7,7 +7,7 @@
     x:Name="NoteEdit"
     Title="Назад"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=NoteEditViewModel}"
-    NavigationPage.HasNavigationBar="True">
+    NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <Style TargetType="Frame">
             <Setter Property="CornerRadius" Value="15" />
@@ -15,18 +15,7 @@
         </Style>
     </ContentPage.Resources>
 
-    <!--<NavigationPage.TitleView>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-             Кнопка внутри нав бара 
-            <Label Text="Назад" FontAttributes="Bold" TextColor="#FFF" FontSize="20" 
-                   VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Start" />
-        </Grid>
-    </NavigationPage.TitleView>-->
-
-     <ContentPage.Content>
+    <ContentPage.Content>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -39,7 +28,6 @@
                 BorderColor="Gray"
                 CornerRadius="10"
                 HasShadow="True"
-                
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill">
                 <Editor
@@ -47,14 +35,26 @@
                     HorizontalOptions="FillAndExpand"
                     Text="{Binding Note.Content}"
                     VerticalOptions="Fill" />
-                
+
             </Frame>
-            <AbsoluteLayout VerticalOptions="End" HorizontalOptions="End" WidthRequest="50"  Margin="25,25,35,45">
-                <Frame BackgroundColor="#EDF0FF"   CornerRadius="24" HasShadow="True"> <!-- кнопка сохранения инфы в блокноте-->
-                    <Button CornerRadius="24" BorderColor="#838383" BorderWidth="2" BackgroundColor="#EDF0FF"
-                         Margin="-20,-20,-20,-20"
-                        Command="{Binding SaveNoteCommand}" ImageSource="save_disk.png"
-                        />
+            <AbsoluteLayout
+                Margin="25,25,35,45"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                WidthRequest="50">
+                <Frame
+                    BackgroundColor="#EDF0FF"
+                    CornerRadius="24"
+                    HasShadow="True">
+                    <!--  кнопка сохранения инфы в блокноте  -->
+                    <Button
+                        Margin="-20,-20,-20,-20"
+                        BackgroundColor="#EDF0FF"
+                        BorderColor="#838383"
+                        BorderWidth="2"
+                        Command="{Binding SaveNoteCommand}"
+                        CornerRadius="24"
+                        ImageSource="save_disk.png" />
                 </Frame>
             </AbsoluteLayout>
 

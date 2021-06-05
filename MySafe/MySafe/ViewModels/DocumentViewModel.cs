@@ -8,6 +8,7 @@ using MySafe.Core.Models.Responses;
 using MySafe.Presentation.EntityExtensions;
 using MySafe.Presentation.Models;
 using MySafe.Presentation.ViewModels.Abstractions;
+using MySafe.Services.Mediator.Documents.ChangeDocumentCommand;
 using MySafe.Services.Mediator.Documents.DocumentInfoQuery;
 using MySafe.Services.Mediator.Images.ChangeImageCommand;
 using Prism.Navigation;
@@ -30,6 +31,7 @@ namespace MySafe.Presentation.ViewModels
         public AsyncCommand UploadFileCommand { get; }
         public AsyncCommand RotatePlusCommand { get; }
         public AsyncCommand RotateMinusCommand { get; }
+        public AsyncCommand EditDocumentCommand { get; }
 
         public Document Document { get; set; }
         public ObservableCollection<Attachment> Attachments { get; set; }
@@ -57,6 +59,7 @@ namespace MySafe.Presentation.ViewModels
             UploadFileCommand = new AsyncCommand(UploadFileCommandTask);
             DownloadFileCommand = new AsyncCommand<Attachment>(DownloadFileCommandTask);
             PrintCommand = new AsyncCommand<Attachment>(PrintCommandTask);
+            EditDocumentCommand = new AsyncCommand(EditDocumentCommandTask);
 
             RotatePlusCommand =
                 new AsyncCommand(() => _mediator.Send(new ChangeImageCommand(CurrentAttachment.Id, "+")));
@@ -133,6 +136,17 @@ namespace MySafe.Presentation.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Ошибка","Ошибка при печати файла", "Ok");
             }
         }
+
+        private async Task EditDocumentCommandTask()
+        {
+            var changedDocumentName = await Application.Current.MainPage.DisplayPromptAsync("Изменить название", Document.Name, accept: "Сохранить", cancel: "Отмена", placeholder: "Новое название");
+
+            if (!string.IsNullOrEmpty(changedDocumentName))
+            {
+                _ = await _mediator.Send(new ChangeDocumentCommand(changedDocumentName, Document.Location, Document.Id, Document.FolderId));
+                await RefreshCommand.ExecuteAsync(null);
+            }
+        } 
 
         protected override Task<DocumentEntity> _refreshTask => _mediator.Send(new DocumentInfoQuery(_navigationParameter.ChildId), GetCancellationToken());
 
