@@ -56,6 +56,8 @@
                 HorizontalTextAlignment="Center">
                 Введите логин и пароль, используемые для входа на сайт
             </Label>
+       
+            
         </StackLayout>
         <StackLayout Grid.Row="2" VerticalOptions="CenterAndExpand">
 

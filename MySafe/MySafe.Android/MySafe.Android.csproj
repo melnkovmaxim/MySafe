@@ -21,7 +21,6 @@
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidStoreUncompressedFileExtensions />
-	<LangVersion>9</LangVersion>
     <MandroidI18n />
     <JavaMaximumHeapSize />
     <JavaOptions />
@@ -76,7 +75,7 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidKeyStore>true</AndroidKeyStore>
-    <AndroidSigningKeyStore>F:\Downloads\melnikovmaxim.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>C:\Users\sonya\Downloads\melnikovmaxim.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>Ssd17xDldD</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>melnikovmaxim</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>Ssd17xDldD</AndroidSigningKeyPass>
@@ -279,6 +278,18 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\green_finger.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\error_autor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\folderpl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\white_pen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\save_disk.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>

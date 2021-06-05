@@ -51,7 +51,7 @@
                 <Entry
                     Margin="-20,-20,-20,-20"
                     CharacterSpacing="5"
-                    FontSize="50"
+                    FontSize="50" Keyboard="Numeric"
                     HorizontalTextAlignment="Center"
                     Text="{Binding Code}" />
             </Frame>
@@ -110,14 +110,14 @@
             <Grid>
                 <Label
                     HorizontalOptions="CenterAndExpand"
-                    HorizontalTextAlignment="Center"
+                    HorizontalTextAlignment="Center" 
                     IsVisible="{Binding Path=LifeTime.IsDead, Converter={StaticResource booleanConverter}, UpdateSourceEventName=LifeTime.RemainingLifeTimeMessage}"
                     Text="{Binding LifeTime.RemainingLifeTimeMessage}" />
                 <Button
-                    Margin="100,5,100,0"
-                    Command="{Binding ResendSmsCommand}"
+                    Margin="100,5,100,0" FontFamily="Roboto-Medium" FontSize="16"
+                    Command="{Binding ResendSmsCommand}" BackgroundColor="Transparent" TextColor="#3D6CC7"
                     IsVisible="{Binding Path=LifeTime.IsDead, UpdateSourceEventName=LifeTime.RemainingLifeTimeMessage}"
-                    Text="Отправить повторно смс" />
+                    Text="Отправить повторно" />
             </Grid>
         </StackLayout>
     </Grid>

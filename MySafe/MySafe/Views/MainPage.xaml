@@ -195,7 +195,7 @@
                                     FontSize="18"
                                     GradientOrientation="Horizontal"
                                     HorizontalOptions="FillAndExpand"
-                                    ImageSource="bin1.png"
+                                    ImageSource="bin.png"
                                     StartColor="#b7ccef"
                                     TextColor="White" />
                             </Frame>

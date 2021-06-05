@@ -5,15 +5,42 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Name="Document"
-    Title="Документы"
+    Title="Документы" 
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=DocumentViewModel}">
-
+    
     <ContentPage.Resources>
         <Style TargetType="Frame">
-            <Setter Property="CornerRadius" Value="15" />
+            <Setter Property="CornerRadius" Value="24" />
             <Setter Property="HasShadow" Value="True" />
         </Style>
     </ContentPage.Resources>
+
+    <NavigationPage.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                
+                <ColumnDefinition Width="10" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Документы" FontAttributes="Bold" TextColor="#FFF" FontSize="20" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Start" />
+            <!--<Frame BackgroundColor="#838383" CornerRadius="24" WidthRequest="10" HorizontalOptions="End" Margin="0,0,0,0" HasShadow="True">
+                <Button Margin="-20,-20,-20,-20"  BorderColor="#fff" BorderWidth="2" CornerRadius="24"
+                                    BackgroundColor="#838383" TextColor="#fff"
+                                    Command="{Binding UploadFileCommand}"
+                                    Padding="0,-5,0,0"
+                                    HorizontalOptions="FillAndExpand"
+                                    Text="+" FontSize="30" />
+            </Frame>-->
+            <Frame BackgroundColor="#838383" CornerRadius="24" WidthRequest="10" HorizontalOptions="End" HasShadow="True">
+                <Button CornerRadius="24" BackgroundColor="#838383"
+                                    Margin="-20,-20,-20,-20" BorderColor="#fff" BorderWidth="2"
+                                    ImageSource="white_pen.png">
+                </Button> <!-- Кнопка внутри нав бара -->
+
+            </Frame>
+        </Grid>
+    </NavigationPage.TitleView>
+    
     <ContentPage.Content>
         <Grid>
             <RefreshView
@@ -28,17 +55,33 @@
                     <StackLayout>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="50" />
+                                <RowDefinition Height="55" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="85" />
                             </Grid.RowDefinitions>
-                            <Button
-                                Grid.Row="0"
-                                BackgroundColor="#F1BE74"
-                                Command="{Binding UploadFileCommand}"
-                                HeightRequest="50"
-                                HorizontalOptions="FillAndExpand"
-                                Text="Добавить файл" />
+                            <!-- #F1BE74 -->
+                            <Grid Grid.Row="0" HeightRequest="55" HorizontalOptions="End" BackgroundColor="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Frame Grid.Column="0" BackgroundColor="#fff" Margin="0,5,-20,0" WidthRequest="10" HorizontalOptions="End" CornerRadius="24" HasShadow="True">
+                                    <Button Margin="-20,-20,-20,-20"  BorderColor="#838383" BorderWidth="2" CornerRadius="24"
+                                    BackgroundColor="#fff" TextColor="#838383"
+                                    Command="{Binding UploadFileCommand}"
+                                    Padding="0,-5,0,0"
+                                    HorizontalOptions="FillAndExpand"
+                                    Text="+" FontSize="30" /> <!-- кнопка добавления документа -->
+                                </Frame>
+                                <!--<Frame Grid.Column="1" Margin="25,0,0,0" BackgroundColor="#838383" CornerRadius="24" HasShadow="True">
+                                    <Button CornerRadius="24" BackgroundColor="#838383"
+                                        Margin="-20,-20,-20,-20" BorderColor="#fff" BorderWidth="2"
+                                        Command="{Binding ToggleEditableModeCommand}" ImageSource="white_pen.png">
+
+                                    </Button>
+
+                                    </Frame> -->
+                            </Grid>
                             <CarouselView
                                 x:Name="Carousel"
                                 Grid.Row="1"
@@ -56,9 +99,10 @@
                                     </DataTemplate>
                                 </CarouselView.ItemTemplate>
                             </CarouselView>
+                        <Frame Grid.Row="2" Margin="5,15,5,5" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                             <Grid
-                                Grid.Row="2"
-                                BackgroundColor="#F1BE74"
+                                Margin="-20,-20,-20,-20" Padding="15,0,15,0"
+                                BackgroundColor="#838383"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="End">
                                 <Grid.ColumnDefinitions>
@@ -67,31 +111,31 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Frame
+                                    <Frame
                                     Grid.Column="0"
                                     Margin="20,10,20,10"
-                                    BackgroundColor="#EDF0FF"
+                                    BackgroundColor="#838383"
                                     HasShadow="True">
-                                    <Button
+                                        <Button
                                         Margin="-20,-20,-20,-20"
-                                        BackgroundColor="#EDF0FF"
+                                        BackgroundColor="#838383" BorderColor="#fff" BorderWidth="2"
                                         Command="{Binding PrintCommand}"
                                         CommandParameter="{Binding CurrentAttachment}"
-                                        CornerRadius="15"
+                                        CornerRadius="24"
                                         ImageSource="print.png" />
-                                </Frame>
-                                <Frame
+                                    </Frame>
+                                    <Frame
                                     Grid.Column="1"
                                     Margin="20,10,20,10"
-                                    BackgroundColor="#EDF0FF"
+                                    BackgroundColor="#838383"
                                     HasShadow="True">
                                     <Button
                                         x:Name="ButtonRotateRight"
                                         Margin="-20,-20,-20,-20"
-                                        BackgroundColor="#EDF0FF"
+                                        BackgroundColor="#838383" BorderColor="#fff" BorderWidth="2"
                                         Command="{Binding RotatePlusCommand}"
-                                        CommandParameter="{Binding CurrentAttachment}"
-                                        ImageSource="clockwise.png">
+                                        CommandParameter="{Binding CurrentAttachment}" CornerRadius="24"
+                                        ImageSource="clockwise.png"> 
                                         <Button.Style>
                                             <Style TargetType="Button">
                                                 <Style.Triggers>
@@ -111,30 +155,31 @@
                                 <Frame
                                     Grid.Column="2"
                                     Margin="20,10,20,10"
-                                    BackgroundColor="#EDF0FF"
+                                    BackgroundColor="#838383"
                                     HasShadow="True">
                                     <Button
                                         Margin="-20,-20,-20,-20"
-                                        BackgroundColor="#EDF0FF"
+                                        BackgroundColor="#838383" BorderColor="#fff" BorderWidth="2"
                                         Command="{Binding DownloadFileCommand}"
-                                        CommandParameter="{Binding CurrentAttachment}"
+                                        CommandParameter="{Binding CurrentAttachment}" CornerRadius="24"
                                         ImageSource="download.png"
                                         Text="" />
                                 </Frame>
                                 <Frame
                                     Grid.Column="3"
                                     Margin="20,10,20,10"
-                                    BackgroundColor="#EDF0FF"
+                                    BackgroundColor="#fff"
                                     HasShadow="True">
                                     <Button
                                         Margin="-20,-20,-20,-20"
-                                        BackgroundColor="#EDF0FF"
+                                        BackgroundColor="#838383" BorderColor="#fff" BorderWidth="2"
                                         Command="{Binding MoveToTrashCommand}"
-                                        CommandParameter="{Binding CurrentAttachment}"
-                                        ImageSource="delete.png"
+                                        CommandParameter="{Binding CurrentAttachment}" CornerRadius="24"
+                                        ImageSource="bin1.png"
                                         Text="" />
                                 </Frame>
                             </Grid>
+                            </Frame>
                         </Grid>
                     </StackLayout>
                 </ScrollView>

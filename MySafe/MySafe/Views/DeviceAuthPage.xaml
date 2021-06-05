@@ -46,7 +46,7 @@
                     Binding="{Binding IsRegistered}"
                     TargetType="Label"
                     Value="False">
-                    <Setter TargetName="LabelHelper" Property="Text" Value="Введите пароль для регистрации" />
+                    <Setter TargetName="LabelHelper" Property="Text" Value="Придумайте PIN-код" />
                 </DataTrigger>
                 <DataTrigger
                     Binding="{Binding IsRegistered}"
@@ -84,7 +84,7 @@
 
                     <Label
                         x:Name="LabelHelper"
-                        Margin="0,0,0,20"
+                        Margin="20,0,20,20"
                         FontFamily="Roboto-Medium"
                         FontSize="18"
                         HorizontalTextAlignment="Center"
@@ -138,6 +138,14 @@
                                         Value="True">
                                         <Setter Property="BackgroundColor" Value="Transparent" />
                                         <Setter Property="ImageSource" Value="green_finger.png" />
+                                    </DataTrigger>
+
+                                    <DataTrigger
+                                        Binding="{Binding IsNotLogged}"
+                                        TargetType="Button"
+                                        Value="True">
+                                        <Setter Property="BackgroundColor" Value="Transparent" />
+                                        <Setter Property="ImageSource" Value="error_autor.png" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

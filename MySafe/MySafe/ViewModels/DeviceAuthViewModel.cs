@@ -25,6 +25,7 @@ namespace MySafe.Presentation.ViewModels
         public bool IsRegistered { get; set; }
         public bool IsExpiredAccessToken { get; set; }
         public bool IsLogged { get; set; }
+        public bool IsNotLogged { get; set; }
 
         public DeviceAuthViewModel(INavigationService navigationService,
             IDeviceAuthService deviceAuthService, IAuthService authService)
@@ -45,6 +46,7 @@ namespace MySafe.Presentation.ViewModels
 
         private async void Login()
         {
+            
             var isAuthorized = await _authService.IsAuthorized();
             IsLogged = true;
             await Task.Delay(50);
@@ -79,7 +81,12 @@ namespace MySafe.Presentation.ViewModels
             {
                 var isSuccessfulLogin = await _deviceAuthService.TryLoginAsync(Password.PasswordStr, _actionOnLogin);
 
-                if (!isSuccessfulLogin) Password.Clear();
+                if (!isSuccessfulLogin) { 
+                    Password.Clear();
+                    IsNotLogged = true;
+                    await Task.Delay(1000);
+                    IsNotLogged = false;
+                }
             }
             else
             {
