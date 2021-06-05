@@ -39,15 +39,19 @@ namespace MySafe.Droid.Renderers
                     gd.SetColor(global::Android.Graphics.Color.Transparent);
                     this.Control.SetBackgroundDrawable(gd);
                     this.Control.SetRawInputType(InputTypes.TextFlagNoSuggestions);
-                    //Control.SetHintTextColor(ColorStateList.ValueOf(global::Android.Graphics.Color.White));
-                    //Control.SetBackgroundColor(Android.Graphics.Color.Black);
+                //Control.SetHintTextColor(ColorStateList.ValueOf(global::Android.Graphics.Color.Black));
+                //Control.SetBackgroundColor(Android.Graphics.Color.Black);
 
-                   // Control.Background = new ColorDrawable(Android.Graphics.Color.Transparent);
-                
-                    //Control.SetBackgroundColor(global::Android.Graphics.Color.LightGreen);
+                //this.Control.SetBackground(this.Resources.GetDrawable(Resource.Drawable.PlayerNameEntryBackground, null));
+                this.Control.InputType = InputTypes.TextVariationVisiblePassword;
+                this.Control.SetTextIsSelectable(true);
 
-                    //Control.SetPaddingRelative(Height, 200);
-                }
+                // Control.Background = new ColorDrawable(Android.Graphics.Color.Transparent);
+
+                //Control.SetBackgroundColor(global::Android.Graphics.Color.LightGreen);
+
+                //Control.SetPaddingRelative(Height, 200);
+            }
             }
     }
 }

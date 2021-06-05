@@ -31,9 +31,9 @@ namespace MySafe.Presentation.ViewModels
         public string SafeSizeInfo { get; set; }
 
         public MainViewModel(
-            INavigationService navigationService, 
-            IMediator mediator, 
-            IMapper mapper, 
+            INavigationService navigationService,
+            IMediator mediator,
+            IMapper mapper,
             IAuthService authService,
             ICalculationSafeCapacityService calculationSafeCapacityService)
             : base(navigationService, mapper, authService)
@@ -66,13 +66,24 @@ namespace MySafe.Presentation.ViewModels
             return _navigationService.NavigateAsync(nameof(SignInPage));
         }
 
+        public double ProgressforName(double progressSend) 
+        {
+            if (progressSend >= 10)
+                return (int)Math.Round(progressSend, 0);
+            else
+                return Math.Round(progressSend, 2);
+        }
+
         protected override void RefillObservableCollection(Safe mediatorEntity)
         {
             var maxCapacity = mediatorEntity.Capacity;
             var usedCapacity = mediatorEntity.UsedCapacity;
 
             Progress = _calculationSafeCapacityService.GetUsedCapacityInPercents(maxCapacity, usedCapacity) / 100;
-            SafeSizeInfo = $"{usedCapacity}/{maxCapacity} MB";
+
+            //var percentCapacity = Math.Round(Progress, 2);
+            var percentCapacity = ProgressforName(Progress);
+            SafeSizeInfo = $"{usedCapacity}/{maxCapacity} MB {percentCapacity}%";
 
             Folders.Clear();
 
@@ -93,5 +104,9 @@ namespace MySafe.Presentation.ViewModels
 
             return clearName + ":";
         }
+    }
+
+    public class progressSend
+    {
     }
 }

@@ -4,16 +4,29 @@
     x:Class="MySafe.Presentation.Views.NoteEditPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="NoteEdit"
     Title="Назад"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=NoteEditViewModel}"
-    NavigationPage.HasNavigationBar="False">
+    NavigationPage.HasNavigationBar="True">
     <ContentPage.Resources>
         <Style TargetType="Frame">
             <Setter Property="CornerRadius" Value="15" />
             <Setter Property="HasShadow" Value="True" />
         </Style>
     </ContentPage.Resources>
-    <ContentPage.Content>
+
+    <!--<NavigationPage.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+             Кнопка внутри нав бара 
+            <Label Text="Назад" FontAttributes="Bold" TextColor="#FFF" FontSize="20" 
+                   VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Start" />
+        </Grid>
+    </NavigationPage.TitleView>-->
+
+     <ContentPage.Content>
 
         <Grid>
             <Grid.RowDefinitions>
@@ -36,11 +49,11 @@
                     VerticalOptions="Fill" />
                 
             </Frame>
-            <AbsoluteLayout VerticalOptions="End" HorizontalOptions="End" Margin="25,25,35,45">
-                <Frame BackgroundColor="#EDF0FF" HasShadow="True">
-                    <Button CornerRadius="15" BackgroundColor="#EDF0FF"
+            <AbsoluteLayout VerticalOptions="End" HorizontalOptions="End" WidthRequest="50"  Margin="25,25,35,45">
+                <Frame BackgroundColor="#EDF0FF"   CornerRadius="24" HasShadow="True"> <!-- кнопка сохранения инфы в блокноте-->
+                    <Button CornerRadius="24" BorderColor="#838383" BorderWidth="2" BackgroundColor="#EDF0FF"
                          Margin="-20,-20,-20,-20"
-                        Command="{Binding SaveNoteCommand}" ImageSource="save_d.png"
+                        Command="{Binding SaveNoteCommand}" ImageSource="save_disk.png"
                         />
                 </Frame>
             </AbsoluteLayout>

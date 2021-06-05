@@ -22,7 +22,49 @@
             <Setter Property="HasShadow" Value="True" />
         </Style>
     </ContentPage.Resources>
+
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Nav Item"
+                 IconImageSource="white_pen.png"
+                 Order="Primary"
+                 Priority="0"
+                 Command="{Binding ToggleEditableModeCommand}"
+                     />
+
+
+    </ContentPage.ToolbarItems>-->
+
+    <NavigationPage.TitleView> <!-- Кнопка внутри нав бара -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+            </Grid.ColumnDefinitions>
+            <Label Text="{Binding FolderName}" FontAttributes="Bold" TextColor="#FFF" FontSize="20" VerticalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Start" />
+        <Frame BackgroundColor="#838383" CornerRadius="24" WidthRequest="10" HorizontalOptions="End" HasShadow="True">
+            <Button CornerRadius="24" BackgroundColor="#838383"
+                                    Margin="-20,-20,-20,-20" BorderColor="#fff" BorderWidth="2"
+                                    Command="{Binding ToggleEditableModeCommand}" ImageSource="white_pen.png">
+                <Button.Style> <!--убрать когда не нужно будет подсвечивание на редактирование -->
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger
+                                                        Binding="{Binding BindingContext.EditableMode.CurrentState, Source={x:Reference Folder}}"
+                                                        TargetType="Button"
+                                                        Value="{x:Static state:ToggleStateEnum.On}">
+                                <Setter Property="BackgroundColor" Value="#FFC46B" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style> <!--Убирать вот по сюда-->
+                </Button>
+                                
+                                </Frame>
+        </Grid>
+    </NavigationPage.TitleView>
+
     <ContentPage.Content>
+        
         <Grid>
             <RefreshView
                 x:Name="_refreshView"
@@ -111,26 +153,13 @@
                                 </Frame>
                             </Grid>-->
 
-                            <!--  кнопка редактирования названий  -->
-                            <AbsoluteLayout
-                                Margin="15,15,15,15"
-                                HorizontalOptions="End"
-                                VerticalOptions="End"
-                                WidthRequest="50">
-                                <Frame
-                                    BackgroundColor="#838383"
-                                    CornerRadius="24"
-                                    HasShadow="True">
-                                    <Button
-                                        Margin="-20,-20,-20,-20"
-                                        BackgroundColor="#838383"
-                                        BorderColor="#fff"
-                                        BorderWidth="2"
-                                        Command="{Binding ToggleEditableModeCommand}"
-                                        CornerRadius="24"
-                                        ImageSource="white_pen.png">
-                                        <Button.Style>
-                                            <!--  убрать когда не нужно будет подсвечивание на редактирование  -->
+                            <!-- кнопка редактирования названий -->
+                            <!--<AbsoluteLayout VerticalOptions="End" HorizontalOptions="End" Margin="15,15,15,15" WidthRequest="50">
+                                <Frame BackgroundColor="#838383" CornerRadius="24" HasShadow="True">
+                                    <Button CornerRadius="24" BackgroundColor="#838383"
+                                    Margin="-20,-20,-20,-20" BorderColor="#fff" BorderWidth="2"
+                                    Command="{Binding ToggleEditableModeCommand}" ImageSource="white_pen.png">
+                                        <Button.Style>  убрать когда не нужно будет подсвечивание на редактирование 
                                             <Style TargetType="Button">
                                                 <Style.Triggers>
                                                     <DataTrigger
@@ -141,12 +170,11 @@
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </Button.Style>
-                                        <!--  Убирать вот по сюда  -->
-                                    </Button>
-
+                                        </Button.Style>  Убирать вот по сюда-->
+                                   <!-- </Button>
+                                
                                 </Frame>
-                            </AbsoluteLayout>
+                            </AbsoluteLayout> -->
                         </StackLayout>
                         <!--</ScrollView>
             </RefreshView>-->
@@ -193,8 +221,6 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
-
-
                     </StackLayout>
                 </ScrollView>
 
@@ -208,17 +234,12 @@
                     VerticalOptions="Center" />
             </Frame>
 
-            <AbsoluteLayout
-                Margin="25,25,35,45"
-                HorizontalOptions="End"
-                VerticalOptions="End">
+            <AbsoluteLayout VerticalOptions="End" HorizontalOptions="End" Margin="25,25,35,45">
                 <!--<Frame BackgroundColor="#EDF0FF" CornerRadius="15" HasShadow="True"> -->
-                <Button
-                    Margin="-20,-20,-20,-20"
-                    BackgroundColor="Transparent"
-                    Command="{Binding AddDocumentCommand}"
-                    CornerRadius="15"
-                    ImageSource="folderpl.png" />
+                <Button CornerRadius="15" BackgroundColor="Transparent"
+                         Margin="-20,-20,-20,-20"
+                        Command="{Binding AddDocumentCommand}" ImageSource="folderpl.png"
+                        />
                 <!--</Frame>-->
             </AbsoluteLayout>
         </Grid>
