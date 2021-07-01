@@ -9,7 +9,7 @@ namespace MySafe.Presentation.Views
     {
         public MainPage()
         {
-            NavigationPage.SetHasNavigationBar(this, false);
+            //NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
 
             //Task.Run(async () =>

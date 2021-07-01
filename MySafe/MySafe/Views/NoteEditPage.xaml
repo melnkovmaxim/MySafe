@@ -7,7 +7,7 @@
     x:Name="NoteEdit"
     Title="Назад"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=NoteEditViewModel}"
-    NavigationPage.HasNavigationBar="False">
+    NavigationPage.HasNavigationBar="True">
     <ContentPage.Resources>
         <Style TargetType="Frame">
             <Setter Property="CornerRadius" Value="15" />

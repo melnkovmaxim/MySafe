@@ -88,7 +88,7 @@ namespace MySafe.Presentation.ViewModels
                 if (!isSuccessfulLogin) { 
                     Password.Clear();
                     IsNotLogged = true;
-                    await Task.Delay(1000);
+                    await Task.Delay(2500);
                     IsNotLogged = false;
                 }
             }

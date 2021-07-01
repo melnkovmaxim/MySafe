@@ -11,7 +11,7 @@
     x:Name="Note"
     Title="Блокнот"
     BindingContext="{Binding Source={StaticResource VmLocator}, Path=NoteViewModel}"
-    NavigationPage.HasNavigationBar="False">
+    NavigationPage.HasNavigationBar="True">
     <!--  -->
     <ContentPage.Content>
         <Grid>
