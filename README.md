@@ -7,7 +7,7 @@
 
 ### Технологии
 * C#
-* Xamarin.Forms
+* Xamarin.Forms + MVVM
 * Prism.DryIoc
 * MediatR
 * RestSharp
